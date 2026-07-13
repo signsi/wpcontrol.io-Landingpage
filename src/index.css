@@ -1,56 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
-:root {
-  --bg: oklch(10.5% 0.018 268);
-  --surface: oklch(14.5% 0.018 268);
-  --surface-2: oklch(18.5% 0.017 268);
-  --border: oklch(22% 0.016 268);
-  --border-subtle: oklch(16% 0.015 268);
+@theme {
+  --color-base:        oklch(10.5% 0.018 268);
+  --color-surface:     oklch(14.5% 0.018 268);
+  --color-raised:      oklch(18.5% 0.017 268);
+  --color-line:        oklch(22%  0.016 268);
+  --color-primary:     oklch(94%  0.006 268);
+  --color-secondary:   oklch(68%  0.01  268);
+  --color-tertiary:    oklch(46%  0.01  268);
+  --color-accent:      oklch(72%  0.15  65);
+  --color-accent-dark: oklch(18%  0.05  65);
+  --color-on-accent:   oklch(12%  0.018 268);
 
-  --text: oklch(94% 0.006 268);
-  --text-mid: oklch(68% 0.01 268);
-  --text-dim: oklch(46% 0.01 268);
-
-  --accent: oklch(74% 0.22 65);
-  --accent-dark: oklch(20% 0.04 65);
-
-  --sans: 'Figtree', system-ui, sans-serif;
-  --heading: 'Bricolage Grotesque', system-ui, sans-serif;
-
-  font: 16px/1.65 var(--sans);
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-sans:    'Figtree', system-ui, sans-serif;
+  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
 }
 
-#root {
-  width: min(1280px, 100%);
-  max-width: 100%;
-  margin: 0 auto;
-  min-height: 100svh;
-  box-sizing: border-box;
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--color-base);
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  p { margin: 0; }
+
+  a { text-decoration: none; color: inherit; }
+
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+
+  #root {
+    width: min(1280px, 100%);
+    max-width: 100%;
+    margin: 0 auto;
+    min-height: 100svh;
+  }
 }
 
-body {
-  margin: 0;
-  background: var(--bg);
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-h1,
-h2,
-h3 {
-  font-family: var(--heading);
-  font-weight: 700;
-  color: var(--text);
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
-p {
-  margin: 0;
+@utility animate-ticker {
+  animation: ticker-scroll 36s linear infinite;
 }
 
-* {
-  box-sizing: border-box;
+@utility animate-cursor {
+  animation: cursor-blink 1s step-end infinite;
 }
