@@ -2,11 +2,11 @@ import { hosters } from '../data/landing'
 
 export default function LogoCloud() {
   return (
-    <section className="px-6 py-10 border-t border-b border-line bg-surface" aria-label="Hosting-Kompatibilität">
-      <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-tertiary mb-6">
+    <section className="px-6 py-14 bg-surface" aria-label="Hosting-Kompatibilität">
+      <p className="text-center text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-tertiary mb-6">
         Im Einsatz mit führenden Hostern
       </p>
-      <div className="grid grid-cols-4 lg:grid-cols-7 gap-px bg-line border border-line rounded-xl overflow-hidden max-w-3xl mx-auto">
+      <div className="stagger-x grid grid-cols-4 lg:grid-cols-7 gap-px bg-line border border-line rounded-xl overflow-hidden max-w-3xl mx-auto">
         {hosters.map((h) => (
           <a
             key={h.name}

@@ -29,7 +29,7 @@ export default function StandalonePage() {
 
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+          <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
             Standalone
           </p>
           <h1 className="font-heading font-extrabold text-[clamp(2.2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
@@ -43,10 +43,10 @@ export default function StandalonePage() {
             <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Person / Monat<br /><span className="text-tertiary text-[0.78rem]">Max. 3 Projekte</span></span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Early Access sichern
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -57,7 +57,7 @@ export default function StandalonePage() {
           <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
               <div>
-                <p className="font-heading font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <h2 className="font-heading font-bold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
@@ -74,7 +74,7 @@ export default function StandalonePage() {
         {/* Timeline */}
         <section className="px-6 py-14 border-b border-line bg-surface">
           <div className="max-w-4xl">
-            <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+            <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
               Zeitplan
             </p>
             <h2 className="font-heading font-extrabold text-[clamp(1.5rem,3vw,2rem)] leading-[1.12] tracking-[-0.025em] mb-4 max-w-[30ch]">
@@ -115,7 +115,7 @@ export default function StandalonePage() {
         {/* Transition phase */}
         <section className="px-6 py-14 border-y border-line bg-raised" id="uebergangsphase">
           <div className="max-w-4xl mx-auto">
-            <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+            <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
               Übergangsphase
             </p>
             <h2 className="font-heading font-extrabold text-[clamp(1.5rem,3vw,2rem)] leading-[1.12] tracking-[-0.025em] mb-4 max-w-[36ch]">
@@ -156,10 +156,10 @@ export default function StandalonePage() {
             Mit dem Cloud-Plan bekommt das gesamte Team Zugang zum Portal – inkl. Monitoring, Update-Planung und Vault-Synchronisation.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/cloud" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/cloud" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Cloud-Plan ansehen
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Zur Startseite
             </Link>
           </div>

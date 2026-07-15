@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 export interface FeatureCard {
   icon: JSX.Element
   title: string

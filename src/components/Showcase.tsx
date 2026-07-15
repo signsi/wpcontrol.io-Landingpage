@@ -20,8 +20,8 @@ export default function Showcase() {
   }, [active])
 
   return (
-    <section className="px-6 py-16 border-t border-line" id="detail">
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 items-start">
+    <section className="px-6 py-20" id="detail">
+      <div className="reveal-up grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 items-start">
 
         {/* Tab list with sliding amber bar */}
         <div className="flex" ref={trackRef}>
@@ -46,7 +46,7 @@ export default function Showcase() {
                   {f.title}
                 </p>
                 {i === active && (
-                  <p className="text-secondary text-[0.9rem] leading-[1.7] mt-3 max-w-[36ch]">
+                  <p className="text-secondary text-[0.9375rem] leading-[1.7] mt-3 max-w-[36ch]">
                     {f.text}
                   </p>
                 )}
@@ -62,7 +62,7 @@ export default function Showcase() {
       </div>
 
       <div className="mt-8">
-        <Link to="/features" className="text-[0.82rem] font-medium text-secondary hover:text-accent transition-colors">
+        <Link to="/features" className="text-[0.875rem] font-medium text-secondary hover:text-accent transition-colors">
           Features im Detail ansehen →
         </Link>
       </div>

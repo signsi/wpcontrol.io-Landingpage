@@ -43,27 +43,31 @@ export default function AISection() {
   }, [displayed, deleting, promptIndex])
 
   return (
-    <section className="px-6 py-20 border-t border-line">
+    <section className="px-6 py-28">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-        <div>
-          <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-            KI-Unterstützung
-          </p>
+        <div className="reveal-up">
           <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] mb-5">
             Schneller entscheiden. Direkt im Workflow.
           </h2>
-          <p className="text-secondary text-[0.95rem] leading-[1.78] max-w-[46ch]">
+          <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[46ch]">
             Nutze deine bestehenden KI-Tools direkt im Workflow: Claude, ChatGPT und Copilot lassen sich schon heute über die VS-Code-Integration einsetzen. Eine native UI-Integration ist in Entwicklung.
           </p>
         </div>
 
-        <div className="flex items-center justify-center py-8 lg:py-0">
-          <div className="w-full bg-raised border border-line rounded-2xl px-6 py-5 flex items-center gap-4 shadow-lg">
-            <Sparkle className="w-6 h-6 text-primary flex-shrink-0 opacity-80" />
-            <div className="flex-1 min-w-0 font-mono text-[0.88rem] text-primary flex items-center">
-              <span>{displayed}</span>
-              <span className="inline-block w-px h-[1.1em] bg-accent ml-0.5 align-middle animate-cursor" />
+        <div className="reveal-up flex items-center justify-center py-8 lg:py-0">
+          <div className="w-full bg-raised border border-line rounded-2xl overflow-hidden shadow-lg">
+            {/* Window chrome */}
+            <div className="flex items-center px-4 py-3 border-b border-line">
+              <span className="text-[0.75rem] text-tertiary font-mono">WPorbit — KI-Assistent</span>
+            </div>
+            {/* Input area */}
+            <div className="px-6 py-5 flex items-center gap-4">
+              <Sparkle className="w-5 h-5 text-accent flex-shrink-0 opacity-90" />
+              <div className="flex-1 min-w-0 font-mono text-[0.875rem] text-primary flex items-center">
+                <span>{displayed}</span>
+                <span className="inline-block w-px h-[1.1em] bg-accent ml-0.5 align-middle animate-cursor" />
+              </div>
             </div>
           </div>
         </div>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<title>WPorbit — Corporate Design Vorschlag</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#07080D;
+    --bg-1:#0E1019;
+    --bg-2:#151827;
+    --bg-3:#1C2033;
+    --line:#282C40;
+    --line-soft:#1A1D2C;
+    --text-0:#F4F5F9;
+    --text-1:#C4C7D6;
+    --text-2:#8B8FA6;
+    --solar:#FF6A39;
+    --solar-2:#FF3D77;
+    --violet:#7B5CFA;
+    --cyan:#2FD9EE;
+    --green:#3DDC84;
+    --orbit-gradient: linear-gradient(90deg,#7B5CFA 0%,#2FD9EE 100%);
+    --solar-gradient: linear-gradient(90deg,#FF6A39 0%,#FF3D77 100%);
+    --font-head: 'Chakra Petch', sans-serif;
+    --font-body: 'Hanken Grotesk', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--bg-0); color:var(--text-0); font-family:var(--font-body); font-size:16px; line-height:1.5;}
+  body{ -webkit-font-smoothing:antialiased; }
+
+  .stars{
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(1px 1px at 8% 22%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 22% 68%, #fff, transparent 60%),
+      radial-gradient(1.5px 1.5px at 37% 12%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 52% 44%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 68% 78%, #fff, transparent 60%),
+      radial-gradient(1.5px 1.5px at 81% 30%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 91% 58%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 14% 90%, #fff, transparent 60%),
+      radial-gradient(1px 1px at 63% 15%, #fff, transparent 60%),
+      radial-gradient(1.5px 1.5px at 46% 85%, #fff, transparent 60%);
+    background-repeat: repeat;
+    background-size: 480px 480px;
+    opacity:.35;
+    pointer-events:none;
+  }
+
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; position:relative; z-index:1;}
+
+  section{ position:relative; padding:88px 0; border-bottom:1px solid var(--line-soft); overflow:hidden;}
+  section:last-of-type{ border-bottom:none; }
+
+  .kicker{ font-family:var(--font-mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:8px; margin-bottom:14px;}
+  .kicker::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--solar); box-shadow:0 0 8px var(--solar);}
+  h1,h2,h3{ font-family:var(--font-head); font-weight:600; letter-spacing:-0.01em; line-height:1.15;}
+  h2{ font-size:32px; margin-bottom:10px;}
+  h3{ font-size:18px; margin-bottom:8px;}
+  p{ color:var(--text-1); max-width:640px;}
+  .lead{ color:var(--text-1); font-size:16px; max-width:600px; margin-bottom:40px;}
+
+  /* HERO */
+  .hero{ padding:120px 0 100px; text-align:center;}
+  .hero .orbit-deco{ position:absolute; inset:-200px 0 auto 0; height:900px; z-index:0; pointer-events:none;}
+  .hero .glow{ position:absolute; width:900px; height:900px; left:50%; top:-380px; transform:translateX(-50%);
+    background: radial-gradient(circle, rgba(123,92,250,.28), transparent 60%), radial-gradient(circle at 65% 65%, rgba(47,217,238,.18), transparent 55%);
+    filter:blur(10px); z-index:0;}
+  .hero-inner{ position:relative; z-index:2;}
+  .logo-mark{ width:64px; height:69px; color:var(--text-0); margin:0 auto 28px;}
+  .hero h1{ font-size:50px; line-height:1.15; margin-bottom:22px;}
+  .hero h1 .grad{ background:var(--orbit-gradient); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p{ margin:0 auto; font-size:17px;}
+  .tagline{ font-family:var(--font-mono); font-size:13px; color:var(--text-2); margin-top:28px;}
+
+  /* LOGO SECTION */
+  .logo-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:32px;}
+  .logo-tile{ border:1px solid var(--line); border-radius:16px; padding:48px; display:flex; align-items:center; justify-content:center; min-height:180px;}
+  .logo-tile.dark{ background:var(--bg-1);}
+  .logo-tile.light{ background:#F4F5F9;}
+  .logo-tile.grad{ background:var(--bg-1);}
+  .logo-tile svg{ width:120px; height:130px;}
+  .logo-tile.light svg{ color:#0E1019;}
+  .logo-tile.dark svg{ color:var(--text-0);}
+  .tile-label{ font-family:var(--font-mono); font-size:11px; color:var(--text-2); text-align:center; margin-top:10px; letter-spacing:.04em;}
+
+  /* PALETTE */
+  .swatch-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px;}
+  .swatch{ border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--bg-1);}
+  .swatch-color{ height:88px;}
+  .swatch-info{ padding:14px 16px;}
+  .swatch-name{ font-size:13px; font-weight:600; margin-bottom:2px;}
+  .swatch-hex{ font-family:var(--font-mono); font-size:12px; color:var(--text-2);}
+  .swatch-use{ font-size:12px; color:var(--text-2); margin-top:6px; line-height:1.4;}
+
+  /* GRADIENTS */
+  .grad-row{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px;}
+  .grad-block{ border-radius:16px; padding:32px; height:140px; display:flex; flex-direction:column; justify-content:space-between; border:1px solid var(--line);}
+  .grad-orbit{ background:var(--orbit-gradient);}
+  .grad-solar{ background:var(--solar-gradient);}
+  .grad-name{ font-family:var(--font-head); font-weight:600; color:#0A0B12; font-size:18px;}
+  .grad-code{ font-family:var(--font-mono); font-size:12px; color:rgba(10,11,18,.75);}
+
+  /* TYPO */
+  .type-row{ display:flex; align-items:baseline; justify-content:space-between; border-top:1px solid var(--line-soft); padding:22px 0;}
+  .type-row:first-of-type{ border-top:none;}
+  .type-sample{ font-family:var(--font-head);}
+  .type-meta{ font-family:var(--font-mono); font-size:12px; color:var(--text-2); text-align:right; white-space:nowrap; padding-left:20px;}
+  .font-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:44px;}
+  .font-card{ border:1px solid var(--line); border-radius:14px; padding:22px; background:var(--bg-1);}
+  .font-card .fname{ font-family:var(--font-mono); font-size:11px; color:var(--cyan); text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px;}
+  .font-card .fsample{ font-size:30px; margin-bottom:6px;}
+  .font-card .frole{ font-size:12px; color:var(--text-2);}
+
+  /* MOTIFS */
+  .motif-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:24px;}
+  .motif-card{ border:1px solid var(--line); border-radius:16px; padding:28px; background:var(--bg-1); min-height:170px; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end;}
+  .motif-card .mlabel{ font-size:13px; font-weight:600; z-index:2;}
+  .motif-card .mdesc{ font-size:12px; color:var(--text-2); z-index:2; margin-top:2px;}
+
+  .m-ring svg{ position:absolute; top:-10px; right:-30px; width:200px; height:200px; opacity:.9;}
+  .m-stars .stars{ opacity:.6;}
+  .m-planet .dot{ position:absolute; top:24px; left:24px; width:26px; height:26px; border-radius:50%; background:var(--solar-gradient); box-shadow:0 0 24px rgba(255,106,57,.5);}
+  .m-planet .ring2{ position:absolute; top:14px; left:14px; width:46px; height:46px; border:1px solid var(--line); border-radius:50%;}
+
+  .divider-demo{ display:flex; align-items:center; gap:14px; margin:36px 0;}
+  .divider-demo svg{ flex:1; height:14px; color:var(--line);}
+
+  /* BUTTONS / BADGES */
+  .component-block{ background:var(--bg-1); border:1px solid var(--line); border-radius:18px; padding:36px; margin-top:24px;}
+  .row{ display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+  .btn{ font-family:var(--font-body); font-weight:600; font-size:14px; padding:12px 22px; border-radius:10px; border:1px solid transparent; cursor:default; display:inline-flex; align-items:center; gap:8px;}
+  .btn-primary{ background:var(--solar-gradient); color:#0A0B12; box-shadow:0 8px 24px rgba(255,106,57,.28);}
+  .btn-secondary{ background:transparent; border-color:var(--line); color:var(--text-0);}
+  .btn-ghost{ background:transparent; color:var(--text-1);}
+  .pill{ font-family:var(--font-mono); font-size:11px; padding:5px 12px; border-radius:20px; border:1px solid var(--line); color:var(--text-2); text-transform:uppercase; letter-spacing:.06em;}
+  .pill.on{ border-color:var(--cyan); color:var(--cyan);}
+  .pill.warn{ border-color:var(--solar); color:var(--solar);}
+
+  .subgrid{ margin-top:36px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .cardex{ border:1px solid var(--line); border-radius:16px; padding:26px; background:var(--bg-2); position:relative;}
+  .cardex .icn{ width:38px; height:38px; border-radius:50%; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .cardex .icn .core{ width:12px; height:12px; border-radius:50%; background:var(--orbit-gradient);}
+  .cardex h3{ font-size:16px;}
+  .cardex p{ font-size:13px; max-width:none;}
+
+  .code-block{ font-family:var(--font-mono); font-size:13px; background:var(--bg-0); border:1px solid var(--line); border-radius:14px; padding:20px 22px; color:var(--text-1); margin-top:20px;}
+  .code-block .p1{ color:var(--text-2);}
+  .code-block .p2{ color:var(--cyan);}
+  .code-block .p3{ color:var(--green);}
+
+  footer{ padding:60px 0; text-align:center;}
+  footer p{ margin:0 auto; font-size:12px; color:var(--text-2); font-family:var(--font-mono);}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="stars"></div>
+  <div class="glow"></div>
+  <div class="wrap hero-inner">
+    <svg class="logo-mark" viewBox="0 0 361.01 390.66" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="180.88" cy="129.7" r="36" fill="currentColor"/>
+      <path d="M72.03,221.85c65.68,29.51,167.13,8,226.61-48.04,59.48-56.04,54.45-125.39-11.23-154.89-12.22-5.49-26.08-9.34-41.09-11.42" stroke="currentColor" stroke-width="15" stroke-linecap="round"/>
+    </svg>
+    <div class="kicker" style="justify-content:center;">Corporate Design Vorschlag · v1</div>
+    <h1>Ein Orbit für <span class="grad">WPorbit</span></h1>
+    <p style="margin-left:auto;margin-right:auto;">Das bestehende Dark-UI bleibt Basis — neu erzählt über Orbit-Linien, Sternenfeld
+      und einen eigenständigen Nebel-Verlauf statt generischem SaaS-Orange-auf-Schwarz.</p>
+    <div class="tagline">FOR WORDPRESS AGENCIES — BUILT IN ORBIT</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Logo &amp; Schutzraum</div>
+    <h2>Bestehendes Logo, neu eingebettet</h2>
+    <p class="lead">Das Logo bleibt unverändert. Für das CI wird es als <strong>currentColor</strong>-Asset behandelt,
+      damit es sich in jeden Hintergrund einfügt — inkl. Farbverlaufs-Variante für Highlight-Momente.</p>
+    <div class="logo-grid">
+      <div>
+        <div class="logo-tile dark"><svg viewBox="0 0 361.01 390.66"><circle cx="180.88" cy="129.7" r="36" fill="currentColor"/><path d="M72.03,221.85c65.68,29.51,167.13,8,226.61-48.04,59.48-56.04,54.45-125.39-11.23-154.89-12.22-5.49-26.08-9.34-41.09-11.42" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="round"/></svg></div>
+        <div class="tile-label">AUF DUNKEL — STANDARD</div>
+      </div>
+      <div>
+        <div class="logo-tile light"><svg viewBox="0 0 361.01 390.66"><circle cx="180.88" cy="129.7" r="36" fill="currentColor"/><path d="M72.03,221.85c65.68,29.51,167.13,8,226.61-48.04,59.48-56.04,54.45-125.39-11.23-154.89-12.22-5.49-26.08-9.34-41.09-11.42" fill="none" stroke="currentColor" stroke-width="15" stroke-linecap="round"/></svg></div>
+        <div class="tile-label">AUF HELL — SEKUNDÄR</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Farbpalette</div>
+    <h2>Deep Space als Basis, zwei Signalfarben</h2>
+    <p class="lead">Die Nacht bleibt das Fundament. Zwei Verläufe geben Orientierung: <em>Orbit</em> (kühl, für Struktur &amp;
+      Ruhe) und <em>Solar</em> (warm, für Aktion &amp; Energie).</p>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#07080D;"></div><div class="swatch-info"><div class="swatch-name">Deep Space</div><div class="swatch-hex">#07080D</div><div class="swatch-use">Basis-Hintergrund</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#151827;"></div><div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#151827</div><div class="swatch-use">Karten, Panels</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#282C40;"></div><div class="swatch-info"><div class="swatch-name">Orbit Line</div><div class="swatch-hex">#282C40</div><div class="swatch-use">Borders, Linien-Motiv</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F4F5F9;"></div><div class="swatch-info"><div class="swatch-name">Starlight</div><div class="swatch-hex">#F4F5F9</div><div class="swatch-use">Primärtext</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FF6A39;"></div><div class="swatch-info"><div class="swatch-name">Solar</div><div class="swatch-hex">#FF6A39</div><div class="swatch-use">Primäre CTA</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FF3D77;"></div><div class="swatch-info"><div class="swatch-name">Solar Flare</div><div class="swatch-hex">#FF3D77</div><div class="swatch-use">Gradient-Ende, Hover</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#7B5CFA;"></div><div class="swatch-info"><div class="swatch-name">Nebula Violet</div><div class="swatch-hex">#7B5CFA</div><div class="swatch-use">Orbit-Gradient, Glow</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#2FD9EE;"></div><div class="swatch-info"><div class="swatch-name">Orbit Cyan</div><div class="swatch-hex">#2FD9EE</div><div class="swatch-use">Links, Status "aktiv"</div></div></div>
+    </div>
+
+    <div class="grad-row">
+      <div class="grad-block grad-orbit">
+        <div class="grad-name">Orbit Gradient</div>
+        <div class="grad-code">linear-gradient(90deg, #7B5CFA → #2FD9EE)</div>
+      </div>
+      <div class="grad-block grad-solar">
+        <div class="grad-name">Solar Gradient</div>
+        <div class="grad-code">linear-gradient(90deg, #FF6A39 → #FF3D77)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Typografie — final</div>
+    <h2>Chakra Petch trifft Hanken Grotesk</h2>
+    <p class="lead"><strong>Chakra Petch</strong> für Headlines — kantig, technisch, mit den charakteristischen
+      abgeschrägten Ecken ein klarer Bezug zu Orbit-Telemetrie/HUD-Displays statt generischer Startup-Grotesk.
+      Für Fliesstext <strong>Hanken Grotesk</strong> — ruhig, gut lesbar, wärmer als Inter.
+      <strong>Space Mono</strong> für Code, Labels und System-Ton.</p>
+
+    <div class="font-cards">
+      <div class="font-card"><div class="fname">Headlines</div><div class="fsample" style="font-family:var(--font-head); font-weight:600;">Aa Orbit</div><div class="frole">Chakra Petch · 500/600/700</div></div>
+      <div class="font-card"><div class="fname">Fliesstext</div><div class="fsample" style="font-family:var(--font-body);">Aa Orbit</div><div class="frole">Hanken Grotesk · 400/500/600</div></div>
+      <div class="font-card"><div class="fname">Code / System</div><div class="fsample" style="font-family:var(--font-mono);">Aa Orbit</div><div class="frole">Space Mono · 400/700</div></div>
+    </div>
+
+    <div>
+      <div class="type-row"><div class="type-sample" style="font-size:38px; font-weight:600;">Bring Ordnung in deinen Alltag</div><div class="type-meta">H1 · Chakra Petch 600 · 38/1.15</div></div>
+      <div class="type-row"><div class="type-sample" style="font-size:26px; font-weight:600;">Du entwickelst.</div><div class="type-meta">H2 · Chakra Petch 600 · 26/1.2</div></div>
+      <div class="type-row"><div class="type-sample" style="font-size:17px; font-weight:600;">Lokale Entwicklung</div><div class="type-meta">H3 · Chakra Petch 600 · 17/1.3</div></div>
+      <div class="type-row"><div class="type-sample" style="font-size:16px; font-family:var(--font-body); color:var(--text-1);">Änderungen gegen Staging testen und Vorschau-Links teilen.</div><div class="type-meta">Body · Hanken Grotesk 400 · 16/1.6</div></div>
+      <div class="type-row"><div class="type-sample" style="font-size:13px; font-family:var(--font-mono); color:var(--text-2);">$ wporbit env:start</div><div class="type-meta">Mono · Space Mono 400 · 13</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Grafische Motive</div>
+    <h2>Orbit-Linien, Sterne, Planeten</h2>
+    <p class="lead">Wiederkehrende Elemente statt Stock-Icons: offene Orbit-Bögen als Divider, feines Sternenfeld
+      als Textur, ein "Planet" (Kreis + Ring) als Bullet- und Statuspunkt.</p>
+
+    <div class="motif-grid">
+      <div class="motif-card m-ring">
+        <svg viewBox="0 0 200 200" fill="none"><ellipse cx="100" cy="100" rx="90" ry="34" stroke="currentColor" stroke-width="1.5" transform="rotate(-18 100 100)"/></svg>
+        <div class="mlabel">Orbit-Ring</div>
+        <div class="mdesc">Dünne, offene Ellipsen als Deko &amp; Divider</div>
+      </div>
+      <div class="motif-card m-stars"><div class="stars"></div>
+        <div class="mlabel">Sternenfeld</div>
+        <div class="mdesc">Feine Punkt-Textur für Section-Hintergründe</div>
+      </div>
+      <div class="motif-card m-planet">
+        <div class="ring2"></div><div class="dot"></div>
+        <div class="mlabel">Planet-Punkt</div>
+        <div class="mdesc">Kreis + Ring als Bullet, Avatar-Frame, Status</div>
+      </div>
+    </div>
+
+    <div class="divider-demo">
+      <span class="pill on">SECTION</span>
+      <svg viewBox="0 0 400 14"><path d="M0,7 C100,-8 300,22 400,7" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">UI-Komponenten</div>
+    <h2>Buttons, Badges, Karten</h2>
+
+    <div class="component-block">
+      <h3 style="margin-bottom:16px;">Buttons</h3>
+      <div class="row">
+        <span class="btn btn-primary">Early Access sichern</span>
+        <span class="btn btn-secondary">Direktvergleich ansehen</span>
+        <span class="btn btn-ghost">Mehr erfahren →</span>
+      </div>
+      <h3 style="margin:28px 0 16px;">Badges / Status</h3>
+      <div class="row">
+        <span class="pill">Standalone</span>
+        <span class="pill on">Cloud · Empfohlen</span>
+        <span class="pill warn">Early Access</span>
+      </div>
+    </div>
+
+    <div class="subgrid">
+      <div class="cardex">
+        <div class="icn"><div class="core"></div></div>
+        <h3>Monitoring und Alerts</h3>
+        <p>Uptime, Security-Scans und Performance-Checks laufen automatisiert und melden frühzeitig.</p>
+      </div>
+      <div class="cardex">
+        <div class="icn"><div class="core"></div></div>
+        <h3>Deploy via GitLab</h3>
+        <p>Funktioniert mit jedem Anbieter, der Pipelines unterstützt.</p>
+      </div>
+    </div>
+
+    <div class="code-block">
+<span class="p1">$</span> wporbit env:start mein-projekt<br>
+<span class="p2">→</span> PHP 8.2 konfiguriert<br>
+<span class="p2">→</span> WordPress 6.5 installiert<br>
+<span class="p3">✓</span> http://mein-projekt.local
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>WPORBIT — CORPORATE DESIGN VORSCHLAG · JULI 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>

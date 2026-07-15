@@ -1,3 +1,5 @@
+import type { JSX } from 'react'
+
 export interface ShowcaseFeature {
   title: string
   text: string
@@ -131,9 +133,9 @@ export const allFeatures: ShowcaseFeature[] = [
         <div className="h-14 w-full">
           <svg viewBox="0 0 260 60" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
             <path d="M0,50 L40,44 L80,46 L100,32 L130,35 L160,20 L190,22 L220,12 L260,14"
-              fill="none" stroke="oklch(74% 0.22 65)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              fill="none" stroke="#FF6A39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M0,50 L40,44 L80,46 L100,32 L130,35 L160,20 L190,22 L220,12 L260,14 L260,60 L0,60Z"
-              fill="oklch(74% 0.22 65)" fillOpacity="0.08" />
+              fill="#FF6A39" fillOpacity="0.08" />
           </svg>
         </div>
         <div className="flex flex-col gap-2.5">
@@ -143,7 +145,7 @@ export const allFeatures: ShowcaseFeature[] = [
             { label: 'Performance', value: '82 / 100',   ok: false },
           ].map((row) => (
             <div key={row.label} className="flex items-center gap-2.5 text-[0.78rem]">
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${row.ok ? 'bg-[oklch(72%_0.18_145)]' : 'bg-accent'}`} />
+              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${row.ok ? 'bg-success' : 'bg-accent'}`} />
               <span className="text-secondary flex-1">{row.label}</span>
               <strong className="text-primary font-semibold tabular-nums">{row.value}</strong>
             </div>
@@ -169,7 +171,7 @@ export const allFeatures: ShowcaseFeature[] = [
             <span className="text-tertiary font-mono text-[0.72rem]">{u.ver}</span>
             <span className={`text-[0.68rem] font-bold px-2 py-0.5 rounded ${
               u.status === 'ok'
-                ? 'bg-[oklch(72%_0.18_145)]/15 text-[oklch(72%_0.18_145)]'
+                ? 'bg-success/15 text-success'
                 : 'bg-accent/15 text-accent'
             }`}>
               {u.status === 'ok' ? 'Staging ✓' : 'Testing…'}

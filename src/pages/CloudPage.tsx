@@ -38,7 +38,7 @@ export default function CloudPage() {
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
           <div className="flex items-center gap-2.5 mb-3">
-            <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent">
+            <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent">
               Cloud
             </p>
             <span className="text-[0.65rem] font-bold tracking-wide text-accent border border-accent/30 bg-accent/10 rounded-full px-2.5 py-0.5">
@@ -56,10 +56,10 @@ export default function CloudPage() {
             <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Monat<br /><span className="text-tertiary text-[0.78rem]">3 Personen inkl.</span></span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Early Access sichern
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -70,7 +70,7 @@ export default function CloudPage() {
           <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
               <div>
-                <p className="font-heading font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <h2 className="font-heading font-bold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
@@ -93,10 +93,10 @@ export default function CloudPage() {
             Sichere dir Early Access, erhalte sofort die ROI- und Migrations-Checkliste und gestalte die nächsten Prioritäten aktiv mit.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Early Access sichern
             </Link>
-            <Link to="/standalone" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/standalone" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Standalone-Plan ansehen
             </Link>
           </div>

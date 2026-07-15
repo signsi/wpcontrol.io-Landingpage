@@ -1,20 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap');
+/* ─── WPorbit Design System — Corporate Design Juli 2026 ─── */
+
+/* Chakra Petch — Headlines */
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/ChakraPetch-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/ChakraPetch-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/ChakraPetch-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Hanken Grotesk — Body */
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/HankenGrotesk-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/HankenGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/HankenGrotesk-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Hanken Grotesk';
+  src: url('/fonts/HankenGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* Space Mono — Code / Labels / Kicker */
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/SpaceMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/SpaceMono-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
 @theme {
-  --color-base:        oklch(10.5% 0.018 268);
-  --color-surface:     oklch(14.5% 0.018 268);
-  --color-raised:      oklch(18.5% 0.017 268);
-  --color-line:        oklch(22%  0.016 268);
-  --color-primary:     oklch(94%  0.006 268);
-  --color-secondary:   oklch(68%  0.01  268);
-  --color-tertiary:    oklch(46%  0.01  268);
-  --color-accent:      oklch(72%  0.15  65);
-  --color-accent-dark: oklch(18%  0.05  65);
-  --color-on-accent:   oklch(12%  0.018 268);
+  /* ── Backgrounds ── */
+  --color-base:         #07080D;   /* Deep Space */
+  --color-surface:      #0E1019;   /* Surface */
+  --color-raised:       #151827;   /* Elevated */
 
-  --font-sans:    'Figtree', system-ui, sans-serif;
-  --font-heading: 'Bricolage Grotesque', system-ui, sans-serif;
+  /* ── Borders ── */
+  --color-line:         #282C40;   /* Orbit Line */
+  --color-border-soft:  #1A1D2C;   /* Border Soft */
+
+  /* ── Text ── */
+  --color-primary:      #F4F5F9;   /* Starlight */
+  --color-secondary:    #C4C7D6;   /* Text Secondary */
+  --color-tertiary:     #8B8FA6;   /* Text Tertiary */
+
+  /* ── Actions ── */
+  --color-accent:       #FF6A39;   /* Solar */
+  --color-accent-dark:  #2A100A;   /* Solar tinted dark bg */
+  --color-on-accent:    #0D0704;   /* Dark label on Solar */
+  --color-solar-flare:  #FF3D77;   /* Solar Gradient end */
+  --color-success:      #3DDC84;   /* Status Success */
+
+  /* ── Typography ── */
+  --font-heading: 'Chakra Petch', system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'Space Mono', ui-monospace, monospace;
 }
 
 @layer base {
@@ -22,6 +95,7 @@
 
   body {
     margin: 0;
+    overflow-x: hidden;
     background-color: var(--color-base);
     color: var(--color-primary);
     font-family: var(--font-sans);
@@ -33,14 +107,16 @@
 
   h1, h2, h3 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--color-primary);
     margin: 0;
   }
 
   p { margin: 0; }
 
-  a { text-decoration: none; color: inherit; }
+  a { text-decoration: none; color: inherit; cursor: pointer; }
+
+  button { cursor: pointer; }
 
   summary { list-style: none; }
   summary::-webkit-details-marker { display: none; }
@@ -53,6 +129,12 @@
   }
 }
 
+/* ── Gradient utilities ── */
+@utility gradient-solar {
+  background: linear-gradient(90deg, #FF6A39, #FF3D77);
+}
+
+/* ── Animations ── */
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -63,10 +145,19 @@
   50%       { opacity: 0; }
 }
 
+@keyframes nebula-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%       { opacity: 0.5;  transform: scale(1.06); }
+}
+
 @utility animate-ticker {
   animation: ticker-scroll 36s linear infinite;
 }
 
 @utility animate-cursor {
   animation: cursor-blink 1s step-end infinite;
+}
+
+@utility animate-nebula {
+  animation: nebula-pulse 8s ease-in-out infinite;
 }

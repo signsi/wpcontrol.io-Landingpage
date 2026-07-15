@@ -5,24 +5,21 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section className="px-6 py-16 border-t border-line" id="faq">
+    <section className="px-6 py-24" id="faq">
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-12 items-start">
 
         {/* Left: heading */}
-        <div className="lg:sticky lg:top-24">
-          <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-            FAQ
-          </p>
+        <div className="reveal-up lg:sticky lg:top-24">
           <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] mb-4">
             Was Teams vor dem Start wissen wollen
           </h2>
-          <p className="text-secondary text-[0.88rem] leading-[1.75] max-w-[32ch]">
+          <p className="text-secondary text-[0.875rem] leading-[1.75] max-w-[32ch]">
             Weitere Fragen? Melde dich direkt über die Early-Access-Anmeldung.
           </p>
         </div>
 
         {/* Right: accordion cards */}
-        <div className="flex flex-col gap-2">
+        <div className="stagger-group flex flex-col gap-2">
           {faqItems.map((item, i) => {
             const isOpen = open === i
             return (
@@ -37,7 +34,7 @@ export default function FAQ() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
                 >
-                  <span className={`font-medium text-[0.9rem] leading-snug transition-colors ${
+                  <span className={`font-medium text-[0.9375rem] leading-snug transition-colors ${
                     isOpen ? 'text-primary' : 'text-secondary'
                   }`}>
                     {item.q}
@@ -49,7 +46,7 @@ export default function FAQ() {
                   </span>
                 </button>
                 {isOpen && (
-                  <p className="px-5 pb-5 text-secondary text-[0.88rem] leading-[1.75]">
+                  <p className="px-5 pb-5 text-secondary text-[0.875rem] leading-[1.75]">
                     {item.a}
                   </p>
                 )}

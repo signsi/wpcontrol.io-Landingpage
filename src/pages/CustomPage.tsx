@@ -33,7 +33,7 @@ export default function CustomPage() {
 
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-heading font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+          <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
             Custom
           </p>
           <h1 className="font-heading font-extrabold text-[clamp(2.2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
@@ -47,10 +47,10 @@ export default function CustomPage() {
             <span className="text-tertiary text-[0.8rem] leading-snug border-l border-line pl-3">Individuelles Angebot<br />nach Anforderung</span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Anfrage stellen
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -61,7 +61,7 @@ export default function CustomPage() {
           <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
               <div>
-                <p className="font-heading font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
                 <h2 className="font-heading font-bold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
@@ -84,10 +84,10 @@ export default function CustomPage() {
             Schreib uns, was du dir vorstellst. Wir schauen gemeinsam, was sich sinnvoll umsetzen lässt – ohne Overhead.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="bg-accent text-on-accent font-bold text-sm px-5 py-3 rounded-[0.3rem] hover:opacity-90 transition-opacity">
+            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
               Anfrage stellen
             </Link>
-            <Link to="/cloud" className="border border-line text-secondary text-sm px-5 py-3 rounded-[0.3rem] hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/cloud" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
               Cloud-Plan ansehen
             </Link>
           </div>
