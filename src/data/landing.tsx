@@ -1,78 +1,42 @@
-import type { JSX } from 'react'
-
 export interface FeatureCard {
-  icon: JSX.Element
+  dot: 'solar' | 'orbit'
   title: string
   text: string
 }
 
 export const featureCards: FeatureCard[] = [
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="M8 10l3 3-3 3" /><line x1="13" y1="16" x2="17" y2="16" />
-      </svg>
-    ),
+    dot: 'orbit',
     title: 'Lokale Entwicklung',
     text: 'WordPress-Umgebungen lokal starten, ohne Docker, NGINX oder Apache. Bereit in Sekunden.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-        <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-      </svg>
-    ),
+    dot: 'solar',
     title: 'Staging und Preview',
     text: 'Änderungen gegen Staging testen und Vorschau-Links mit Kunden oder Kollegen teilen.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" />
-        <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
-      </svg>
-    ),
+    dot: 'orbit',
     title: 'Deploy via GitLab',
     text: 'WPorbit funktioniert mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
-        <polyline points="17 3 21 3 21 7" /><line x1="10" y1="14" x2="21" y2="3" />
-      </svg>
-    ),
+    dot: 'solar',
     title: 'Import / Migration',
     text: 'Import direkt aus deiner Live-Installation: SSH-Zugang genügt, inklusive Theme-Repo, wo vorhanden.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-      </svg>
-    ),
+    dot: 'orbit',
     title: 'Monitoring und Alerts',
     text: 'Uptime, Security-Scans und Performance-Checks laufen automatisiert und melden frühzeitig.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-        <path d="M7 11V7a5 5 0 0110 0v4" />
-      </svg>
-    ),
+    dot: 'solar',
     title: 'Vault und Zugänge',
     text: 'Alle Zugangsdaten werden in der Schweiz gehostet und DSGVO-konform verschlüsselt. Kein Copy-Paste in Chats.',
   },
   {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
-        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
-      </svg>
-    ),
+    dot: 'orbit',
     title: 'Updates und Wartung',
     text: 'Core-, Plugin- und Theme-Updates mit Staging-Test und Rollback auf Knopfdruck.',
   },

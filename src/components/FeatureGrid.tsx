@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { featureCards } from '../data/landing'
+import PlanetDot from './PlanetDot'
 
 export default function FeatureGrid() {
   return (
@@ -15,8 +16,8 @@ export default function FeatureGrid() {
 
       <div className="stagger-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
         {featureCards.map((card) => (
-          <article key={card.title} className="bg-surface p-6 flex flex-col gap-3 hover:bg-raised transition-colors group">
-            <div className="text-accent">{card.icon}</div>
+          <article key={card.title} className="bg-surface p-6 flex flex-col gap-4 hover:bg-raised transition-colors group">
+            <PlanetDot color={card.dot} size={11} />
             <p className="font-heading font-bold text-[0.9375rem] tracking-[-0.01em] text-primary leading-snug">{card.title}</p>
             <p className="text-secondary text-[0.875rem] leading-[1.65]">{card.text}</p>
           </article>

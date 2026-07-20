@@ -10,20 +10,9 @@ export default function Hero() {
       >
         <div
           className="animate-nebula absolute -top-32 -left-24 w-[680px] h-[680px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #7B5CFA 0%, #2FD9EE 40%, transparent 70%)', filter: 'blur(100px)', opacity: 0.2 }}
+          style={{ background: 'radial-gradient(circle, #7B5CFA 0%, #2FD9EE 40%, transparent 70%)', filter: 'blur(100px)', opacity: 0.16 }}
         />
-        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          {[
-            [4,  14, 1.4], [10, 68, 0.9], [18, 32, 1.1], [25, 84, 0.7],
-            [33, 18, 1.3], [40, 56, 0.8], [48, 8,  1.0], [55, 74, 1.2],
-            [62, 42, 0.9], [70, 28, 1.4], [78, 90, 0.8], [85, 48, 1.1],
-            [91, 88, 0.6], [96, 62, 1.3], [13, 22, 0.7], [28, 6,  1.2],
-            [44, 52, 1.0], [58, 16, 0.9], [72, 76, 1.1], [88, 36, 0.8],
-            [2,  38, 0.8], [97, 15, 1.0], [50, 92, 0.7], [36, 44, 1.2],
-          ].map(([cx, cy, r], i) => (
-            <circle key={i} cx={`${cx}%`} cy={`${cy}%`} r={r as number} fill="#F4F5F9" opacity={0.25 + (i % 3) * 0.06} />
-          ))}
-        </svg>
+        <div className="absolute inset-0 bg-orbit-stars opacity-35" />
       </div>
 
       {/* Content */}

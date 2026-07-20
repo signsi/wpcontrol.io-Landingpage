@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { showcaseFeatures } from '../data/features'
+import { OrbitArc } from './OrbitMotif'
 
 export default function Showcase() {
   const [active, setActive] = useState(0)
@@ -20,8 +21,12 @@ export default function Showcase() {
   }, [active])
 
   return (
-    <section className="px-6 py-20" id="detail">
-      <div className="reveal-up grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 items-start">
+    <section className="relative px-6 py-20" id="detail">
+      <OrbitArc
+        rotate={-14}
+        className="hidden lg:block absolute -right-16 -top-10 w-[420px] h-[420px] text-line opacity-50 pointer-events-none"
+      />
+      <div className="reveal-up relative grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 items-start">
 
         {/* Tab list with sliding amber bar */}
         <div className="flex" ref={trackRef}>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import PlanetDot from './PlanetDot'
 
 const plans = [
   {
@@ -52,15 +53,15 @@ export default function Pricing() {
         {plans.map((plan) => (
           <article
             key={plan.name}
-            className={`relative flex flex-col gap-6 p-7 rounded-2xl border overflow-hidden ${
+            className={`relative flex flex-col gap-6 p-7 rounded-2xl border ${
               plan.highlighted
                 ? 'bg-surface border-line shadow-[0_16px_48px_-12px_color-mix(in_srgb,#FF6A39_18%,transparent)]'
                 : 'bg-surface border-line'
             }`}
           >
-            {/* Gradient top accent — clipped by overflow-hidden + rounded-2xl */}
+            {/* Planet-dot mark — signals "empfohlen" without a generic top bar */}
             {plan.highlighted && (
-              <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] gradient-solar" />
+              <PlanetDot color="solar" size={13} ring className="absolute -top-3 -right-3 bg-base" />
             )}
 
             {/* Header */}

@@ -1,9 +1,14 @@
+import { OrbitDivider } from './OrbitMotif'
+
 export default function EarlyAccess() {
   return (
     <section
       className="relative px-6 py-24 overflow-hidden"
       id="waitlist"
     >
+      {/* Signature curved divider — marks the final transition into the CTA */}
+      <OrbitDivider className="absolute inset-x-0 top-0 w-full h-6 text-line pointer-events-none" />
+
       {/* Subtle background glow */}
       <div
         aria-hidden="true"
