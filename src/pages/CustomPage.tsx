@@ -33,24 +33,24 @@ export default function CustomPage() {
 
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
             Custom
           </p>
-          <h1 className="font-heading font-extrabold text-[clamp(2.2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
+          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
             WPorbit nach Mass.<br />Für deine Agentur.
           </h1>
           <p className="text-secondary leading-[1.75] text-[1rem] max-w-[52ch] mb-5">
             CRM- und ERP-Integrationen, eigene Workflows, Custom Abfragen und dedizierter Support – alles aufgebaut auf dem Cloud-Plan, abgestimmt auf die Prozesse deiner Agentur.
           </p>
           <div className="inline-flex items-center gap-3 bg-surface border border-line rounded-xl px-5 py-3.5 mb-8">
-            <span className="font-heading font-extrabold text-[1.5rem] tracking-[-0.02em] text-primary leading-none">Auf Anfrage</span>
+            <span className="font-heading font-semibold text-[1.5rem] tracking-[-0.02em] text-primary leading-none">Auf Anfrage</span>
             <span className="text-tertiary text-[0.8rem] leading-snug border-l border-line pl-3">Individuelles Angebot<br />nach Anforderung</span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Anfrage stellen
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -61,10 +61,10 @@ export default function CustomPage() {
           <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
               <div>
-                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <h2 className="font-heading font-bold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
+                <h2 className="font-heading font-semibold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
                   {f.title}
                 </h2>
               </div>
@@ -77,17 +77,17 @@ export default function CustomPage() {
 
         {/* CTA */}
         <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-extrabold text-[clamp(1.6rem,3.5vw,2.2rem)] leading-[1.12] tracking-[-0.025em] mb-3 max-w-[28ch] mx-auto">
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3 max-w-[28ch] mx-auto">
             Klingt nach deiner Agentur?
           </h2>
           <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[44ch] mx-auto mb-7">
             Schreib uns, was du dir vorstellst. Wir schauen gemeinsam, was sich sinnvoll umsetzen lässt – ohne Overhead.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Anfrage stellen
             </Link>
-            <Link to="/cloud" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/cloud" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Cloud-Plan ansehen
             </Link>
           </div>

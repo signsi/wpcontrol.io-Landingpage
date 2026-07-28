@@ -1,50 +1,58 @@
+import heroVisual from '../assets/hero.png'
+
+function OrbitMark() {
+  return (
+    <svg viewBox="0 0 361.01 390.66" fill="none" className="h-[4.875rem] w-[4.5rem] overflow-visible text-primary" aria-hidden="true">
+      <circle cx="180.88" cy="129.7" r="36" fill="currentColor" />
+      <path d="M72.03,221.85c65.68,29.51,167.13,8,226.61-48.04,59.48-56.04,54.45-125.39-11.23-154.89-12.22-5.49-26.08-9.34-41.09-11.42" stroke="currentColor" strokeWidth="15" strokeLinecap="round" />
+      <circle cx="0" cy="0" r="16" className="animate-logo-orbit fill-accent [filter:drop-shadow(0_0_3px_oklch(52%_0.185_288/60%))]" />
+    </svg>
+  )
+}
+
 export default function Hero() {
   return (
-    <section className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 px-6 pt-28 pb-20 items-center">
-
-      {/* Full-viewport background — breaks out of the 1280px #root container */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0"
-        style={{ left: 'calc(50% - 50vw)', width: '100vw' }}
-      >
-        <div
-          className="animate-nebula absolute -top-32 -left-24 w-[680px] h-[680px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #7B5CFA 0%, #2FD9EE 40%, transparent 70%)', filter: 'blur(100px)', opacity: 0.16 }}
-        />
-        <div className="absolute inset-0 bg-orbit-stars opacity-35" />
+    <section className="relative overflow-hidden border-b border-border-soft px-6 pb-20 pt-24 text-center sm:pb-24 sm:pt-32">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-[calc(50%-50vw)] w-screen">
+        <div className="animate-halo bg-orbit-halo absolute -top-52 left-1/2 size-[26rem] -translate-x-1/2 rounded-full blur-[30px]" />
       </div>
 
-      {/* Content */}
-      <div className="relative flex flex-col gap-6">
-        <p className="hero-kicker font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent">
+      <div className="relative mx-auto flex max-w-[48rem] flex-col items-center">
+        <div className="hero-mark mb-5 flex h-[8rem] items-center justify-center">
+          <OrbitMark />
+        </div>
+        <p className="hero-kicker mb-5 flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-accent-strong before:size-1.5 before:rounded-full before:bg-accent">
           Für WordPress-Agenturen
         </p>
-        <h1 className="hero-heading font-heading font-extrabold text-[clamp(2.4rem,5vw,3.8rem)] leading-[1.05] tracking-[-0.035em] text-primary">
-          Vom Setup bis zur Wartung. Ein Cockpit.
+        <h1 className="hero-heading font-heading text-[clamp(3.4rem,8vw,6rem)] leading-[1.01] tracking-[-0.04em]">
+          <span className="block font-medium text-tertiary">Weniger Chaos.</span>
+          <span className="block font-bold text-primary">Mehr Projekte.</span>
         </h1>
-        <p className="hero-body text-secondary leading-[1.78] text-[1rem] max-w-[52ch]">
-          WPorbit verbindet lokale Entwicklung, Staging, Deployment, Monitoring und Wartungsplanung in einem Workspace. Hoster-unabhängig, gebaut für Teams mit laufenden WordPress-Projekten.
+        <p className="hero-body mt-7 max-w-[38rem] text-[1.08rem] leading-[1.65] text-secondary sm:text-[1.2rem]">
+          Ein gemeinsames Cockpit für alle WordPress-Projekte, Zugänge und Deployments. Ohne Tool-Dschungel und ohne Hoster-Wechsel.
         </p>
-        <div className="hero-ctas flex gap-3 flex-wrap">
-          <a href="#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
-            Early Access sichern
+        <div className="hero-ctas mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a href="#demo" className="gradient-solar rounded-full px-6 py-3.5 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_14px_30px_-8px_oklch(52%_0.185_288/55%)]">
+            10 Tage gratis testen
           </a>
-          <a href="#vergleich" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+          <a href="#vergleich" className="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-primary transition duration-200 ease-out-expo hover:border-tertiary hover:bg-raised">
             Direktvergleich ansehen
           </a>
         </div>
-      </div>
+        <p className="mt-5 text-[0.78rem] font-medium text-tertiary">Keine Kreditkarte. Voller Funktionsumfang. Ein Projekt.</p>
 
-      <aside className="hero-image relative hidden lg:flex items-center justify-center">
-        <div className="bg-surface border border-line rounded-2xl overflow-hidden w-full shadow-2xl">
+        <div className="hero-image relative mt-16 w-full max-w-[46rem] overflow-hidden rounded-panel border border-line bg-surface p-6 shadow-card sm:p-10">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/45 to-transparent" />
           <img
-            src="https://developer.wordpress.com/wp-content/uploads/2025/08/studio-hero-image-v1.png"
-            alt="App-Screen einer WordPress-Desktop-Oberfläche"
-            className="w-full h-auto"
+            src={heroVisual}
+            alt="WPorbit verbindet lokale Entwicklung, Staging und Live-Umgebungen"
+            className="mx-auto h-auto w-full max-w-[22rem]"
           />
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[0.72rem] font-semibold uppercase tracking-[0.08em] text-tertiary">
+            <span>Local</span><span className="size-1 rounded-full bg-accent" /><span>Staging</span><span className="size-1 rounded-full bg-accent" /><span>Live</span>
+          </div>
         </div>
-      </aside>
+      </div>
     </section>
   )
 }

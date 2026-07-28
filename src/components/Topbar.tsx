@@ -32,14 +32,14 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
-        scrolled ? 'border-line bg-base/90 backdrop-blur-sm' : 'border-transparent bg-transparent'
+        scrolled ? 'border-line bg-base/95' : 'border-transparent bg-transparent'
       }`}
     >
-      <div className="max-w-[1280px] mx-auto flex items-center justify-between px-6 h-[3.25rem]">
+      <div className="mx-auto flex h-[3.75rem] max-w-[1120px] items-center justify-between px-6">
 
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src="/wporbit-quer.svg" alt="WPorbit" className="h-6 w-auto" style={{ filter: 'brightness(0) invert(1)' }} />
+          <img src="/wporbit-quer.svg" alt="WPorbit" className="h-7 w-auto" />
         </Link>
 
         {/* Desktop nav */}
@@ -56,12 +56,12 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
             )
           )}
           {variant === 'landing' ? (
-            <a href="#waitlist" className="text-[0.875rem] font-medium text-primary bg-surface border border-line px-3.5 py-1.5 rounded-lg hover:bg-raised transition-colors">
-              Early Access
+            <a href="#demo" className="gradient-solar rounded-full px-4 py-2 text-[0.8125rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+              Gratis testen
             </a>
           ) : (
-            <Link to="/#waitlist" className="text-[0.875rem] font-medium text-primary bg-surface border border-line px-3.5 py-1.5 rounded-lg hover:bg-raised transition-colors">
-              Early Access
+            <Link to="/#demo" className="gradient-solar rounded-full px-4 py-2 text-[0.8125rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+              Gratis testen
             </Link>
           )}
         </nav>
@@ -81,7 +81,7 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-line bg-base/95 backdrop-blur-sm">
+        <div className="border-t border-line bg-base md:hidden">
           <nav className="flex flex-col px-6 py-4 gap-1">
             {links.map((l) =>
               l.isLink ? (
@@ -105,11 +105,11 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
               )
             )}
             <a
-              href="#waitlist"
-              className="mt-2 text-sm font-bold text-on-accent gradient-solar px-4 py-2.5 rounded-lg text-center shadow-[0_4px_16px_-4px_#FF6A3966]"
+              href="#demo"
+              className="gradient-solar mt-2 rounded-full px-4 py-2.5 text-center text-sm font-semibold text-on-accent shadow-action"
               onClick={() => setMobileOpen(false)}
             >
-              Early Access sichern
+              Gratis testen
             </a>
           </nav>
         </div>

@@ -18,7 +18,7 @@ export const allFeatures: ShowcaseFeature[] = [
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
-          <span className="ml-3 text-[0.68rem] text-tertiary font-mono">wporbit — zsh</span>
+          <span className="ml-3 text-[0.68rem] text-tertiary font-medium">wporbit — zsh</span>
         </div>
         <div className="flex-1 p-5 font-mono text-[0.8rem] leading-relaxed flex flex-col gap-2">
           <p><span className="text-accent">$</span> <span className="text-primary">wporbit env:start mein-projekt</span></p>
@@ -54,7 +54,7 @@ export const allFeatures: ShowcaseFeature[] = [
             <div className="h-2.5 bg-raised rounded w-1/2" />
             <div className="h-2.5 bg-raised rounded w-2/3" />
           </div>
-          <div className="absolute bottom-5 right-5 bg-accent text-on-accent text-[0.72rem] font-bold px-3 py-1.5 rounded-full shadow-lg">
+          <div className="absolute bottom-5 right-5 rounded-full bg-accent px-3 py-1.5 text-[0.72rem] font-bold text-on-accent shadow-action">
             🔗 Link kopiert
           </div>
         </div>
@@ -133,9 +133,9 @@ export const allFeatures: ShowcaseFeature[] = [
         <div className="h-14 w-full">
           <svg viewBox="0 0 260 60" preserveAspectRatio="none" className="w-full h-full" aria-hidden="true">
             <path d="M0,50 L40,44 L80,46 L100,32 L130,35 L160,20 L190,22 L220,12 L260,14"
-              fill="none" stroke="#FF6A39" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M0,50 L40,44 L80,46 L100,32 L130,35 L160,20 L190,22 L220,12 L260,14 L260,60 L0,60Z"
-              fill="#FF6A39" fillOpacity="0.08" />
+              fill="var(--color-accent)" fillOpacity="0.08" />
           </svg>
         </div>
         <div className="flex flex-col gap-2.5">

@@ -43,8 +43,7 @@ export default function Footer() {
             <img
               src="/wporbit-quer.svg"
               alt="WPorbit"
-              className="h-7 w-auto"
-              style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
+              className="h-9 w-auto opacity-90"
             />
           </Link>
 
@@ -60,7 +59,7 @@ export default function Footer() {
 
         {/* Produkt */}
         <div className="flex flex-col gap-5">
-          <p className="font-mono font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
+          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
             Produkt
           </p>
           <nav className="flex flex-col gap-4" aria-label="Produkt-Navigation">
@@ -74,7 +73,7 @@ export default function Footer() {
 
         {/* Pläne */}
         <div className="flex flex-col gap-5">
-          <p className="font-mono font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
+          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
             Pläne
           </p>
           <nav className="flex flex-col gap-4" aria-label="Pläne-Navigation">
@@ -87,7 +86,7 @@ export default function Footer() {
 
         {/* Legal */}
         <div className="flex flex-col gap-5">
-          <p className="font-mono font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
+          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
             Legal
           </p>
           <nav className="flex flex-col gap-4" aria-label="Legal-Navigation">

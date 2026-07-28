@@ -6,7 +6,7 @@ export default function FeatureGrid() {
   return (
     <section className="px-6 py-24" id="produkt">
       <div className="reveal-up mb-12">
-        <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] mb-3">
+        <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3">
           Du entwickelst. WPorbit erledigt den Rest.
         </h2>
         <p className="text-secondary leading-[1.75] text-[0.9375rem] max-w-[52ch]">
@@ -17,8 +17,8 @@ export default function FeatureGrid() {
       <div className="stagger-group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line border border-line rounded-xl overflow-hidden">
         {featureCards.map((card) => (
           <article key={card.title} className="bg-surface p-6 flex flex-col gap-4 hover:bg-raised transition-colors group">
-            <PlanetDot color={card.dot} size={11} />
-            <p className="font-heading font-bold text-[0.9375rem] tracking-[-0.01em] text-primary leading-snug">{card.title}</p>
+            <PlanetDot color={card.dot} size={16} ring ringPadding={9} />
+            <p className="font-heading font-semibold text-[0.9375rem] tracking-[-0.01em] text-primary leading-snug">{card.title}</p>
             <p className="text-secondary text-[0.875rem] leading-[1.65]">{card.text}</p>
           </article>
         ))}

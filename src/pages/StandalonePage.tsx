@@ -29,24 +29,24 @@ export default function StandalonePage() {
 
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
             Standalone
           </p>
-          <h1 className="font-heading font-extrabold text-[clamp(2.2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
+          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
             Lokal entwickeln.<br />Ohne Overhead.
           </h1>
           <p className="text-secondary leading-[1.75] text-[1rem] max-w-[48ch] mb-2">
             Für Agenturen und Entwickler, die WordPress-Projekte lokal verwalten wollen – ohne Cloud-Abhängigkeit.
           </p>
           <div className="flex items-end gap-2 leading-none mb-8 mt-5">
-            <span className="font-heading font-extrabold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 40</span>
+            <span className="font-heading font-semibold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 40</span>
             <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Person / Monat<br /><span className="text-tertiary text-[0.78rem]">Max. 3 Projekte</span></span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Early Access sichern
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -57,10 +57,10 @@ export default function StandalonePage() {
           <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
               <div>
-                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   {String(i + 1).padStart(2, '0')}
                 </p>
-                <h2 className="font-heading font-bold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
+                <h2 className="font-heading font-semibold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
                   {f.title}
                 </h2>
               </div>
@@ -74,10 +74,10 @@ export default function StandalonePage() {
         {/* Timeline */}
         <section className="px-6 py-14 border-b border-line bg-surface">
           <div className="max-w-4xl">
-            <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+            <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
               Zeitplan
             </p>
-            <h2 className="font-heading font-extrabold text-[clamp(1.5rem,3vw,2rem)] leading-[1.12] tracking-[-0.025em] mb-4 max-w-[30ch]">
+            <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[30ch]">
               Wechsel auf Standalone bis Ende 2026
             </h2>
             <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[60ch] mb-8">
@@ -87,7 +87,7 @@ export default function StandalonePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <article className="border border-line rounded-xl p-5 bg-base">
                 <p className="text-[0.66rem] uppercase tracking-[0.12em] text-tertiary mb-2">Bis August 2026</p>
-                <h3 className="font-heading font-bold text-[1rem] text-primary mb-2">Vorbereitung</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Vorbereitung</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
                   Bestand aufnehmen, Prioritäten definieren und Team auf den Wechsel vorbereiten.
                 </p>
@@ -95,7 +95,7 @@ export default function StandalonePage() {
 
               <article className="border border-accent/30 rounded-xl p-5 bg-accent/10">
                 <p className="text-[0.66rem] uppercase tracking-[0.12em] text-accent mb-2">Ab September 2026</p>
-                <h3 className="font-heading font-bold text-[1rem] text-primary mb-2">Team-Testphase</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Team-Testphase</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
                   Neue Standalone-Version im Team testen, Feedback aufnehmen und iterativ entwickeln.
                 </p>
@@ -103,7 +103,7 @@ export default function StandalonePage() {
 
               <article className="border border-line rounded-xl p-5 bg-base">
                 <p className="text-[0.66rem] uppercase tracking-[0.12em] text-tertiary mb-2">Ende 2026</p>
-                <h3 className="font-heading font-bold text-[1rem] text-primary mb-2">Wechsel abgeschlossen</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Wechsel abgeschlossen</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
                   Umstieg auf die Standalone-Version als neue Basis im laufenden Betrieb.
                 </p>
@@ -115,10 +115,10 @@ export default function StandalonePage() {
         {/* Transition phase */}
         <section className="px-6 py-14 border-y border-line bg-raised" id="uebergangsphase">
           <div className="max-w-4xl mx-auto">
-            <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+            <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
               Übergangsphase
             </p>
-            <h2 className="font-heading font-extrabold text-[clamp(1.5rem,3vw,2rem)] leading-[1.12] tracking-[-0.025em] mb-4 max-w-[36ch]">
+            <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[36ch]">
               Betreuung der aktuellen CLI-Lösung bis zum Wechsel
             </h2>
             <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[62ch] mb-8">
@@ -128,7 +128,7 @@ export default function StandalonePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <article className="border border-line rounded-xl p-5 bg-surface">
-                <h3 className="font-heading font-bold text-[1rem] text-primary mb-2">Automatische Umgebungs-Updates</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Automatische Umgebungs-Updates</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
                   Neue Updates für die Umgebung werden direkt zur Verfügung gestellt und können vom Team
                   selbstständig installiert werden.
@@ -136,7 +136,7 @@ export default function StandalonePage() {
               </article>
 
               <article className="border border-line rounded-xl p-5 bg-surface">
-                <h3 className="font-heading font-bold text-[1rem] text-primary mb-2">Gemeinsamer Support-Channel</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Gemeinsamer Support-Channel</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
                   Für Support und Bug-Fixing richten wir einen gemeinsamen Channel ein, damit Fragen,
                   Meldungen und Lösungen schnell koordiniert werden können.
@@ -149,17 +149,17 @@ export default function StandalonePage() {
 
         {/* Compare nudge */}
         <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-extrabold text-[clamp(1.6rem,3.5vw,2.2rem)] leading-[1.12] tracking-[-0.025em] mb-3 max-w-[26ch] mx-auto">
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3 max-w-[26ch] mx-auto">
             Mehr Projekte oder ein Team?
           </h2>
           <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[42ch] mx-auto mb-7">
             Mit dem Cloud-Plan bekommt das gesamte Team Zugang zum Portal – inkl. Monitoring, Update-Planung und Vault-Synchronisation.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/cloud" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/cloud" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Cloud-Plan ansehen
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Zur Startseite
             </Link>
           </div>

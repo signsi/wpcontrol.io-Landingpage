@@ -5,12 +5,12 @@ interface OrbitArcProps {
 
 /** Offener Orbit-Bogen — das Kernmotiv aus dem Logo, als leise Deko hinter Karten/Sections. Nie vollständig geschlossen. */
 export function OrbitArc({ className = '', rotate = -18 }: OrbitArcProps) {
+  const rotation = rotate === -14 ? '-rotate-[14deg]' : '-rotate-[18deg]'
   return (
     <svg
       aria-hidden="true"
       viewBox="0 0 200 200"
-      className={className}
-      style={{ transform: `rotate(${rotate}deg)` }}
+      className={`${rotation} ${className}`}
     >
       <ellipse
         cx="100"

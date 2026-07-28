@@ -4,30 +4,26 @@ export default function EarlyAccess() {
   return (
     <section
       className="relative px-6 py-24 overflow-hidden"
-      id="waitlist"
+      id="demo"
     >
       {/* Signature curved divider — marks the final transition into the CTA */}
       <OrbitDivider className="absolute inset-x-0 top-0 w-full h-6 text-line pointer-events-none" />
 
       {/* Subtle background glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -right-24 w-[500px] h-[500px] rounded-full"
-        style={{ background: 'radial-gradient(circle, #FF6A39 0%, #FF3D77 40%, transparent 70%)', filter: 'blur(100px)', opacity: 0.07 }}
-      />
+      <div aria-hidden="true" className="bg-orbit-halo pointer-events-none absolute -right-24 -top-32 size-[31.25rem] rounded-full blur-[80px]" />
 
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="reveal-up">
-          <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.4rem)] leading-[1.1] tracking-[-0.025em] mb-4">
-            Mitgestalten statt warten
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4">
+            10 Tage gratis. Voller Umfang.
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[44ch] mb-6">
-            Kein Countdown, keine künstliche Verknappung. Early Adopters liefern Input, priorisieren Features mit und erhalten sofort die ROI- und Migrations-Checkliste.
+            Einfach E-Mail eingeben, App herunterladen und loslegen. Ein Projekt mit allen Features – kein Onboarding-Formular, keine Kreditkarte.
           </p>
           <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {[
-              'Sofortzugang zur ROI- und Migrations-Checkliste',
-              'Feature-Prioritäten aktiv mitgestalten',
+              '1 Projekt mit vollem Funktionsumfang',
+              'Direkter Download – in Minuten startklar',
               'Kein Lock-in, jederzeit kündbar',
             ].map((item) => (
               <li key={item} className="flex items-center gap-2.5 text-[0.875rem] text-secondary">
@@ -38,7 +34,7 @@ export default function EarlyAccess() {
           </ul>
         </div>
 
-        <div className="reveal-up bg-surface border border-line rounded-2xl p-6 shadow-lg">
+        <div className="reveal-up rounded-panel border border-line bg-surface p-6 shadow-card">
           <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
             <div className="flex flex-col gap-1.5">
               <label className="text-[0.75rem] font-semibold text-secondary" htmlFor="email-main">
@@ -52,29 +48,14 @@ export default function EarlyAccess() {
                 className="bg-base border border-line text-primary text-sm px-3.5 py-2.5 rounded-lg placeholder:text-tertiary outline-none focus:border-accent transition-colors"
               />
             </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[0.75rem] font-semibold text-secondary" htmlFor="size-main">
-                Teamgrösse
-              </label>
-              <select
-                id="size-main"
-                defaultValue="10-15"
-                className="bg-base border border-line text-primary text-sm px-3.5 py-2.5 rounded-lg outline-none focus:border-accent transition-colors"
-              >
-                <option value="3-5">3–5 Personen</option>
-                <option value="6-9">6–9 Personen</option>
-                <option value="10-15">10–15 Personen</option>
-                <option value="16+">16+ Personen</option>
-              </select>
-            </div>
             <button
               type="submit"
-              className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966] border-0 mt-1"
+              className="gradient-solar mt-1 rounded-full border-0 px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
             >
-              Checkliste + Early Access sichern
+              Demo herunterladen →
             </button>
             <p className="text-[0.75rem] text-tertiary text-center">
-              Keine Kreditkarte. Jederzeit kündbar.
+              Keine Kreditkarte. 10 Tage gratis. Voller Funktionsumfang.
             </p>
           </form>
         </div>

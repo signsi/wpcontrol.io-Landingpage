@@ -18,7 +18,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-base text-primary">
       <Topbar variant="landing" />
-      <main className="pt-[3.25rem]">
+      <main className="pt-[3.75rem]">
         <Hero />
         <FeatureGrid />
         <Showcase />

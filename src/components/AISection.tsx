@@ -37,8 +37,11 @@ export default function AISection() {
       return () => clearTimeout(t)
     }
     if (deleting && displayed.length === 0) {
-      setDeleting(false)
-      setPromptIndex((i) => (i + 1) % prompts.length)
+      const t = setTimeout(() => {
+        setDeleting(false)
+        setPromptIndex((i) => (i + 1) % prompts.length)
+      }, 0)
+      return () => clearTimeout(t)
     }
   }, [displayed, deleting, promptIndex])
 
@@ -47,7 +50,7 @@ export default function AISection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
         <div className="reveal-up">
-          <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] mb-5">
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-5">
             Schneller entscheiden. Direkt im Workflow.
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[46ch]">
@@ -56,10 +59,10 @@ export default function AISection() {
         </div>
 
         <div className="reveal-up flex items-center justify-center py-8 lg:py-0">
-          <div className="w-full bg-raised border border-line rounded-2xl overflow-hidden shadow-lg">
+          <div className="w-full overflow-hidden rounded-panel border border-line bg-raised shadow-card">
             {/* Window chrome */}
             <div className="flex items-center px-4 py-3 border-b border-line">
-              <span className="text-[0.75rem] text-tertiary font-mono">WPorbit — KI-Assistent</span>
+              <span className="text-[0.75rem] text-tertiary font-medium">WPorbit — KI-Assistent</span>
             </div>
             {/* Input area */}
             <div className="px-6 py-5 flex items-center gap-4">

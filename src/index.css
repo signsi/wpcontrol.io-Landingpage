@@ -1,61 +1,27 @@
-/* ─── WPorbit Design System — Corporate Design Juli 2026 ─── */
+/* WPorbit V3 tokens. Components consume these exclusively through Tailwind. */
 
-/* Chakra Petch — Headlines */
+/* General Sans — Headings, Body, Labels. One typeface, hierarchy via weight and size. */
 @font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/ChakraPetch-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/ChakraPetch-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Chakra Petch';
-  src: url('/fonts/ChakraPetch-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-
-/* Hanken Grotesk — Body */
-@font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/HankenGrotesk-Regular.ttf') format('truetype');
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Regular.ttf') format('truetype');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/HankenGrotesk-Medium.ttf') format('truetype');
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/HankenGrotesk-SemiBold.ttf') format('truetype');
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Hanken Grotesk';
-  src: url('/fonts/HankenGrotesk-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-
-/* Space Mono — Code / Labels / Kicker */
-@font-face {
-  font-family: 'Space Mono';
-  src: url('/fonts/SpaceMono-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Space Mono';
-  src: url('/fonts/SpaceMono-Bold.ttf') format('truetype');
+  font-family: 'General Sans';
+  src: url('/fonts/GeneralSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-display: swap;
 }
@@ -63,35 +29,42 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Backgrounds ── */
-  --color-base:         #07080D;   /* Deep Space */
-  --color-surface:      #0E1019;   /* Surface */
-  --color-raised:       #151827;   /* Elevated */
+  /* Surfaces */
+  --color-base:        oklch(98.7% 0.004 282);
+  --color-surface:     oklch(99.4% 0.003 282);
+  --color-raised:      oklch(96.3% 0.007 284);
+  --color-dark:        oklch(18% 0.032 267);
+  --color-on-dark:     oklch(96% 0.006 282);
 
-  /* ── Borders ── */
-  --color-line:         #282C40;   /* Orbit Line */
-  --color-border-soft:  #1A1D2C;   /* Border Soft */
+  /* Lines */
+  --color-line:        oklch(90.5% 0.007 284);
+  --color-border-soft: oklch(94.5% 0.005 284);
 
-  /* ── Text ── */
-  --color-primary:      #F4F5F9;   /* Starlight */
-  --color-secondary:    #C4C7D6;   /* Text Secondary */
-  --color-tertiary:     #8B8FA6;   /* Text Tertiary */
+  /* Type, tertiary is AA-safe at 5.31:1 on base */
+  --color-primary:     oklch(19% 0.014 282);
+  --color-secondary:   oklch(38% 0.013 282);
+  --color-tertiary:    oklch(52% 0.011 282);
 
-  /* ── Actions ── */
-  --color-accent:       #FF6A39;   /* Solar */
-  --color-accent-dark:  #2A100A;   /* Solar tinted dark bg */
-  --color-on-accent:    #0D0704;   /* Dark label on Solar */
-  --color-solar-flare:  #FF3D77;   /* Solar Gradient end */
-  --color-success:      #3DDC84;   /* Status Success */
-
-  /* ── Orbit palette (planet-dot motif) ── */
-  --color-nebula:       #7B5CFA;   /* Nebula Violet */
-  --color-orbit-cyan:   #2FD9EE;   /* Orbit Cyan */
+  /* Actions, accent is AA-safe at 5.31:1 with on-accent */
+  --color-accent:        oklch(52% 0.185 288);
+  --color-accent-strong: oklch(44% 0.17 290);
+  --color-accent-tint:   oklch(95% 0.028 288);
+  --color-on-accent:     oklch(96% 0.006 282);
+  --color-success:       oklch(48% 0.1 150);
+  --color-danger:        oklch(52% 0.16 25);
 
   /* ── Typography ── */
-  --font-heading: 'Chakra Petch', system-ui, sans-serif;
-  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;
-  --font-mono:    'Space Mono', ui-monospace, monospace;
+  --font-heading: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-sans:    'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Geometry and elevation */
+  --radius-control: 0.75rem;
+  --radius-panel: 1.25rem;
+  --shadow-card: 0 1px 2px oklch(20% 0.02 282 / 6%), 0 1px 1px oklch(20% 0.02 282 / 4%);
+  --shadow-overlay: 0 16px 40px -18px oklch(20% 0.02 282 / 16%), 0 2px 8px -2px oklch(20% 0.02 282 / 6%);
+  --shadow-action: 0 10px 24px -8px oklch(52% 0.185 288 / 45%);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
@@ -103,7 +76,7 @@
     background-color: var(--color-base);
     color: var(--color-primary);
     font-family: var(--font-sans);
-    line-height: 1.65;
+    line-height: 1.62;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -122,11 +95,16 @@
 
   button { cursor: pointer; }
 
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
   summary { list-style: none; }
   summary::-webkit-details-marker { display: none; }
 
   #root {
-    width: min(1280px, 100%);
+    width: min(1120px, 100%);
     max-width: 100%;
     margin: 0 auto;
     min-height: 100svh;
@@ -135,29 +113,15 @@
 
 /* ── Gradient utilities ── */
 @utility gradient-solar {
-  background: linear-gradient(90deg, #FF6A39, #FF3D77);
+  background: linear-gradient(120deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
 }
 
-@utility gradient-orbit {
-  background: linear-gradient(135deg, #7B5CFA, #2FD9EE);
+@utility bg-orbit-halo {
+  background: radial-gradient(circle, var(--color-accent-tint) 0%, oklch(97% 0.015 288 / 30%) 45%, transparent 72%);
 }
 
-/* ── Motif: Sternenfeld ──
-   Fine dot texture used sparingly as a signature background moment, not a repeated pattern. */
-@utility bg-orbit-stars {
-  background-image:
-    radial-gradient(1px 1px at 8% 22%,  #fff, transparent 60%),
-    radial-gradient(1px 1px at 22% 68%, #fff, transparent 60%),
-    radial-gradient(1.5px 1.5px at 37% 12%, #fff, transparent 60%),
-    radial-gradient(1px 1px at 52% 44%, #fff, transparent 60%),
-    radial-gradient(1px 1px at 68% 78%, #fff, transparent 60%),
-    radial-gradient(1.5px 1.5px at 81% 30%, #fff, transparent 60%),
-    radial-gradient(1px 1px at 91% 58%, #fff, transparent 60%),
-    radial-gradient(1px 1px at 14% 90%, #fff, transparent 60%),
-    radial-gradient(1px 1px at 63% 15%, #fff, transparent 60%),
-    radial-gradient(1.5px 1.5px at 46% 85%, #fff, transparent 60%);
-  background-repeat: repeat;
-  background-size: 480px 480px;
+@utility bg-orbit-wash {
+  background: radial-gradient(ellipse 60% 120% at 100% 50%, var(--color-accent-tint), transparent);
 }
 
 /* ── Animations ── */
@@ -171,9 +135,13 @@
   50%       { opacity: 0; }
 }
 
-@keyframes nebula-pulse {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50%       { opacity: 0.5;  transform: scale(1.06); }
+@keyframes halo-pulse {
+  0%, 100% { opacity: 0.45; transform: translateX(-50%) scale(1); }
+  50%      { opacity: 0.6; transform: translateX(-50%) scale(1.03); }
+}
+
+@keyframes logo-orbit-travel {
+  to { offset-distance: 100%; }
 }
 
 @utility animate-ticker {
@@ -184,6 +152,22 @@
   animation: cursor-blink 1s step-end infinite;
 }
 
-@utility animate-nebula {
-  animation: nebula-pulse 8s ease-in-out infinite;
+@utility animate-halo {
+  animation: halo-pulse 12s ease-in-out infinite;
+}
+
+@utility animate-logo-orbit {
+  offset-path: path('M336.67,69.38 A165.01,107.99 -18.01 1 1 22.82,171.42 A165.01,107.99 -18.01 1 1 336.67,69.38');
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  animation: logo-orbit-travel 9s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-halo,
+  .animate-logo-orbit,
+  .animate-ticker,
+  .animate-cursor {
+    animation: none;
+  }
 }

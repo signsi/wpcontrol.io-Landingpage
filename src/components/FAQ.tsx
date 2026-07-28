@@ -10,7 +10,7 @@ export default function FAQ() {
 
         {/* Left: heading */}
         <div className="reveal-up lg:sticky lg:top-24">
-          <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] mb-4">
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4">
             Was Teams vor dem Start wissen wollen
           </h2>
           <p className="text-secondary text-[0.875rem] leading-[1.75] max-w-[32ch]">

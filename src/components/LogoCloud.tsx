@@ -19,7 +19,7 @@ export default function LogoCloud() {
             <img
               src={`/logos/${h.file}`}
               alt={h.name}
-              className="h-5 max-w-[6rem] brightness-0 invert opacity-35 group-hover:opacity-75 transition-opacity duration-200"
+              className="h-5 max-w-[6rem] brightness-0 opacity-40 group-hover:opacity-80 transition-opacity duration-200"
             />
           </a>
         ))}

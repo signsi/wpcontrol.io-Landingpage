@@ -4,10 +4,10 @@ export default function Comparison() {
   return (
     <section className="px-6 py-24" id="vergleich">
       <div className="reveal-up mb-10">
-        <p className="font-mono font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
+        <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
           Marktvergleich
         </p>
-        <h2 className="font-heading font-extrabold text-[clamp(1.8rem,3.5vw,2.6rem)] leading-[1.1] tracking-[-0.025em] max-w-[40ch]">
+        <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] max-w-[40ch]">
           Warum Agenturen WPorbit statt LocalWP oder WordPress Studio wählen
         </h2>
       </div>

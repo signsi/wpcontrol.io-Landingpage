@@ -11,20 +11,20 @@ export default function FeaturesPage() {
       <main className="pt-[3.25rem]">
         {/* Hero */}
         <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-mono font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
+          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
             WPorbit Features
           </p>
-          <h1 className="font-heading font-extrabold text-[clamp(2.2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.035em] mb-5 max-w-2xl">
+          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-5 max-w-2xl">
             Alle Funktionen. Im Detail.
           </h1>
           <p className="text-secondary leading-[1.75] text-[1rem] max-w-[48ch] mb-7">
             Von der lokalen Entwicklung bis zur automatisierten Wartung: alles, was WordPress-Agenturen täglich brauchen, in einer Plattform.
           </p>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Early Access sichern
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Zurück zur Übersicht
             </Link>
           </div>
@@ -51,10 +51,10 @@ export default function FeaturesPage() {
               i % 2 === 1 ? 'lg:[direction:rtl]' : ''
             }`}>
               <div className={i % 2 === 1 ? 'lg:[direction:ltr]' : ''}>
-                <p className="font-mono font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
+                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
                   Feature {String(i + 1).padStart(2, '0')}
                 </p>
-                <h2 className="font-heading font-bold text-[clamp(1.5rem,2.8vw,2rem)] leading-[1.15] tracking-[-0.025em] mb-4">
+                <h2 className="font-heading font-semibold text-[clamp(1.5rem,2.8vw,2rem)] leading-[1.15] tracking-[-0.025em] mb-4">
                   {feature.title}
                 </h2>
                 <p className="text-secondary text-[0.95rem] leading-[1.78] max-w-[46ch]">
@@ -73,17 +73,17 @@ export default function FeaturesPage() {
 
         {/* CTA */}
         <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-extrabold text-[clamp(1.6rem,3.5vw,2.4rem)] leading-[1.12] tracking-[-0.025em] mb-4 max-w-[24ch] mx-auto">
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[24ch] mx-auto">
             Bereit, den WordPress-Alltag zu vereinfachen?
           </h2>
           <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[44ch] mx-auto mb-7">
             Sichere dir Early Access, erhalte sofort die ROI- und Migrations-Checkliste und gestalte die nächsten Prioritäten aktiv mit.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar text-on-accent font-bold text-sm px-5 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-[0_4px_16px_-4px_#FF6A3966]">
+            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
               Early Access sichern
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-lg hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Zur Startseite
             </Link>
           </div>
