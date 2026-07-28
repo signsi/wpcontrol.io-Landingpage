@@ -18,7 +18,8 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
 
   const landingLinks = [
     { label: 'Produkt',    href: '#produkt',   isLink: false },
-    { label: 'Features',   href: '/features',  isLink: true  },
+    { label: 'Standalone', href: '/standalone', isLink: true },
+    { label: 'Cloud',      href: '/cloud',      isLink: true  },
     { label: 'Vergleich',  href: '#vergleich', isLink: false },
     { label: 'Preise',     href: '#preise',    isLink: false },
   ]

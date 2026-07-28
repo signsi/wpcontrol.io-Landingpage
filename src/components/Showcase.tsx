@@ -46,8 +46,8 @@ export default function Showcase() {
       </div>
 
       <div className="mt-8">
-        <Link to="/features" className="text-[0.875rem] font-medium text-secondary hover:text-accent transition-colors">
-          Features im Detail ansehen →
+        <Link to="/standalone" className="text-[0.875rem] font-medium text-secondary hover:text-accent transition-colors">
+          Alle Standalone-Funktionen ansehen →
         </Link>
       </div>
     </section>

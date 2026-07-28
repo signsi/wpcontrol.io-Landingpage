@@ -11,69 +11,62 @@ export const featureCards: FeatureCard[] = [
     text: 'WordPress-Umgebungen lokal starten, ohne Docker, NGINX oder Apache. Bereit in Sekunden.',
   },
   {
-    dot: 'solar',
-    title: 'Staging und Preview',
-    text: 'Änderungen gegen Staging testen und Vorschau-Links mit Kunden oder Kollegen teilen.',
-  },
-  {
     dot: 'orbit',
-    title: 'Deploy via GitLab',
-    text: 'WPorbit funktioniert mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog.',
+    title: 'Deploy und Pull',
+    text: 'Änderungen gezielt ausrollen oder bestehende Inhalte zurück in die lokale Umgebung holen.',
   },
   {
     dot: 'solar',
-    title: 'Import / Migration',
+    title: 'Import aus Live',
     text: 'Import direkt aus deiner Live-Installation: SSH-Zugang genügt, inklusive Theme-Repo, wo vorhanden.',
   },
   {
     dot: 'orbit',
-    title: 'Monitoring und Alerts',
-    text: 'Uptime, Security-Scans und Performance-Checks laufen automatisiert und melden frühzeitig.',
-  },
-  {
-    dot: 'solar',
-    title: 'Vault und Zugänge',
-    text: 'Alle Zugangsdaten werden in der Schweiz gehostet und DSGVO-konform verschlüsselt. Kein Copy-Paste in Chats.',
+    title: 'Lokaler Vault',
+    text: 'SSH-Keys, Logins und API-Tokens verschlüsselt pro Projekt verwalten. Kein Copy-Paste in Chats.',
   },
   {
     dot: 'orbit',
-    title: 'Updates und Wartung',
-    text: 'Core-, Plugin- und Theme-Updates mit Staging-Test und Rollback auf Knopfdruck.',
+    title: 'Zentrale Projektübersicht',
+    text: 'Alle lokalen WordPress-Projekte, Umgebungen und Verbindungen in einer übersichtlichen Oberfläche im Blick behalten.',
+  },
+  {
+    dot: 'solar',
+    title: 'Aus dem Agenturalltag entwickelt',
+    text: 'Bekannte Stolpersteine werden früh abgefangen. Prüfungen, Erklärungen und Hilfestellungen begleiten dich direkt im jeweiligen Arbeitsschritt.',
   },
 ]
 
 export const compareRows = [
   { criterion: 'Lokale Entwicklung', wporbit: 'Integriert', localwp: 'Ja', studio: 'Ja' },
-  { criterion: 'Preview & Synchronisation', wporbit: 'Integriert', localwp: 'Ja', studio: 'Ja' },
+  { criterion: 'Setup ohne Docker, NGINX oder Apache', wporbit: 'Integriert', localwp: 'Integriert', studio: 'Integriert' },
+  { criterion: 'Import aus Live-Installationen', wporbit: 'Per SSH, inklusive Theme-Repo', localwp: 'Hosterabhängig', studio: 'Manueller Import' },
+  { criterion: 'Deploy und Pull', wporbit: 'Direkt im lokalen Workflow', localwp: 'Abhängig vom Hosting', studio: 'WordPress.com-Workflow' },
+  { criterion: 'Lokaler Vault', wporbit: 'Zugänge verschlüsselt pro Projekt', localwp: 'Nicht integriert', studio: 'Nicht integriert' },
   { criterion: 'Hosting-Flexibilität', wporbit: 'Freie Wahl des Hostings', localwp: 'Starke Anbindung an WP Engine', studio: 'Starke Anbindung an WordPress.com & Pressable' },
-  { criterion: 'Kunden- & Projektverwaltung', wporbit: 'Zentral an einem Ort', localwp: 'Nicht ausgelegt', studio: 'Nicht ausgelegt' },
-  { criterion: 'Team-Vault & Zugänge', wporbit: 'Geteilter Vault für das gesamte Team', localwp: 'Nicht integriert', studio: 'Nicht integriert' },
-  { criterion: 'Agentur-Workflows', wporbit: 'Entwicklung, Deployment, Wartung und Betrieb in einer Plattform', localwp: 'Fokus auf Entwicklung', studio: 'Fokus auf Entwicklung' },
-  { criterion: 'AI-Unterstützung', wporbit: 'Claude, ChatGPT und Copilot via VS Code nutzbar; native UI in Entwicklung', localwp: 'Nicht integriert', studio: 'Integriert' },
-  { criterion: 'Zusammenarbeit im Team', wporbit: 'Gemeinsame Standards, Zugänge und Projekte', localwp: 'Entwickler-Workflows', studio: 'Entwickler-Workflows' },
-  { criterion: 'Ideal für', wporbit: 'Agenturen und WordPress-Teams', localwp: 'Einzelentwickler & Entwicklerteams', studio: 'Entwickler im WordPress.com-Ökosystem' },
+  { criterion: 'Ideal für', wporbit: 'Agenturen mit eigenen Hosting-Workflows', localwp: 'Einzelentwickler und WP-Engine-Teams', studio: 'WordPress.com-Ökosystem' },
 ]
 
 export const faqItems = [
   {
     q: 'Kann ich WPorbit für lokale Entwicklung nutzen, auch ohne Cloud-Sync?',
-    a: 'Ja. WPorbit lässt sich als Standalone starten. Du baust lokal, verwaltest Zugänge im Vault und nutzt Staging-Prozesse. Cloud-Sync aktivierst du später, wenn das Team wächst.',
+    a: 'Ja. WPorbit Standalone funktioniert unabhängig von der Cloud. Du entwickelst lokal, verwaltest Zugänge im lokalen Vault und steuerst Deploy- und Pull-Prozesse direkt aus der App.',
   },
   {
     q: 'Brauchen wir einen bestimmten Hoster, um WPorbit einzusetzen?',
     a: 'Nein. WPorbit ist für Agenturen gebaut, die mit unterschiedlichen Hostings arbeiten. Es gibt keinen Plattform-Lock-in.',
   },
   {
-    q: 'Wie läuft das WordPress-Update-Management ab?',
-    a: 'Updates werden gegen eine Staging-Umgebung getestet. Bei Problemen ist der Rollback direkt aus WPorbit möglich, ohne manuellen Aufwand.',
+    q: 'Was ist heute in Standalone enthalten?',
+    a: 'Lokale WordPress-Umgebungen, Import aus bestehenden Live-Installationen, Deploy- und Pull-Prozesse sowie ein verschlüsselter lokaler Vault. Cloud-Funktionen werden separat entwickelt.',
   },
   {
     q: 'Welche Integrationen sind zum Start verfügbar?',
     a: 'WPorbit funktioniert grundsätzlich mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog. Die Pipelines liegen in der Verantwortung der Agentur; für GitLab bieten wir vorgefertigte Vorlagen an.',
   },
   {
-    q: 'Was passiert nach der Early-Access-Anmeldung?',
-    a: 'Du erhältst sofort die ROI- und Migrations-Checkliste und kannst Feature-Prioritäten aktiv mitgestalten.',
+    q: 'Was passiert nach der Demo-Anmeldung?',
+    a: 'Du erhältst den Download für die Standalone-Demo und kannst ein Projekt zehn Tage lang mit dem verfügbaren Funktionsumfang testen.',
   },
 ]
 

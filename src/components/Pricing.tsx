@@ -29,7 +29,7 @@ const plans = [
     priceMain: 'ab 1200',
     priceSub: 'CHF / Monat',
     note: '3 Personen, inkl. Cloud Portal für das gesamte Team.',
-    badge: null,
+    badge: 'In Entwicklung',
     features: ['Staging und Preview', 'Monitoring und Update-Planung', 'Vault-Synchronisation', 'Projekte und Zugänge zentral verwalten', 'Wartungsplanung im Dashboard'],
     highlighted: true,
     href: '/cloud',
@@ -84,7 +84,7 @@ export default function Pricing() {
                   {plan.badge}
                 </span>
               )}
-              {plan.highlighted && (
+              {plan.highlighted && !plan.badge && (
                 <span className="text-[0.6875rem] font-bold tracking-wide text-accent border border-accent/30 bg-accent/10 rounded-full px-2.5 py-0.5 whitespace-nowrap">
                   Empfohlen
                 </span>
@@ -137,7 +137,7 @@ export default function Pricing() {
                 to={plan.href}
                 className="gradient-solar mt-auto rounded-full px-4 py-2.5 text-center text-[0.875rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
               >
-                Loslegen →
+                Mehr über Cloud →
               </Link>
             ) : (
               <Link

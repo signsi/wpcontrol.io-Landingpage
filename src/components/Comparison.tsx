@@ -5,10 +5,10 @@ export default function Comparison() {
     <section className="px-6 py-24" id="vergleich">
       <div className="reveal-up mb-10">
         <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
-          Marktvergleich
+          Standalone im Vergleich
         </p>
         <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] max-w-[40ch]">
-          Warum Agenturen WPorbit statt LocalWP oder WordPress Studio wählen
+          Lokale WordPress-Workflows, ohne Bindung an ein Hosting-Ökosystem.
         </h2>
       </div>
 
@@ -17,7 +17,7 @@ export default function Comparison() {
           <thead>
             <tr className="border-b border-line">
               <th className="text-left px-5 py-3.5 text-tertiary font-semibold text-[0.75rem] uppercase tracking-wide w-[22%] bg-surface">Kriterium</th>
-              <th className="text-left px-5 py-3.5 text-accent  font-bold    text-[0.75rem] uppercase tracking-wide w-[26%] bg-surface">WPorbit</th>
+              <th className="text-left px-5 py-3.5 text-accent  font-bold    text-[0.75rem] uppercase tracking-wide w-[26%] bg-surface">WPorbit Standalone</th>
               <th className="text-left px-5 py-3.5 text-tertiary font-semibold text-[0.75rem] uppercase tracking-wide w-[26%] bg-surface">LocalWP</th>
               <th className="text-left px-5 py-3.5 text-tertiary font-semibold text-[0.75rem] uppercase tracking-wide w-[26%] bg-surface">WordPress Studio</th>
             </tr>

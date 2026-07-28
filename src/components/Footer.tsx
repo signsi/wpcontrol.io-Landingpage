@@ -64,7 +64,8 @@ export default function Footer() {
           </p>
           <nav className="flex flex-col gap-4" aria-label="Produkt-Navigation">
             <a href="#produkt"    className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Überblick</a>
-            <Link to="/features"  className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Features</Link>
+            <Link to="/standalone" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Standalone</Link>
+            <Link to="/cloud" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Cloud</Link>
             <a href="#vergleich"  className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Vergleich</a>
             <a href="#preise"     className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Preise</a>
             <a href="#faq"        className="text-[0.875rem] text-secondary hover:text-primary transition-colors">FAQ</a>

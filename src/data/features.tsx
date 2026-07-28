@@ -185,12 +185,12 @@ export const allFeatures: ShowcaseFeature[] = [
     ),
   },
   {
-    title: 'Vault und Zugänge',
-    text: 'Alle Zugangsdaten verschlüsselt pro Projekt, direkt im Workflow verfügbar.',
-    detail: 'Alle Zugangsdaten — SSH-Keys, WP-Admin-Logins, Datenbank-Credentials und API-Tokens — liegen verschlüsselt im geteilten Team-Vault. Die Daten werden in der Schweiz gehostet und DSGVO-konform verschlüsselt. Jedes Projekt hat seinen eigenen Bereich. Neue Teammitglieder erhalten Zugang auf Projektebene, nicht alles auf einmal.',
+    title: 'Lokaler Vault für Zugänge',
+    text: 'SSH-Keys, Logins und Tokens verschlüsselt pro Projekt verwalten.',
+    detail: 'SSH-Keys, WP-Admin-Logins, Datenbank-Credentials und API-Tokens liegen verschlüsselt im lokalen Vault. Jedes Projekt hat seinen eigenen Bereich. Damit bleiben sensible Zugänge aus Chats, Notizen und Repositories heraus.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-1.5">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary mb-1.5">Team-Vault: Projekt Müller & Co.</p>
+        <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary mb-1.5">Lokaler Vault: Projekt Müller &amp; Co.</p>
         {[
           { label: 'SSH Production', icon: '⌥', sub: 'deploy@prod.muellerco.ch',         accent: true  },
           { label: 'WP Admin',       icon: 'W', sub: 'admin@muellerco.ch',               accent: false },
@@ -252,7 +252,7 @@ export const allFeatures: ShowcaseFeature[] = [
 
 // Landing showcase: 5 visually distinctive features — no 1:1 overlap with the capabilities grid above.
 // Terminal, Browser, Sync-Checklist, Pipeline, Chart — each has a unique visual language.
-export const showcaseFeatures = allFeatures.slice(0, 5)
+export const showcaseFeatures = [allFeatures[0], allFeatures[3], allFeatures[6]]
 
 export const tickerItems = [
   'Lokale Entwicklung',

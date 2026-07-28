@@ -8,6 +8,10 @@ const features = [
     detail: 'WordPress-Projekte lokal starten – kein Docker, kein NGINX, kein Apache. WPorbit übernimmt die gesamte Laufzeitumgebung. PHP-Version, Datenbank und Konfiguration sind pro Projekt definiert und reproduzierbar.',
   },
   {
+    title: 'Zentrale Projektübersicht',
+    detail: 'Alle lokalen WordPress-Projekte werden in einer gemeinsamen Oberfläche zusammengeführt. Du siehst Umgebungen, Verbindungen und den aktuellen Projektzustand auf einen Blick und wechselst ohne Terminal-Suche direkt zum nächsten Arbeitsschritt.',
+  },
+  {
     title: 'Vault für Zugangsdaten',
     detail: 'SSH-Keys, WP-Admin-Logins, Datenbank-Credentials und API-Tokens liegen verschlüsselt im lokalen Vault. Kein Copy-Paste in Chats, keine Zugangsdaten in Repositories. Alle Daten werden DSGVO-konform verschlüsselt und in der Schweiz gehostet.',
   },
@@ -18,6 +22,10 @@ const features = [
   {
     title: 'Import direkt aus Live-Installationen',
     detail: 'SSH-Zugang genügt, um bestehende WordPress-Installationen zu importieren – inklusive Theme-Repo, wo vorhanden. Kein manuelles Backup und Wiederherstellen.',
+  },
+  {
+    title: 'Aus dem Agenturalltag entwickelt',
+    detail: 'WPorbit kennt die typischen Stolpersteine in WordPress-Projekten. Voraussetzungen werden vor kritischen Aktionen geprüft, bekannte Fehlerquellen früh abgefangen und verständlich erklärt. Kontextbezogene Hilfestellungen zeigen direkt im jeweiligen Arbeitsschritt, was zu tun ist.',
   },
 ]
 
