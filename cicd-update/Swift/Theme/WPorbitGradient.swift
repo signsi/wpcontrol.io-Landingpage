@@ -1,36 +1,33 @@
 import SwiftUI
 
-// MARK: - WPorbit Gradients
-
 enum WPorbitGradient {
-
-    /// Kühler Verlauf für Struktur, Glow, Charts, Gradient-Text.
-    static let orbit = LinearGradient(
-        colors: [WPorbitColor.nebulaViolet, WPorbitColor.orbitCyan],
-        startPoint: .leading,
-        endPoint: .trailing
+    static let accent = LinearGradient(
+        colors: [WPorbitColor.accent, WPorbitColor.accentStrong],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
     )
 
-    /// Warmer Verlauf für primäre Call-to-Actions.
-    static let solar = LinearGradient(
-        colors: [WPorbitColor.solar, WPorbitColor.solarFlare],
-        startPoint: .leading,
-        endPoint: .trailing
+    static let halo = RadialGradient(
+        colors: [WPorbitColor.accentTint, WPorbitColor.accentTint.opacity(0)],
+        center: .center,
+        startRadius: 0,
+        endRadius: 220
     )
 
-    /// Weicher Nebel-Glow für Hero-/Header-Hintergründe. In einer ZStack hinter
-    /// dem Inhalt platzieren und mit .blur(radius: 40-60) versehen.
-    static func nebulaGlow(size: CGFloat = 500) -> some View {
-        ZStack {
-            Circle()
-                .fill(WPorbitColor.nebulaViolet.opacity(0.28))
-                .frame(width: size, height: size)
-                .offset(x: -size * 0.15, y: -size * 0.1)
-            Circle()
-                .fill(WPorbitColor.orbitCyan.opacity(0.18))
-                .frame(width: size * 0.8, height: size * 0.8)
-                .offset(x: size * 0.2, y: size * 0.15)
-        }
-        .blur(radius: 60)
+    static func haloGlow(size: CGFloat = 420) -> some View {
+        Circle()
+            .fill(halo)
+            .frame(width: size, height: size)
+            .blur(radius: 30)
+            .opacity(0.55)
+            .allowsHitTesting(false)
+    }
+
+    @available(*, deprecated, renamed: "accent") static let solar = accent
+    @available(*, deprecated, renamed: "accent") static let orbit = accent
+
+    @available(*, deprecated, message: "Use haloGlow(size:) instead.")
+    static func nebulaGlow(size: CGFloat = 420) -> some View {
+        haloGlow(size: size)
     }
 }

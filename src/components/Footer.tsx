@@ -48,7 +48,7 @@ export default function Footer() {
           </Link>
 
           <p className="text-secondary text-[0.875rem] leading-[1.65] max-w-[26ch]">
-            Vom Setup bis zur Wartung. Ein Cockpit für WordPress-Agenturen.
+            Alle WordPress-Projekte, Zugänge und Veröffentlichungen übersichtlich an einem Ort.
           </p>
 
           <div className="flex flex-wrap gap-2.5">
@@ -80,8 +80,8 @@ export default function Footer() {
           <nav className="flex flex-col gap-4" aria-label="Pläne-Navigation">
             <Link to="/standalone" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Standalone</Link>
             <Link to="/cloud"      className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Cloud</Link>
-            <Link to="/custom"     className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Custom</Link>
-            <a href="#waitlist"    className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Early Access</a>
+            <Link to="/custom"     className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Massgeschneidert</Link>
+            <a href="#demo"        className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Gratis testen</a>
           </nav>
         </div>
 

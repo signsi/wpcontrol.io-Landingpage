@@ -1,7 +1,7 @@
 const workflows = [
-  { label: 'Umgebung starten', meta: 'PHP 8.3 · WordPress 6.6', status: 'Bereit' },
-  { label: 'Live-Site importieren', meta: 'SSH-Verbindung geprüft', status: 'Verbunden' },
-  { label: 'Änderungen deployen', meta: 'GitLab Pipeline', status: 'Kontrolliert' },
+  { label: 'Projekt starten', meta: 'Alles automatisch eingerichtet', status: 'Bereit' },
+  { label: 'Bestehende Website übernehmen', meta: 'Verbindung sicher hergestellt', status: 'Verbunden' },
+  { label: 'Änderungen veröffentlichen', meta: 'Alle Prüfungen abgeschlossen', status: 'Sicher' },
 ]
 
 export default function BigPlus() {
@@ -20,10 +20,10 @@ export default function BigPlus() {
             Das grosse Plus
           </p>
           <h2 className="max-w-[13ch] font-heading text-[clamp(2.4rem,5vw,4.5rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-primary">
-            Keine Skript-Sammlung. Eine klare Oberfläche.
+            Keine Insellösungen. Eine klare Oberfläche.
           </h2>
           <p className="mt-6 max-w-[36rem] text-[1rem] leading-[1.75] text-secondary sm:text-[1.08rem]">
-            Keine verteilten Bash-Skripte, kryptischen Befehle oder unübersichtlichen Terminal-Anwendungen. WPorbit bündelt wiederkehrende WordPress-Abläufe in einer massgeschneiderten Benutzeroberfläche, die das gesamte Team versteht.
+            Schluss mit verstreuten Skripten und schwer verständlichen Befehlen. WPorbit führt wiederkehrende Aufgaben in einer massgeschneiderten Oberfläche zusammen, die das ganze Team versteht.
           </p>
 
           <p className="mt-6 max-w-[36rem] text-[0.9rem] leading-[1.65] text-secondary">
@@ -73,9 +73,9 @@ export default function BigPlus() {
                 ?
               </span>
               <span>
-                <span className="block text-[0.78rem] font-semibold text-primary">WPorbit prüft vor dem Deploy</span>
+                <span className="block text-[0.78rem] font-semibold text-primary">WPorbit prüft vor der Veröffentlichung</span>
                 <span className="mt-0.5 block text-[0.72rem] leading-[1.55] text-secondary">
-                  Verbindung, Zielumgebung und Pipeline werden geprüft. Bei Problemen zeigt WPorbit den nächsten Schritt.
+                  Verbindung, Ziel und Voraussetzungen werden automatisch geprüft. Bei Problemen zeigt WPorbit verständlich den nächsten Schritt.
                 </span>
               </span>
             </div>
@@ -85,7 +85,7 @@ export default function BigPlus() {
                 Projekt öffnen
               </button>
               <button type="button" className="gradient-solar rounded-control px-4 py-2.5 text-sm font-semibold text-on-accent shadow-action">
-                Aktion starten
+                Veröffentlichen
               </button>
             </div>
           </div>

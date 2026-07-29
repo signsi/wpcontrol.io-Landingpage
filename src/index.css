@@ -163,9 +163,34 @@
   animation: logo-orbit-travel 9s linear infinite;
 }
 
+@keyframes flow-dot-travel {
+  0%, 100% { offset-distance: 0%; opacity: 0; }
+  6%       { opacity: 1; }
+  94%      { opacity: 1; }
+  99%      { offset-distance: 100%; opacity: 0; }
+}
+
+@keyframes flow-step-pulse {
+  0%, 8%, 100% { box-shadow: 0 0 0 0 oklch(52% 0.185 288 / 0%); }
+  4%           { box-shadow: 0 0 0 7px oklch(52% 0.185 288 / 18%); }
+}
+
+@utility animate-flow-dot {
+  offset-path: path('M100,100 Q300,10 500,100');
+  offset-distance: 0%;
+  offset-rotate: 0deg;
+  animation: flow-dot-travel 9s ease-in-out infinite;
+}
+
+@utility animate-flow-step {
+  animation: flow-step-pulse 9s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-halo,
   .animate-logo-orbit,
+  .animate-flow-dot,
+  .animate-flow-step,
   .animate-ticker,
   .animate-cursor {
     animation: none;

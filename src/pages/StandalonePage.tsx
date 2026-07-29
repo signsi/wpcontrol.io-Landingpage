@@ -4,24 +4,24 @@ import Footer from '../components/Footer'
 
 const features = [
   {
-    title: 'Lokale Entwicklungsumgebung',
-    detail: 'WordPress-Projekte lokal starten – kein Docker, kein NGINX, kein Apache. WPorbit übernimmt die gesamte Laufzeitumgebung. PHP-Version, Datenbank und Konfiguration sind pro Projekt definiert und reproduzierbar.',
+    title: 'Startklar ohne Einrichtung',
+    detail: 'WPorbit starten, Projekt öffnen und direkt loslegen. Die technische Einrichtung läuft automatisch im Hintergrund. Jedes Projekt erhält eine eigene, zuverlässig abgestimmte Arbeitsumgebung.',
   },
   {
-    title: 'Zentrale Projektübersicht',
-    detail: 'Alle lokalen WordPress-Projekte werden in einer gemeinsamen Oberfläche zusammengeführt. Du siehst Umgebungen, Verbindungen und den aktuellen Projektzustand auf einen Blick und wechselst ohne Terminal-Suche direkt zum nächsten Arbeitsschritt.',
+    title: 'Alle Projekte im Blick',
+    detail: 'Alle WordPress-Projekte werden in einer gemeinsamen Oberfläche zusammengeführt. Verbindungen, aktueller Stand und nächste Schritte sind auf einen Blick sichtbar. So wechselt das Team ohne lange Suche direkt zum nächsten Projekt.',
   },
   {
-    title: 'Vault für Zugangsdaten',
-    detail: 'SSH-Keys, WP-Admin-Logins, Datenbank-Credentials und API-Tokens liegen verschlüsselt im lokalen Vault. Kein Copy-Paste in Chats, keine Zugangsdaten in Repositories. Alle Daten werden DSGVO-konform verschlüsselt und in der Schweiz gehostet.',
+    title: 'Zugänge sicher verwahrt',
+    detail: 'Passwörter, Schlüssel und weitere Zugangsdaten liegen verschlüsselt im passenden Projekt. Kein Teilen über Chats oder E-Mails und keine sensiblen Daten in ungeschützten Notizen.',
   },
   {
-    title: 'Deploy und Pull Prozesse',
-    detail: 'Änderungen gezielt auf Live-Umgebungen deployen oder von dort pullen. WPorbit funktioniert mit jedem Anbieter, der Pipelines unterstützt – GitLab ist der erste Anwendungsfall, GitHub funktioniert analog. Für GitLab bieten wir vorgefertigte Vorlagen an.',
+    title: 'Änderungen sicher veröffentlichen',
+    detail: 'Websites online aktualisieren oder den aktuellen Stand zurückholen, ohne einzelne technische Schritte von Hand auszuführen. WPorbit prüft die Voraussetzungen und startet den bestehenden Ablauf. Zum Start stehen Vorlagen für GitLab bereit; GitHub lässt sich nach demselben Prinzip anbinden.',
   },
   {
-    title: 'Import direkt aus Live-Installationen',
-    detail: 'SSH-Zugang genügt, um bestehende WordPress-Installationen zu importieren – inklusive Theme-Repo, wo vorhanden. Kein manuelles Backup und Wiederherstellen.',
+    title: 'Bestehende Websites übernehmen',
+    detail: 'Die vorhandenen Zugangsdaten genügen, um eine bestehende WordPress-Website samt Projektdateien zu übernehmen. Manuelle Sicherungen und aufwendiges Wiederherstellen entfallen.',
   },
   {
     title: 'Aus dem Agenturalltag entwickelt',
@@ -41,18 +41,18 @@ export default function StandalonePage() {
             Standalone
           </p>
           <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
-            Lokal entwickeln.<br />Ohne Overhead.
+            Professionell arbeiten.<br />Einfach starten.
           </h1>
           <p className="text-secondary leading-[1.75] text-[1rem] max-w-[48ch] mb-2">
-            Für Agenturen und Entwickler, die WordPress-Projekte lokal verwalten wollen – ohne Cloud-Abhängigkeit.
+            Für Agenturen, die WordPress-Projekte zuverlässig organisieren und unabhängig von der Cloud bearbeiten wollen.
           </p>
           <div className="flex items-end gap-2 leading-none mb-8 mt-5">
-            <span className="font-heading font-semibold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 40</span>
+            <span className="font-heading font-semibold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 290</span>
             <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Person / Monat<br /><span className="text-tertiary text-[0.78rem]">Max. 3 Projekte</span></span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
-              Early Access sichern
+            <Link to="/#demo" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+              10 Tage gratis testen
             </Link>
             <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
               Alle Pläne vergleichen
@@ -127,7 +127,7 @@ export default function StandalonePage() {
               Übergangsphase
             </p>
             <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[36ch]">
-              Betreuung der aktuellen CLI-Lösung bis zum Wechsel
+              Die bisherige Lösung bleibt bis zum Wechsel betreut
             </h2>
             <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[62ch] mb-8">
               In diesem Zeitraum wird die aktuelle Lösung weiter betreut. Updates der Umgebung stehen automatisch bereit
@@ -144,10 +144,10 @@ export default function StandalonePage() {
               </article>
 
               <article className="border border-line rounded-xl p-5 bg-surface">
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Gemeinsamer Support-Channel</h3>
+                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Direkter Support</h3>
                 <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Für Support und Bug-Fixing richten wir einen gemeinsamen Channel ein, damit Fragen,
-                  Meldungen und Lösungen schnell koordiniert werden können.
+                  Ein gemeinsamer Kontaktpunkt sorgt dafür, dass Fragen, Meldungen und Lösungen schnell
+                  koordiniert werden können.
                 </p>
               </article>
 
@@ -161,7 +161,7 @@ export default function StandalonePage() {
             Mehr Projekte oder ein Team?
           </h2>
           <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[42ch] mx-auto mb-7">
-            Mit dem Cloud-Plan bekommt das gesamte Team Zugang zum Portal – inkl. Monitoring, Update-Planung und Vault-Synchronisation.
+            Mit dem Cloud-Plan arbeitet das gesamte Team auf demselben Projektstand. Wissen, Zugänge und nächste Schritte bleiben für Berechtigte verfügbar.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
             <Link to="/cloud" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">

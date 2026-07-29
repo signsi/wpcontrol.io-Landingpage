@@ -5,7 +5,7 @@ import SwiftUI
 ///
 /// Beispiel:
 ///   OrbitRing(startAngle: -160, endAngle: 160)
-///       .stroke(WPorbitColor.borderDefault, lineWidth: 1.5)
+///       .stroke(WPorbitColor.line, lineWidth: 1.5)
 ///       .frame(width: 220, height: 90)
 ///       .rotationEffect(.degrees(-18))
 struct OrbitRing: Shape {
@@ -36,7 +36,7 @@ struct OrbitFrame: View {
 
     var body: some View {
         Circle()
-            .stroke(WPorbitColor.borderDefault, lineWidth: lineWidth)
+            .stroke(WPorbitColor.line, lineWidth: lineWidth)
             .frame(width: diameter, height: diameter)
     }
 }

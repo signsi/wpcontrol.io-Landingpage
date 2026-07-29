@@ -11,10 +11,10 @@ export default function FeatureGrid() {
           Jetzt in Standalone
         </div>
         <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3">
-          Alles für deinen lokalen WordPress-Workflow.
+          Professionelle WordPress-Arbeit, einfach organisiert.
         </h2>
         <p className="text-secondary leading-[1.75] text-[0.9375rem] max-w-[52ch]">
-          Vom ersten lokalen Start bis zum kontrollierten Deploy: diese Funktionen stehen in WPorbit Standalone zur Verfügung.
+          Vom Projektstart bis zur sicheren Veröffentlichung: Diese Funktionen stehen in WPorbit Standalone bereits heute zur Verfügung.
         </p>
       </div>
 

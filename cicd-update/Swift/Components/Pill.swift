@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Badge/Status-Pill mit Orbit-Ring-Rahmen (Space-Mono, Uppercase).
+/// Compact semantic badge.
 ///
 /// Beispiel:
 ///   Pill(text: "Cloud · Empfohlen", style: .active)
@@ -15,24 +15,24 @@ struct Pill: View {
             .font(.wpCaption)
             .tracking(1.2)
             .foregroundColor(foreground)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 5)
+            .padding(.horizontal, WPorbitSpacing.md)
+            .padding(.vertical, WPorbitSpacing.xs)
             .overlay(Capsule().stroke(border, lineWidth: 1))
     }
 
     private var foreground: Color {
         switch style {
         case .neutral: return WPorbitColor.textTertiary
-        case .active:  return WPorbitColor.orbitCyan
-        case .warning: return WPorbitColor.solar
+        case .active:  return WPorbitColor.accentStrong
+        case .warning: return WPorbitColor.danger
         }
     }
 
     private var border: Color {
         switch style {
-        case .neutral: return WPorbitColor.borderDefault
-        case .active:  return WPorbitColor.orbitCyan
-        case .warning: return WPorbitColor.solar
+        case .neutral: return WPorbitColor.line
+        case .active:  return WPorbitColor.accent
+        case .warning: return WPorbitColor.danger
         }
     }
 }

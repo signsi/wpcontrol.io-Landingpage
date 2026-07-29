@@ -1,33 +1,27 @@
 import SwiftUI
 
-// MARK: - WPorbit Typografie
-//
-// Voraussetzung: die TTF-Dateien aus /Fonts sind dem Xcode-Target hinzugefügt
-// (Copy Bundle Resources) und in Info.plist unter "Fonts provided by application"
-// (UIAppFonts) eingetragen. Siehe README.md, Abschnitt "Fonts einbinden".
-//
-// Headlines:     Chakra Petch   (Medium / SemiBold / Bold)
-// Fliesstext:    Hanken Grotesk (Regular / Medium / SemiBold / Bold)
-// Code / Labels: Space Mono     (Regular / Bold)
-
+// General Sans files must be included in Copy Bundle Resources and UIAppFonts.
 enum WPorbitFont {
-
     enum HeadlineWeight: String {
-        case medium   = "ChakraPetch-Medium"
-        case semibold = "ChakraPetch-SemiBold"
-        case bold     = "ChakraPetch-Bold"
+        case medium = "GeneralSans-Medium"
+        case semibold = "GeneralSans-SemiBold"
+        case bold = "GeneralSans-Bold"
     }
 
     enum BodyWeight: String {
-        case regular  = "HankenGrotesk-Regular"
-        case medium   = "HankenGrotesk-Medium"
-        case semibold = "HankenGrotesk-SemiBold"
-        case bold     = "HankenGrotesk-Bold"
+        case regular = "GeneralSans-Regular"
+        case medium = "GeneralSans-Medium"
+        case semibold = "GeneralSans-SemiBold"
+        case bold = "GeneralSans-Bold"
     }
 
-    enum MonoWeight: String {
-        case regular = "SpaceMono-Regular"
-        case bold    = "SpaceMono-Bold"
+    enum MonoWeight {
+        case regular
+        case bold
+
+        fileprivate var systemWeight: Font.Weight {
+            self == .bold ? .bold : .regular
+        }
     }
 
     static func headline(_ size: CGFloat, weight: HeadlineWeight = .semibold) -> Font {
@@ -39,39 +33,34 @@ enum WPorbitFont {
     }
 
     static func mono(_ size: CGFloat, weight: MonoWeight = .regular) -> Font {
-        .custom(weight.rawValue, size: size)
+        .system(size: size, weight: weight.systemWeight, design: .monospaced)
     }
 }
 
-// MARK: - Fertige Textstile (analog zur H1-H3 / Body / Caption Skala im Web-CI)
-
 extension Font {
-    static let wpDisplay = WPorbitFont.headline(34, weight: .semibold)   // Hero-Headline
-    static let wpH1      = WPorbitFont.headline(28, weight: .semibold)   // Screen-Titel
-    static let wpH2      = WPorbitFont.headline(22, weight: .semibold)   // Section-Titel
-    static let wpH3      = WPorbitFont.headline(17, weight: .semibold)   // Karten-Titel
-    static let wpBody    = WPorbitFont.body(16)                         // Fliesstext
+    static let wpDisplay = WPorbitFont.headline(34, weight: .bold)
+    static let wpH1 = WPorbitFont.headline(28, weight: .semibold)
+    static let wpH2 = WPorbitFont.headline(22, weight: .semibold)
+    static let wpH3 = WPorbitFont.headline(17, weight: .semibold)
+    static let wpBody = WPorbitFont.body(16)
     static let wpBodyStrong = WPorbitFont.body(16, weight: .semibold)
-    static let wpCaption = WPorbitFont.mono(11)                         // Kicker, Pills, Meta-Labels
-    static let wpCode    = WPorbitFont.mono(13)                         // Terminal-/Code-Blöcke
+    static let wpCaption = WPorbitFont.body(11, weight: .semibold)
+    static let wpCode = WPorbitFont.mono(13)
 }
-
-// MARK: - Kicker-Textstil (Uppercase + Letter-Spacing), analog zum Web-Kicker
 
 struct KickerText: View {
     var text: String
-    var color: Color = WPorbitColor.orbitCyan
+    var color: Color = WPorbitColor.accentStrong
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: WPorbitSpacing.sm) {
             Circle()
-                .fill(WPorbitColor.solar)
+                .fill(WPorbitColor.accent)
                 .frame(width: 6, height: 6)
-                .shadow(color: WPorbitColor.solar.opacity(0.7), radius: 4)
             Text(text.uppercased())
                 .font(.wpCaption)
-                .tracking(1.4)
-                .foregroundColor(color)
+                .tracking(1)
+                .foregroundStyle(color)
         }
     }
 }

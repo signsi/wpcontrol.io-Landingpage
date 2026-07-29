@@ -5,10 +5,10 @@ export default function Comparison() {
     <section className="px-6 py-24" id="vergleich">
       <div className="reveal-up mb-10">
         <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
-          Standalone im Vergleich
+          Warum WPorbit
         </p>
         <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] max-w-[40ch]">
-          Lokale WordPress-Workflows, ohne Bindung an ein Hosting-Ökosystem.
+          Professionelle WordPress-Projekte, ohne Bindung an ein bestimmtes Hosting.
         </h2>
       </div>
 

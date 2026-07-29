@@ -9,26 +9,28 @@ export interface ShowcaseFeature {
 
 export const allFeatures: ShowcaseFeature[] = [
   {
-    title: 'Lokale Entwicklung ohne Abhängigkeiten',
-    text: 'Starte WordPress-Projekte in Sekunden lokal. Kein Docker, kein NGINX, kein Apache.',
-    detail: 'Starte WordPress-Projekte in Sekunden lokal. Kein Docker, kein NGINX, kein Apache. WPorbit übernimmt die Umgebung, du startest sofort. Jede Seite läuft in einer isolierten Umgebung — PHP-Version, Datenbank und Konfiguration sind pro Projekt definiert und reproduzierbar.',
+    title: 'WPorbit starten. Direkt loslegen.',
+    text: 'Projekt öffnen und sofort arbeiten. Die technische Einrichtung übernimmt WPorbit.',
+    detail: 'Projekt öffnen und sofort arbeiten. WPorbit richtet im Hintergrund alles passend ein und sorgt dafür, dass jedes Projekt zuverlässig in seiner eigenen Umgebung läuft.',
     visual: (
-      <div className="flex flex-col flex-1 bg-surface">
-        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-line">
-          <span className="w-2.5 h-2.5 rounded-full bg-raised" />
-          <span className="w-2.5 h-2.5 rounded-full bg-raised" />
-          <span className="w-2.5 h-2.5 rounded-full bg-raised" />
-          <span className="ml-3 text-[0.68rem] text-tertiary font-medium">wporbit — zsh</span>
+      <div className="flex flex-1 flex-col gap-4 bg-surface p-5">
+        <div className="flex items-center justify-between border-b border-line pb-4">
+          <div>
+            <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary">Projekt</p>
+            <p className="mt-1 text-[0.85rem] font-semibold text-primary">agentur-website.ch</p>
+          </div>
+          <span className="rounded-full bg-accent/10 px-3 py-1 text-[0.68rem] font-semibold text-accent">Startklar</span>
         </div>
-        <div className="flex-1 p-5 font-mono text-[0.8rem] leading-relaxed flex flex-col gap-2">
-          <p><span className="text-accent">$</span> <span className="text-primary">wporbit env:start mein-projekt</span></p>
-          <p className="text-secondary">→ PHP 8.2 konfiguriert</p>
-          <p className="text-secondary">→ WordPress 6.5 installiert</p>
-          <p className="text-accent font-semibold">✓ http://mein-projekt.local</p>
-          <p>
-            <span className="text-accent">$</span>
-            <span className="inline-block w-1.5 h-[1em] bg-accent animate-cursor align-middle ml-1" />
-          </p>
+        <div className="flex flex-1 flex-col gap-2.5 text-[0.78rem]">
+          {['WordPress eingerichtet', 'Projektdateien verbunden', 'Website bereit zum Bearbeiten'].map((item) => (
+            <div key={item} className="flex items-center gap-3 rounded-lg bg-raised px-3.5 py-3 text-secondary">
+              <span className="flex size-5 items-center justify-center rounded-full bg-accent/15 text-[0.65rem] font-bold text-accent">✓</span>
+              {item}
+            </div>
+          ))}
+          <div className="mt-auto rounded-md bg-accent px-3.5 py-2.5 text-[0.77rem] font-bold text-on-accent">
+            Projekt öffnen →
+          </div>
         </div>
       </div>
     ),
@@ -94,31 +96,31 @@ export const allFeatures: ShowcaseFeature[] = [
     ),
   },
   {
-    title: 'Automatischer Deploy via GitLab',
-    text: 'WPorbit funktioniert mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog.',
-    detail: 'WPorbit funktioniert grundsätzlich mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog. Die Pipelines liegen in der Verantwortung der Agentur; für GitLab bieten wir vorgefertigte Vorlagen an. Jeder Deploy bleibt reproduzierbar, versioniert und bei Bedarf rückgängig machbar.',
+    title: 'Online ohne manuelle Interaktion',
+    text: 'Änderungen sicher veröffentlichen. WPorbit prüft alles Wichtige und startet den bestehenden Ablauf.',
+    detail: 'Änderungen sicher veröffentlichen, ohne einzelne technische Schritte von Hand auszuführen. WPorbit prüft zuerst die Voraussetzungen, startet den bestehenden Ablauf und hält den Fortschritt nachvollziehbar fest.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-5">
         <div className="flex items-center">
-          {(['Commit', 'Build', 'Deploy', 'Live'] as const).map((stage, i) => (
+          {(['Prüfen', 'Vorbereiten', 'Online'] as const).map((stage, i) => (
             <div key={stage} className="flex items-center flex-1 last:flex-none">
               <div className="flex flex-col items-center gap-1.5">
                 <div className={`w-3 h-3 rounded-full border-2 transition-colors ${
-                  i < 2  ? 'bg-accent border-accent' :
-                  i === 2 ? 'border-accent bg-transparent animate-pulse' :
+                  i < 1  ? 'bg-accent border-accent' :
+                  i === 1 ? 'border-accent bg-transparent animate-pulse' :
                             'border-line bg-transparent'
                 }`} />
-                <span className={`text-[0.65rem] ${i < 3 ? 'text-secondary' : 'text-tertiary'}`}>{stage}</span>
+                <span className={`text-[0.65rem] ${i < 2 ? 'text-secondary' : 'text-tertiary'}`}>{stage}</span>
               </div>
-              {i < 3 && (
-                <div className={`h-px flex-1 mx-2 mb-4 ${i < 2 ? 'bg-accent' : 'bg-line'}`} />
+              {i < 2 && (
+                <div className={`h-px flex-1 mx-2 mb-4 ${i < 1 ? 'bg-accent' : 'bg-line'}`} />
               )}
             </div>
           ))}
         </div>
-        <div className="flex-1 bg-base rounded-md p-3.5 font-mono text-[0.75rem] flex flex-col gap-2">
-          <p className="text-accent">✓ Tests bestanden (42/42)</p>
-          <p className="text-secondary">↻ Deploying to production...</p>
+        <div className="flex flex-1 flex-col gap-2 rounded-md bg-base p-3.5 text-[0.75rem]">
+          <p className="font-semibold text-accent">✓ Alle Prüfungen erfolgreich</p>
+          <p className="text-secondary">Website wird sicher aktualisiert …</p>
         </div>
       </div>
     ),
@@ -185,17 +187,17 @@ export const allFeatures: ShowcaseFeature[] = [
     ),
   },
   {
-    title: 'Lokaler Vault für Zugänge',
-    text: 'SSH-Keys, Logins und Tokens verschlüsselt pro Projekt verwalten.',
-    detail: 'SSH-Keys, WP-Admin-Logins, Datenbank-Credentials und API-Tokens liegen verschlüsselt im lokalen Vault. Jedes Projekt hat seinen eigenen Bereich. Damit bleiben sensible Zugänge aus Chats, Notizen und Repositories heraus.',
+    title: 'Zugänge sicher verwahrt',
+    text: 'Passwörter, Schlüssel und weitere Zugangsdaten verschlüsselt pro Projekt ablegen.',
+    detail: 'Alle Zugangsdaten liegen verschlüsselt im passenden Projekt. So bleiben sensible Informationen aus Chats, E-Mails und ungeschützten Notizen heraus und sind dort verfügbar, wo sie gebraucht werden.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-1.5">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary mb-1.5">Lokaler Vault: Projekt Müller &amp; Co.</p>
+        <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary mb-1.5">Zugänge: Projekt Müller &amp; Co.</p>
         {[
-          { label: 'SSH Production', icon: '⌥', sub: 'deploy@prod.muellerco.ch',         accent: true  },
-          { label: 'WP Admin',       icon: 'W', sub: 'admin@muellerco.ch',               accent: false },
-          { label: 'Datenbank',      icon: '◎', sub: 'wp_user — mysql://prod',           accent: false },
-          { label: 'API Token',      icon: '⬡', sub: 'GitLab CI/CD · expires 2025-12',  accent: false },
+          { label: 'Website',        icon: '⌥', sub: 'Sicher verbunden', accent: true  },
+          { label: 'WordPress',      icon: 'W', sub: 'Zugang hinterlegt', accent: false },
+          { label: 'Datenbank',      icon: '◎', sub: 'Zugang hinterlegt', accent: false },
+          { label: 'Veröffentlichung', icon: '⬡', sub: 'Freigabe gültig', accent: false },
         ].map((item) => (
           <div key={item.label} className="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-raised transition-colors">
             <span className={`w-8 h-8 flex items-center justify-center rounded-md text-xs font-bold flex-shrink-0 border ${

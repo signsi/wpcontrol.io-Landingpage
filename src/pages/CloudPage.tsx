@@ -4,6 +4,14 @@ import Footer from '../components/Footer'
 
 const features = [
   {
+    title: 'Projekte und Arbeitsstände synchronisieren',
+    detail: 'Cloud wird Projekte, Konfigurationen und aktuelle Arbeitsstände zwischen berechtigten Teammitgliedern synchronisieren. Dadurch arbeitet jede Person mit demselben verlässlichen Projektstand.',
+  },
+  {
+    title: 'Nahtlose Übergaben und Know-how-Transfer',
+    detail: 'Teammitglieder sollen dort weiterarbeiten können, wo andere aufgehört haben. Projektwissen, Standards und wiederkehrende Abläufe bleiben für das Team verfügbar, statt nur bei einzelnen Personen.',
+  },
+  {
     title: 'Staging und Preview',
     detail: 'Geplant sind isolierte Staging-Umgebungen für Tests vor dem Live-Gang. Vorschau-Links sollen sich direkt mit Kunden teilen lassen, ohne Änderungen zu veröffentlichen.',
   },
@@ -46,10 +54,10 @@ export default function CloudPage() {
             </span>
           </div>
           <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
-            Der gemeinsame Arbeitsbereich für dein Team.
+            Dort weiterarbeiten, wo das Team aufgehört hat.
           </h1>
           <p className="text-secondary leading-[1.75] text-[1rem] max-w-[50ch] mb-2">
-            WPorbit Cloud wird Standalone um Zusammenarbeit, zentrale Projektverwaltung und automatisierte Betriebsprozesse erweitern.
+            Cloud synchronisiert Projekte, Arbeitsstände und Standards. So bleibt Know-how im Team und Aufgaben können ohne Übergabeverlust weitergeführt werden.
           </p>
           <div className="flex items-end gap-2 leading-none mb-8 mt-5">
             <span className="font-heading font-semibold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 1200</span>

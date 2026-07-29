@@ -15,16 +15,16 @@ export default function EarlyAccess() {
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="reveal-up">
           <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4">
-            10 Tage gratis. Voller Umfang.
+            10 Tage gratis. Ohne Risiko.
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[44ch] mb-6">
-            Einfach E-Mail eingeben, App herunterladen und loslegen. Ein Projekt mit allen Features – kein Onboarding-Formular, keine Kreditkarte.
+            Geschäftliche E-Mail eingeben, WPorbit herunterladen und direkt loslegen. Ein Projekt mit allen verfügbaren Funktionen, ohne Kreditkarte.
           </p>
           <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {[
-              '1 Projekt mit vollem Funktionsumfang',
-              'Direkter Download – in Minuten startklar',
-              'Kein Lock-in, jederzeit kündbar',
+              'Ein Projekt mit allen verfügbaren Funktionen',
+              'In wenigen Minuten startklar',
+              'Keine Kreditkarte, keine Verpflichtung',
             ].map((item) => (
               <li key={item} className="flex items-center gap-2.5 text-[0.875rem] text-secondary">
                 <span className="text-accent flex-shrink-0 text-xs font-bold">✓</span>
@@ -52,7 +52,7 @@ export default function EarlyAccess() {
               type="submit"
               className="gradient-solar mt-1 rounded-full border-0 px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
             >
-              Demo herunterladen →
+              Kostenlos testen →
             </button>
             <p className="text-[0.75rem] text-tertiary text-center">
               Keine Kreditkarte. 10 Tage gratis. Voller Funktionsumfang.

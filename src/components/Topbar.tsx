@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import OrbitMark from './OrbitMark'
 
 interface TopbarProps {
   variant?: 'landing' | 'features'
@@ -39,8 +40,9 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
       <div className="mx-auto flex h-[3.75rem] max-w-[1120px] items-center justify-between px-6">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img src="/wporbit-quer.svg" alt="WPorbit" className="h-7 w-auto" />
+        <Link to="/" className="flex items-center gap-2.5" aria-label="WPorbit Startseite">
+          <OrbitMark className="h-8 w-8 text-primary" />
+          <span className="font-heading text-[1.05rem] font-semibold tracking-[-0.02em] text-primary">WPorbit</span>
         </Link>
 
         {/* Desktop nav */}

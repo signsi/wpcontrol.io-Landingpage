@@ -1,43 +1,45 @@
 import SwiftUI
 
-/// Primärer Button — Solar-Gradient, für die eine Haupt-Aktion pro Screen.
+/// Primary action. Use once per decision group.
 struct WPorbitPrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(WPorbitFont.body(15, weight: .semibold))
-            .foregroundColor(WPorbitColor.onSolar)
-            .padding(.horizontal, 22)
-            .padding(.vertical, 12)
-            .background(WPorbitGradient.solar)
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .shadow(color: WPorbitColor.solar.opacity(0.28), radius: 16, y: 8)
+            .foregroundStyle(WPorbitColor.onAccent)
+            .padding(.horizontal, WPorbitSpacing.xl)
+            .padding(.vertical, WPorbitSpacing.md)
+            .background(WPorbitGradient.accent)
+            .clipShape(RoundedRectangle(cornerRadius: WPorbitRadius.control, style: .continuous))
+            .wpShadow(WPorbitShadow.action)
             .opacity(configuration.isPressed ? 0.85 : 1)
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }
 }
 
-/// Sekundärer Button — Outline, für die zweite Aktion.
+/// Secondary outline action.
 struct WPorbitSecondaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(WPorbitFont.body(15, weight: .semibold))
-            .foregroundColor(WPorbitColor.textPrimary)
-            .padding(.horizontal, 22)
-            .padding(.vertical, 12)
+            .foregroundStyle(WPorbitColor.textPrimary)
+            .padding(.horizontal, WPorbitSpacing.xl)
+            .padding(.vertical, WPorbitSpacing.md)
+            .background(configuration.isPressed ? WPorbitColor.raised : Color.clear)
             .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(WPorbitColor.borderDefault, lineWidth: 1)
+                RoundedRectangle(cornerRadius: WPorbitRadius.control, style: .continuous)
+                    .stroke(WPorbitColor.line, lineWidth: 1)
             )
+            .clipShape(RoundedRectangle(cornerRadius: WPorbitRadius.control, style: .continuous))
             .opacity(configuration.isPressed ? 0.7 : 1)
     }
 }
 
-/// Ghost-Button — reiner Text-Link, für tertiäre Aktionen.
+/// Tertiary text action.
 struct WPorbitGhostButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(WPorbitFont.body(15, weight: .semibold))
-            .foregroundColor(WPorbitColor.textSecondary)
+            .foregroundStyle(WPorbitColor.textSecondary)
             .opacity(configuration.isPressed ? 0.6 : 1)
     }
 }

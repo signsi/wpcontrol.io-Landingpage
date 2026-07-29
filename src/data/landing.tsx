@@ -7,62 +7,61 @@ export interface FeatureCard {
 export const featureCards: FeatureCard[] = [
   {
     dot: 'orbit',
-    title: 'Lokale Entwicklung',
-    text: 'WordPress-Umgebungen lokal starten, ohne Docker, NGINX oder Apache. Bereit in Sekunden.',
+    title: 'Startklar ohne Einrichtung',
+    text: 'WPorbit starten, Projekt öffnen und direkt loslegen. Die technische Einrichtung übernimmt WPorbit.',
   },
   {
     dot: 'orbit',
-    title: 'Deploy und Pull',
-    text: 'Änderungen gezielt ausrollen oder bestehende Inhalte zurück in die lokale Umgebung holen.',
+    title: 'Änderungen sicher veröffentlichen',
+    text: 'Websites online aktualisieren oder den aktuellen Stand zurückholen, ohne manuelle Zwischenschritte.',
   },
   {
     dot: 'solar',
-    title: 'Import aus Live',
-    text: 'Import direkt aus deiner Live-Installation: SSH-Zugang genügt, inklusive Theme-Repo, wo vorhanden.',
+    title: 'Bestehende Websites übernehmen',
+    text: 'Die vorhandenen Zugangsdaten genügen. WPorbit übernimmt die Website und die zugehörigen Projektdateien.',
   },
   {
     dot: 'orbit',
-    title: 'Lokaler Vault',
-    text: 'SSH-Keys, Logins und API-Tokens verschlüsselt pro Projekt verwalten. Kein Copy-Paste in Chats.',
+    title: 'Zugänge sicher verwahrt',
+    text: 'Passwörter, Schlüssel und weitere Zugangsdaten verschlüsselt pro Projekt ablegen. Kein Teilen über Chat oder E-Mail.',
   },
   {
     dot: 'orbit',
-    title: 'Zentrale Projektübersicht',
-    text: 'Alle lokalen WordPress-Projekte, Umgebungen und Verbindungen in einer übersichtlichen Oberfläche im Blick behalten.',
+    title: 'Alle Projekte im Blick',
+    text: 'Projekte, Verbindungen und aktueller Stand sind in einer zentralen Übersicht sofort verfügbar.',
   },
   {
     dot: 'solar',
-    title: 'Aus dem Agenturalltag entwickelt',
-    text: 'Bekannte Stolpersteine werden früh abgefangen. Prüfungen, Erklärungen und Hilfestellungen begleiten dich direkt im jeweiligen Arbeitsschritt.',
+    title: 'Hilfe statt Fehlersuche',
+    text: 'Aus dem Agenturalltag entwickelt: WPorbit erkennt bekannte Stolpersteine früh und erklärt verständlich, was zu tun ist.',
   },
 ]
 
 export const compareRows = [
-  { criterion: 'Lokale Entwicklung', wporbit: 'Integriert', localwp: 'Ja', studio: 'Ja' },
-  { criterion: 'Setup ohne Docker, NGINX oder Apache', wporbit: 'Integriert', localwp: 'Integriert', studio: 'Integriert' },
-  { criterion: 'Import aus Live-Installationen', wporbit: 'Per SSH, inklusive Theme-Repo', localwp: 'Hosterabhängig', studio: 'Manueller Import' },
-  { criterion: 'Deploy und Pull', wporbit: 'Direkt im lokalen Workflow', localwp: 'Abhängig vom Hosting', studio: 'WordPress.com-Workflow' },
-  { criterion: 'Lokaler Vault', wporbit: 'Zugänge verschlüsselt pro Projekt', localwp: 'Nicht integriert', studio: 'Nicht integriert' },
-  { criterion: 'Hosting-Flexibilität', wporbit: 'Freie Wahl des Hostings', localwp: 'Starke Anbindung an WP Engine', studio: 'Starke Anbindung an WordPress.com & Pressable' },
-  { criterion: 'Ideal für', wporbit: 'Agenturen mit eigenen Hosting-Workflows', localwp: 'Einzelentwickler und WP-Engine-Teams', studio: 'WordPress.com-Ökosystem' },
+  { criterion: 'Sofort startklar', wporbit: 'Technische Einrichtung inklusive', localwp: 'Ja', studio: 'Ja' },
+  { criterion: 'Bestehende Websites übernehmen', wporbit: 'Website und Projektdateien', localwp: 'Abhängig vom Hosting', studio: 'Manuelle Übernahme' },
+  { criterion: 'Änderungen veröffentlichen', wporbit: 'Direkt aus WPorbit', localwp: 'Abhängig vom Hosting', studio: 'Für WordPress.com ausgelegt' },
+  { criterion: 'Zugänge sicher verwahrt', wporbit: 'Verschlüsselt pro Projekt', localwp: 'Nicht integriert', studio: 'Nicht integriert' },
+  { criterion: 'Freie Wahl des Hostings', wporbit: 'Ja', localwp: 'Starke Anbindung an WP Engine', studio: 'Starke Anbindung an WordPress.com und Pressable' },
+  { criterion: 'Ideal für', wporbit: 'Agenturen mit verschiedenen Hosting-Anbietern', localwp: 'Einzelne und WP-Engine-Teams', studio: 'WordPress.com-Teams' },
 ]
 
 export const faqItems = [
   {
-    q: 'Kann ich WPorbit für lokale Entwicklung nutzen, auch ohne Cloud-Sync?',
-    a: 'Ja. WPorbit Standalone funktioniert unabhängig von der Cloud. Du entwickelst lokal, verwaltest Zugänge im lokalen Vault und steuerst Deploy- und Pull-Prozesse direkt aus der App.',
+    q: 'Kann ich WPorbit auch ohne Cloud nutzen?',
+    a: 'Ja. WPorbit Standalone funktioniert unabhängig von der Cloud. Du bearbeitest Projekte, verwahrst Zugänge sicher und veröffentlichst Änderungen direkt aus der Anwendung.',
   },
   {
-    q: 'Brauchen wir einen bestimmten Hoster, um WPorbit einzusetzen?',
-    a: 'Nein. WPorbit ist für Agenturen gebaut, die mit unterschiedlichen Hostings arbeiten. Es gibt keinen Plattform-Lock-in.',
+    q: 'Müssen wir unseren Hosting-Anbieter wechseln?',
+    a: 'Nein. WPorbit ist für Agenturen gebaut, die mit unterschiedlichen Hosting-Anbietern arbeiten. Du bleibst bei der Lösung, die zu deiner Agentur und deinen Kunden passt.',
   },
   {
     q: 'Was ist heute in Standalone enthalten?',
-    a: 'Lokale WordPress-Umgebungen, Import aus bestehenden Live-Installationen, Deploy- und Pull-Prozesse sowie ein verschlüsselter lokaler Vault. Cloud-Funktionen werden separat entwickelt.',
+    a: 'Das Starten und Organisieren von Projekten, die Übernahme bestehender Websites, das sichere Veröffentlichen von Änderungen und die verschlüsselte Ablage von Zugangsdaten. Cloud-Funktionen werden separat entwickelt.',
   },
   {
-    q: 'Welche Integrationen sind zum Start verfügbar?',
-    a: 'WPorbit funktioniert grundsätzlich mit jedem Anbieter, der Pipelines unterstützt. GitLab ist der erste Anwendungsfall, GitHub funktioniert analog. Die Pipelines liegen in der Verantwortung der Agentur; für GitLab bieten wir vorgefertigte Vorlagen an.',
+    q: 'Wie werden Änderungen veröffentlicht?',
+    a: 'WPorbit prüft die Voraussetzungen und startet die Veröffentlichung ohne manuelle Zwischenschritte. Bestehende automatisierte Abläufe können weiterverwendet werden. Zum Start stehen dafür Vorlagen für GitLab bereit; GitHub lässt sich nach demselben Prinzip anbinden.',
   },
   {
     q: 'Was passiert nach der Demo-Anmeldung?',

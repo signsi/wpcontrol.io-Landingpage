@@ -15,11 +15,11 @@ const plans = [
   },
   {
     name: 'Standalone',
-    priceMain: 'ab 40',
+    priceMain: 'ab 290',
     priceSub: 'CHF / Person / Monat',
-    note: 'Für Agenturen, die lokal starten wollen.',
+    note: 'Für Einzelpersonen, die bis zu drei Projekte unabhängig verwalten.',
     badge: 'Max. 3 Projekte',
-    features: ['Lokale Entwicklungsumgebung', 'Vault für Zugangsdaten', 'Deploy und Pull Prozesse'],
+    features: ['Ohne technische Einrichtung starten', 'Alle Projekte im Blick', 'Zugänge sicher verwahrt', 'Änderungen sicher veröffentlichen'],
     highlighted: false,
     href: '/standalone',
     isAnchor: false,
@@ -28,9 +28,9 @@ const plans = [
     name: 'Cloud',
     priceMain: 'ab 1200',
     priceSub: 'CHF / Monat',
-    note: '3 Personen, inkl. Cloud Portal für das gesamte Team.',
+    note: 'Für Teams, die Projekte und Wissen gemeinsam weiterführen. 3 Personen inklusive.',
     badge: 'In Entwicklung',
-    features: ['Staging und Preview', 'Monitoring und Update-Planung', 'Vault-Synchronisation', 'Projekte und Zugänge zentral verwalten', 'Wartungsplanung im Dashboard'],
+    features: ['Gemeinsamer Stand aller Projekte', 'Dort weiterarbeiten, wo das Team aufgehört hat', 'Gemeinsame Standards und Know-how', 'Zugänge für Berechtigte verfügbar', 'Websites überwachen und Wartung planen'],
     highlighted: true,
     href: '/cloud',
     isAnchor: false,
@@ -38,7 +38,7 @@ const plans = [
 ]
 
 const customPlan = {
-  features: ['Alles aus Cloud', 'CRM- und ERP-Integrationen', 'Custom Workflows und Prozesse', 'Eigene Abfragen und Automatisierungen', 'Dedizierter Support'],
+  features: ['Alles aus Cloud', 'Anbindung an CRM und ERP', 'Abläufe nach Mass', 'Eigene Abfragen und Automatisierungen', 'Persönlicher Support'],
   href: '/custom',
 }
 
@@ -47,13 +47,13 @@ export default function Pricing() {
     <section className="px-6 py-28" id="preise">
       <div className="reveal-up mb-12">
         <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
-          Pricing
+          Preise
         </p>
         <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em]">
-          Standalone, Cloud oder Custom – du wählst, wie du startest.
+          Standalone für Einzelne. Cloud für Teams.
         </h2>
         <p className="text-secondary text-[0.9375rem] leading-[1.75] mt-3 max-w-[62ch]">
-          Spart Zeit beim Setup, Unterhalt und Wartung. Typische Fehler und Stolperfallen fangen wir direkt ab und leisten Hilfestellung – das spart Zeit, Ärger und am Ende Geld.
+          Standalone hält deine eigenen Projekte übersichtlich. Cloud bringt Projekte, Arbeitsstände und Wissen für das ganze Team zusammen, damit alle ohne Übergabeverlust weiterarbeiten können.
         </p>
       </div>
 
@@ -130,7 +130,7 @@ export default function Pricing() {
                 href={plan.href}
                 className="gradient-solar mt-auto rounded-full px-4 py-2.5 text-center text-[0.875rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
               >
-                Demo herunterladen →
+                Kostenlos testen →
               </a>
             ) : plan.highlighted ? (
               <Link
@@ -158,12 +158,12 @@ export default function Pricing() {
         <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 px-8 py-7">
           {/* Left */}
           <div className="flex-1 min-w-0">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-tertiary mb-2">Custom</p>
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-tertiary mb-2">Massgeschneidert</p>
             <p className="font-heading font-semibold text-[1.25rem] leading-tight text-primary mb-1">
               Braucht ihr mehr als Standard?
             </p>
             <p className="text-[0.875rem] text-secondary leading-relaxed max-w-[52ch]">
-              CRM- & ERP-Integrationen, eigene Automatisierungen und dedizierter Support – massgeschneidert für eure Agentur.
+              Anbindungen an CRM und ERP, eigene Automatisierungen und persönlicher Support, abgestimmt auf eure Agentur.
             </p>
           </div>
 

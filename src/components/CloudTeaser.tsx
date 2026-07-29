@@ -19,7 +19,7 @@ export default function CloudTeaser() {
 
         <div className="reveal-up lg:pb-1">
           <p className="mb-6 max-w-[38ch] text-[0.95rem] leading-[1.75] text-on-dark/70">
-            WPorbit Cloud entsteht als separate Erweiterung für Teams. Alle geplanten Funktionen und der aktuelle Stand sind auf der Cloud-Seite zusammengefasst.
+            Cloud hält Projekte, Arbeitsstände und Standards im Team auf demselben Stand. Wissen bleibt verfügbar, auch wenn Aufgaben oder Verantwortlichkeiten wechseln.
           </p>
           <Link
             to="/cloud"

@@ -1,12 +1,10 @@
 import SwiftUI
 
-/// Feines, deterministisches Sternenfeld als Hintergrundtextur für Hero- oder
-/// dunkle Section-Hintergründe. Deterministisch (Seed), damit sich die Punkte
-/// bei jedem Re-Render nicht neu mischen.
+/// Optional deterministic texture for explicitly dark product surfaces.
 ///
 /// Beispiel:
 ///   ZStack {
-///       WPorbitColor.backgroundBase
+///       WPorbitColor.dark
 ///       Starfield(density: 60, opacity: 0.35)
 ///   }
 struct Starfield: View {
@@ -24,7 +22,7 @@ struct Starfield: View {
                 let rect = CGRect(x: x - radius, y: y - radius, width: radius * 2, height: radius * 2)
                 context.fill(
                     Path(ellipseIn: rect),
-                    with: .color(WPorbitColor.textPrimary.opacity(opacity))
+                    with: .color(WPorbitColor.onDark.opacity(opacity))
                 )
             }
         }
