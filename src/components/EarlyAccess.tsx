@@ -50,7 +50,7 @@ export default function EarlyAccess() {
             </div>
             <button
               type="submit"
-              className="gradient-solar mt-1 rounded-full border-0 px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
+              className="btn btn-primary btn-md mt-1"
             >
               Kostenlos testen →
             </button>

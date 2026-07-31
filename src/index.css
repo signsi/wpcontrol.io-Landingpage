@@ -116,6 +116,64 @@
   background: linear-gradient(120deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
 }
 
+/* ── Buttons — one CTA system, mirrors cicd-update/WPorbit_CI_CD_Vorschlag.html ── */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 200ms var(--ease-out-expo), filter 200ms var(--ease-out-expo),
+    background-color 200ms var(--ease-out-expo), border-color 200ms var(--ease-out-expo),
+    color 200ms var(--ease-out-expo);
+}
+
+@utility btn-sm {
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+}
+@utility btn-md {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+}
+@utility btn-lg {
+  padding: 0.875rem 1.5rem;
+  font-size: 0.875rem;
+}
+
+@utility btn-primary {
+  border: 1px solid transparent;
+  color: var(--color-on-accent);
+  background: linear-gradient(120deg, var(--color-accent) 0%, var(--color-accent-strong) 100%);
+  box-shadow: var(--shadow-action);
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+}
+
+@utility btn-secondary {
+  border: 1px solid var(--color-line);
+  color: var(--color-primary);
+  background: transparent;
+  &:hover {
+    border-color: var(--color-tertiary);
+    background: var(--color-raised);
+  }
+}
+
+@utility btn-on-dark {
+  border: 1px solid oklch(96% 0.006 282 / 20%);
+  color: var(--color-dark);
+  background: var(--color-on-dark);
+  &:hover {
+    transform: translateY(-2px);
+    background: var(--color-accent-tint);
+  }
+}
+
 @utility bg-orbit-halo {
   background: radial-gradient(circle, var(--color-accent-tint) 0%, oklch(97% 0.015 288 / 30%) 45%, transparent 72%);
 }

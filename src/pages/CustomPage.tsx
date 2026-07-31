@@ -47,10 +47,10 @@ export default function CustomPage() {
             <span className="text-tertiary text-[0.8rem] leading-snug border-l border-line pl-3">Individuelles Angebot<br />nach Anforderung</span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#waitlist" className="btn btn-primary btn-md">
               Anfrage stellen
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="btn btn-secondary btn-md">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -84,10 +84,10 @@ export default function CustomPage() {
             Schreib uns, was du dir vorstellst. Wir schauen gemeinsam, was sich sinnvoll umsetzen lässt – ohne Overhead.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#waitlist" className="btn btn-primary btn-md">
               Anfrage stellen
             </Link>
-            <Link to="/cloud" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/cloud" className="btn btn-secondary btn-md">
               Cloud-Plan ansehen
             </Link>
           </div>

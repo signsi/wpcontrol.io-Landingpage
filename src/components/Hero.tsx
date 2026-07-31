@@ -83,10 +83,10 @@ export default function Hero() {
           Alle WordPress-Projekte, Zugänge und Veröffentlichungen in einer klaren Anwendung. So arbeitet dein Team schneller und sicherer, ganz unabhängig vom Hosting.
         </p>
         <div className="hero-ctas mt-8 flex flex-wrap items-center justify-center gap-3">
-          <a href="#demo" className="gradient-solar rounded-full px-6 py-3.5 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_14px_30px_-8px_oklch(52%_0.185_288/55%)]">
+          <a href="#demo" className="btn btn-primary btn-lg">
             10 Tage gratis testen
           </a>
-          <a href="#vergleich" className="rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-primary transition duration-200 ease-out-expo hover:border-tertiary hover:bg-raised">Standalone vergleichen</a>
+          <a href="#vergleich" className="btn btn-secondary btn-lg">Standalone vergleichen</a>
         </div>
         <p className="mt-5 text-[0.78rem] font-medium text-tertiary">Keine Kreditkarte. Voller Funktionsumfang. Ein Projekt.</p>
 

@@ -21,10 +21,10 @@ export default function FeaturesPage() {
             Von der lokalen Entwicklung bis zur automatisierten Wartung: alles, was WordPress-Agenturen täglich brauchen, in einer Plattform.
           </p>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#waitlist" className="btn btn-primary btn-md">
               Early Access sichern
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="btn btn-secondary btn-md">
               Zurück zur Übersicht
             </Link>
           </div>
@@ -80,10 +80,10 @@ export default function FeaturesPage() {
             Sichere dir Early Access, erhalte sofort die ROI- und Migrations-Checkliste und gestalte die nächsten Prioritäten aktiv mit.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#waitlist" className="btn btn-primary btn-md">
               Early Access sichern
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="btn btn-secondary btn-md">
               Zur Startseite
             </Link>
           </div>

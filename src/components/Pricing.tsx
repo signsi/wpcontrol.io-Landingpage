@@ -128,14 +128,14 @@ export default function Pricing() {
             {plan.isAnchor ? (
               <a
                 href={plan.href}
-                className="gradient-solar mt-auto rounded-full px-4 py-2.5 text-center text-[0.875rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
+                className="btn btn-primary btn-md mt-auto"
               >
                 Kostenlos testen →
               </a>
             ) : plan.highlighted ? (
               <Link
                 to={plan.href}
-                className="gradient-solar mt-auto rounded-full px-4 py-2.5 text-center text-[0.875rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110"
+                className="btn btn-primary btn-md mt-auto"
               >
                 Mehr über Cloud →
               </Link>
