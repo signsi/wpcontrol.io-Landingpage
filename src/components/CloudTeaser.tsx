@@ -23,7 +23,7 @@ export default function CloudTeaser() {
           </p>
           <Link
             to="/cloud"
-            className="inline-flex rounded-full border border-on-dark/20 bg-on-dark px-5 py-3 text-sm font-semibold text-dark transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:bg-accent-tint"
+            className="btn btn-on-dark btn-md"
           >
             Mehr über WPorbit Cloud →
           </Link>

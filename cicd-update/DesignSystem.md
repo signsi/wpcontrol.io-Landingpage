@@ -28,7 +28,8 @@ General Sans is used for headings, body copy, and labels. Swift's system monospa
 
 ## Layout and elevation
 
-- Controls: `WPorbitRadius.control` (12 pt)
+- Controls: `WPorbitRadius.control` (12 pt) — compact fields and inline elements, not buttons
+- Buttons: `Capsule` — `WPorbitPrimaryButtonStyle`/`WPorbitSecondaryButtonStyle` are pill-shaped, matching the web `.btn` utility
 - Panels: `WPorbitRadius.panel` (20 pt)
 - Spacing: `WPorbitSpacing.xxs` through `.section`
 - Normal panels: `WPorbitShadow.card`
@@ -41,7 +42,7 @@ Apply shadows with `.wpShadow(WPorbitShadow.card)`.
 
 The components under `Swift/Components` consume semantic V3 tokens:
 
-- `WPorbitPrimaryButtonStyle`, `WPorbitSecondaryButtonStyle`, `WPorbitGhostButtonStyle`
+- `WPorbitPrimaryButtonStyle`, `WPorbitSecondaryButtonStyle`, `WPorbitOnDarkButtonStyle`, `WPorbitGhostButtonStyle`
 - `WPorbitCard`
 - `Pill`
 - `PlanetDot`
@@ -49,3 +50,16 @@ The components under `Swift/Components` consume semantic V3 tokens:
 - `Starfield`, only for intentionally dark product surfaces
 
 Legacy names such as `solar`, `orbitCyan`, and `backgroundBase` remain as deprecated aliases so existing screens can migrate incrementally.
+
+## Buttons
+
+Every button style mirrors a web `.btn-*` utility 1:1, including its size scale:
+
+| Swift | Web | Purpose |
+|---|---|---|
+| `.buttonStyle(.wpPrimary)` / `.wpPrimary(.sm\|.md\|.lg)` | `.btn-primary` | Gradient fill, one per decision group |
+| `.buttonStyle(.wpSecondary)` / `.wpSecondary(.sm\|.md\|.lg)` | `.btn-secondary` | Outline, `textPrimary` label |
+| `.buttonStyle(.wpOnDark)` / `.wpOnDark(.sm\|.md\|.lg)` | `.btn-on-dark` | Solid `onDark` fill for CTAs on `WPorbitColor.dark` surfaces |
+| `.buttonStyle(.wpGhost)` | — (plain text link) | Tertiary text action, no size scale |
+
+`WPorbitButtonSize` (`.sm` / `.md` / `.lg`) sets padding and label size; the no-argument form defaults to `.lg` for `wpPrimary`/`wpSecondary` and `.md` for `wpOnDark`, matching each style's most common web usage (hero CTA vs. standard CTA). All three are `Capsule`-shaped — see Layout and elevation above.

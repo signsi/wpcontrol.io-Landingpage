@@ -59,11 +59,11 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
             )
           )}
           {variant === 'landing' ? (
-            <a href="#demo" className="gradient-solar rounded-full px-4 py-2 text-[0.8125rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <a href="#demo" className="btn btn-primary btn-sm">
               Gratis testen
             </a>
           ) : (
-            <Link to="/#demo" className="gradient-solar rounded-full px-4 py-2 text-[0.8125rem] font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#demo" className="btn btn-primary btn-sm">
               Gratis testen
             </Link>
           )}
@@ -109,7 +109,7 @@ export default function Topbar({ variant = 'landing' }: TopbarProps) {
             )}
             <a
               href="#demo"
-              className="gradient-solar mt-2 rounded-full px-4 py-2.5 text-center text-sm font-semibold text-on-accent shadow-action"
+              className="btn btn-primary btn-sm mt-2"
               onClick={() => setMobileOpen(false)}
             >
               Gratis testen

@@ -51,10 +51,10 @@ export default function StandalonePage() {
             <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Person / Monat<br /><span className="text-tertiary text-[0.78rem]">Max. 3 Projekte</span></span>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link to="/#demo" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/#demo" className="btn btn-primary btn-md">
               10 Tage gratis testen
             </Link>
-            <Link to="/#preise" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/#preise" className="btn btn-secondary btn-md">
               Alle Pläne vergleichen
             </Link>
           </div>
@@ -164,10 +164,10 @@ export default function StandalonePage() {
             Mit dem Cloud-Plan arbeitet das gesamte Team auf demselben Projektstand. Wissen, Zugänge und nächste Schritte bleiben für Berechtigte verfügbar.
           </p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/cloud" className="gradient-solar rounded-full px-5 py-3 text-sm font-semibold text-on-accent shadow-action transition duration-200 ease-out-expo hover:-translate-y-0.5 hover:brightness-110">
+            <Link to="/cloud" className="btn btn-primary btn-md">
               Cloud-Plan ansehen
             </Link>
-            <Link to="/" className="border border-line text-secondary text-sm px-5 py-3 rounded-full hover:text-primary hover:border-secondary/60 transition-colors">
+            <Link to="/" className="btn btn-secondary btn-md">
               Zur Startseite
             </Link>
           </div>

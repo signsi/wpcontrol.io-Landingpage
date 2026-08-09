@@ -44,7 +44,7 @@ Schritte:
      deiner Wahl — falls das Projekt kein SVG-Rendering hat, kurz Bescheid geben
      statt einfach ein PNG zu erzeugen)
    - Headline mit .wpDisplay / .wpH1, Fliesstext mit .wpBody
-   - Primary-, Secondary- und Ghost-Button (.wpPrimary, .wpSecondary, .wpGhost)
+   - Primary-, Secondary-, OnDark- und Ghost-Button (.wpPrimary, .wpSecondary, .wpOnDark, .wpGhost)
    - Zwei bis drei Pills in unterschiedlichen Styles
    - Eine WPorbitCard mit PlanetDot-Icon-Slot
    - Ein OrbitRing als Deko-Element irgendwo im Layout

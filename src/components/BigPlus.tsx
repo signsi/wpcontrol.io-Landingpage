@@ -81,10 +81,10 @@ export default function BigPlus() {
             </div>
 
             <div className="grid grid-cols-2 gap-2 border-t border-border-soft pt-4">
-              <button type="button" className="rounded-control border border-line bg-raised px-4 py-2.5 text-sm font-semibold text-primary">
+              <button type="button" className="btn btn-secondary btn-sm">
                 Projekt öffnen
               </button>
-              <button type="button" className="gradient-solar rounded-control px-4 py-2.5 text-sm font-semibold text-on-accent shadow-action">
+              <button type="button" className="btn btn-primary btn-sm">
                 Veröffentlichen
               </button>
             </div>
