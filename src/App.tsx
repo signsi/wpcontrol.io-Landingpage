@@ -2,8 +2,9 @@ import { useEffect } from 'react'
 import { initAnimations } from './lib/animations'
 import Topbar      from './components/Topbar'
 import Hero        from './components/Hero'
-import BigPlus     from './components/BigPlus'
-import FeatureGrid from './components/FeatureGrid'
+import BigPlus       from './components/BigPlus'
+import AgencyBanner from './components/AgencyBanner'
+import FeatureGrid  from './components/FeatureGrid'
 import LogoCloud   from './components/LogoCloud'
 import Showcase    from './components/Showcase'
 import EarlyAccess from './components/EarlyAccess'
@@ -22,6 +23,7 @@ export default function App() {
       <main className="pt-[3.75rem]">
         <Hero />
         <BigPlus />
+        <AgencyBanner />
         <FeatureGrid />
         <Showcase />
         <LogoCloud />
