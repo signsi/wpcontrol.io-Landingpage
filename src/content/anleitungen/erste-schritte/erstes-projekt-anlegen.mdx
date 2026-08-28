@@ -1,0 +1,87 @@
+---
+title: "Dein erstes Projekt in WPorbit anlegen"
+description: "In wenigen Minuten von der Installation zum laufenden WordPress-Projekt: Projekt anlegen, Umgebung starten und im Browser öffnen."
+order: 20
+updated: 2026-08-20
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - veroeffentlichen/gitlab-deployment-einrichten
+  - fehlerbehebung/deploy-schlaegt-fehl
+draft: false
+---
+
+Diese Anleitung führt dich vom fertig installierten WPorbit zum ersten laufenden WordPress-Projekt. Du brauchst dafür keine Vorkenntnisse in Docker, NGINX oder PHP-Konfiguration.
+
+<Callout variant="hinweis" title="Voraussetzung">
+WPorbit ist installiert und die Lizenz oder Demo ist aktiviert. Falls nicht, findest du das unter [Downloads](/downloads).
+</Callout>
+
+## Projekt anlegen
+
+<Steps>
+
+<Step title="Neues Projekt starten">
+
+Öffne WPorbit und wähle in der Projektübersicht **Neues Projekt**. WPorbit fragt dich, ob du neu beginnen oder eine bestehende Website übernehmen willst. Wähle für diese Anleitung **Neues Projekt**.
+
+</Step>
+
+<Step title="Projektname und Kunde festlegen">
+
+Vergib einen Projektnamen. Er wird für den lokalen Ordner und die lokale Adresse verwendet, also am besten kurz und ohne Sonderzeichen.
+
+<Callout variant="tipp" title="Benennung von Anfang an durchziehen">
+Bei fünfzehn Projekten macht eine einheitliche Benennung den Unterschied. Ein Muster wie `kunde-projekt` funktioniert gut: `mueller-website`, `mueller-shop`. So stehen alle Projekte desselben Kunden in der Liste beieinander.
+</Callout>
+
+</Step>
+
+<Step title="PHP-Version wählen">
+
+WPorbit schlägt eine aktuelle, stabile PHP-Version vor. Für ein neues Projekt kannst du diese übernehmen.
+
+Die Version gilt nur für dieses Projekt. Ein Legacy-Kunde auf PHP 7.4 und ein neues Projekt auf PHP 8.3 können parallel laufen, ohne sich zu stören. Ändern lässt sich das später jederzeit.
+
+</Step>
+
+<Step title="Projekt erstellen">
+
+Bestätige die Angaben. WPorbit legt jetzt die Projektstruktur an, richtet die Datenbank ein und installiert WordPress. Das dauert in der Regel unter einer Minute.
+
+Es sind keine weiteren Schritte nötig: kein Datenbankserver, den du separat starten musst, keine Hosts-Datei, die du bearbeitest.
+
+</Step>
+
+<Step title="Umgebung starten und öffnen">
+
+Wähle das Projekt in der Übersicht und klicke auf **Starten**. Sobald der Status auf „läuft" wechselt, öffnet **Im Browser öffnen** die Website.
+
+Die Zugangsdaten für das WordPress-Backend findest du direkt im Projekt hinterlegt — du musst sie dir nicht notieren.
+
+</Step>
+
+</Steps>
+
+## Was jetzt eingerichtet ist
+
+Nach diesen Schritten hast du:
+
+- eine isolierte lokale Umgebung mit eigener Datenbank und eigener PHP-Version
+- eine funktionierende WordPress-Installation mit Administratorzugang
+- ein Projekt in der Übersicht, das sich jederzeit starten und stoppen lässt
+
+Andere Projekte laufen unabhängig davon weiter. Du kannst mehrere Projekte gleichzeitig gestartet lassen.
+
+## Nächste Schritte
+
+Sinnvoll ist als Nächstes eines von beiden:
+
+- **Bestehende Website übernehmen**, wenn du mit echten Kundenprojekten arbeiten willst statt mit einer leeren Installation.
+- **[Deployment einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten)**, damit Änderungen kontrolliert live gehen.
+
+<Callout variant="achtung" title="Projekt lässt sich nicht starten?">
+Wenn der Start fehlschlägt, liegt es meist an einem belegten Port oder an fehlenden Berechtigungen im Projektordner. Die häufigsten Ursachen und ihre Lösungen stehen unter [Fehlerbehebung](/anleitungen/fehlerbehebung).
+</Callout>

@@ -1,0 +1,96 @@
+---
+title: "Deploy schlägt fehl: die häufigsten Ursachen"
+description: "Fehlerbilder beim Veröffentlichen erkennen und beheben: abgewiesene Verbindungen, fehlende Rechte, falsche Pfade und abgebrochene Pipelines."
+order: 20
+updated: 2026-08-18
+type: fehlerbehebung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/gitlab-deployment-einrichten
+draft: false
+---
+
+Wenn ein Deployment abbricht, liegt die Ursache fast immer in einer von vier Kategorien. Diese Seite ist nach Fehlerbild sortiert: such das, was du siehst, und arbeite die Prüfschritte von oben nach unten ab.
+
+<Callout variant="tipp" title="Zuerst das Protokoll lesen">
+Die Fehlermeldung der Pipeline nennt in fast allen Fällen die Ursache. Es lohnt sich, die letzten Zeilen vollständig zu lesen, bevor man zu raten beginnt.
+</Callout>
+
+## Verbindung wird abgewiesen
+
+**Fehlerbild:** `Permission denied (publickey)` oder `Connection refused`.
+
+**Ursache:** Der SSH-Schlüssel ist auf dem Zielsystem nicht hinterlegt, gehört zum falschen Benutzer, oder das Hosting erwartet einen anderen Port.
+
+**Prüfschritte:**
+
+1. Teste die Verbindung von Hand:
+
+   ```bash
+   ssh -p 22 benutzer@hosting.example.ch
+   ```
+
+2. Schlägt das ebenfalls fehl, liegt es nicht am Deployment, sondern am Zugang. Prüf, ob der öffentliche Schlüssel im Zielsystem hinterlegt ist.
+3. Manche Schweizer Hoster nutzen einen abweichenden SSH-Port. Trag ihn explizit ein, statt dich auf die Standardeinstellung zu verlassen.
+
+<Callout variant="achtung" title="Passphrase-geschützte Schlüssel">
+Ein Schlüssel mit Passphrase funktioniert interaktiv, aber nicht in einer Pipeline — dort kann niemand die Passphrase eingeben. Für Deployments braucht es einen eigenen Schlüssel ohne Passphrase, dessen Rechte auf das Zielverzeichnis beschränkt sind.
+</Callout>
+
+## Keine Schreibrechte im Zielverzeichnis
+
+**Fehlerbild:** `rsync: mkstemp failed: Permission denied` oder `Read-only file system`.
+
+**Ursache:** Der Deployment-Benutzer darf im Zielverzeichnis nicht schreiben.
+
+**Prüfschritte:**
+
+1. Verbinde dich per SSH und prüf die Rechte:
+
+   ```bash
+   ls -la /pfad/zum/zielverzeichnis
+   ```
+
+2. Vergleich den Besitzer mit dem Benutzer, unter dem das Deployment läuft.
+3. Bei manchen Managed-Hostings ist ein Teil des Verzeichnisbaums bewusst schreibgeschützt. Prüf in dem Fall, ob der Zielpfad überhaupt der richtige ist.
+
+## Falscher Pfad
+
+**Fehlerbild:** Die Pipeline meldet Erfolg, aber auf der Website ändert sich nichts.
+
+**Ursache:** Die Dateien landen an einer Stelle, die vom Webserver nicht ausgeliefert wird. Das passiert besonders oft, wenn der Hoster ein Unterverzeichnis wie `httpdocs`, `public_html` oder `www` als Dokumentwurzel verwendet.
+
+**Prüfschritte:**
+
+1. Prüf per SSH, ob die Dateien tatsächlich am erwarteten Ort liegen und wann sie zuletzt geändert wurden:
+
+   ```bash
+   ls -la /pfad/zum/zielverzeichnis/wp-content/themes/mein-theme
+   ```
+
+2. Vergleich diesen Pfad mit der Dokumentwurzel aus dem Hosting-Backend.
+3. Wenn die Dateien am richtigen Ort liegen und trotzdem nichts sichtbar ist, ist meist ein Cache im Spiel — beim Hoster, in einem Caching-Plugin oder vorgelagert.
+
+## Pipeline bricht vor dem Deployment ab
+
+**Fehlerbild:** Der Durchlauf endet, bevor Dateien übertragen werden.
+
+**Ursache:** Ein vorgelagerter Schritt schlägt fehl, meist die Installation von Abhängigkeiten oder ein Build-Vorgang.
+
+**Prüfschritte:**
+
+1. Sieh nach, welcher Schritt abgebrochen ist. Der Fehler liegt fast nie im Deployment selbst.
+2. Prüf, ob die Node- oder PHP-Version in der Pipeline zu der passt, mit der lokal gebaut wird. Abweichungen hier sind die häufigste Ursache für „lokal geht es, in der Pipeline nicht".
+3. Prüf, ob alle benötigten CI/CD-Variablen gesetzt sind. Eine fehlende Variable führt oft zu einer irreführenden Folgefehlermeldung.
+
+## Wenn nichts davon passt
+
+Sammle vor der Support-Anfrage:
+
+- den vollständigen Auszug aus dem Pipeline-Protokoll
+- Projektname und Zielumgebung
+- was zuletzt geändert wurde, bevor der Fehler auftrat
+
+Mit diesen drei Angaben lässt sich fast jeder Fall ohne Rückfragen einordnen. Schreib uns über den [Support](/support).

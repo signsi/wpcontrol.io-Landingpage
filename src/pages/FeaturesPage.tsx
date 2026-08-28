@@ -1,96 +1,88 @@
 import { Link } from 'react-router-dom'
-import Topbar  from '../components/Topbar'
-import Footer  from '../components/Footer'
+import Seo from '../components/Seo'
+import PageHero from '../components/PageHero'
+import CTABand from '../components/CTABand'
 import { allFeatures, tickerItems } from '../data/features'
+import { breadcrumbLd } from '../lib/jsonld'
+
+const crumbs = [
+  { label: 'Produkt', path: '/produkt' },
+  { label: 'Funktionen', path: '/produkt/funktionen' },
+]
 
 export default function FeaturesPage() {
   return (
-    <div className="min-h-screen bg-base text-primary">
-      <Topbar variant="features" />
+    <>
+      <Seo
+        title="Alle Funktionen"
+        description="Von der lokalen Entwicklung bis zur automatisierten Wartung: alle Funktionen von WPorbit im Detail."
+        path="/produkt/funktionen"
+        jsonLd={breadcrumbLd(crumbs)}
+      />
 
-      <main className="pt-[3.25rem]">
-        {/* Hero */}
-        <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-            WPorbit Features
-          </p>
-          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-5 max-w-2xl">
-            Alle Funktionen. Im Detail.
-          </h1>
-          <p className="text-secondary leading-[1.75] text-[1rem] max-w-[48ch] mb-7">
-            Von der lokalen Entwicklung bis zur automatisierten Wartung: alles, was WordPress-Agenturen täglich brauchen, in einer Plattform.
-          </p>
-          <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="btn btn-primary btn-md">
-              Early Access sichern
-            </Link>
-            <Link to="/" className="btn btn-secondary btn-md">
-              Zurück zur Übersicht
-            </Link>
-          </div>
-        </section>
+      <PageHero
+        kicker="Funktionen"
+        title="Alle Funktionen. Im Detail."
+        lead="Von der lokalen Entwicklung bis zur automatisierten Wartung: alles, was WordPress-Agenturen täglich brauchen, in einer Plattform."
+        crumbs={crumbs}
+        actions={
+          <>
+            <Link to="/demo" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
+            <Link to="/produkt" className="btn btn-secondary btn-md">Zum Überblick</Link>
+          </>
+        }
+      />
 
-        {/* Ticker */}
-        <div className="overflow-hidden border-b border-line bg-surface" aria-hidden="true">
-          <div className="flex w-max animate-ticker">
-            {[...tickerItems, ...tickerItems].map((item, i) => (
-              <span
-                key={`${item}-${i}`}
-                className="px-5 py-2.5 text-[0.72rem] font-medium text-tertiary whitespace-nowrap border-r border-line tracking-[0.02em]"
-              >
-                {item}
-              </span>
-            ))}
-          </div>
+      {/* Ticker */}
+      <div className="overflow-hidden border-b border-line bg-surface" aria-hidden="true">
+        <div className="flex w-max animate-ticker">
+          {[...tickerItems, ...tickerItems].map((item, i) => (
+            <span
+              key={`${item}-${i}`}
+              className="border-r border-line px-5 py-2.5 text-[0.72rem] font-medium tracking-[0.02em] text-tertiary whitespace-nowrap"
+            >
+              {item}
+            </span>
+          ))}
         </div>
+      </div>
 
-        {/* Feature sections — alternating layout */}
-        {allFeatures.map((feature, i) => (
-          <section key={feature.title} className="px-6 py-16 border-b border-line last:border-b-0">
-            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center ${
+      {/* Feature-Sektionen, abwechselnd ausgerichtet */}
+      {allFeatures.map((feature, i) => (
+        <section key={feature.title} className="reveal-up border-b border-line px-6 py-16 last:border-b-0">
+          <div
+            className={`grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20 ${
               i % 2 === 1 ? 'lg:[direction:rtl]' : ''
-            }`}>
-              <div className={i % 2 === 1 ? 'lg:[direction:ltr]' : ''}>
-                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
-                  Feature {String(i + 1).padStart(2, '0')}
-                </p>
-                <h2 className="font-heading font-semibold text-[clamp(1.5rem,2.8vw,2rem)] leading-[1.15] tracking-[-0.025em] mb-4">
-                  {feature.title}
-                </h2>
-                <p className="text-secondary text-[0.95rem] leading-[1.78] max-w-[46ch]">
-                  {feature.detail}
-                </p>
-              </div>
-
-              <div className={`border border-line rounded-xl overflow-hidden flex flex-col min-h-72 ${
-                i % 2 === 1 ? 'lg:[direction:ltr]' : ''
-              }`}>
-                {feature.visual}
-              </div>
+            }`}
+          >
+            <div className={i % 2 === 1 ? 'lg:[direction:ltr]' : ''}>
+              <p className="mb-3 text-[0.62rem] font-bold uppercase tracking-[0.13em] text-tertiary">
+                Funktion {String(i + 1).padStart(2, '0')}
+              </p>
+              <h2 className="mb-4 font-heading text-[clamp(1.5rem,2.8vw,2rem)] font-semibold leading-[1.15] tracking-[-0.025em]">
+                {feature.title}
+              </h2>
+              <p className="max-w-[46ch] text-[0.95rem] leading-[1.78] text-secondary">
+                {feature.detail}
+              </p>
             </div>
-          </section>
-        ))}
 
-        {/* CTA */}
-        <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[24ch] mx-auto">
-            Bereit, den WordPress-Alltag zu vereinfachen?
-          </h2>
-          <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[44ch] mx-auto mb-7">
-            Sichere dir Early Access, erhalte sofort die ROI- und Migrations-Checkliste und gestalte die nächsten Prioritäten aktiv mit.
-          </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="btn btn-primary btn-md">
-              Early Access sichern
-            </Link>
-            <Link to="/" className="btn btn-secondary btn-md">
-              Zur Startseite
-            </Link>
+            <div
+              className={`flex min-h-72 flex-col overflow-hidden rounded-xl border border-line ${
+                i % 2 === 1 ? 'lg:[direction:ltr]' : ''
+              }`}
+            >
+              {feature.visual}
+            </div>
           </div>
         </section>
-      </main>
+      ))}
 
-      <Footer />
-    </div>
+      <CTABand
+        title="Bereit, den WordPress-Alltag zu vereinfachen?"
+        text="Teste WPorbit zehn Tage lang mit einem Projekt und vollem Funktionsumfang. Keine Kreditkarte nötig."
+        secondary={{ label: 'Preise ansehen', to: '/preise' }}
+      />
+    </>
   )
 }

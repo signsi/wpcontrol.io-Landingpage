@@ -1,7 +1,23 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { faqItems } from '../data/landing'
 
-export default function FAQ() {
+interface FaqItem {
+  q: string
+  a: string
+}
+
+interface FAQProps {
+  items?: FaqItem[]
+  heading?: string
+  intro?: string
+}
+
+export default function FAQ({
+  items = faqItems,
+  heading = 'Was Entscheider vor dem Start wissen wollen',
+  intro,
+}: FAQProps) {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
@@ -11,16 +27,23 @@ export default function FAQ() {
         {/* Left: heading */}
         <div className="reveal-up lg:sticky lg:top-24">
           <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4">
-            Was Entscheider vor dem Start wissen wollen
+            {heading}
           </h2>
           <p className="text-secondary text-[0.875rem] leading-[1.75] max-w-[32ch]">
-            Weitere Fragen? Melde dich direkt über die Early-Access-Anmeldung.
+            {intro ?? (
+              <>
+                Weitere Fragen? Schau in die{' '}
+                <Link to="/anleitungen" className="text-accent-strong underline">Anleitungen</Link>{' '}
+                oder schreib uns über{' '}
+                <Link to="/kontakt" className="text-accent-strong underline">Kontakt</Link>.
+              </>
+            )}
           </p>
         </div>
 
         {/* Right: accordion cards */}
         <div className="stagger-group flex flex-col gap-2">
-          {faqItems.map((item, i) => {
+          {items.map((item, i) => {
             const isOpen = open === i
             return (
               <div

@@ -1,61 +1,28 @@
 import { Link } from 'react-router-dom'
 import PlanetDot from './PlanetDot'
+import { customPlan, plans } from '../data/plans'
 
-const plans = [
-  {
-    name: 'Demo',
-    priceMain: 'Kostenlos',
-    priceSub: '',
-    note: '10 Tage gratis. Voller Funktionsumfang. Kein Risiko.',
-    badge: '10 Tage · 1 Projekt',
-    features: ['Voller Funktionsumfang', 'Direkter Download', 'Keine Kreditkarte'],
-    highlighted: false,
-    href: '#demo',
-    isAnchor: true,
-  },
-  {
-    name: 'Standalone',
-    priceMain: 'ab 290',
-    priceSub: 'CHF / Person / Monat',
-    note: 'Für Einzelpersonen, die bis zu drei Projekte unabhängig verwalten.',
-    badge: 'Max. 3 Projekte',
-    features: ['Ohne technische Einrichtung starten', 'Alle Projekte im Blick', 'Zugänge sicher verwahrt', 'Änderungen sicher veröffentlichen'],
-    highlighted: false,
-    href: '/standalone',
-    isAnchor: false,
-  },
-  {
-    name: 'Cloud',
-    priceMain: 'ab 1200',
-    priceSub: 'CHF / Monat',
-    note: 'Für Teams, die Projekte und Wissen gemeinsam weiterführen. 3 Personen inklusive.',
-    badge: 'In Entwicklung',
-    features: ['Gemeinsamer Stand aller Projekte', 'Dort weiterarbeiten, wo das Team aufgehört hat', 'Gemeinsame Standards und Know-how', 'Zugänge für Berechtigte verfügbar', 'Websites überwachen und Wartung planen'],
-    highlighted: true,
-    href: '/cloud',
-    isAnchor: false,
-  },
-]
-
-const customPlan = {
-  features: ['Alles aus Cloud', 'Anbindung an CRM und ERP', 'Abläufe nach Mass', 'Eigene Abfragen und Automatisierungen', 'Persönlicher Support'],
-  href: '/custom',
+interface PricingProps {
+  /** 'section' auf der Startseite (mit Überschrift), 'page' auf /preise. */
+  variant?: 'section' | 'page'
 }
 
-export default function Pricing() {
+export default function Pricing({ variant = 'section' }: PricingProps) {
   return (
-    <section className="px-6 py-28" id="preise">
-      <div className="reveal-up mb-12">
-        <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
-          Preise
-        </p>
-        <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em]">
-          Standalone für Einzelne. Cloud für Teams.
-        </h2>
-        <p className="text-secondary text-[0.9375rem] leading-[1.75] mt-3 max-w-[62ch]">
-          Standalone hält deine eigenen Projekte übersichtlich. Cloud bringt Projekte, Arbeitsstände und Wissen für das ganze Team zusammen, damit alle ohne Übergabeverlust weiterarbeiten können.
-        </p>
-      </div>
+    <section className={variant === 'page' ? 'px-6 py-16' : 'px-6 py-28'} id="preise">
+      {variant === 'section' && (
+        <div className="reveal-up mb-12">
+          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
+            Preise
+          </p>
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em]">
+            Standalone für Einzelne. Cloud für Teams.
+          </h2>
+          <p className="text-secondary text-[0.9375rem] leading-[1.75] mt-3 max-w-[62ch]">
+            Standalone hält deine eigenen Projekte übersichtlich. Cloud bringt Projekte, Arbeitsstände und Wissen für das ganze Team zusammen, damit alle ohne Übergabeverlust weiterarbeiten können.
+          </p>
+        </div>
+      )}
 
       <div className="stagger-group grid grid-cols-1 md:grid-cols-3 gap-5">
         {plans.map((plan) => (
@@ -125,26 +92,16 @@ export default function Pricing() {
             </ul>
 
             {/* CTA */}
-            {plan.isAnchor ? (
-              <a
-                href={plan.href}
-                className="btn btn-primary btn-md mt-auto"
-              >
-                Kostenlos testen →
-              </a>
-            ) : plan.highlighted ? (
-              <Link
-                to={plan.href}
-                className="btn btn-primary btn-md mt-auto"
-              >
-                Mehr über Cloud →
+            {plan.id === 'demo' || plan.highlighted ? (
+              <Link to={plan.href} className="btn btn-primary btn-md mt-auto">
+                {plan.cta} →
               </Link>
             ) : (
               <Link
                 to={plan.href}
                 className="mt-auto text-[0.875rem] font-medium text-tertiary hover:text-secondary transition-colors"
               >
-                Details ansehen →
+                {plan.cta} →
               </Link>
             )}
           </article>
@@ -158,12 +115,12 @@ export default function Pricing() {
         <div className="relative flex flex-col md:flex-row items-start md:items-center gap-6 px-8 py-7">
           {/* Left */}
           <div className="flex-1 min-w-0">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-tertiary mb-2">Massgeschneidert</p>
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-tertiary mb-2">{customPlan.name}</p>
             <p className="font-heading font-semibold text-[1.25rem] leading-tight text-primary mb-1">
-              Braucht ihr mehr als Standard?
+              {customPlan.headline}
             </p>
             <p className="text-[0.875rem] text-secondary leading-relaxed max-w-[52ch]">
-              Anbindungen an CRM und ERP, eigene Automatisierungen und persönlicher Support, abgestimmt auf eure Agentur.
+              {customPlan.note}
             </p>
           </div>
 
@@ -185,7 +142,7 @@ export default function Pricing() {
             to={customPlan.href}
             className="shrink-0 text-[0.875rem] font-semibold text-primary border border-line bg-raised px-5 py-2.5 rounded-xl hover:border-secondary/50 hover:bg-surface transition-colors whitespace-nowrap"
           >
-            Auf Anfrage →
+            {customPlan.cta} →
           </Link>
         </div>
       </div>

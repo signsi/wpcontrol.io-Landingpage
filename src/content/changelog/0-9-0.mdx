@@ -1,0 +1,31 @@
+---
+version: "0.9.0"
+date: 2026-08-01
+title: "Selektive Synchronisierung und schnellere Projektstarts"
+type: release
+highlights:
+  - "Einzelne Themes, Plugins oder die Datenbank gezielt synchronisieren"
+  - "Projektstart im Schnitt 40 Prozent schneller"
+  - "Vorlagen für GitLab-Pipelines direkt im Projekt verfügbar"
+draft: false
+---
+
+## Selektive Synchronisierung
+
+Bisher liess sich `wp-content` nur vollständig übertragen. Neu wählst du gezielt aus, was synchronisiert wird: ein einzelnes Theme, ein bestimmtes Plugin oder nur die Datenbank.
+
+Das macht vor allem den Alltag bei grossen Projekten leichter, bei denen die Medienbibliothek ein Vielfaches des eigentlichen Codes wiegt.
+
+## Schnellere Projektstarts
+
+Der Start einer lokalen Umgebung wurde überarbeitet. Bei Projekten mit vielen Plugins liegt die Verbesserung im Schnitt bei rund 40 Prozent.
+
+## GitLab-Vorlagen im Projekt
+
+Die Pipeline-Vorlage muss nicht mehr aus der Dokumentation kopiert werden, sondern liegt direkt im Projekt bereit. Die Einrichtung ist unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten) beschrieben.
+
+## Korrekturen
+
+- Projekte mit Umlauten im Namen liessen sich unter bestimmten Umständen nicht starten.
+- Der Status eines Projekts wurde nach einem fehlgeschlagenen Deployment nicht zurückgesetzt.
+- Beim Wechsel der PHP-Version blieb gelegentlich ein alter Prozess aktiv.

@@ -1,0 +1,94 @@
+---
+title: "WordPress-Updates ohne Angst: der Staging-First-Workflow"
+description: "Warum Agenturen Updates nie direkt auf Live einspielen sollten und wie ein Ablauf aussieht, der auch am Freitagnachmittag funktioniert."
+date: 2026-08-12
+category: wartung
+tags: [updates, staging, prozesse]
+author: patrick
+featured: true
+draft: false
+---
+
+<KeyTakeaways>
+
+- Direkte Live-Updates sparen zehn Minuten und kosten im Fehlerfall einen halben Tag.
+- Ein Staging-Durchlauf braucht drei Schritte: kopieren, aktualisieren, prüfen.
+- Entscheidend ist nicht das Werkzeug, sondern dass der Ablauf immer derselbe ist.
+- Wer keinen geprüften Rückweg hat, hat kein Update-Verfahren, sondern eine Hoffnung.
+
+</KeyTakeaways>
+
+Fast jede Agentur kennt diesen Moment: Ein Kunde meldet sich, weil das Kontaktformular seit gestern nicht mehr funktioniert. Gestern war Update-Tag. Niemand weiss genau, welches der elf Plugins die Ursache ist, und die letzte Sicherung stammt aus der Nacht davor, inklusive aller Inhalte, die seither entstanden sind.
+
+Das Problem ist selten das Update selbst. Das Problem ist, dass es keinen Ort gab, an dem der Fehler hätte auffallen können, bevor er die Kundin trifft.
+
+## Was ein Update tatsächlich kostet
+
+Die Rechnung, die in Agenturen selten gemacht wird, sieht ungefähr so aus.
+
+| Ablauf | Aufwand pro Projekt | Aufwand im Fehlerfall |
+| --- | --- | --- |
+| Direkt auf Live | 10 Minuten | 3 bis 5 Stunden, plus Vertrauensverlust |
+| Über Staging | 25 Minuten | 20 Minuten, intern, ohne Aussenwirkung |
+
+Bei fünfzehn Projekten und monatlichen Updates ist der Staging-Weg im Jahr rund 45 Stunden teurer. Ein einziger ernsthafter Zwischenfall pro Jahr holt das wieder herein. Zwei Zwischenfälle, und der direkte Weg war die teurere Variante.
+
+Dazu kommt ein Effekt, der sich schlecht beziffern lässt: Teams, die Angst vor Updates haben, schieben sie auf. Aufgeschobene Updates werden zu grossen Updates, und grosse Updates gehen häufiger schief. Das Risiko wächst genau dort, wo man es vermeiden wollte.
+
+## Der Ablauf in drei Schritten
+
+Der Wert liegt nicht in der Raffinesse, sondern in der Wiederholbarkeit. Derselbe Ablauf, jedes Mal, unabhängig davon, wer im Team ihn ausführt.
+
+<Steps>
+
+<Step title="Aktuellen Live-Stand kopieren">
+
+Staging muss den echten Produktivstand abbilden, inklusive Datenbank und `wp-content`. Eine Staging-Umgebung, die drei Monate alt ist, testet nicht das Update, sondern die Vergangenheit.
+
+Wichtig ist auch, was **nicht** mitkopiert wird: produktive Zugangsdaten für Zahlungsdienste, Mail-Versand und externe Schnittstellen. Sonst schickt die Testumgebung echte Bestellbestätigungen an echte Kundinnen.
+
+</Step>
+
+<Step title="Updates einspielen und beobachten">
+
+Core, Plugins und Themes aktualisieren. Danach die Fehlerprotokolle ansehen, nicht nur die Startseite.
+
+<Callout variant="tipp" title="Einzeln statt gebündelt">
+Bei Projekten mit vielen Plugins lohnt es sich, kritische Erweiterungen einzeln zu aktualisieren. Wenn dann etwas bricht, weisst du sofort, welches Plugin es war, statt elf Kandidaten auszuschliessen.
+</Callout>
+
+</Step>
+
+<Step title="Die Wege prüfen, die Geld bringen">
+
+Nicht die ganze Website durchklicken, sondern gezielt das, was für den Kunden zählt: Kontaktformular absenden, Bestellung abschliessen, Login, Suche, das zentrale Formular.
+
+Diese Liste gehört einmal pro Projekt festgehalten. Sie ist in zehn Minuten geschrieben und spart bei jedem Update die Frage, was man eigentlich testen wollte.
+
+</Step>
+
+</Steps>
+
+## Der Rückweg gehört dazu
+
+Ein Update-Verfahren ohne geprüften Rückweg ist kein Verfahren. Vor jedem Live-Update muss klar sein, wie der vorherige Zustand wiederhergestellt wird, wie lange das dauert und wer es kann.
+
+<Callout variant="achtung" title="Backups sind erst ein Rückweg, wenn sie einmal eingespielt wurden">
+Eine Sicherung, die nie zurückgespielt wurde, ist eine Vermutung. Teste die Wiederherstellung einmal pro Quartal an einem unkritischen Projekt. Fast jede Agentur, die das zum ersten Mal macht, findet dabei etwas Kaputtes.
+</Callout>
+
+Der Rückweg muss auch nachts um elf funktionieren, wenn die Person, die den Ablauf gebaut hat, in den Ferien ist. Das ist der eigentliche Test für jede Dokumentation.
+
+## Warum es an der Umsetzung scheitert
+
+Kaum jemand widerspricht diesem Vorgehen. Trotzdem arbeiten viele Teams weiterhin direkt auf Live. Der Grund ist fast immer Reibung: Staging von Hand aufzusetzen dauert länger als das Update selbst.
+
+Genau hier entscheidet sich, ob ein Prozess gelebt wird. Wenn der sichere Weg drei Klicks braucht und der unsichere einen, gewinnt der unsichere an jedem stressigen Tag.
+
+Deshalb lohnt es sich, diesen Ablauf zu automatisieren statt ihn zu dokumentieren. In WPorbit sind Kopieren, Aktualisieren und Zurückrollen Teil derselben Oberfläche. Wie der Rückweg konkret eingerichtet wird, steht unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten); alle weiteren Abläufe findest du im [Hilfe-Center](/anleitungen).
+
+## Der Anfang für nächste Woche
+
+Nimm das Projekt, bei dem dir ein Update am meisten Bauchschmerzen bereitet. Schreib die fünf Abläufe auf, die funktionieren müssen. Mach einen Staging-Durchlauf. Wenn nichts passiert, hast du zwanzig Minuten investiert und weisst es jetzt sicher.
+
+Das ist der eigentliche Gewinn: nicht, dass nie etwas schiefgeht, sondern dass du es vor dem Kunden merkst.

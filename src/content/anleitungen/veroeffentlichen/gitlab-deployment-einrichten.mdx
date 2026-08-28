@@ -1,0 +1,101 @@
+---
+title: "Deployment über GitLab einrichten"
+description: "Ein Projekt mit einer GitLab-Pipeline verbinden, damit Änderungen reproduzierbar veröffentlicht und im Bedarfsfall zurückgerollt werden können."
+order: 10
+updated: 2026-08-18
+type: anleitung
+audience: fortgeschritten
+duration: "20 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - fehlerbehebung/deploy-schlaegt-fehl
+  - erste-schritte/erstes-projekt-anlegen
+draft: false
+---
+
+Diese Anleitung verbindet ein WPorbit-Projekt mit einer GitLab-Pipeline. Danach lassen sich Änderungen über einen definierten Ablauf veröffentlichen, statt Dateien einzeln per FTP zu übertragen.
+
+<Callout variant="hinweis" title="Voraussetzungen">
+Du brauchst ein GitLab-Repository für das Projekt, SSH-Zugang zum Zielhosting und Schreibrechte im Zielverzeichnis. Die Pipeline selbst läuft in deiner GitLab-Instanz — WPorbit stösst sie an und wertet das Ergebnis aus.
+</Callout>
+
+## Einrichtung
+
+<Steps>
+
+<Step title="Repository mit dem Projekt verbinden">
+
+Öffne das Projekt in WPorbit und wechsle in die Einstellungen zum Bereich **Veröffentlichen**. Trag dort die Repository-URL ein.
+
+Wichtig ist die Frage, was versioniert wird. Bewährt hat sich, nur das eigene Theme und projektspezifische Plugins ins Repository zu legen — nicht den WordPress-Core, nicht `uploads`, nicht Plugins aus dem Verzeichnis.
+
+```gitignore
+/wp-admin/
+/wp-includes/
+/wp-content/uploads/
+/wp-content/upgrade/
+wp-config.php
+```
+
+</Step>
+
+<Step title="Zugangsdaten hinterlegen">
+
+Hinterlege SSH-Host, Benutzer und Schlüssel im Projekt. Die Daten werden verschlüsselt gespeichert und nicht ins Repository geschrieben.
+
+<Callout variant="achtung" title="Niemals in die Pipeline-Datei">
+Zugangsdaten gehören in die CI/CD-Variablen von GitLab oder in den Vault, nie in die `.gitlab-ci.yml`. Die Datei liegt im Repository und ist damit für alle sichtbar, die Zugriff darauf haben.
+</Callout>
+
+</Step>
+
+<Step title="Pipeline-Vorlage übernehmen">
+
+WPorbit bringt eine Vorlage für GitLab mit. Übernimm sie in das Repository als `.gitlab-ci.yml` und passe Zielpfad und Branch an.
+
+```yaml
+stages:
+  - deploy
+
+deploy_production:
+  stage: deploy
+  only:
+    - main
+  script:
+    - rsync -az --delete
+        --exclude='wp-content/uploads'
+        wp-content/themes/mein-theme/
+        "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/wp-content/themes/mein-theme/"
+```
+
+Der Ausschluss von `uploads` ist wichtig: Medien werden auf dem Produktivsystem hochgeladen und dürfen nicht vom Repository überschrieben werden.
+
+</Step>
+
+<Step title="Ersten Durchlauf testen">
+
+Teste den Ablauf zuerst gegen eine Staging-Umgebung oder ein unkritisches Projekt, nicht gegen die Live-Website eines Kunden.
+
+Löse das Deployment aus WPorbit aus. Die Anwendung prüft die Voraussetzungen, startet die Pipeline und zeigt dir das Ergebnis. Bei einem Fehler siehst du direkt, an welcher Stelle der Ablauf abgebrochen ist.
+
+</Step>
+
+<Step title="Rückweg prüfen">
+
+Ein Deployment-Verfahren ist erst fertig, wenn der Rückweg einmal funktioniert hat. Rolle den letzten Stand testweise zurück und stell sicher, dass die Website danach unverändert läuft.
+
+<Callout variant="tipp" title="Einmal reicht nicht für immer">
+Prüfe den Rückweg einmal pro Quartal erneut. Änderungen am Hosting oder an der Pipeline fallen sonst erst dann auf, wenn du sie am dringendsten brauchst.
+</Callout>
+
+</Step>
+
+</Steps>
+
+## GitHub statt GitLab
+
+Das Prinzip ist identisch. Statt `.gitlab-ci.yml` liegt der Ablauf unter `.github/workflows/deploy.yml`, und die Zugangsdaten werden als *Repository Secrets* hinterlegt. Vorgefertigte Vorlagen gibt es zum Start nur für GitLab.
+
+## Wenn etwas nicht funktioniert
+
+Die häufigsten Ursachen für fehlgeschlagene Deployments — abgewiesene SSH-Verbindungen, falsche Pfade, fehlende Schreibrechte — stehen mit Lösung unter [Deploy schlägt fehl](/anleitungen/fehlerbehebung/deploy-schlaegt-fehl).
