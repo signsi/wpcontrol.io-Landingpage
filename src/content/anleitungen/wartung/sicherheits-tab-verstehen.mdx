@@ -12,7 +12,7 @@ related:
   - wartung/ueberwachung-einschalten
   - entwicklung/datenbank-wp-cli-und-terminal
   - veroeffentlichen/live-seite-sicher-aktualisieren
-draft: true
+draft: false
 ---
 
 Im Team-Dashboard hat jedes Projekt einen Tab **Sicherheit**. Er fasst zusammen, was das Inventar über den Zustand einer Live-Seite verrät. Keiner der Punkte ist für sich ein Sicherheitsvorfall. Zusammen zeigen sie aber, wo eine Seite gepflegt werden sollte.
@@ -23,7 +23,7 @@ Der Tab braucht das Inventar, also die Überwachung mit Lesezugang per SSH. Bei 
 
 Die Werte stammen aus dem letzten Inventar, das der Server alle 6 Stunden liest. Eine Änderung auf der Live-Seite siehst du also erst nach dem nächsten Lauf.
 
-{/* SCREENSHOT 01-sicherheit-tab: Web-Dashboard, Tab „Sicherheit“ eines Projekts mit Lesezugang; idealerweise WP_DEBUG „an“ und mindestens ein inaktives Plugin, darunter die Tabelle „Administratoren“ mit zwei bis drei Logins */}
+![Team-Dashboard, Tab „Sicherheit“: WP_DEBUG, Cron, nächster Cron-Event, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren](/anleitungen/wartung/sicherheits-tab-verstehen/01-sicherheit-tab.webp)
 
 ## WP_DEBUG
 

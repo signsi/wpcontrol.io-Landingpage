@@ -12,7 +12,7 @@ related:
   - veroeffentlichen/live-seite-sicher-aktualisieren
   - zugaenge/zugangsdaten-im-vault
   - fehlerbehebung/deploy-schlaegt-fehl
-draft: true
+draft: false
 ---
 
 Damit WPorbit Daten holen, senden oder ein Theme deployen kann, braucht es einen SSH-Zugang zum Server. Diese Anleitung zeigt, wo du ihn einträgst, wie WPorbit sich anmeldet und wie du herausfindest, ob alles bereit ist.
@@ -110,7 +110,7 @@ Hat sich seit dem letzten vollständig bestandenen Test nichts an den Zugangsdat
 
 Den Test findest du auch im Kontextmenü eines Projekts.
 
-{/* SCREENSHOT 03-ausfuehrlicher-test: Bereich „Alle Prüfungen einzeln“ aufgeklappt, Ergebnis mit einer fehlgeschlagenen Zeile „Datenbankverbindung“, Fehlerdetails und Knopf „Beheben“ */}
+![Bereich „Alle Prüfungen einzeln“ nach „Verbindung ausführlich testen“: „Alle Prüfungen erfolgreich“, 8 von 8 Tests mit „OK“, darunter das Protokoll](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten/03-ausfuehrlicher-test.webp)
 
 <Callout variant="achtung" title="Dieser Test kann den Server verändern">
 Anders als **Verbindung prüfen** ist der ausführliche Test nicht rein lesend. Findet er keine Datenbank, legt er sie an. Findet er eine leere Datenbank, installiert er WordPress auf dem Server. Das ist für einen neuen, leeren Server gedacht. Nutze bei einer bestehenden Live-Seite zuerst **Verbindung prüfen**.
