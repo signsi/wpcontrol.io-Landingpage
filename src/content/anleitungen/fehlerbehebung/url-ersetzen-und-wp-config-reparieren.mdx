@@ -1,0 +1,155 @@
+---
+title: "URL ersetzen und wp-config.php reparieren"
+description: "Zwei Reparaturen aus der Wartungskarte: Adressen in der lokalen Datenbank umschreiben, wenn die lokale Seite auf die Live-Seite verweist, und DB_HOST auf dem Server korrigieren, wenn WP-CLI keine Datenbankverbindung bekommt."
+order: 40
+updated: 2026-09-24
+type: fehlerbehebung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - fehlerbehebung/deploy-schlaegt-fehl
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - projekte/projekt-aus-backup-importieren
+  - wartung/backups-erstellen
+draft: true
+---
+
+Beide Reparaturen findest du im Projekt im Tab **Übersicht**, in der Karte **Wartung**. Jede Zeile nennt zuerst das Symptom und daneben die Aktion. Diese Seite erklärt, wann du welche brauchst und was sie genau verändern.
+
+| Symptom in der Karte **Wartung** | Aktion | Wirkt auf |
+|---|---|---|
+| „Die lokale Seite verweist noch auf die Live-Adresse.“ | **URL ersetzen…** | die lokale Datenbank |
+| „WP-CLI bekommt auf dem Server keine Datenbankverbindung.“ | **wp-config.php reparieren…** | die `wp-config.php` auf dem Server |
+
+![Tab „Übersicht“ mit der Karte „Wartung“: fünf Symptome mit je einer Aktion, darunter „URL ersetzen…“ und „wp-config.php reparieren…“](/anleitungen/fehlerbehebung/url-ersetzen-und-wp-config-reparieren/01-wartungskarte.webp)
+
+## URL ersetzen
+
+### Wann du es brauchst
+
+Die lokale Seite läuft, aber Links, Bilder oder Weiterleitungen führen auf die Live-Domain. Klickst du lokal auf einen Menüpunkt, landest du plötzlich auf der Live-Seite. Das passiert zum Beispiel nach einem manuell eingespielten Datenbank-Dump oder wenn beim Senden die lokalen Adressen nicht vollständig wiederhergestellt werden konnten. WPorbit meldet das dann mit „Lokale URLs konnten nach dem Export nicht vollständig wiederhergestellt werden“.
+
+Beim **Holen** und beim **Backup importieren** passt WPorbit die Adressen selbst an. Dort brauchst du **URL ersetzen…** normalerweise nicht.
+
+### So gehst du vor
+
+<Steps>
+
+<Step title="Projekt starten">
+
+Die Ersetzung läuft im lokalen Container. Das Projekt muss laufen.
+
+</Step>
+
+<Step title="Fenster öffnen">
+
+Klicke in der Karte **Wartung** auf **URL ersetzen…**. Das Fenster „URL ersetzen“ füllt die beiden Felder mit den Werten aus den Zugangsdaten vor:
+
+- **Von (alt)**: die Live-Adresse
+- **Nach (neu)**: die lokale Adresse
+
+Passe die Werte an, falls die Datenbank eine andere alte Adresse enthält, etwa eine frühere Domain oder eine Staging-Adresse.
+
+![Fenster „URL ersetzen“: „Von (alt)“ mit der Live-Adresse, „Nach (neu)“ mit der lokalen Adresse, Hinweis zu wp search-replace](/anleitungen/fehlerbehebung/url-ersetzen-und-wp-config-reparieren/02-url-ersetzen.webp)
+
+</Step>
+
+<Step title="Ersetzen">
+
+Klicke auf **URL ersetzen**. Der Knopf ist nur aktiv, wenn beide Felder ausgefüllt sind und sich unterscheiden. Unter **Ausgabe** siehst du jede einzelne Ersetzung und wie viele Stellen WP-CLI geändert hat.
+
+</Step>
+
+</Steps>
+
+### Was dabei passiert
+
+WPorbit führt `wp search-replace` über alle Tabellen der lokalen Datenbank aus. Serialisierte Daten, wie sie in Optionen und Plugin-Einstellungen vorkommen, bleiben dabei gültig.
+
+Ersetzt wird nicht nur die Adresse genau so, wie du sie eingetippt hast, sondern auch in den Schreibweisen, in denen dieselbe Seite in einer Datenbank vorkommt:
+
+- mit dem jeweils anderen Schema, also `http://` statt `https://` und umgekehrt
+- ohne Schema, wie `//kunde.ch/logo.png` in HTML und CSS
+- in der Form, in der der Block-Editor Adressen speichert, mit maskierten Schrägstrichen
+
+<Callout variant="achtung" title="Kein Rückgängig">
+Die Ersetzung lässt sich nicht rückgängig machen. Erstelle vorher mit **Backup erstellen…** im Tab **Backup** eine Sicherung der Datenbank, besonders wenn du von Hand andere Adressen eingetragen hast.
+</Callout>
+
+## wp-config.php reparieren
+
+### Wann du es brauchst
+
+Die Live-Seite funktioniert im Browser, aber WP-CLI auf dem Server erreicht die Datenbank nicht. Das zeigt sich so:
+
+- Holen oder Senden scheitert an der Datenbank, zum Beispiel mit „Error establishing a database connection“.
+- In **Verbindung ausführlich testen** schlägt „Datenbankverbindung“ fehl.
+
+Ursache ist häufig der Eintrag `DB_HOST` in der `wp-config.php`. Der Webserver erreicht die Datenbank darüber, WP-CLI auf der Kommandozeile aber nicht.
+
+Die Zeile ist nur aktiv, wenn für das Projekt ein Server hinterlegt ist.
+
+### Was dabei passiert
+
+Das Fenster „wp-config.php reparieren“ beschreibt unter „Was wird gemacht?“ drei Schritte:
+
+1. Die `wp-config.php` wird per SCP vom Server heruntergeladen.
+2. Der Eintrag `DB_HOST` wird durch einen Block ersetzt, der für WP-CLI und für den Webzugriff je einen eigenen Wert setzt.
+3. Die korrigierte Datei wird zurück auf den Server hochgeladen.
+
+Der Block, den WPorbit einsetzt, sieht so aus:
+
+```php
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+  /** MySQL hostname for WP-CLI */
+  define('DB_HOST', '127.0.0.1:3306');
+} else {
+  /** MySQL hostname */
+  define('DB_HOST', 'localhost:3306');
+}
+```
+
+WP-CLI verbindet sich danach über `127.0.0.1:3306`, der Webzugriff über `localhost:3306`.
+
+<Callout variant="wichtig" title="Nur für eine Datenbank auf demselben Server">
+Der bisherige Wert von `DB_HOST` wird ersetzt, nicht ergänzt. Läuft die Datenbank bei deinem Hoster auf einem eigenen Server, etwa `db.hoster.ch`, oder auf einem anderen Port als 3306, erreicht die Live-Seite danach die Datenbank nicht mehr. Schau vorher in der `wp-config.php` nach, was bei `DB_HOST` steht. Steht dort etwas anderes als `localhost` oder `127.0.0.1`, verwende diese Reparatur nicht.
+</Callout>
+
+### So gehst du vor
+
+<Steps>
+
+<Step title="Sicherung der Datei anlegen">
+
+WPorbit legt von der bisherigen `wp-config.php` keine Kopie auf dem Server an. Lade sie vorher selbst herunter, zum Beispiel im Terminal:
+
+```bash
+scp -P 22 benutzer@server.example.com:/pfad/zum/web-root/wp-config.php ./wp-config.backup.php
+```
+
+Setz Port, Benutzer, Server und Web-Root aus den Zugangsdaten des Projekts ein.
+
+</Step>
+
+<Step title="Reparatur starten">
+
+Klicke in der Karte **Wartung** auf **wp-config.php reparieren…** und im Fenster auf **wp-config.php reparieren**. Unter **Protokoll** siehst du Download, Korrektur und Upload.
+
+{/* SCREENSHOT 03-wp-config-reparieren: Fenster „wp-config.php reparieren“ nach erfolgreichem Lauf, „Was wird gemacht?“ mit drei Schritten, Protokoll mit „wp-config.php für WP-CLI angepasst!“ und grüner Meldung „Erfolgreich abgeschlossen“ */}
+
+</Step>
+
+<Step title="Ergebnis prüfen">
+
+Nach „Erfolgreich abgeschlossen“ öffne die Live-Seite im Browser, um sicherzugehen, dass sie weiterhin läuft. Starte danach im Tab **Remote** unter **Alle Prüfungen einzeln** den Test **Verbindung ausführlich testen**.
+
+</Step>
+
+</Steps>
+
+### Meldungen
+
+- **„DB_HOST-Block für WP-CLI ist bereits korrekt. Keine Änderung nötig.“** Die Datei enthält den Block schon. WPorbit lädt nichts hoch. Liegt das Problem trotzdem vor, ist die Ursache eine andere.
+- **„In der wp-config.php fehlt das define für DB_HOST.“** WPorbit findet keinen `DB_HOST`-Eintrag und ändert nichts.
+- **SSH- oder SCP-Fehler.** Der Server ist nicht erreichbar oder der Pfad stimmt nicht. Siehe [Deploy schlägt fehl](/anleitungen/fehlerbehebung/deploy-schlaegt-fehl).

@@ -1,0 +1,128 @@
+---
+title: "Überwachung für ein Projekt einschalten"
+description: "Mit einem Befehl überwacht der WPorbit-Server deine Live-Seite: Erreichbarkeit, SSL und Antwortzeit, und mit Lesezugang auch Plugins, Themes und Versionen. Ohne Plugin und ohne gespeichertes Passwort."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "5 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - wartung/team-dashboard-nutzen
+  - fehlerbehebung/lesezugang-nicht-moeglich
+  - zugaenge/projekte-im-team-teilen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+draft: false
+---
+
+Mit **Überwachung einschalten…** prüft der WPorbit-Server deine Live-Seite rund um die Uhr. Die Ergebnisse siehst du im [Team-Dashboard](/anleitungen/wartung/team-dashboard-nutzen). Du musst dafür kein Plugin auf der Kundenseite installieren, und der WPorbit-Server bekommt kein Passwort.
+
+<Callout variant="hinweis" title="Voraussetzungen">
+Das Projekt ist mit einem Team verknüpft (siehe [Projekte im Team teilen](/anleitungen/zugaenge/projekte-im-team-teilen)), und im Projekt ist eine Live-Adresse hinterlegt. Für das Inventar braucht es zusätzlich einen SSH-Zugang zum Live-Server und den Web-Root.
+</Callout>
+
+## Zwei Arten der Überwachung
+
+Es gibt einen einzigen Befehl. WPorbit versucht immer zuerst den Lesezugang per SSH. Klappt das nicht, sagt die App warum und bietet an, nur von aussen zu überwachen.
+
+| | Mit Inventar (Lesezugang per SSH) | Nur von aussen |
+|---|---|---|
+| Erreichbarkeit, Antwortzeit | Ja | Ja |
+| Ablauf des SSL-Zertifikats | Ja | Ja |
+| WordPress-, PHP- und Datenbankversion | Ja | Nein |
+| Plugins und Themes mit offenen Updates | Ja | Nein |
+| Administratoren, WP_DEBUG, Cron, Datenbankgrösse | Ja | Nein |
+| Was auf dem Live-Server abgelegt wird | Ein kleines Skript und eine Zeile in `authorized_keys` | Nichts |
+
+## Überwachung einschalten
+
+<Steps>
+
+<Step title="Befehl im Kontextmenü wählen">
+
+Klicke in der Seitenleiste mit der rechten Maustaste auf das Projekt und wähle **Überwachung einschalten…**. Der Eintrag erscheint nur bei Projekten, die mit einem Team verknüpft sind.
+
+![Kontextmenü eines Team-Projekts mit hervorgehobenem Eintrag „Überwachung einschalten…“](/anleitungen/wartung/ueberwachung-einschalten/01-kontextmenue-einschalten.webp)
+
+</Step>
+
+<Step title="Rückfrage lesen und bestätigen">
+
+WPorbit fragt nach: „Überwachung einschalten?“. Der Text sagt genau, was passiert: Der WPorbit-Server bekommt Lesezugang per SSH, auf dem Live-Server wird ein kleines Skript in `~/.wporbit` abgelegt, und Projektname und Kunde gehen im Klartext an den WPorbit-Server, damit sie im Team-Dashboard erscheinen.
+
+Wähle **Einschalten**.
+
+![Dialog „Überwachung einschalten?“ mit Erklärung zu Lesezugang, Skript in ~/.wporbit und beschränktem Schlüssel, Knöpfe „Abbrechen“ und „Einschalten“](/anleitungen/wartung/ueberwachung-einschalten/02-rueckfrage-einschalten.webp)
+
+</Step>
+
+<Step title="WPorbit richtet den Lesezugang ein">
+
+Die App verbindet sich mit den Zugangsdaten des Projekts, die nur auf deinem Mac liegen, und richtet den Lesezugang ein. Das läuft in dieser Reihenfolge ab:
+
+1. Sie prüft das SSH-Konto. Ist es `root`, bricht sie ab.
+2. Sie sucht WP-CLI auf dem Live-Server.
+3. Sie legt den WPorbit-Agenten ab und macht einen Probelauf. Liefert er kein Inventar, entfernt sie ihn wieder.
+4. Sie liest den Host-Schlüssel des Live-Servers und prüft ihn, wenn möglich, gegen die Datei auf dem Server.
+5. Erst dann trägt sie den Schlüssel des WPorbit-Servers in `~/.ssh/authorized_keys` ein. Vorher sichert sie die Datei, und deine eigenen Schlüssel bleiben unberührt.
+
+Geht ein Schritt schief, räumt die App alles wieder weg. Es bleibt kein halber Zugang zurück.
+
+</Step>
+
+<Step title="Ergebnis prüfen">
+
+Hat alles geklappt, steht im Kontextmenü des Projekts neu **Überwacht: Mit Inventar (Lesezugang per SSH)**. Das erste Inventar liest der Server beim nächsten Durchgang. Danach findest du das Projekt im Team-Dashboard.
+
+Ging der Lesezugang nicht, erscheint „Lesezugang nicht möglich“ mit dem Grund. Was du dann tun kannst, steht unter [Lesezugang nicht möglich](/anleitungen/fehlerbehebung/lesezugang-nicht-moeglich).
+
+![Kontextmenü eines überwachten Projekts: grauer Eintrag „Überwacht: Mit Inventar (Lesezugang per SSH)“ und „Überwachung ausschalten“](/anleitungen/wartung/ueberwachung-einschalten/03-kontextmenue-ueberwacht.webp)
+
+</Step>
+
+</Steps>
+
+## Was der Lesezugang kann und was nicht
+
+Entscheidend ist, was man mit dem Schlüssel des WPorbit-Servers tun kann. Die Zeile in `authorized_keys` sieht so aus:
+
+```
+restrict,command="/home/kunde/.wporbit/agent.sh" ssh-ed25519 AAAA… wporbit-worker agentur-team 2026-09-24
+```
+
+- **Keine Shell.** `restrict` sperrt Terminal, Port-Weiterleitung und Agent-Weitergabe. `command=` startet immer den Agenten, egal was verlangt wird. Auch `scp` und `sftp` gehen damit nicht.
+- **Zwei feste Befehle.** Der Agent kennt nur `inventory` und `version`, ohne Argumente. Alles andere lehnt er ab.
+- **Nur lesen.** WP-CLI läuft nur mit lesenden Befehlen, die meisten ohne Plugins und Themes zu laden. Der Agent liest keine Dateien, exportiert keine Datenbank und ändert nichts.
+- **Kein Passwort beim WPorbit-Server.** Der Server hat seinen eigenen Schlüssel. Deine Zugangsdaten bleiben auf deinem Mac, auch das Einrichten macht die App, nicht der Server.
+- **Nur zum richtigen Server.** Der WPorbit-Server verbindet sich nur, wenn der Host-Schlüssel des Live-Servers zu dem passt, den die App hinterlegt hat.
+- **Nachvollziehbar.** Der Kommentar in der Zeile nennt Team und Datum. Jeder Abruf steht im Prüfpfad des Teams, und der Agent schreibt zusätzlich ein Protokoll in `~/.wporbit/agent.log` auf dem Live-Server, auch jede Ablehnung.
+
+<Callout variant="wichtig" title="Die ehrliche Grenze">
+Wer den WPorbit-Server selbst übernimmt, könnte das Inventar aller Seiten mit Lesezugang lesen: Versionen, Plugin-Listen, Admin-Logins. Zugangsdaten, Dateien und Kundendatenbanken bekommt er damit nicht. Die Live-Adresse, der Projektname und der Kunde liegen für überwachte Projekte im Klartext beim Server, sonst könnte er die Seite nicht aufrufen.
+</Callout>
+
+## Was gemessen wird und wie oft
+
+- **Erreichbarkeit und Antwortzeit** über eine gewöhnliche Abfrage der Live-Adresse, mehrmals pro Stunde. Ein Fehler 5xx oder keine Antwort innert 15 Sekunden gilt als Ausfall. Eine Seite, die 404 meldet, gilt als erreichbar.
+- **SSL-Zertifikat:** wie lange es noch gültig ist, bei jeder Messung.
+- **Inventar** (nur mit Lesezugang): alle 6 Stunden.
+
+Messungen bewahrt der Server 30 Tage auf. Vom Inventar behält er das letzte, das letzte fehlerfreie und für die letzten 30 Tage je eines pro Tag.
+
+## Inventar nachholen
+
+Läuft ein Projekt nur von aussen, zeigt das Kontextmenü **Überwacht: Nur von aussen** und darunter **Inventar einrichten…**. Wähle den Eintrag, sobald der SSH-Zugang im Projekt stimmt. WPorbit fragt mit „Inventar einrichten?“ nach und richtet den Lesezugang ein wie oben. Klappt es wieder nicht, läuft die Überwachung einfach weiter nur von aussen.
+
+## Überwachung ausschalten
+
+Wähle im Kontextmenü **Überwachung ausschalten**. WPorbit
+
+- meldet dem WPorbit-Server, dass er aufhören soll: Das Projekt verschwindet aus dem Team-Dashboard, es wird nicht mehr gemessen,
+- entfernt auf dem Live-Server die Zeile des WPorbit-Servers aus `authorized_keys` und das Skript `~/.wporbit/agent.sh`,
+- entfernt ein Status-Plugin, falls eine Version vor 1.8.0 eines abgelegt hat.
+
+Das Protokoll `~/.wporbit/agent.log` bleibt absichtlich liegen: Es ist der Nachweis für den Kunden, was mit dem Zugang geschah. Bereits gespeicherte Messungen laufen nach 30 Tagen aus.
+
+<Callout variant="achtung" title="Zugang von Hand entfernen">
+Zum Aufräumen auf dem Live-Server braucht die App den SSH-Zugang des Projekts. Fehlt er auf deinem Mac, bleibt die Zeile stehen. Dein Kunde oder du kannst sie jederzeit selbst löschen: Es ist die Zeile mit `wporbit-worker` in `~/.ssh/authorized_keys`. Danach kann der WPorbit-Server nichts mehr lesen.
+</Callout>

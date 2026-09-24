@@ -1,0 +1,47 @@
+---
+version: "1.8.0"
+date: 2026-09-24
+title: "Überwachung mit einem Knopf, ohne Plugin und ohne Passwort beim Server"
+type: release
+highlights:
+  - "Überwachung einschalten mit einem Befehl: mit Inventar per SSH oder nur von aussen"
+  - "Kein Status-Plugin auf Kundenseiten und kein gespeicherter Hauptzugang mehr"
+  - "Team-Dashboard mit Plugins, Themes, Updates, Erreichbarkeit und Sicherheit"
+  - "Bessere Bedienung mit Tastatur und VoiceOver"
+draft: true
+---
+
+## Überwachung mit einem Knopf
+
+Im Kontextmenü eines Team-Projekts gibt es neu **Überwachung einschalten…**. WPorbit fragt nach, erklärt, was auf dem Live-Server passiert, und richtet dann einen Lesezugang per SSH ein. Damit sieht das Team-Dashboard nicht nur, ob die Seite erreichbar ist, sondern auch, welche Plugins, Themes und Versionen installiert sind und wo Updates offen sind.
+
+Geht der Lesezugang auf einem Server nicht, sagt WPorbit warum und bietet an, nur von aussen zu überwachen: Erreichbarkeit, SSL und Antwortzeit, ohne dass auf dem Live-Server etwas installiert wird. Das Inventar lässt sich später mit **Inventar einrichten…** nachholen. Im Kontextmenü steht jetzt auch, wie ein Projekt überwacht wird.
+
+Die Einrichtung ist unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten) beschrieben.
+
+## Kein Plugin, kein Passwort beim Server
+
+Das Status-Plugin, das frühere Versionen auf Kundenseiten ablegten, und der verschlüsselt hinterlegte Hauptzugang beim WPorbit-Server sind entfernt. Das Plugin war auf jeder Kundenseite eine öffentliche Angriffsfläche, der Hauptzugang ein Passwort beim Server.
+
+Der Lesezugang kommt ohne beides aus. Der WPorbit-Server bekommt einen eigenen, beschränkten Schlüssel, der nur ein kleines Skript mit zwei festen Lesebefehlen starten kann: keine Shell, kein Dateizugriff, keine Änderungen. Eingerichtet wird immer von der App, denn nur auf deinem Mac liegen die Zugangsdaten. Mehr dazu im Beitrag [WordPress überwachen, ohne ein Plugin zu installieren](/blog/ueberwachung-ohne-plugin).
+
+Hast du mit einer früheren Version ein Status-Plugin installiert, entfernt WPorbit es beim Ausschalten der Überwachung automatisch.
+
+## Team-Dashboard
+
+Unter [dashboard.wporbit.ch](https://dashboard.wporbit.ch) sieht jedes Teammitglied die überwachten Projekte seiner Teams: einen Zustandsbalken zum Filtern, Suche und eine sortierbare Tabelle. Pro Projekt gibt es Plugins, Themes, Umgebung, Erreichbarkeit mit Verlauf über 7 Tage und einen Sicherheits-Tab. Die Anmeldung läuft über einen Link per E-Mail. Siehe [Das Team-Dashboard nutzen](/anleitungen/wartung/team-dashboard-nutzen).
+
+## Bedienung und Texte
+
+- Die Seitenleiste lässt sich mit den Pfeiltasten bedienen, Tabs mit ← und →. Alle Schalter und Symbolknöpfe sind für VoiceOver beschriftet, und ein Zustand wird nie nur über Farbe angezeigt.
+- Seitenleiste und Übersicht haben dasselbe Kontextmenü.
+- Esc bricht in allen Fenstern ab, Return bestätigt. Return löst nie eine zerstörerische Aktion aus.
+- Riskante Aktionen fragen nach. Beim Deployen tippst du wie beim Senden die Zieladresse ein.
+- **Verbindung ausführlich testen** ist jetzt getrennt von **Verbindung prüfen**.
+- Die Markenfarbe ist im Dunkelmodus besser lesbar, und reduzierte Bewegung wird überall beachtet.
+- Die Texte der App sind vereinheitlicht: durchgehend du-Form, Schweizer Schreibweise und Hinweise, die auf Orte zeigen, die es in der App wirklich gibt.
+
+## Korrekturen
+
+- Fehler beim Ein- und Ausschalten der Überwachung werden jetzt angezeigt statt stillschweigend übergangen.
+- Menübefehle sind ausgegraut, wenn sie gerade nicht passen, etwa wenn kein Projekt ausgewählt ist.

@@ -1,0 +1,124 @@
+---
+title: "Ein Theme per rsync deployen"
+description: "Nur den Theme-Ordner auf den Server übertragen: Theme wählen, Ziel in der Vorschau kontrollieren, Probelauf machen und das Deployment bestätigen."
+order: 30
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/holen-senden-deployen
+  - veroeffentlichen/gitlab-deployment-einrichten
+  - fehlerbehebung/deploy-schlaegt-fehl
+draft: false
+---
+
+**Theme deployen** überträgt einen einzigen Theme-Ordner aus deiner lokalen Umgebung auf den Server. Datenbank, Plugins und Uploads bleiben unberührt. Das ist der übliche Weg, wenn du am Theme gearbeitet hast und nur Templates, Styles oder Skripte live bringen willst.
+
+<Callout variant="hinweis" title="Voraussetzungen">
+Für das Projekt ist ein Server hinterlegt, und das lokale Projekt läuft. WPorbit liest die verfügbaren Themes aus dem laufenden Container. Ist ein Theme-Ordner in den Zugangsdaten hinterlegt (`THEME_FOLDER`), schlägt WPorbit ihn vor.
+</Callout>
+
+## Was beim Deployen passiert
+
+WPorbit kopiert den gewählten Theme-Ordner aus dem lokalen Container und gleicht ihn per rsync mit dem Ordner auf dem Server ab:
+
+- Ziel ist `<Web-Root>/wp-content/themes/<Ordner>`. Fehlt der Ordner auf dem Server, wird er angelegt.
+- Nicht übertragen werden `.git`, `.DS_Store` und `node_modules`.
+- rsync läuft mit `--delete`. Dateien, die im Ordner auf dem Server liegen, lokal aber nicht, werden auf dem Server gelöscht.
+- Danach setzt WPorbit die Dateirechte im Theme-Ordner auf dem Server.
+
+WPorbit baut nichts. Übertragen wird, was im Theme-Ordner liegt. Wenn dein Theme kompilierte Styles oder Skripte braucht, erzeuge sie lokal, bevor du deployst.
+
+<Callout variant="achtung" title="Änderungen direkt auf dem Server gehen verloren">
+Wegen `--delete` ist der Ordner auf dem Server danach ein Abbild deines lokalen Themes. Hat jemand Dateien im Theme direkt auf dem Server geändert oder hinzugefügt, sind sie danach weg. Hol sie vorher mit **Holen…** (Bereich **Themes**) in die lokale Umgebung.
+</Callout>
+
+## Theme deployen
+
+<Steps>
+
+<Step title="Assistenten öffnen">
+
+Öffne im Projekt den Tab **Remote** und klicke in der Karte **Übertragen** bei **Theme deployen** auf **Deployen…**. Alternativ findest du **Theme deployen…** im Kontextmenü des Projekts.
+
+</Step>
+
+<Step title="Theme wählen">
+
+Im Bereich **Theme** wählst du unter **Lokales Theme** den Ordner, der übertragen werden soll. Die Liste zeigt alle Theme-Ordner im lokalen Container.
+
+Heisst der Ordner auf dem Server anders als lokal, trag den Namen unter **Remote-Ordner überschreiben (optional)** ein. Das Feld ist mit dem lokalen Namen oder dem hinterlegten Server-Ordner (`THEME_FOLDER_REMOTE`) vorausgefüllt.
+
+</Step>
+
+<Step title="Vorschau kontrollieren">
+
+Der Bereich **Vorschau** zeigt, was geplant ist:
+
+- **Theme**: der lokale Ordner
+- **Remote-Ordner**: der Ordnername auf dem Server
+- **Quelle**: der Pfad im lokalen Container
+- **Ziel**: der vollständige Pfad auf dem Server
+
+Prüfe vor allem **Ziel**. Er muss im Web-Root der Live-Seite liegen. Nach einer Änderung der Zugangsdaten lädt **Vorschau aktualisieren** die Werte neu.
+
+![Fenster „Theme deployen“: lokales Theme gewählt, Vorschau mit Quelle und Ziel, „Zuerst einen Probelauf machen“ an, darunter die Ausgabe „Probelauf erfolgreich“](/anleitungen/veroeffentlichen/theme-per-rsync-deployen/01-deploy-vorschau.webp)
+
+</Step>
+
+<Step title="Probelauf machen">
+
+Der Schalter **Zuerst einen Probelauf machen** ist beim Öffnen eingeschaltet. Klicke auf **Probelauf starten**.
+
+Der Probelauf überträgt nichts und verbindet sich nicht mit dem Server. Er stellt aus den Zugangsdaten und deiner Auswahl den geplanten Ablauf zusammen und zeigt ihn im Ausgabefeld an:
+
+```text
+Probelauf erfolgreich. Geplantes Deployment:
+Theme: mein-theme
+Ordner auf dem Server: mein-theme
+Quelle: /var/www/html/wp-content/themes/mein-theme
+Ziel: /home/kunde/public_html/wp-content/themes/mein-theme
+```
+
+So siehst du, ob Theme, Ordnername und Zielpfad stimmen, bevor etwas passiert. Ob die Verbindung funktioniert, prüfst du mit **Verbindung prüfen** im Tab **Remote**.
+
+</Step>
+
+<Step title="Deployment bestätigen">
+
+Schalte **Zuerst einen Probelauf machen** aus. Der Knopf heisst jetzt **Deployen…**. Ein Klick darauf überträgt noch nichts, sondern öffnet eine Bestätigungskarte „Achtung“: „Dies überschreibt das Theme **mein-theme** auf:“, darunter der Zielserver in grosser Schrift und der Hinweis „Die Aktion kann nicht rückgängig gemacht werden.“
+
+Ist die Live-Seite öffentlich erreichbar, tippst du die Zieladresse unter „Tippe zur Bestätigung die Zieladresse ein:“ ab, wie beim Senden. Erst dann wird **Jetzt auf kunde.ch deployen** aktiv (mit deiner Domain). Dieser Knopf reagiert bewusst nicht auf die Eingabetaste, sondern nur auf einen Klick.
+
+Mit **Zurück** verlässt du die Bestätigung, ohne dass etwas übertragen wurde.
+
+![„Theme deployen“ ohne Probelauf: Bestätigungskarte „Achtung“ mit der Ziel-Domain, leeres Feld „Zieladresse“, Knopf „Jetzt auf … deployen“ noch inaktiv (Serverzeile unkenntlich gemacht)](/anleitungen/veroeffentlichen/theme-per-rsync-deployen/02-deploy-bestaetigung.webp)
+
+</Step>
+
+<Step title="Ergebnis prüfen">
+
+Während des Laufs zeigt das Ausgabefeld die Schritte, von „Exportiere Theme aus Container…“ bis „Deploy abgeschlossen“. War der Lauf erfolgreich, schliesst sich das Fenster, und die App meldet „Theme deployt.“
+
+Öffne die Live-Seite und prüfe die geänderten Stellen. Siehst du den alten Stand, liegt das meist an einem Cache beim Hoster oder in einem Caching-Plugin.
+
+</Step>
+
+</Steps>
+
+## Wenn das Deployment fehlschlägt
+
+Die Meldung beginnt mit „Deploy konnte nicht ausgeführt werden:“, gefolgt von der Ursache. Danach sucht WPorbit automatisch unter „Woran es liegen könnte“. Bei einem Deployment liegt es meist am Theme-Ordner:
+
+- „Theme-Ordner „mein-theme“ gibt es auf dem Server nicht“ mit einer Liste der vorhandenen Ordner
+- „Theme-Ordner „mein-theme“ gibt es lokal nicht“
+
+Gibt es einen eindeutigen Kandidaten, bietet WPorbit einen Knopf wie **THEME_FOLDER auf „mein-theme-child“ setzen** an. Ein Klick speichert den Wert und lädt die Vorschau neu.
+
+Weitere Fehlerbilder stehen unter [Deploy schlägt fehl](/anleitungen/fehlerbehebung/deploy-schlaegt-fehl).
+
+<Callout variant="tipp" title="Automatisch bei jedem Git-Push">
+Wenn dein Theme in GitLab liegt, kann eine Pipeline das Deployment übernehmen. WPorbit bereitet die Zugangsdaten dafür vor, siehe [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
+</Callout>

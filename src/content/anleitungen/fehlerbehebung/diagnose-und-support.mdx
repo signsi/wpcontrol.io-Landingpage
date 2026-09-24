@@ -1,0 +1,154 @@
+---
+title: "Diagnose und Support"
+description: "Einen Debug-Bericht erstellen, typische Reparaturen selbst auslösen, das App-Protokoll lesen und ein Support-Ticket mit Bildern senden."
+order: 50
+updated: 2026-09-24
+type: fehlerbehebung
+audience: einsteiger
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - fehlerbehebung/einrichtung-schlaegt-fehl
+  - entwicklung/logs-lesen
+  - wartung/wporbit-aktualisieren
+  - zugaenge/zugangsdaten-im-vault
+draft: true
+---
+
+Wenn etwas nicht läuft und keine andere Anleitung weiterhilft, findest du alles Weitere in den Einstellungen im Tab **Diagnose & Support**. Er hat zwei Gruppen: **Diagnose** für das, was du selbst prüfen und reparieren kannst, und **Support** für den Kontakt zu uns.
+
+## Zuerst: Benötigte Programme prüfen
+
+Ganz oben unter **Benötigte Programme** steht jedes Werkzeug, das WPorbit braucht, etwa Colima, Docker und Vault, mit seinem Zustand. Fehlt eines, steht der Befehl dabei, mit dem du es installierst. Programme, die nur für einzelne Funktionen nötig sind, tragen den Zusatz „optional“.
+
+![Einstellungen → Diagnose & Support: „Benötigte Programme“, alle installiert, zwei davon optional](/anleitungen/fehlerbehebung/diagnose-und-support/01-benoetigte-programme.webp)
+
+## Einen Debug-Bericht erstellen
+
+Der Debug-Bericht fasst in einem Textblock zusammen, was wir für die Fehlersuche brauchen: Status der Infrastruktur, Caddy-Konfiguration, laufende Container, DNS-Auflösung, die Projekte mit ihren Einstellungen, den letzten Verlauf und das App-Protokoll.
+
+<Steps>
+
+<Step title="Bericht kopieren">
+
+Klicke im Abschnitt **Debug-Bericht** auf **Debug-Bericht kopieren**. WPorbit sammelt die Angaben („Wird gesammelt…“) und legt den Bericht in die Zwischenablage. Danach erscheint kurz „Kopiert!“.
+
+</Step>
+
+<Step title="Bericht einfügen">
+
+Füge den Bericht in dein Support-Ticket oder deine E-Mail ein.
+
+</Step>
+
+</Steps>
+
+<Callout variant="hinweis" title="Keine Passwörter im Bericht">
+Der Bericht enthält keine Passwörter. Er ist dafür gemacht, in eine Support-Anfrage eingefügt zu werden. Hostnamen und Projektnamen stehen aber drin. Lies ihn kurz durch, bevor du ihn weitergibst.
+</Callout>
+
+## Reparaturen, die du selbst auslösen kannst
+
+| Problem | Abschnitt | Knopf |
+|---|---|---|
+| Colima, Vault oder lokale Domains laufen nach einer Neuinstallation nicht mehr | Einrichtungsassistent | **Einrichtungsassistent neu starten** |
+| Der Browser zeigt Projekte unter `*.wporbit` als „nicht sicher“ an | SSL-Zertifikat reparieren | **Zertifikat neu vertrauen…** |
+| Die lokale Infrastruktur ist nicht bereit | Schnellstart lokal | **Lokal alles bereit machen** |
+| Vault antwortet nicht oder Zugangsdaten fehlen | Vault-Verbindungstest | **Diagnose starten** |
+
+Nach **Zertifikat neu vertrauen…** startest du den Browser neu. **Diagnose starten** zeigt den Zustand des Vaults, wie viele Projekte darin liegen, und Empfehlungen. Mit **Bericht kopieren** nimmst du das Ergebnis mit ins Ticket.
+
+Weiter unten stehen die **Colima-Diagnose** und das **Vault-Protokoll**. Beide lädst du bei Bedarf neu und kopierst sie mit **In Zwischenablage kopieren** bzw. **Kopieren**.
+
+## Das App-Protokoll lesen
+
+Ganz unten steht das **App-Protokoll**. Es zeigt, was WPorbit selbst gerade tut, unabhängig von einem einzelnen Projekt.
+
+- Mit **Min. Stufe** filterst du nach Wichtigkeit: **Alle**, **Info und höher**, **Warnung und höher** oder **Fehler**.
+- Das Feld „Suchen…“ filtert nach einem Begriff, etwa einem Projektnamen.
+- **Kopieren** legt die gefilterten Einträge in die Zwischenablage, **Leeren** leert die Liste.
+
+Die Logs eines einzelnen Projekts findest du im Projekt im Tab **Logs**, siehe [Logs lesen](/anleitungen/entwicklung/logs-lesen).
+
+{/* SCREENSHOT 02-app-protokoll: Abschnitt „App-Protokoll“ mit „Min. Stufe: Warnung und höher“, Suchfeld, Eintragszahl und einigen Zeilen. Nach einer Aktion, die Warnungen erzeugt hat. */}
+
+## Alles zurücksetzen
+
+Hilft nichts anderes, kannst du WPorbit in den Auslieferungszustand zurücksetzen. Das ist der letzte Schritt, nicht der erste.
+
+<Callout variant="achtung" title="Zugangsdaten sind danach weg">
+Das Zurücksetzen stoppt Vault und Colima, entfernt die lokale Domain-Infrastruktur (Caddy, dnsmasq) und löscht Projektliste, Vault-Daten, Lizenz-Aktivierung, Tokens und alle Einstellungen. Die im Vault gespeicherten Zugangsdaten aller Projekte sind danach unwiderruflich weg. Exportiere sie vorher, siehe [Zugangsdaten im Vault verwalten](/anleitungen/zugaenge/zugangsdaten-im-vault).
+</Callout>
+
+Nicht angetastet werden deine Projektordner auf der Festplatte und die Docker-Container und -Volumes.
+
+<Steps>
+
+<Step title="Zurücksetzen auslösen">
+
+Klicke im Abschnitt **App zurücksetzen** auf **Alles zurücksetzen und neu starten…**.
+
+</Step>
+
+<Step title="Bestätigen">
+
+WPorbit fragt „Alles wirklich löschen?“ und zählt auf, was verloren geht. Bestätige mit **Zurücksetzen**.
+
+</Step>
+
+<Step title="Neustart abwarten">
+
+WPorbit setzt alles zurück und startet danach von selbst neu. Anschliessend führt dich die Ersteinrichtung wie beim ersten Mal durch alles.
+
+</Step>
+
+</Steps>
+
+## Ein Support-Ticket senden
+
+In der Gruppe **Support** schreibst du uns direkt aus der App. Dafür musst du in WPorbit angemeldet sein.
+
+<Steps>
+
+<Step title="Problem beschreiben">
+
+Beschreibe im Feld unter **Neues Ticket erstellen**, was du tun wolltest, was passiert ist und welche Meldung erschien. Die Nachricht braucht mindestens 20 und höchstens 4000 Zeichen. Den Debug-Bericht kannst du direkt hier einfügen.
+
+</Step>
+
+<Step title="Bilder anhängen">
+
+Mit **Bild hinzufügen** hängst du bis zu fünf Bilder an, etwa Bildschirmfotos der Fehlermeldung. Möglich sind PNG, JPG, GIF und WebP. Grosse Bilder verkleinert WPorbit vor dem Hochladen.
+
+</Step>
+
+<Step title="Senden">
+
+Klicke auf **Ticket senden**. Danach steht dort „Ticket erfolgreich erstellt.“
+
+</Step>
+
+</Steps>
+
+Ist der Bild-Upload gerade nicht verfügbar, erscheint „Bild-Upload momentan nicht verfügbar.“ Mit **Ticket ohne Bilder senden** schickst du die Nachricht trotzdem ab.
+
+![„Neues Ticket erstellen“: Beschreibung mit Zeichenzähler 199/4000, zwei angehängte Bilder und „Ticket senden“](/anleitungen/fehlerbehebung/diagnose-und-support/03-neues-ticket.webp)
+
+## Deine Tickets und ihr Verlauf
+
+Unter **Meine Tickets** stehen alle Tickets, die du gesendet hast, mit Status, Datum und der Zahl der Anhänge. Der Status ist **Offen**, **In Bearbeitung** oder **Geschlossen**. Mit **Aktualisieren** lädst du die Liste neu.
+
+Ein Klick auf ein Ticket öffnet das „Ticket-Detail“ mit deiner Nachricht, den Anhängen und dem Verlauf. Im Verlauf siehst du die Antworten des Supports und deine eigenen Beiträge.
+
+{/* SCREENSHOT 04-ticket-detail: Fenster „Ticket-Detail“ mit Status „In Bearbeitung“, Nachricht, Abschnitt „ANHÄNGE“ mit einem Bild und „VERLAUF“ mit einer Antwort von „Support“. Ticket mit mindestens einer Antwort nötig. */}
+
+Kommst du nicht bis in die App, erreichst du uns über die Seite [Support](/support).
+
+<KeyTakeaways>
+
+- **Einstellungen → Diagnose & Support** bündelt Prüfen, Reparieren und den Kontakt zu uns.
+- **Debug-Bericht kopieren** und in das Ticket einfügen spart die meisten Rückfragen.
+- **Alles zurücksetzen und neu starten…** löscht alle Zugangsdaten. Exportiere sie vorher.
+- Tickets mit bis zu fünf Bildern sendest du direkt aus der App, den Verlauf siehst du unter **Meine Tickets**.
+
+</KeyTakeaways>

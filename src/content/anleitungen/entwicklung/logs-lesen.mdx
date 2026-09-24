@@ -1,0 +1,102 @@
+---
+title: "Logs lesen: Container und debug.log"
+description: "Im Tab Logs die Ausgaben der Docker-Container und das WordPress-debug.log eines Projekts lesen, durchsuchen und kopieren."
+order: 40
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - entwicklung/php-und-wordpress-version-wechseln
+  - entwicklung/datenbank-wp-cli-und-terminal
+  - fehlerbehebung/diagnose-und-support
+draft: true
+---
+
+Wenn eine lokale Seite einen weissen Bildschirm zeigt oder ein Plugin sich seltsam verhält, steht der Grund meist in einem Log. Im Tab **Logs** eines Projekts findest du alle Logs dieses Projekts an einem Ort.
+
+## Aufbau des Tabs
+
+Links steht die Liste der Quellen, rechts das gewählte Log, die neuesten Zeilen unten.
+
+- Unter „Container“ stehen die Docker-Container des Projekts, zum Beispiel WordPress, Datenbank und MailHog. Ein Punkt zeigt, ob der Container läuft. Darunter steht das verwendete Image.
+- Unter „WordPress“ steht **debug.log**, das Fehlerprotokoll von WordPress.
+
+Wenn du den Tab öffnest, ist der WordPress-Container ausgewählt. Läuft das Projekt nicht, ist es das debug.log.
+
+![Tab „Logs“: links die Container und debug.log, rechts das Log des WordPress-Containers](/anleitungen/entwicklung/logs-lesen/01-logs-tab.webp)
+
+<Callout variant="hinweis" title="Das Protokoll der App selbst">
+Der Tab zeigt nur die Logs des Projekts. Was WPorbit selbst protokolliert, findest du unter **Einstellungen → Diagnose & Support**.
+</Callout>
+
+## Container-Logs lesen
+
+Klicke links auf einen Container. Rechts erscheinen seine letzten 500 Zeilen. Das reicht, um zu sehen, was gerade passiert ist.
+
+Mit einem Rechtsklick auf einen Container kannst du ihn einzeln **Starten**, **Stoppen** oder **Neu starten**. Das ist praktisch, wenn nur ein Dienst hängt.
+
+Steht links „Keine Container — das Projekt läuft nicht.“, starte das Projekt zuerst. „Container-Laufzeit nicht erreichbar.“ bedeutet, dass Docker (Colima) nicht läuft.
+
+## Das debug.log lesen
+
+Das debug.log füllt sich nur, wenn **WP_DEBUG** eingeschaltet ist. Den Schalter findest du direkt über dem Log, sobald links „debug.log“ gewählt ist. Er ist derselbe wie in der Übersicht.
+
+<Steps>
+
+<Step title="WP_DEBUG einschalten">
+
+Wähle links **debug.log** und schalte **WP_DEBUG** ein. Die Zeile darunter wechselt auf „Debug-Logging aktiv“.
+
+</Step>
+
+<Step title="Fehler auslösen">
+
+Lade die Seite im Browser, die den Fehler zeigt. WordPress schreibt ins debug.log, sobald eine Seite geladen wird.
+
+</Step>
+
+<Step title="Neu laden">
+
+Klicke oben rechts auf **Neu laden**. Die neuen Einträge stehen unten.
+
+</Step>
+
+</Steps>
+
+![debug.log mit eingeschaltetem WP_DEBUG und einigen PHP-Warnungen](/anleitungen/entwicklung/logs-lesen/02-debug-log.webp)
+
+Ist das debug.log sehr gross, zeigt WPorbit nur die letzten 200 KB und sagt das in einer Zeile über dem Log, mit der tatsächlichen Dateigrösse.
+
+<Callout variant="tipp" title="Nach der Fehlersuche wieder ausschalten">
+Ein eingeschaltetes WP_DEBUG schreibt bei jedem Seitenaufruf ins Log, und die Datei wächst. Schalte es aus, wenn du fertig bist. Fehler erscheinen übrigens nie in der Seite selbst, denn WPorbit lässt `WP_DEBUG_DISPLAY` immer aus.
+</Callout>
+
+## Suchen und kopieren
+
+Über dem Log stehen drei Werkzeuge:
+
+| Werkzeug | Wirkung |
+|---|---|
+| **Im Log suchen…** | zeigt nur Zeilen, die den Suchbegriff enthalten, ohne Rücksicht auf Gross- und Kleinschreibung |
+| **Kopieren** | legt die angezeigten Zeilen in die Zwischenablage |
+| **Neu laden** | liest die Container und das gewählte Log neu ein |
+
+Die Suche wirkt auch auf **Kopieren**: Suchst du zum Beispiel nach `Fatal`, kopierst du nur die Zeilen mit schweren Fehlern. So kannst du einem Kollegen oder dem Support genau den relevanten Ausschnitt schicken.
+
+Findet die Suche nichts, steht dort „Keine Zeile enthält „…“.“
+
+![Container-Log, gefiltert mit dem Suchbegriff „ServerName“](/anleitungen/entwicklung/logs-lesen/03-log-suche.webp)
+
+<Callout variant="achtung" title="Vor dem Weitergeben prüfen">
+Logs können Pfade, E-Mail-Adressen oder andere Daten deiner Kunden enthalten. Lies den kopierten Ausschnitt durch, bevor du ihn weitergibst.
+</Callout>
+
+<KeyTakeaways>
+
+- Der Tab **Logs** zeigt die Container des Projekts und das WordPress-debug.log.
+- Für das debug.log muss **WP_DEBUG** eingeschaltet sein. Danach Seite laden und **Neu laden**.
+- Die Suche filtert die Zeilen, **Kopieren** übernimmt genau die angezeigten.
+
+</KeyTakeaways>

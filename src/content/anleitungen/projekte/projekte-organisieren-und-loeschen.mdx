@@ -1,0 +1,104 @@
+---
+title: "Projekte organisieren, bearbeiten und löschen"
+description: "Projekte in der Seitenleiste finden, das Kontextmenü nutzen, Angaben bearbeiten und den Unterschied zwischen „Aus der Liste entfernen“ und „Komplett löschen…“ kennen."
+order: 30
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/oberflaeche-im-ueberblick
+  - entwicklung/php-und-wordpress-version-wechseln
+  - wartung/backups-erstellen
+draft: false
+---
+
+Mit der Zeit sammeln sich Projekte an. Diese Anleitung zeigt, wie du sie in der Seitenleiste findest, was im Kontextmenü steht und wie du ein Projekt ausblendest oder ganz entfernst.
+
+## Projekte finden
+
+Die Seitenleiste listet unter „PROJEKTE“ alle deine Projekte. Ab acht Projekten erscheint darüber das Feld **Filtern**. Mit `⌘F` (**Projekte durchsuchen**) holst du es jederzeit hervor. Der Filter sucht in Projektname, Kunde und Slug. `Esc` leert ihn wieder.
+
+Weitere Tastenkürzel in der Liste:
+
+| Taste | Wirkung |
+|---|---|
+| `↑` / `↓` | vorheriges oder nächstes Projekt (wenn die Liste den Fokus hat) |
+| `⌥⌘↓` / `⌥⌘↑` | nächstes oder vorheriges Projekt, von überall |
+| Buchstaben | springt zum ersten passenden Projekt |
+| `⌫` | fragt, ob das Projekt aus der Liste entfernt werden soll |
+
+![Seitenleiste mit dem Filter „Beispiel“: nur passende Projekte bleiben sichtbar](/anleitungen/projekte/projekte-organisieren-und-loeschen/01-filter.webp)
+
+<Callout variant="tipp" title="Kunde mitpflegen">
+Weil der Filter auch das Feld „Kunde“ durchsucht, findest du alle Projekte eines Kunden mit einem Wort. Es lohnt sich, das Feld beim Anlegen oder über **Bearbeiten…** auszufüllen.
+</Callout>
+
+## Das Kontextmenü
+
+Ein Rechtsklick auf ein Projekt in der Seitenleiste öffnet das Projektmenü. Dasselbe Menü erscheint beim Rechtsklick auf den Projektnamen oben in der Übersicht. Es ist in Gruppen geordnet:
+
+- **Starten** oder **Stoppen**, **Neu starten**, **Lokale Umgebung einrichten…**
+- **Im Finder zeigen** und die beiden VS-Code-Einträge
+- Was den Server betrifft: **Vom Server holen…**, **Zum Server senden…**, **Theme deployen…**, **Theme einrichten**, **Verbindung ausführlich testen**. Ohne hinterlegten Server sind diese Einträge ausgegraut.
+- **Backup erstellen…** und **Backup importieren…**
+- Reparaturen: **Berechtigungen korrigieren** und **Neues Docker-Image holen…**
+- **Bearbeiten…**, **Aus der Liste entfernen** und **Komplett löschen…**
+
+Arbeitest du in einem Team, stehen zusätzlich Team-Einträge im Menü.
+
+![Kontextmenü auf einem laufenden Projekt mit Server in der Seitenleiste, mit allen Gruppen von „Stoppen“ bis „Komplett löschen…“](/anleitungen/projekte/projekte-organisieren-und-loeschen/02-kontextmenue.webp)
+
+Ein `…` am Ende eines Eintrags bedeutet: WPorbit fragt zuerst nach oder öffnet einen Assistenten. Einträge ohne `…` laufen sofort.
+
+## Angaben bearbeiten
+
+**Bearbeiten…** öffnet „Projekt bearbeiten“. Dort änderst du Name, lokalen Pfad (auch über **Ordner wählen**) und die optionalen Felder Kunde, Verantwortlich, Tag und Hoster sowie die Notizen. Mit **Speichern** übernimmst du die Änderungen.
+
+PHP- und WordPress-Version siehst du unter „Laufzeit“ nur. Ändern kannst du sie über **PHP-/WordPress-Version ändern…**. Das ist ein eigener Ablauf mit Sicherung, beschrieben unter [PHP- und WordPress-Version wechseln](/anleitungen/entwicklung/php-und-wordpress-version-wechseln).
+
+## Reparaturen
+
+Beide Reparaturen findest du auch in der Übersicht in der Karte „Wartung“ und im Menü neben dem Status-Knopf oben.
+
+**Berechtigungen korrigieren** setzt die Dateirechte im WordPress-Container neu. Das hilft, wenn Uploads, Plugin-Updates oder Git mit „Permission denied“ scheitern. Das Projekt muss dafür laufen.
+
+**Neues Docker-Image holen…** lädt die neueste Version des WordPress-Images und erstellt den Container neu. WPorbit fragt vorher: „Neues Docker-Image holen?“. Die lokale Seite ist dabei kurz nicht erreichbar, Datenbank und Dateien bleiben erhalten. Bestätige mit **Holen und neu erstellen**.
+
+## Entfernen oder löschen
+
+WPorbit kennt zwei Arten, ein Projekt loszuwerden. Sie unterscheiden sich stark:
+
+| | Aus der Liste entfernen | Komplett löschen… |
+|---|---|---|
+| Projekt in WPorbit | ausgeblendet, bleibt in der Datenbank | entfernt |
+| Docker-Container und Volumes | bleiben | werden gelöscht |
+| Projektordner | bleibt | wird in den Papierkorb verschoben |
+| Rückgängig | ja, für einige Sekunden | nein |
+| Bestätigung | kurze Rückfrage | Eingabe des Projekt-Slugs |
+
+### Aus der Liste entfernen
+
+WPorbit fragt „Projekt aus der Liste entfernen?“. Nach dem Bestätigen erscheint in der Übersicht die Zeile „… wurde aus der Liste entfernt.“ mit **Rückgängig**. Das geht nur für einige Sekunden.
+
+### Komplett löschen…
+
+Das Fenster „Projekt komplett löschen“ verlangt, dass du den Projekt-Slug eintippst. Erst dann ist **Komplett löschen** aktiv.
+
+![Fenster „Projekt komplett löschen“: Warnhinweis, Projekt-Slug zur Bestätigung und leeres Eingabefeld, „Komplett löschen“ noch inaktiv](/anleitungen/projekte/projekte-organisieren-und-loeschen/03-komplett-loeschen.webp)
+
+WPorbit stoppt die Container, löscht sie mit ihren Volumes und verschiebt den Projektordner in den Papierkorb. Liegt der Ordner nicht mindestens zwei Ebenen unterhalb deines Benutzerordners, lässt WPorbit ihn zur Sicherheit stehen und meldet das.
+
+<Callout variant="achtung" title="Datenbank ist danach weg">
+Die lokale Datenbank lebt in einem Docker-Volume und wird mitgelöscht. Den Ordner holst du aus dem Papierkorb zurück, die Datenbank nicht. Erstelle vorher ein Backup, wenn du den Stand noch brauchst.
+</Callout>
+
+<KeyTakeaways>
+
+- Filter mit `⌘F`, gesucht wird in Name, Kunde und Slug.
+- Das Kontextmenü ist in der Seitenleiste und oben in der Übersicht dasselbe.
+- **Aus der Liste entfernen** blendet nur aus und lässt sich kurz rückgängig machen.
+- **Komplett löschen…** entfernt Container, Volumes und Projektordner.
+
+</KeyTakeaways>

@@ -1,0 +1,80 @@
+---
+title: "Mit VS Code im Container arbeiten"
+description: "Ein Projekt mit einem Klick in VS Code öffnen, direkt im laufenden WordPress-Container, und einen anderen Ordner wie ein einzelnes Plugin wählen."
+order: 30
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - entwicklung/datenbank-wp-cli-und-terminal
+  - entwicklung/logs-lesen
+  - veroeffentlichen/theme-per-rsync-deployen
+draft: true
+---
+
+WPorbit öffnet VS Code direkt im laufenden WordPress-Container. Du bearbeitest die Dateien dort, wo WordPress sie liest, und das integrierte Terminal von VS Code läuft ebenfalls im Container. PHP, WP-CLI und die Werkzeuge des Images musst du auf dem Mac nicht installieren.
+
+## Voraussetzungen
+
+- Visual Studio Code ist installiert.
+- In VS Code ist die Erweiterung **Dev Containers** von Microsoft installiert. Ohne sie öffnet VS Code den Container nicht, sondern nur ein leeres Fenster.
+- Das Projekt läuft. Solange es gestoppt ist, sind die VS-Code-Einträge ausgegraut.
+
+<Callout variant="hinweis" title="Wenn die Erweiterung fehlt">
+WPorbit prüft vor dem Öffnen, ob Dev Containers installiert ist. Fehlt sie, erscheint „Erweiterung ›Dev Containers‹ fehlt“ mit **Erweiterung installieren**. Hast du deine VS-Code-Erweiterungen an einen anderen Ort verschoben, findet WPorbit sie eventuell nicht. Dann wählst du **Trotzdem öffnen**.
+</Callout>
+
+## Mit einem Klick öffnen
+
+VS Code erreichst du an zwei Stellen: im Menü **Öffnen in…** rechts in der Tab-Leiste und im Kontextmenü des Projekts in der Seitenleiste. Beide bieten dieselben zwei Einträge.
+
+Der erste Eintrag öffnet sofort, ohne Rückfrage:
+
+1. den Ordner, den du in diesem Projekt zuletzt geöffnet hast,
+2. sonst das Child-Theme,
+3. sonst das WordPress-Verzeichnis.
+
+Kennt WPorbit den zuletzt benutzten Ordner, steht er im Eintrag, zum Beispiel **In VS Code öffnen: Themes**. Sonst heisst der Eintrag nur **In VS Code öffnen**. Gibt es den Ordner nicht mehr, überspringt WPorbit ihn.
+
+![Menü „Öffnen in…“ mit „In VS Code öffnen: contact-form-7“ und „Anderen Ordner in VS Code öffnen…“](/anleitungen/entwicklung/vs-code-und-dev-container/01-vscode-menue.webp)
+
+## Einen anderen Ordner öffnen
+
+**Anderen Ordner in VS Code öffnen…** öffnet einen Dialog mit einer Ordnerliste:
+
+- zuerst die zuletzt geöffneten Ordner mit ihrem Pfad und wann du sie geöffnet hast,
+- dann die Standardordner, die es im Container gibt, etwa WordPress-Root, Themes, Plugins, Uploads, MU-Plugins und das Child-Theme des Projekts.
+
+Der Pfeil neben einem Ordner zeigt seine Unterordner. So erreichst du ein einzelnes Theme oder Plugin mit zwei Klicks. Ein Doppelklick öffnet den Ordner sofort, sonst wählst du ihn aus und klickst auf **Öffnen**.
+
+Unter „Anderer Ordner“ kannst du einen Pfad auch eintippen, relativ zum WordPress-Verzeichnis im Container, zum Beispiel `wp-content/plugins/mein-plugin`. Ein getippter Pfad hat Vorrang vor der Auswahl in der Liste.
+
+![Dialog „In VS Code öffnen“ mit aufgeklapptem Ordner Plugins und ausgewähltem Plugin](/anleitungen/entwicklung/vs-code-und-dev-container/02-ordner-dialog.webp)
+
+## Was in VS Code passiert
+
+VS Code öffnet ein neues Fenster, das mit dem Container verbunden ist. Unten links zeigt VS Code die Verbindung zum Container an. Änderungen an Dateien sind sofort in der lokalen Website sichtbar, ohne Kopieren und ohne Neustart.
+
+![VS Code, verbunden mit dem WordPress-Container, Remote-Anzeige unten links](/anleitungen/entwicklung/vs-code-und-dev-container/03-vscode-container.webp)
+
+WPorbit richtet Git im Container so ein, dass reine Änderungen an Dateirechten nicht als Änderung zählen. VS Code löst solche Änderungen manchmal selbst aus.
+
+<Callout variant="tipp" title="Das Child-Theme als Standard">
+Welcher Ordner als Child-Theme gilt, kommt aus den Zugangsdaten des Projekts: zuerst der Child-Theme-Ordner, sonst der Theme-Ordner. Arbeitest du meist in einem Plugin, öffne es einmal über **Anderen Ordner in VS Code öffnen…**. Danach öffnet der erste Eintrag genau diesen Ordner.
+</Callout>
+
+## Wenn es nicht klappt
+
+- **„Der WordPress-Container wurde nicht gefunden. Läuft das Projekt?“**: Starte das Projekt und versuche es erneut.
+- **VS Code öffnet sich nicht**: Die Einzelheiten stehen im App-Protokoll unter **Einstellungen → Diagnose & Support**.
+- **Leeres VS-Code-Fenster**: Meist fehlt die Erweiterung Dev Containers.
+
+<KeyTakeaways>
+
+- Voraussetzungen: VS Code, die Erweiterung Dev Containers und ein laufendes Projekt.
+- Der erste Eintrag öffnet sofort den zuletzt benutzten Ordner, sonst das Child-Theme.
+- **Anderen Ordner in VS Code öffnen…** zeigt eine aufklappbare Ordnerliste und ein Feld für eigene Pfade.
+
+</KeyTakeaways>

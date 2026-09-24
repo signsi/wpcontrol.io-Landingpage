@@ -1,0 +1,139 @@
+---
+title: "Zugangsdaten im Vault verwalten"
+description: "Wo WPorbit SSH-Zugänge, Passwörter und Projektwerte ablegt, wie du sie im Projekt ansiehst und bearbeitest und wie du sie exportierst."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - zugaenge/projekte-im-team-teilen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - fehlerbehebung/diagnose-und-support
+draft: false
+---
+
+WPorbit speichert die Zugangsdaten deiner Projekte nicht in einer Tabelle und nicht in der Projektdatenbank, sondern in einem lokalen **Vault** auf deinem Mac. Dort liegen zum Beispiel SSH-Host, Benutzer und Passwort, der Web-Root auf dem Server und die Werte der lokalen Datenbank. Den Schlüssel zum Vault, den Vault-Token, bewahrt WPorbit im macOS-Schlüsselbund auf.
+
+Im Alltag begegnest du dem Vault an zwei Stellen: in der Karte **Zugangsdaten** in der Übersicht eines Projekts und in den Einstellungen unter **Infrastruktur → Vault**.
+
+<Callout variant="hinweis" title="Zwei Namen, eine Sache">
+In der Projektansicht heisst die Karte „Zugangsdaten“. Das Wort „Vault“ steht nur in den Einstellungen, weil dort der Dienst selbst gemeint ist, der die Daten verwahrt.
+</Callout>
+
+## Zugangsdaten eines Projekts ansehen
+
+<Steps>
+
+<Step title="Projekt öffnen">
+
+Wähle das Projekt in der Seitenleiste. Im Tab **Übersicht** findest du unter „Projektdetails“ die Karte **Zugangsdaten**. Eine kleine Zahl daneben zeigt, wie viele eigene Einträge hinterlegt sind.
+
+</Step>
+
+<Step title="Karte aufklappen">
+
+Klicke auf die Kartenüberschrift. Die Einträge erscheinen gruppiert, Passwörter sind durch Punkte verdeckt. Mit dem Häkchen **Werte zeigen** blendest du sie ein. Über das Symbol neben einem Eintrag kopierst du den Wert in die Zwischenablage.
+
+Steht dort „Noch nicht geladen — klicke auf ›Aus Vault neu laden‹.“, liest **Aus Vault neu laden** die Werte frisch aus dem Vault.
+
+</Step>
+
+<Step title="Bei Bedarf alle Schlüssel zeigen">
+
+Standardmässig siehst du nur, was du selbst pflegst. **Alle Schlüssel anzeigen** blendet zusätzlich ein, was WPorbit für sich selbst hinterlegt, etwa Prüf-Zeitstempel oder den Magic-Login. **Rohansicht** zeigt alles als `SCHLÜSSEL=Wert`-Liste, **Gruppiert** wechselt zurück.
+
+</Step>
+
+</Steps>
+
+![Karte „Zugangsdaten“ aufgeklappt: Live-Adresse, Server, Benutzer, Port, Passwort verdeckt, Web-Root; oben „Werte zeigen“ (Serverdaten unkenntlich gemacht)](/anleitungen/zugaenge/zugangsdaten-im-vault/01-karte-zugangsdaten.webp)
+
+## Werte bearbeiten oder ergänzen
+
+<Steps>
+
+<Step title="Bearbeiten starten">
+
+Klicke in der aufgeklappten Karte auf **Werte bearbeiten**. Hat das Projekt noch keine Einträge, heisst der Knopf **Zugangsdaten hinzufügen**. Fehlt der Server-Zugang ganz, führt dich **Server-Zugang hinterlegen…** in den Projektdetails direkt hierher.
+
+</Step>
+
+<Step title="Werte ändern">
+
+Ändere die Felder direkt. Einen zusätzlichen Eintrag legst du unten mit Schlüssel und Wert an und bestätigst mit **Hinzufügen**.
+
+</Step>
+
+<Step title="Speichern">
+
+Klicke auf **Speichern**. WPorbit prüft die Eingaben wie im Einrichtungsassistenten: Ein Host mit `https://` davor oder ein relativer Web-Root wird abgelehnt, statt später bei jedem Serverbefehl zu scheitern. **Abbrechen** verwirft die Änderungen.
+
+</Step>
+
+</Steps>
+
+<Callout variant="achtung" title="Manche Werte starten das Projekt neu">
+Änderst du Laufzeitwerte wie `PHP_MEMORY_LIMIT` oder `WORDPRESS_CONFIG_EXTRA` und das Projekt läuft, erstellt WPorbit die Container nach dem Speichern kontrolliert neu. Die Seite ist dabei kurz nicht erreichbar.
+</Callout>
+
+![Karte „Zugangsdaten“ im Bearbeitungsmodus: Werte als Felder, Passwörter verdeckt, oben „Abbrechen“ und „Speichern“](/anleitungen/zugaenge/zugangsdaten-im-vault/02-werte-bearbeiten.webp)
+
+## Mehr Details mit „Technische Details anzeigen“
+
+Schaltest du unter **Einstellungen → Allgemein → Ansicht** den Schalter **Technische Details anzeigen** ein (oder drückst ⇧⌘E), kommen in der Karte zwei Dinge dazu:
+
+- ein Filterfeld „Schlüssel oder Werte filtern…“, praktisch bei vielen Einträgen
+- der Bereich **.env neu importieren** mit **.env importieren**, **.env aus dem Projektordner laden** und **Zugangsdaten exportieren…**
+
+Beim Import prüft WPorbit die eingefügte `.env` zuerst (**Analysieren**) und schreibt sie erst mit **In Vault übernehmen** in den Vault.
+
+## Alle Projekte in den Einstellungen
+
+Unter **Einstellungen → Infrastruktur → Vault** steht der Dienst selbst: Adresse, Token, Start und Stopp. Für den Alltag ist vor allem der Abschnitt **Vault-Projekte (Ablage)** interessant.
+
+<Steps>
+
+<Step title="Liste laden">
+
+Klicke auf **Projekte laden**. WPorbit zeigt alle Einträge, die im lokalen Vault liegen, jeweils mit dem Kurznamen des Projekts. Das geht nur, wenn der Vault läuft.
+
+</Step>
+
+<Step title="Einen Eintrag exportieren">
+
+Klicke neben dem Projekt auf **Exportieren** und wähle einen Speicherort. WPorbit schlägt den Dateinamen `<projekt>-vault.env` vor. Die Datei lässt sich später über **.env importieren** wieder einlesen.
+
+</Step>
+
+<Step title="Einen Eintrag löschen">
+
+Das Papierkorb-Symbol löscht die Zugangsdaten eines Projekts aus dem Vault. WPorbit fragt vorher nach („Vault-Eintrag löschen?“). Das lässt sich nicht rückgängig machen.
+
+</Step>
+
+</Steps>
+
+![Einstellungen → Infrastruktur, „Vault-Projekte (Ablage)“ nach „Projekte laden“: Einträge mit „Exportieren“, „Laden“ und Papierkorb](/anleitungen/zugaenge/zugangsdaten-im-vault/03-vault-ablage.webp)
+
+<Callout variant="wichtig" title="Exporte enthalten Passwörter im Klartext">
+Eine exportierte `.env` enthält alle Werte unverschlüsselt, auch SSH- und Datenbankpasswörter. Lege sie nicht in geteilte Ordner, Mails oder Chats und lösche sie, sobald du sie nicht mehr brauchst.
+</Callout>
+
+## Vault-Token und Entsperren
+
+Der Vault-Token steht im Abschnitt **Vault-Zugang (Schlüsselbund)**. WPorbit richtet ihn bei der Ersteinrichtung ein, normalerweise musst du hier nichts tun. Zeigt die Karte „Zugangsdaten“ im Projekt „Kein Vault-Token“, fügst du ihn hier ein und klickst auf **Token speichern**.
+
+Mit **Löschen…** entfernst du den Token aus dem Schlüsselbund. Ohne ihn liest WPorbit keine Zugangsdaten mehr aus dem Vault. Hast du ihn nirgends notiert, kommst du an die Einträge nicht mehr heran.
+
+Ist der Vault versiegelt, erscheint der Abschnitt **Vault entsperren**. Dort gibst du den Entsperrungsschlüssel ein und klickst auf **Entsperren**.
+
+<KeyTakeaways>
+
+- Zugangsdaten liegen lokal im Vault auf deinem Mac, der Token im macOS-Schlüsselbund.
+- Im Projekt: Übersicht → Karte **Zugangsdaten**, bearbeiten mit **Werte bearbeiten** und **Speichern**.
+- Alle Projekte, Export und Löschen: **Einstellungen → Infrastruktur → Vault → Vault-Projekte (Ablage)**.
+- Exporte sind Klartext. Behandle sie wie ein Passwort.
+
+</KeyTakeaways>
