@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom'
-import Topbar from '../components/Topbar'
-import Footer from '../components/Footer'
+import Seo from '../components/Seo'
+import PageHero from '../components/PageHero'
+import NumberedFeatures from '../components/NumberedFeatures'
+import CTABand from '../components/CTABand'
+import { plans, STANDALONE_PROJECT_LIMIT } from '../data/plans'
+import { breadcrumbLd } from '../lib/jsonld'
+
+const standalone = plans.find((p) => p.id === 'standalone')!
 
 const features = [
   {
@@ -29,152 +35,121 @@ const features = [
   },
 ]
 
+const crumbs = [{ label: 'Standalone', path: '/standalone' }]
+
 export default function StandalonePage() {
   return (
-    <div className="min-h-screen bg-base text-primary">
-      <Topbar variant="features" />
-      <main className="pt-[3.25rem]">
+    <>
+      <Seo
+        title="Standalone"
+        description={`WPorbit Standalone: WordPress-Projekte unabhängig organisieren, Zugänge sicher verwahren und Änderungen veröffentlichen. Ab ${standalone.priceMain.replace('ab ', '')} CHF pro Person und Monat.`}
+        path="/standalone"
+        jsonLd={breadcrumbLd(crumbs)}
+      />
 
-        {/* Hero */}
-        <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-            Standalone
-          </p>
-          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
-            Professionell arbeiten.<br />Einfach starten.
-          </h1>
-          <p className="text-secondary leading-[1.75] text-[1rem] max-w-[48ch] mb-2">
-            Für Agenturen, die WordPress-Projekte zuverlässig organisieren und unabhängig von der Cloud bearbeiten wollen.
-          </p>
-          <div className="flex items-end gap-2 leading-none mb-8 mt-5">
-            <span className="font-heading font-semibold text-[2.8rem] tracking-[-0.03em] text-primary leading-none">ab 290</span>
-            <span className="text-secondary text-[0.88rem] leading-tight mb-1.5">CHF / Person / Monat<br /><span className="text-tertiary text-[0.78rem]">Max. 3 Projekte</span></span>
-          </div>
-          <div className="flex gap-3 flex-wrap">
-            <Link to="/#demo" className="btn btn-primary btn-md">
-              10 Tage gratis testen
-            </Link>
-            <Link to="/#preise" className="btn btn-secondary btn-md">
-              Alle Pläne vergleichen
-            </Link>
-          </div>
-        </section>
+      <PageHero
+        kicker="Standalone"
+        title={<>Professionell arbeiten.<br />Einfach starten.</>}
+        lead="Für Agenturen, die WordPress-Projekte zuverlässig organisieren und unabhängig von der Cloud bearbeiten wollen."
+        crumbs={crumbs}
+        actions={
+          <>
+            <Link to="/demo" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
+            <Link to="/preise" className="btn btn-secondary btn-md">Alle Pläne vergleichen</Link>
+          </>
+        }
+      >
+        <div className="mt-5 flex items-end gap-2 leading-none">
+          <span className="font-heading text-[2.8rem] font-semibold leading-none tracking-[-0.03em] text-primary">
+            {standalone.priceMain}
+          </span>
+          <span className="mb-1.5 text-[0.88rem] leading-tight text-secondary">
+            {standalone.priceSub}
+            <br />
+            <span className="text-[0.78rem] text-tertiary">Max. {STANDALONE_PROJECT_LIMIT} Projekte</span>
+          </span>
+        </div>
+      </PageHero>
 
-        {/* Features */}
-        {features.map((f, i) => (
-          <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
-              <div>
-                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
-                  {String(i + 1).padStart(2, '0')}
-                </p>
-                <h2 className="font-heading font-semibold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
-                  {f.title}
-                </h2>
-              </div>
-              <p className="text-secondary text-[0.95rem] leading-[1.78] lg:pt-8">
-                {f.detail}
-              </p>
-            </div>
-          </section>
-        ))}
+      <NumberedFeatures features={features} />
 
-        {/* Timeline */}
-        <section className="px-6 py-14 border-b border-line bg-surface">
-          <div className="max-w-4xl">
-            <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-              Zeitplan
-            </p>
-            <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[30ch]">
-              Wechsel auf Standalone bis Ende 2026
-            </h2>
-            <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[60ch] mb-8">
-              Der operative Wechsel auf WPorbit Standalone ist bis Ende 2026 geplant.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <article className="border border-line rounded-xl p-5 bg-base">
-                <p className="text-[0.66rem] uppercase tracking-[0.12em] text-tertiary mb-2">Bis August 2026</p>
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Vorbereitung</h3>
-                <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Bestand aufnehmen, Prioritäten definieren und Team auf den Wechsel vorbereiten.
-                </p>
-              </article>
-
-              <article className="border border-accent/30 rounded-xl p-5 bg-accent/10">
-                <p className="text-[0.66rem] uppercase tracking-[0.12em] text-accent mb-2">Ab September 2026</p>
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Team-Testphase</h3>
-                <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Neue Standalone-Version im Team testen, Feedback aufnehmen und iterativ entwickeln.
-                </p>
-              </article>
-
-              <article className="border border-line rounded-xl p-5 bg-base">
-                <p className="text-[0.66rem] uppercase tracking-[0.12em] text-tertiary mb-2">Ende 2026</p>
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Wechsel abgeschlossen</h3>
-                <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Umstieg auf die Standalone-Version als neue Basis im laufenden Betrieb.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        {/* Transition phase */}
-        <section className="px-6 py-14 border-y border-line bg-raised" id="uebergangsphase">
-          <div className="max-w-4xl mx-auto">
-            <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-              Übergangsphase
-            </p>
-            <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4 max-w-[36ch]">
-              Die bisherige Lösung bleibt bis zum Wechsel betreut
-            </h2>
-            <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[62ch] mb-8">
-              In diesem Zeitraum wird die aktuelle Lösung weiter betreut. Updates der Umgebung stehen automatisch bereit
-              und können selbstständig installiert werden.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <article className="border border-line rounded-xl p-5 bg-surface">
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Automatische Umgebungs-Updates</h3>
-                <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Neue Updates für die Umgebung werden direkt zur Verfügung gestellt und können vom Team
-                  selbstständig installiert werden.
-                </p>
-              </article>
-
-              <article className="border border-line rounded-xl p-5 bg-surface">
-                <h3 className="font-heading font-semibold text-[1rem] text-primary mb-2">Direkter Support</h3>
-                <p className="text-secondary text-[0.86rem] leading-[1.65]">
-                  Ein gemeinsamer Kontaktpunkt sorgt dafür, dass Fragen, Meldungen und Lösungen schnell
-                  koordiniert werden können.
-                </p>
-              </article>
-
-            </div>
-          </div>
-        </section>
-
-        {/* Compare nudge */}
-        <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3 max-w-[26ch] mx-auto">
-            Mehr Projekte oder ein Team?
+      {/* Zeitplan */}
+      <section className="reveal-up border-b border-line bg-surface px-6 py-14">
+        <div className="max-w-4xl">
+          <p className="mb-3 text-[0.67rem] font-bold uppercase tracking-[0.13em] text-accent">Zeitplan</p>
+          <h2 className="mb-4 max-w-[30ch] font-heading text-[clamp(1.75rem,3.4vw,2.125rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+            Wechsel auf Standalone bis Ende 2026
           </h2>
-          <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[42ch] mx-auto mb-7">
-            Mit dem Cloud-Plan arbeitet das gesamte Team auf demselben Projektstand. Wissen, Zugänge und nächste Schritte bleiben für Berechtigte verfügbar.
+          <p className="mb-8 max-w-[60ch] text-[0.95rem] leading-[1.75] text-secondary">
+            Der operative Wechsel auf WPorbit Standalone ist bis Ende 2026 geplant.
           </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/cloud" className="btn btn-primary btn-md">
-              Cloud-Plan ansehen
-            </Link>
-            <Link to="/" className="btn btn-secondary btn-md">
-              Zur Startseite
-            </Link>
-          </div>
-        </section>
 
-      </main>
-      <Footer />
-    </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <article className="rounded-xl border border-line bg-base p-5">
+              <p className="mb-2 text-[0.66rem] uppercase tracking-[0.12em] text-tertiary">Bis August 2026</p>
+              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Vorbereitung</h3>
+              <p className="text-[0.86rem] leading-[1.65] text-secondary">
+                Bestand aufnehmen, Prioritäten definieren und Team auf den Wechsel vorbereiten.
+              </p>
+            </article>
+
+            <article className="rounded-xl border border-accent/30 bg-accent/10 p-5">
+              <p className="mb-2 text-[0.66rem] uppercase tracking-[0.12em] text-accent">Ab September 2026</p>
+              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Team-Testphase</h3>
+              <p className="text-[0.86rem] leading-[1.65] text-secondary">
+                Neue Standalone-Version im Team testen, Feedback aufnehmen und iterativ entwickeln.
+              </p>
+            </article>
+
+            <article className="rounded-xl border border-line bg-base p-5">
+              <p className="mb-2 text-[0.66rem] uppercase tracking-[0.12em] text-tertiary">Ende 2026</p>
+              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Wechsel abgeschlossen</h3>
+              <p className="text-[0.86rem] leading-[1.65] text-secondary">
+                Umstieg auf die Standalone-Version als neue Basis im laufenden Betrieb.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Übergangsphase */}
+      <section id="uebergangsphase" className="reveal-up border-y border-line bg-raised px-6 py-14">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-3 text-[0.67rem] font-bold uppercase tracking-[0.13em] text-accent">Übergangsphase</p>
+          <h2 className="mb-4 max-w-[36ch] font-heading text-[clamp(1.75rem,3.4vw,2.125rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+            Die bisherige Lösung bleibt bis zum Wechsel betreut
+          </h2>
+          <p className="mb-8 max-w-[62ch] text-[0.95rem] leading-[1.75] text-secondary">
+            In diesem Zeitraum wird die aktuelle Lösung weiter betreut. Updates der Umgebung stehen automatisch bereit
+            und können selbstständig installiert werden.
+          </p>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <article className="rounded-xl border border-line bg-surface p-5">
+              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Automatische Umgebungs-Updates</h3>
+              <p className="text-[0.86rem] leading-[1.65] text-secondary">
+                Neue Updates für die Umgebung werden direkt zur Verfügung gestellt und können vom Team
+                selbstständig installiert werden.
+              </p>
+            </article>
+
+            <article className="rounded-xl border border-line bg-surface p-5">
+              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Direkter Support</h3>
+              <p className="text-[0.86rem] leading-[1.65] text-secondary">
+                Ein gemeinsamer Kontaktpunkt sorgt dafür, dass Fragen, Meldungen und Lösungen schnell
+                koordiniert werden können.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <CTABand
+        title="Mehr Projekte oder ein Team?"
+        text="Mit dem Cloud-Plan arbeitet das gesamte Team auf demselben Projektstand. Wissen, Zugänge und nächste Schritte bleiben für Berechtigte verfügbar."
+        primary={{ label: 'Cloud-Plan ansehen', to: '/cloud' }}
+        secondary={{ label: 'Alle Pläne vergleichen', to: '/preise' }}
+      />
+    </>
   )
 }

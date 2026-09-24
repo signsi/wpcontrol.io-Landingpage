@@ -1,0 +1,105 @@
+---
+title: "Holen, Senden, Deployen: was wohin übertragen wird"
+description: "Der Remote-Tab im Überblick: was ›Holen‹, ›Senden‹ und ›Deployen‹ übertragen, was dabei überschrieben wird und wofür die Pipeline da ist."
+order: 5
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/live-seite-sicher-aktualisieren
+  - veroeffentlichen/theme-per-rsync-deployen
+  - veroeffentlichen/gitlab-deployment-einrichten
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+draft: true
+---
+
+Zwischen deiner lokalen Umgebung und dem Server gibt es in WPorbit drei Wege: **Holen**, **Senden** und **Deployen**. Sie unterscheiden sich darin, in welche Richtung sie laufen und was sie mitnehmen. Diese Seite erklärt die drei, damit du vor dem Klick weisst, was danach anders ist.
+
+<Callout variant="hinweis" title="Voraussetzung">
+Für das Projekt ist ein Server hinterlegt. Ohne Server-Zugang ist der Tab **Remote** ausgegraut. Wie du ihn einträgst, steht unter [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
+</Callout>
+
+## Der Remote-Tab
+
+Wähle das Projekt und wechsle in den Tab **Remote**. Oben siehst du, wohin die Daten gehen: links **Lokal** mit der lokalen Adresse, rechts **Server** mit der Live-Adresse. Darunter steht, ob die letzte Verbindungsprüfung bestanden hat.
+
+Die Karte **Übertragen** enthält drei Zeilen:
+
+- **Vom Server holen** mit dem Knopf **Holen…**
+- **Zum Server senden** mit dem Knopf **Senden…**
+- **Theme deployen** mit dem Knopf **Deployen…**
+
+Die drei Punkte am Ende der Knopfbeschriftung bedeuten: Es öffnet sich zuerst ein Assistent, der nachfragt. Nichts läuft sofort los.
+
+Darunter liegt die Karte **Einrichtung** mit Dingen, die du pro Projekt meist nur einmal machst: **Theme einrichten** und **Pipeline einrichten…**.
+
+![Tab „Remote“: Statuskarte Lokal ⇄ Server mit „Verbindung geprüft“, darunter die Karten „Übertragen“ (Holen…, Senden…, Deployen…) und „Einrichtung“](/anleitungen/veroeffentlichen/holen-senden-deployen/01-remote-tab-uebersicht.webp)
+
+Die drei Wege findest du auch im Kontextmenü eines Projekts (Rechtsklick), dort als **Vom Server holen…**, **Zum Server senden…** und **Theme deployen…**.
+
+## Vom Server holen
+
+**Holen** lädt Daten vom Server in deine lokale Umgebung. Das ist der Weg, wenn du lokal mit dem aktuellen Stand der Live-Seite arbeiten willst.
+
+Im Assistenten wählst du unter „Was holen?“ aus, was übertragen wird:
+
+- **Datenbank**: SQL-Dump vom Server importieren (vorausgewählt)
+- **Plugins**: Plugin-Dateien synchronisieren
+- **Uploads**: Media-Bibliothek übertragen
+- **Themes**: Theme-Ordner synchronisieren (ohne Build)
+
+Vor dem Start ermittelt WPorbit die Grössen auf dem Server. Sind die Uploads gross, fragt ein zusätzliches Fenster „Grosse Datenmenge erkannt“ nach, welche Upload-Ordner du wirklich brauchst. Dort kannst du zum Beispiel nur die letzten ein oder zwei Jahre holen.
+
+Nach dem Import passt WPorbit die Adressen in der Datenbank an, damit die lokale Seite auf die lokale Adresse zeigt und nicht auf die Live-Domain.
+
+<Callout variant="achtung" title="Holen überschreibt lokal">
+Was du holst, ersetzt den lokalen Stand. Hast du lokal Inhalte in der Datenbank geändert, die noch nicht auf dem Server sind, sind sie nach dem Holen weg. Sichere sie vorher mit **Backup erstellen…** im Tab **Backup**.
+</Callout>
+
+## Zum Server senden
+
+**Senden** ist die Gegenrichtung: Lokale Datenbank und Inhalte gehen auf den Server. Der Assistent bietet dieselben vier Bereiche an (Datenbank, Plugins, Uploads, Themes).
+
+Beim Senden der Datenbank schreibt WPorbit die Adressen für den Export auf die Live-Adresse um, spielt den Dump auf dem Server ein und stellt die lokalen Adressen danach wieder her. Auf dem Server leert WPorbit anschliessend Cache und Permalinks und setzt die Dateirechte.
+
+Senden ist die weitreichendste der drei Aktionen: Es überschreibt Daten auf dem Server und lässt sich nicht rückgängig machen. Deshalb nennt der Assistent vor dem Start das Ziel in grosser Schrift, und bei einer öffentlich erreichbaren Live-Seite musst du die Zieladresse von Hand eintippen. Den ganzen Ablauf beschreibt [Live-Seite sicher aktualisieren](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren).
+
+## Theme deployen
+
+**Deployen** überträgt nur einen einzigen Theme-Ordner auf den Server, per rsync. Datenbank, Plugins und Uploads bleiben unberührt. Das ist der Weg, wenn du am Theme gearbeitet hast und nur Code und Styles live bringen willst.
+
+Im Assistenten wählst du das lokale Theme und siehst in der Vorschau Quelle und Ziel. Mit **Zuerst einen Probelauf machen** kontrollierst du die Pfade, bevor etwas übertragen wird. Details stehen unter [Theme per rsync deployen](/anleitungen/veroeffentlichen/theme-per-rsync-deployen).
+
+## Und die Pipeline?
+
+**Pipeline einrichten…** überträgt selbst nichts. Es bereitet das Projekt einmalig darauf vor, dass GitLab das Theme bei jedem Git-Push selbst deployt: Deploy-Key, Eintrag auf dem Server und die CI/CD-Variablen zum Einfügen. Die Pipeline läuft danach in GitLab, nicht in WPorbit. Mehr dazu unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
+
+## Welcher Weg wofür?
+
+| Du willst … | Weg | Richtung | Was übertragen wird |
+|---|---|---|---|
+| lokal mit echten Inhalten der Live-Seite arbeiten | **Holen…** | Server → lokal | Datenbank, Plugins, Uploads, Themes nach Auswahl |
+| lokal gebaute Seite oder neue Inhalte live stellen | **Senden…** | lokal → Server | Datenbank, Plugins, Uploads, Themes nach Auswahl |
+| nur Änderungen am Theme live bringen | **Deployen…** | lokal → Server | ein Theme-Ordner |
+| Theme-Änderungen automatisch per Git ausrollen | **Pipeline einrichten…** | GitLab → Server | nichts direkt, nur Vorbereitung |
+
+Als Faustregel: Wenn auf der Live-Seite Redaktionsarbeit passiert, also Beiträge, Bestellungen oder Formulareinträge, dann sende die Datenbank nicht. Sie würde diese Einträge überschreiben. Für Theme-Änderungen reicht **Deployen**.
+
+## Prüfung vor jedem Lauf
+
+Holen und Senden prüfen vor dem Start selbst, ob der Server kann, was nötig ist: SSH, Web-Root, WordPress-Installation, PHP, WP-CLI, Datenbank und Tabellen-Präfix. Fehlt etwas, brechen sie ab, bevor etwas verändert wird. Die Meldung endet dann mit „Es wurde nichts verändert.“
+
+Findet die letzte Prüfung etwas, woran eine Richtung scheitern würde, zeigt die betroffene Zeile ein orangefarbenes Warndreieck. Die Ursache steht in der Statuskarte oben.
+
+{/* SCREENSHOT 02-uebertragen-mit-warnung: Karte „Übertragen“, bei „Zum Server senden“ ein orangefarbenes Warndreieck; darüber die Statuskarte mit „Letzte Prüfung fehlgeschlagen · …“ und der betroffenen Richtung */}
+
+<KeyTakeaways>
+
+- **Holen** bringt Daten vom Server nach lokal und überschreibt den lokalen Stand.
+- **Senden** bringt lokale Daten auf den Server und überschreibt dort. Bei Live-Seiten tippst du die Zieladresse zur Bestätigung ein.
+- **Deployen** überträgt nur einen Theme-Ordner. Datenbank und Uploads bleiben unberührt.
+- **Pipeline einrichten…** bereitet GitLab vor, überträgt selbst aber nichts.
+
+</KeyTakeaways>

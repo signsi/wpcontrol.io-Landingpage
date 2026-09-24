@@ -1,0 +1,145 @@
+---
+title: "Deployment über GitLab einrichten"
+description: "Mit ›Pipeline einrichten…‹ Deploy-Key, Server-Eintrag und CI/CD-Variablen vorbereiten, damit GitLab das Theme bei jedem Git-Push selbst auf den Server überträgt."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "20 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/theme-per-rsync-deployen
+  - veroeffentlichen/holen-senden-deployen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - fehlerbehebung/deploy-schlaegt-fehl
+draft: false
+---
+
+Wenn dein Theme in einem GitLab-Repository liegt, kann eine GitLab-Pipeline es bei jedem Push selbst auf den Server übertragen. WPorbit übernimmt dabei den mühsamen Teil der Vorbereitung: Es erzeugt einen eigenen Deploy-Key, hinterlegt ihn auf dem Server und stellt dir alle CI/CD-Variablen zum Kopieren bereit.
+
+<Callout variant="hinweis" title="Was WPorbit macht und was nicht">
+**Pipeline einrichten…** bereitet die Zugänge vor. Die Pipeline-Datei `.gitlab-ci.yml` schreibst du selbst, und die Pipeline läuft in GitLab. WPorbit startet sie nicht, zeigt ihr Ergebnis nicht an und bietet kein Zurückrollen an.
+</Callout>
+
+## Voraussetzungen
+
+- Für das Projekt ist ein Server hinterlegt, und die Verbindung funktioniert. Siehe [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
+- In den Zugangsdaten des Projekts steht der Theme-Ordner: `CHILD_THEME_FOLDER` oder, falls es kein Child-Theme gibt, `THEME_FOLDER`. WPorbit nimmt das Child-Theme, wenn beide gesetzt sind.
+- Der Theme-Ordner ist das Git-Repository, das die Pipeline auscheckt.
+- Das lokale Projekt läuft. Das Theme liegt im lokalen Container, und dort legt WPorbit die Schlüsseldateien ab.
+
+## Pipeline vorbereiten
+
+<Steps>
+
+<Step title="Assistenten öffnen">
+
+Öffne im Projekt den Tab **Remote**. In der Karte **Einrichtung** steht die Zeile „GitLab soll das Theme bei jedem Git-Push selbst deployen.“ Klicke dort auf **Pipeline einrichten…**.
+
+Das Fenster „Pipeline einrichten“ erklärt unter „Was dabei passiert“, was gleich geschieht.
+
+![Fenster „Pipeline einrichten“ vor dem Start: „Was dabei passiert“ mit fünf Punkten, unten „Einrichten“](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten/01-pipeline-einrichten-intro.webp)
+
+</Step>
+
+<Step title="Einrichten">
+
+Klicke auf **Einrichten**. WPorbit arbeitet jetzt fünf Schritte ab und protokolliert jeden im Fenster:
+
+1. Es erzeugt ein Ed25519-Schlüsselpaar nur für diese Pipeline, getrennt von deinem persönlichen Schlüssel.
+2. Es hinterlegt den öffentlichen Teil auf dem Server in `~/.ssh/authorized_keys`.
+3. Es liest die Host-Fingerabdrücke des Servers, damit die Pipeline ihn wiedererkennt.
+4. Es legt beides im Theme unter `.ssh/` ab.
+5. Es trägt `.ssh/` in die `.gitignore` des Themes ein, damit der private Schlüssel nicht ins Repository gelangt.
+
+Am Ende steht „Fertig — die Variablen stehen unten zum Kopieren bereit.“
+
+<Callout variant="achtung" title="Wenn authorized_keys nicht beschreibbar ist">
+Kann WPorbit den öffentlichen Schlüssel nicht auf dem Server eintragen, bricht der Vorgang nicht ab. Das Protokoll zeigt dann „Konnte authorized_keys nicht schreiben“ und darunter den Befehl, mit dem du den Schlüssel von Hand hinterlegst. Ohne diesen Schritt kann sich die Pipeline nicht anmelden.
+</Callout>
+
+</Step>
+
+<Step title="Variablen in GitLab eintragen">
+
+Unter „GitLab → Einstellungen → CI/CD → Variablen“ listet WPorbit sieben Variablen, jede mit Zweck, Wert und einem Knopf **Kopieren**:
+
+| Name | Typ | Inhalt |
+|---|---|---|
+| `SSH_HOST` | Variable | Server, auf den die Pipeline deployt |
+| `SSH_USER` | Variable | Benutzer für die SSH-Anmeldung |
+| `SSH_PORT` | Variable | SSH-Port des Servers |
+| `WEB_ROOT` | Variable | WordPress-Verzeichnis auf dem Server |
+| `THEME_FOLDER` | Variable | Theme-Ordner, den die Pipeline überträgt |
+| `SSH_KEY` | File, Masked | privater Deploy-Key |
+| `SSH_KNOWN_HOSTS` | File | Host-Fingerabdrücke des Servers |
+
+Öffne in GitLab dein Projekt und dort **Settings → CI/CD → Variables** (in der deutschen Oberfläche **Einstellungen → CI/CD → Variablen**). Lege jede Variable mit Namen und Wert an.
+
+**Alles kopieren** legt alle Variablen in einem Block mit Kommentaren in die Zwischenablage, praktisch zum Aufbewahren oder Weitergeben an die Person, die GitLab verwaltet.
+
+![„Pipeline einrichten“ nach Erfolg: Protokoll oben, darunter die GitLab-Variablen mit Typ-Tags und „Kopieren“, unten „Alles kopieren“ (Serverdaten unkenntlich gemacht)](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten/02-pipeline-variablen.webp)
+
+<Callout variant="wichtig" title="Typ ›File‹ bei SSH_KEY und SSH_KNOWN_HOSTS">
+Lege `SSH_KEY` und `SSH_KNOWN_HOSTS` in GitLab mit dem Typ **File** an. Als gewöhnliche Variable gehen die Zeilenumbrüche verloren, und die Anmeldung schlägt fehl. Bei diesem Typ enthält die Variable in der Pipeline den Pfad zu einer Datei mit dem Wert, nicht den Wert selbst.
+</Callout>
+
+</Step>
+
+<Step title="Die .gitignore committen">
+
+WPorbit hat `.ssh/` in die `.gitignore` des Themes eingetragen, falls der Eintrag fehlte. Committe diese Änderung. Prüfe mit `git status`, dass der Ordner `.ssh/` nicht zum Commit vorgeschlagen wird.
+
+</Step>
+
+<Step title="Die Pipeline-Datei schreiben">
+
+Leg im Theme-Repository eine `.gitlab-ci.yml` an. WPorbit erzeugt sie nicht. Ein Beispiel, das die Variablen von oben verwendet und bei jedem Push auf `main` deployt:
+
+```yaml
+deploy_theme:
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+  before_script:
+    - apk add --no-cache openssh-client rsync
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+    - chmod 600 "$SSH_KEY"
+  script:
+    - rsync -az --delete
+        --exclude=.git --exclude=.ssh --exclude=node_modules
+        -e "ssh -i $SSH_KEY -p $SSH_PORT"
+        ./ "$SSH_USER@$SSH_HOST:$WEB_ROOT/wp-content/themes/$THEME_FOLDER/"
+```
+
+Passe Branch, Image und Ausschlüsse an dein Projekt an. Braucht dein Theme einen Build-Schritt, gehört er vor das `rsync`.
+
+<Callout variant="achtung" title="--delete räumt auf dem Server auf">
+Mit `--delete` entfernt rsync Dateien im Theme-Ordner auf dem Server, die nicht im Repository liegen. Das ist gewollt, damit der Server dem Repository entspricht. Wer direkt auf dem Server Dateien ins Theme legt, verliert sie beim nächsten Durchlauf.
+</Callout>
+
+</Step>
+
+<Step title="Ersten Durchlauf testen">
+
+Teste den Ablauf zuerst gegen eine Staging-Umgebung oder ein unkritisches Projekt. Pushe einen kleinen Commit und verfolge den Job in GitLab unter **Build → Pipelines**. Schlägt die Anmeldung fehl, prüfe zuerst den Typ der beiden File-Variablen.
+
+</Step>
+
+</Steps>
+
+## Der Rückweg
+
+WPorbit kann ein Pipeline-Deployment nicht zurückrollen. Der Rückweg führt über Git: Mach den fehlerhaften Commit mit `git revert` rückgängig und pushe. Die Pipeline überträgt dann den vorherigen Stand. Probiere das einmal aus, solange nichts drängt.
+
+## Gut zu wissen
+
+- **Nur GitLab.** Die Variablen sind für GitLab aufbereitet. GitHub Actions kennt keinen Variablentyp „File“ und benennt seine Einstellungen anders.
+- **Ein zweiter Lauf erzeugt einen neuen Schlüssel.** Der neue öffentliche Schlüssel kommt zusätzlich in `authorized_keys`, der alte bleibt dort, bis du ihn auf dem Server entfernst. Trag danach auch die neuen Werte in GitLab ein.
+- **Ohne Theme-Ordner geht es nicht.** Fehlen `CHILD_THEME_FOLDER` und `THEME_FOLDER`, bricht WPorbit ab, bevor ein Schlüssel erzeugt wird: „Für dieses Projekt ist kein Theme-Ordner hinterlegt …“
+- **Ohne Host-Schlüssel auch nicht.** Liefert der Server keine Fingerabdrücke, meldet WPorbit „Der Server … hat keine Host-Schlüssel zurückgegeben.“ Prüfe dann Host und Port.
+
+## Wenn etwas nicht funktioniert
+
+Die häufigsten Ursachen für fehlgeschlagene Deployments stehen mit Lösung unter [Deploy schlägt fehl](/anleitungen/fehlerbehebung/deploy-schlaegt-fehl).

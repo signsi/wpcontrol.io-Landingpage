@@ -1,0 +1,97 @@
+---
+title: "Lokale Domains und MailHog"
+description: "Projekte unter https://<slug>.wporbit erreichen statt unter localhost mit Port, und den Mail-Container MailHog ein- oder ausschalten."
+order: 50
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone]
+related:
+  - entwicklung/logs-lesen
+  - erste-schritte/wporbit-installieren
+  - fehlerbehebung/einrichtung-schlaegt-fehl
+draft: false
+---
+
+Ohne weitere Einrichtung erreichst du ein lokales Projekt unter `http://localhost` mit einer eigenen Portnummer. Mit lokalen Domains bekommt jedes Projekt eine feste Adresse mit HTTPS, zum Beispiel `https://mueller-website.wporbit`. Beides stellst du unter **Einstellungen → Infrastruktur → Lokale Umgebung** ein, zusammen mit MailHog.
+
+![Einstellungen → Infrastruktur, Gruppe „Lokale Umgebung“: Lokale Domains aktiv mit DNS-Resolver, dnsmasq und Caddy, darunter MailHog](/anleitungen/entwicklung/mailhog-und-lokale-domains/01-lokale-umgebung.webp)
+
+## Lokale Domains
+
+Die Adresse eines Projekts ist `https://<slug>.wporbit`. Damit das funktioniert, richtet WPorbit einmalig drei Dinge auf deinem Mac ein:
+
+| Komponente | Aufgabe |
+|---|---|
+| DNS-Resolver (`/etc/resolver/wporbit`) | leitet alle Adressen auf `.wporbit` an deinen Mac (`127.0.0.1`) |
+| dnsmasq | beantwortet diese Anfragen als Systemdienst |
+| Caddy (HTTPS-Proxy) | nimmt die Anfragen an, leitet sie an das richtige Projekt weiter und liefert ein lokales Zertifikat |
+
+<Callout variant="hinweis" title="Voraussetzung: Homebrew">
+WPorbit installiert dnsmasq und Caddy über Homebrew. Ist Homebrew nicht unter `/opt/homebrew` installiert, bricht die Einrichtung mit „Homebrew nicht gefunden“ ab. Installiere dann zuerst Homebrew.
+</Callout>
+
+<Steps>
+
+<Step title="Lokale Domains aktivieren">
+
+Öffne **Einstellungen → Infrastruktur**. Schalte in der Gruppe „Lokale Umgebung“ **Lokale Domains aktivieren** ein. Darunter erscheinen die drei Komponenten mit ihrem Status.
+
+</Step>
+
+<Step title="Infrastruktur einrichten">
+
+Klicke auf **Infrastruktur einrichten**. macOS fragt nach deinem Administrator-Passwort, weil der Resolver und die Systemdienste Administratorrechte brauchen. Brichst du diese Abfrage ab, passiert nichts.
+
+WPorbit richtet dabei auch das lokale Zertifikat von Caddy als vertrauenswürdig ein, damit der Browser keine Zertifikatswarnung zeigt.
+
+</Step>
+
+<Step title="Status prüfen">
+
+Sind alle drei Zeilen grün und steht bei Caddy „Läuft“, ist die Einrichtung abgeschlossen. **Aktualisieren** liest den Status neu.
+
+</Step>
+
+<Step title="Projekt neu starten">
+
+Starte das Projekt neu. Beim Start trägt WPorbit es bei Caddy ein. Danach führt der Link **Lokale Website** oben in der Übersicht auf die `.wporbit`-Adresse.
+
+</Step>
+
+</Steps>
+
+<Callout variant="achtung" title="Container laufen, Adresse geht nicht">
+Ist das Projekt gestartet, aber eine Komponente fehlt, meldet WPorbit: „Container laufen, aber https://… ist nicht erreichbar“ und nennt, was fehlt. In derselben Meldung steht die direkte Adresse mit Port, unter der das Projekt trotzdem erreichbar ist.
+</Callout>
+
+### Unsichere Dateirechte
+
+Erscheint in den Einstellungen die Warnung „Unsichere Dateirechte“, ist die Konfigurationsdatei von Caddy für alle Prozesse auf deinem Mac beschreibbar. Weil Caddy als root läuft, ist das ein Sicherheitsrisiko. **Jetzt korrigieren** führt die Einrichtung erneut aus und setzt die Rechte korrekt.
+
+### Wieder entfernen
+
+**Infrastruktur entfernen** baut Resolver, dnsmasq-Dienst und Caddy-Dienst wieder ab. Auch dafür fragt macOS nach dem Administrator-Passwort. Die Homebrew-Pakete dnsmasq und Caddy bleiben installiert.
+
+## MailHog
+
+Jedes Projekt hat einen eigenen Mail-Container: MailHog. Er ist ein Mail-Fänger mit Weboberfläche. Mails, die an ihn gehen, landen dort und nicht bei echten Empfängern. So testest du Kontaktformulare oder Bestellbestätigungen, ohne Kunden versehentlich anzuschreiben.
+
+Die Adresse der Weboberfläche steht nach dem Einrichten eines Projekts im Protokoll, in der Zeile `MailHog: http://localhost:<Port>`. Jedes Projekt hat einen eigenen Port.
+
+![MailHog-Weboberfläche mit der abgefangenen Test-Mail „Neue Kontaktanfrage“](/anleitungen/entwicklung/mailhog-und-lokale-domains/02-mailhog.webp)
+
+### MailHog abschalten
+
+Brauchst du MailHog nicht, sparst du einen Container pro Projekt. Schalte unter **Einstellungen → Infrastruktur → Lokale Umgebung** im Bereich „MailHog“ den Schalter **MailHog starten** aus.
+
+Das gilt ab dem nächsten Projektstart. Bereits laufende Container sind davon nicht betroffen. Starte ein Projekt neu, wenn MailHog sofort verschwinden soll.
+
+<KeyTakeaways>
+
+- Lokale Domains: **Lokale Domains aktivieren**, dann **Infrastruktur einrichten**. Braucht Homebrew und einmal das Administrator-Passwort.
+- Die Adresse eines Projekts ist `https://<slug>.wporbit`. Nach der Einrichtung Projekte neu starten.
+- MailHog fängt Mails lokal ab. **MailHog starten** schaltet den Container für künftige Starts ein oder aus.
+
+</KeyTakeaways>

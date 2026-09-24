@@ -26,19 +26,6 @@ export default function BigPlus() {
             Schluss mit verstreuten Skripten und schwer verständlichen Befehlen. WPorbit führt wiederkehrende Aufgaben in einer massgeschneiderten Oberfläche zusammen, die das ganze Team versteht.
           </p>
 
-          <p className="mt-6 max-w-[36rem] text-[0.9rem] leading-[1.65] text-secondary">
-            <strong className="font-semibold text-primary">Aus dem Agenturalltag entwickelt:</strong>{' '}
-            WPorbit erkennt typische Stolpersteine und erklärt direkt, was zu tun ist.
-          </p>
-
-          <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-[0.82rem] font-semibold text-secondary">
-            {['Geführte Abläufe', 'Klare Projektzustände', 'Hilfe im richtigen Moment'].map((benefit) => (
-              <span key={benefit} className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-accent" />
-                {benefit}
-              </span>
-            ))}
-          </div>
         </div>
 
         <div className="reveal-up relative">

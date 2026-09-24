@@ -1,0 +1,150 @@
+---
+title: "Die Oberfläche im Überblick"
+description: "Seitenleiste, Statuszeichen, Kopfzeile, Tabs mit ⌘1 bis ⌘5, das Menü „Öffnen in…“, die Statuszeile und die Einstellungen: wo in WPorbit was liegt."
+order: 40
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "10 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/erstes-projekt-anlegen
+  - erste-schritte/glossar
+  - entwicklung/datenbank-wp-cli-und-terminal
+  - entwicklung/logs-lesen
+draft: true
+---
+
+Das WPorbit-Fenster hat vier feste Bereiche: links die Seitenleiste mit deinen Projekten, rechts oben die Kopfzeile des ausgewählten Projekts, darunter die Tabs und ganz unten die Statuszeile, sobald etwas läuft. Diese Seite geht sie der Reihe nach durch.
+
+![Hauptfenster: links die Seitenleiste mit den Projekten, rechts das laufende Projekt „demo-remote“ im Tab „Übersicht“, unten die Statuszeile](/anleitungen/erste-schritte/oberflaeche-im-ueberblick/01-gesamtfenster.webp)
+
+## Die Seitenleiste
+
+Unter **PROJEKTE** stehen alle deine Projekte alphabetisch. Ein Klick wählt ein Projekt aus.
+
+Jede Zeile trägt links ein Statuszeichen für den lokalen Zustand und rechts ein Zeichen für die Live-Seite. Beide unterscheiden sich in der Form, nicht nur in der Farbe.
+
+**Lokaler Zustand (links):**
+
+| Zeichen | Bedeutung |
+| --- | --- |
+| gefüllter Punkt | Das Projekt läuft. Der Name steht zusätzlich fett |
+| gestrichelter Ring | Das Projekt startet. Die Container laufen, die Website antwortet noch nicht |
+| leerer Ring | Das Projekt ist gestoppt |
+
+**Live-Seite (rechts):**
+
+| Zeichen | Bedeutung |
+| --- | --- |
+| nichts | Kein Server hinterlegt, das Projekt ist in Entwicklung |
+| kleiner Punkt | Server hinterlegt, die Live-Seite ist noch nicht geprüft |
+| Globus | Live und öffentlich erreichbar |
+| Schloss | Online, aber geschützt, etwa durch ein Passwort |
+| Warndreieck | Die Live-Seite läuft unter einer anderen Adresse oder ist nicht erreichbar |
+
+Fährst du mit der Maus über ein Zeichen, zeigt WPorbit die Adresse und wann zuletzt geprüft wurde.
+
+{/* SCREENSHOT 02-seitenleiste: Nahaufnahme der Seitenleiste mit Zeilen in verschiedenen Zuständen: laufend (gefüllter Punkt, fett), gestoppt (leerer Ring), eine Zeile mit Globus, eine mit Schloss, eine ohne Live-Zeichen, dazu der Start/Stopp-Knopf beim Überfahren einer Zeile. */}
+
+Weitere Elemente der Seitenleiste:
+
+- **Start- und Stopp-Knopf**: erscheint beim Überfahren einer Zeile und bleibt sichtbar, solange das Projekt läuft.
+- **Rechtsklick** auf eine Zeile öffnet das Projektmenü, etwa mit **Starten**, **Lokale Umgebung einrichten…**, **Im Finder zeigen**, **Bearbeiten…** und **Aus der Liste entfernen**.
+- **Filtern**: Ab acht Projekten erscheint oben ein Filterfeld. Mit ⌘F holst du es jederzeit hervor. Es sucht in Name, Kunde und Kurzname.
+- **IM TEAM**: Projekte, die dein Team hat und dieser Mac noch nicht. **Einrichten** holt sie auf deinen Mac.
+- **Projekt hinzufügen**: öffnet den Assistenten für ein neues Projekt (⌘N).
+- **Hinweis ganz unten**: erscheint nur, wenn etwas fehlt, zum Beispiel „Colima ist nicht gestartet“ oder „Kein Vault-Token“. Ein Klick behebt es oder öffnet die passende Einstellung.
+
+Mit der Tastatur wechselst du mit ↑ und ↓ zwischen Projekten, sobald die Liste den Fokus hat. Aus jedem Tab heraus geht das mit ⌥⌘↓ und ⌥⌘↑.
+
+## Die Kopfzeile
+
+Oben steht der Name des ausgewählten Projekts. Ein Rechtsklick darauf öffnet dasselbe Menü wie in der Seitenleiste. Darunter stehen die Links, die gerade Sinn ergeben:
+
+- **WP-Admin ↗** und **Lokale Website ↗**, solange das Projekt läuft.
+- **Produktivseite ↗**, wenn eine Live-Adresse hinterlegt ist, mit dem Live-Zeichen und einem Wort wie „öffentlich“ oder „geschützt“.
+
+Rechts sitzt der Schalter für das Projekt. Er zeigt **Läuft**, **Gestoppt**, **Startet…** oder **Einrichten…**. Ein Klick startet, stoppt oder öffnet bei einem neuen Projekt die Einrichtung. Der kleine Pfeil daneben öffnet weitere Aktionen: **Neu starten**, **Status prüfen**, **Berechtigungen korrigieren**, **Neues Docker-Image holen…**, **WordPress neu installieren…** und **Infrastruktur-Status anzeigen**.
+
+![Kopfzeile eines laufenden Projekts mit Server: „WP-Admin“, „Lokale Website“, „Produktivseite“ mit Globus „öffentlich“, rechts der Schalter „Läuft“ mit geöffnetem Pfeilmenü](/anleitungen/erste-schritte/oberflaeche-im-ueberblick/03-kopfzeile.webp)
+
+## Die Tabs
+
+Unter der Kopfzeile liegen fünf Tabs. Sie stehen immer an derselben Stelle. Was gerade nicht geht, ist ausgegraut, und der Tooltip sagt, warum.
+
+| Tab | Kurzbefehl | Inhalt |
+| --- | --- | --- |
+| **Übersicht** | ⌘1 | Verbindungen, Umgebung mit PHP- und WordPress-Version, Projektdetails, Zugangsdaten und die Karte „Wartung“ |
+| **Vorschau** | ⌘2 | die lokale Website direkt in WPorbit. Nur verfügbar, solange das Projekt läuft |
+| **Remote** | ⌘3 | Holen, Senden und Deployen. Nur verfügbar, wenn ein Server hinterlegt ist |
+| **Backup** | ⌘4 | Backups erstellen und importieren |
+| **Logs** | ⌘5 | die Protokolle der Container |
+
+Weitere Kurzbefehle:
+
+| Kurzbefehl | Wirkung |
+| --- | --- |
+| ⌘N | **Projekt hinzufügen** |
+| ⌘R | ausgewähltes Projekt starten oder stoppen. Im Tab **Vorschau** lädt es stattdessen die Seite neu |
+| ⌘F | Projekte durchsuchen |
+| ⌥⌘↓ / ⌥⌘↑ | nächstes oder vorheriges Projekt |
+| ⇧⌘E | **Technische Details anzeigen** ein- oder ausschalten |
+| ⌘, | Einstellungen |
+
+Die Tab-Befehle und die Projektnavigation findest du auch im Menü **Darstellung**.
+
+## Das Menü „Öffnen in…“
+
+Rechts neben den Tabs liegt **Öffnen in…**. Es sammelt die Werkzeuge für das ausgewählte Projekt:
+
+| Eintrag | Was passiert | Voraussetzung |
+| --- | --- | --- |
+| **Terminal** | eine Shell im WordPress-Container, als Benutzer www-data im WordPress-Verzeichnis | Container läuft |
+| **Terminal (root)** | dieselbe Shell als root | Projekt läuft |
+| **In VS Code öffnen** | öffnet den zuletzt genutzten Ordner, sonst das Child-Theme, sonst das WordPress-Verzeichnis | Projekt läuft |
+| **Anderen Ordner in VS Code öffnen…** | fragt, welcher Ordner | Projekt läuft |
+| **Datenbank öffnen** | die Datenbank des Projekts in einem Viewer | Projekt läuft |
+| **Im Finder zeigen** | den Projektordner im Finder | – |
+| **WP-CLI…** | WP-CLI-Befehle ausführen | Projekt läuft |
+| **SSH-Terminal** | SSH-Sitzung auf dem Server | Server hinterlegt |
+
+Mehr dazu in [Datenbank, WP-CLI und Terminal](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal) und [VS Code und Dev Container](/anleitungen/entwicklung/vs-code-und-dev-container).
+
+![Menü „Öffnen in…“ bei einem laufenden Projekt mit Server: alle Einträge sind aktiv](/anleitungen/erste-schritte/oberflaeche-im-ueberblick/04-oeffnen-in.webp)
+
+## Die Statuszeile und Mitteilungen
+
+Läuft ein längerer Vorgang wie eine Einrichtung, ein Holen oder ein Backup, erscheint am unteren Fensterrand eine Statuszeile über die ganze Breite. Sie zeigt, was gerade passiert, zu welchem Projekt und, wenn bekannt, den Fortschritt in Prozent. Ist nichts zu melden, ist sie nicht da.
+
+Ein Klick auf die Statuszeile öffnet die Details „Aktivität“ mit den Bereichen „Läuft“ und „Zuletzt“. Dort kannst du einen Vorgang abbrechen, sein Protokoll aufklappen oder kopieren und mit **Verlauf leeren** aufräumen. Ein Fehlschlag färbt die Zeile ein und bleibt stehen, bis du die Details geöffnet hast.
+
+{/* SCREENSHOT 05-statuszeile: Statuszeile unten mit laufendem Vorgang und aufgeklappten Details „Aktivität“ (Bereiche „Läuft“ und „Zuletzt“, ein Protokoll aufgeklappt). */}
+
+Bist du in einer anderen App, kann WPorbit dir mit einer macOS-Mitteilung Bescheid geben: bei Vorgängen, die mindestens 20 Sekunden gedauert haben, und bei jedem Fehlschlag. Ein Klick auf die Mitteilung öffnet das betroffene Projekt. Einschalten kannst du das unter **Einstellungen → Allgemein → Mitteilungen** mit **Bescheid geben, wenn ein langer Vorgang endet**. Hat macOS die Mitteilungen blockiert, zeigt WPorbit dort **Systemeinstellungen öffnen**.
+
+## Die Einstellungen
+
+Die Einstellungen öffnest du mit ⌘, oder über das Menü **WPorbit**. Sie haben vier Tabs:
+
+| Tab | Inhalt |
+| --- | --- |
+| **Allgemein** | Ansicht (**Technische Details anzeigen**), Mitteilungen, Updates, Lizenz und Team |
+| **WordPress** | Vorgaben für neue Projekte: WordPress-Setup, Plugins, Theme & Repo, Template, dazu der Katalog und die Docker-Images |
+| **Infrastruktur** | Colima, Vault und die lokale Umgebung |
+| **Diagnose & Support** | benötigte Programme, Debug-Bericht, Reparaturen und Protokolle, dazu der Support |
+
+Oben auf jeder Seite springst du mit den Links direkt zu einem Abschnitt.
+
+<Callout variant="tipp" title="Technische Details anzeigen">
+Der Schalter ändert nicht, was du tun kannst, sondern nur, wie viel du siehst: vollständige Protokolle, die Rohansicht der Zugangsdaten und den .env-Abgleich. Für den Alltag kannst du ihn ausgeschaltet lassen.
+</Callout>
+
+<KeyTakeaways>
+
+- Links in jeder Projektzeile der lokale Zustand, rechts der Zustand der Live-Seite. Beide lesen sich auch ohne Farbe.
+- Die fünf Tabs stehen immer an derselben Stelle: ⌘1 bis ⌘5.
+- Werkzeuge wie Terminal, VS Code, Datenbank und WP-CLI liegen im Menü **Öffnen in…**.
+- Die Statuszeile unten erscheint nur, wenn etwas läuft. Ein Klick zeigt Details und Protokoll.
+
+</KeyTakeaways>

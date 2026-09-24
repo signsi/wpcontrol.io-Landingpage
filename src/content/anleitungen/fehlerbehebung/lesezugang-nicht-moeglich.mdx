@@ -1,0 +1,94 @@
+---
+title: "„Lesezugang nicht möglich“ beim Einschalten der Überwachung"
+description: "Warum WPorbit den Lesezugang per SSH manchmal nicht einrichten kann, wie du die häufigsten Ursachen behebst und wann „Nur von aussen überwachen“ die richtige Wahl ist."
+order: 30
+updated: 2026-09-24
+type: fehlerbehebung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - wartung/ueberwachung-einschalten
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - zugaenge/zugangsdaten-im-vault
+  - fehlerbehebung/diagnose-und-support
+draft: true
+---
+
+Beim Einschalten der Überwachung versucht WPorbit immer zuerst, einen Lesezugang per SSH einzurichten. Geht das nicht, erscheint der Dialog „Lesezugang nicht möglich“. Oben steht der Grund, darunter das Angebot, die Seite nur von aussen zu überwachen.
+
+Auf dem Live-Server bleibt in diesem Fall nichts zurück. Hat die App schon etwas abgelegt, hat sie es wieder entfernt.
+
+{/* SCREENSHOT 01-dialog-lesezugang: macOS-App, Dialog „Lesezugang nicht möglich“ mit einem Grund (z. B. fehlender Web-Root) und den Knöpfen „Nur von aussen überwachen“ und „Abbrechen“ */}
+
+## Zwei Wege aus dem Dialog
+
+- **Abbrechen:** Es wird nichts eingeschaltet. Behebe die Ursache und wähle danach nochmals **Überwachung einschalten…**.
+- **Nur von aussen überwachen:** Der WPorbit-Server prüft Erreichbarkeit, SSL und Antwortzeit über die öffentliche Adresse. Auf dem Live-Server wird nichts installiert. Plugins, Themes und Updates sieht das Dashboard so aber nicht.
+
+Beides lässt sich später ändern. Wählst du „nur von aussen“, holst du das Inventar nach, sobald die Ursache behoben ist: Rechtsklick auf das Projekt in der Seitenleiste, dann **Inventar einrichten…**.
+
+<Callout variant="tipp" title="Oft ist es eine einzelne Angabe">
+Viele Gründe lassen sich mit einem Eintrag in den Zugangsdaten des Projekts beheben. Es lohnt sich, den Grund genau zu lesen, bevor du auf „nur von aussen“ ausweichst.
+</Callout>
+
+## Die Gründe und was du tun kannst
+
+### „Für dieses Projekt sind keine SSH-Angaben hinterlegt.“
+
+Im Projekt fehlt der Server. Ergänze in der Karte **Zugangsdaten** des Projekts mindestens **Server** (`SSH_HOST`) und **Benutzer** (`SSH_USER`), bei Bedarf **Port** und **Passwort**. Prüfe danach mit **Verbindung prüfen**, ob die Verbindung steht. Mehr dazu unter [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
+
+### „Für dieses Projekt ist kein Web-Root hinterlegt …“
+
+Der Agent muss wissen, in welchem Ordner WordPress auf dem Live-Server liegt. Trage in den Zugangsdaten den **Web-Root** (`WEB_ROOT`) ein, als absoluten Pfad, zum Beispiel `/home/kunde/public_html`.
+
+### „Der Pfad „…“ ist für den Agenten nicht zulässig …“
+
+Web-Root, WP-CLI-Pfad und das Home-Verzeichnis werden fest in das Skript auf dem Live-Server eingesetzt. Aus Sicherheitsgründen müssen sie absolut sein und dürfen nur Buchstaben, Ziffern und `._/-` enthalten, also keine Leerzeichen, Umlaute oder `..`. Korrigiere den Pfad im Projekt. Liegt WordPress wirklich in einem Ordner mit Leerzeichen, geht der Lesezugang auf diesem Server nicht.
+
+### „WP-CLI („wp“) wurde auf dem Live-Server nicht gefunden …“
+
+Der Agent liest das Inventar mit WP-CLI. Die App sucht es unter dem Namen `wp`. Liegt es beim Hoster woanders, trage in den Zugangsdaten `REMOTE_BIN_WP` mit dem vollen Pfad ein, zum Beispiel `/usr/local/bin/wp`. Den Pfad findest du per SSH mit `command -v wp` oder in der Dokumentation des Hosters. Ist WP-CLI gar nicht installiert, frag den Hoster danach.
+
+### „Der Agent ist abgelegt, liefert aber kein Inventar …“
+
+Der Probelauf ist fehlgeschlagen, und die App hat den Agenten wieder entfernt. Dahinter steht einer von zwei Zusätzen:
+
+- **„WP-CLI antwortet nicht“:** WP-CLI wurde gefunden, kann aber die WordPress-Installation im Web-Root nicht lesen. Prüfe, ob der Web-Root stimmt und dort eine `wp-config.php` liegt, und ob WP-CLI mit der PHP-Version auf dem Server läuft.
+- **„Das Skript liess sich nicht ausführen.“:** Der Agent ist gar nicht erst angelaufen. Am häufigsten zeigt der Web-Root auf einen Ordner, den es auf dem Server nicht gibt: Dann verweigert der Agent den Dienst. Prüfe den Pfad per SSH. Stimmt er, darf das Konto im Home-Verzeichnis vermutlich kein Skript ausführen, oder es ist nur SFTP ohne echte Shell erlaubt. Das lässt sich meist nur beim Hoster ändern.
+
+### „Das SSH-Konto dieses Projekts ist root …“
+
+Als root richtet WPorbit keinen Lesezugang ein. WP-CLI läuft nicht als root, und mit Umwegen liefe der Code aller Plugins mit vollen Rechten auf dem Server. Hinterlege im Projekt ein Konto ohne root-Rechte, zum Beispiel das des Webhostings.
+
+### „Der Host-Schlüssel des Live-Servers liess sich nicht lesen …“
+
+Die App konnte von deinem Mac aus keinen Host-Schlüssel des Servers abfragen. Ohne ihn verbindet sich der WPorbit-Server nicht, damit er nicht auf einen fremden Server umgeleitet werden kann. Prüfe, ob Server und Port stimmen und der Server von deinem Netz aus erreichbar ist. Hinter einer Firewall oder einem VPN kann die Abfrage scheitern.
+
+### „Der Host-Schlüssel, den dieser Mac sieht, ist nicht der, der auf dem Live-Server hinterlegt ist …“
+
+Das ist die ernsteste Meldung. Dein Mac hat einen anderen Host-Schlüssel gesehen, als auf dem Server selbst liegt. Das kann eine umgeleitete Verbindung sein. Die Überwachung wurde absichtlich nicht eingeschaltet.
+
+<Callout variant="achtung" title="Nicht einfach wiederholen">
+Versuche es in einem anderen Netz, etwa ohne öffentliches WLAN oder ohne Firmen-Proxy. Tritt die Meldung weiterhin auf, frag den Hoster, ob der Server neu aufgesetzt wurde oder hinter einem Load Balancer mit mehreren Servern steht. Wähle „nur von aussen“ erst, wenn die Ursache geklärt ist.
+</Callout>
+
+### „Der WPorbit-Server hat noch keinen SSH-Schlüssel für das Inventar …“
+
+Das liegt nicht an deinem Projekt, sondern am WPorbit-Server: Er ist für das Inventar nicht eingerichtet. Die Überwachung von aussen funktioniert trotzdem. Melde dich beim Support, siehe [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support).
+
+### Andere Meldungen
+
+Steht im Dialog eine Meldung von SSH selbst, etwa zu einer abgelehnten Anmeldung oder einer Zeitüberschreitung, kam die App gar nicht erst auf den Server. Prüfe den Zugang mit **Verbindung ausführlich testen**.
+
+## Wenn das Inventar später ausfällt
+
+Manchmal klappt das Einrichten, aber das Dashboard zeigt später in der Spalte Inventar „Fehler“. Häufige Ursache: Ein Hosting-Panel schreibt `~/.ssh/authorized_keys` neu und entfernt dabei die Zeile des WPorbit-Servers. Andere Gründe sind ein geänderter Host-Schlüssel nach einem Serverumzug oder ein verschobener Web-Root.
+
+In diesem Fall wählst du **Überwachung ausschalten** und danach wieder **Überwachung einschalten…**. Die App richtet den Lesezugang mit den aktuellen Angaben neu ein. Gibt es bei diesem Hoster keinen dauerhaften Weg, bleibt „nur von aussen“ die richtige Wahl.
+
+{/* SCREENSHOT 02-dashboard-inventar-fehler: Web-Dashboard, Tabellenzeile eines Projekts mit „Inventar-Fehler“ im Status und der Markierung „Fehler“ in der Spalte Inventar */}
+
+## Wenn das Inventar für ein bestehendes Projekt nicht klappt
+
+Läuft die Überwachung schon von aussen und du wählst **Inventar einrichten…**, bietet WPorbit bei einem Fehlschlag nicht nochmals „nur von aussen“ an. Stattdessen erscheint „Das hat nicht geklappt“ mit dem Grund und dem Satz „Die Überwachung läuft weiter wie bisher: nur von aussen.“ Es geht also nichts verloren.

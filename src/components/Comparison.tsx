@@ -1,16 +1,29 @@
 import { compareRows } from '../data/landing'
 
-export default function Comparison() {
+interface ComparisonProps {
+  kicker?: string
+  heading?: string
+  /** Auf /vergleich steht die Überschrift bereits im Seitenkopf. */
+  showHeading?: boolean
+}
+
+export default function Comparison({
+  kicker = 'Warum WPorbit',
+  heading = 'Professionelle WordPress-Projekte, ohne Bindung an ein bestimmtes Hosting.',
+  showHeading = true,
+}: ComparisonProps) {
   return (
     <section className="px-6 py-24" id="vergleich">
-      <div className="reveal-up mb-10">
-        <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
-          Warum WPorbit
-        </p>
-        <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] max-w-[40ch]">
-          Professionelle WordPress-Projekte, ohne Bindung an ein bestimmtes Hosting.
-        </h2>
-      </div>
+      {showHeading && (
+        <div className="reveal-up mb-10">
+          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-accent mb-3">
+            {kicker}
+          </p>
+          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] max-w-[40ch]">
+            {heading}
+          </h2>
+        </div>
+      )}
 
       <div className="reveal-up overflow-x-auto border border-line rounded-xl">
         <table className="w-full text-[0.85rem] border-collapse">

@@ -1,0 +1,157 @@
+---
+title: "WPorbit installieren und einrichten"
+description: "WPorbit herunterladen, in den Programme-Ordner legen und beim ersten Start die lokale Umgebung mit Colima, Docker, Vault und lokalen Domains einrichten lassen."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "15 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/anmelden-und-lizenz-aktivieren
+  - erste-schritte/demo-projekt-ausprobieren
+  - fehlerbehebung/einrichtung-schlaegt-fehl
+  - wartung/wporbit-aktualisieren
+draft: true
+---
+
+Diese Anleitung führt dich vom Download bis zu einer lokalen Umgebung, in der WordPress-Projekte laufen können. Die Anmeldung mit deiner E-Mail-Adresse ist ein eigener Schritt und steht in [Anmelden und Lizenz aktivieren](/anleitungen/erste-schritte/anmelden-und-lizenz-aktivieren).
+
+## Was WPorbit auf deinem Mac braucht
+
+WPorbit ist eine macOS-App. Die WordPress-Projekte selbst laufen in Containern. Dafür braucht es eine Container-Laufzeit und ein paar Werkzeuge im Hintergrund. Die musst du nicht selbst zusammensuchen: Der Einrichtungsassistent installiert sie beim ersten Start über Homebrew.
+
+| Komponente | Wofür | Wer installiert sie |
+| --- | --- | --- |
+| macOS 15 oder neuer | Voraussetzung für die App | du |
+| Homebrew | installiert alle weiteren Abhängigkeiten | du, einmalig (WPorbit zeigt dir den Befehl) |
+| Container-Laufzeit (Colima) | führt die Container jedes Projekts aus | WPorbit |
+| Docker CLI und Docker Compose | starten und steuern die Container | WPorbit |
+| HashiCorp Vault | verwahrt die Zugangsdaten der Projekte | WPorbit |
+| certutil (nss), optional | macht das lokale HTTPS-Zertifikat auch für Firefox und Chrome gültig | WPorbit |
+
+Docker Desktop brauchst du nicht. Colima übernimmt diese Aufgabe.
+
+<Callout variant="hinweis" title="Internet und Mac-Passwort bereithalten">
+Beim ersten Start lädt WPorbit mehrere Programme und ein VM-Abbild von rund 500 MB herunter. Für die lokalen Domains fragt macOS einmal nach deinem Mac-Passwort.
+</Callout>
+
+## WPorbit herunterladen und installieren
+
+<Steps>
+
+<Step title="Download anfordern">
+
+Gib auf der Seite [Gratis testen](/demo) deine E-Mail-Adresse ein. Den Download-Link bekommst du per E-Mail. Die aktuelle Version und den Changelog findest du unter [Downloads](/downloads).
+
+</Step>
+
+<Step title="App in den Programme-Ordner legen">
+
+Öffne die heruntergeladene `.dmg`-Datei. Im Fenster, das sich öffnet, liegt **WPorbit**. Zieh die App im Finder in den Ordner **Programme** und wirf das Laufwerk danach aus.
+
+{/* SCREENSHOT 01-dmg-fenster: Geöffnetes DMG-Fenster „WPorbit“ mit der App, daneben ein Finder-Fenster mit dem Ordner Programme. macOS, kein App-Zustand nötig. */}
+
+</Step>
+
+<Step title="WPorbit zum ersten Mal öffnen">
+
+Starte WPorbit aus dem Programme-Ordner. macOS fragt beim ersten Öffnen einmal nach, weil die App aus dem Internet stammt. Bestätige mit **Öffnen**.
+
+WPorbit zeigt dir zuerst die Anmeldung. Wie du dich registrierst und den Anmelde-Link einlöst, steht in [Anmelden und Lizenz aktivieren](/anleitungen/erste-schritte/anmelden-und-lizenz-aktivieren). Danach geht es hier weiter.
+
+</Step>
+
+</Steps>
+
+## Die lokale Umgebung einrichten
+
+Nach der Anmeldung erscheint der Bildschirm „Willkommen bei WPorbit“. Er zählt auf, was jetzt eingerichtet wird: **Colima & Docker**, **Vault** und **Lokale Domains**.
+
+{/* SCREENSHOT 02-willkommen: Einrichtungsassistent, Bildschirm „Willkommen bei WPorbit“ mit den drei Zeilen Colima & Docker, Vault, Lokale Domains und dem Button Einrichten. Frischer Mac oder Einrichtung über „Einrichtungsassistent neu starten“ ausgelöst. */}
+
+<Steps>
+
+<Step title="Einrichtung starten">
+
+Klicke auf **Einrichten**. WPorbit prüft zuerst, ob Homebrew vorhanden ist.
+
+Fehlt Homebrew, erscheint „Homebrew wird benötigt“ mit dem Installationsbefehl. Kopiere ihn über das Kopier-Symbol, führe ihn im Terminal aus und klicke danach auf **Erneut suchen**.
+
+{/* SCREENSHOT 03-homebrew-fehlt: Bildschirm „Homebrew wird benötigt“ mit dem Installationsbefehl und dem Button Erneut suchen. Mac ohne Homebrew. */}
+
+</Step>
+
+<Step title="Programme installieren lassen">
+
+WPorbit installiert jetzt nacheinander, was noch fehlt, zum Beispiel „Container-Laufzeit (Colima) wird installiert…“. Was schon da ist, wird übersprungen. Je nach Verbindung dauert das einige Minuten.
+
+Danach konfiguriert WPorbit Vault. Das Vault-Token legt es selbst an, du musst dir nichts notieren.
+
+</Step>
+
+<Step title="Lokale Domains einrichten">
+
+Bei „Lokale Domains werden eingerichtet…“ fragt macOS nach deinem Mac-Passwort. Gib es ein. Danach sind deine Projekte unter Adressen wie `https://meinprojekt.wporbit` erreichbar.
+
+Brichst du die Passwortabfrage ab, schliesst WPorbit die Einrichtung trotzdem ab. Die lokalen Domains fehlen dann, und die Projekte sind vorerst nur über ihren localhost-Port erreichbar. Nachholen kannst du das später über **Einstellungen → Diagnose & Support → Einrichtungsassistent neu starten**.
+
+</Step>
+
+<Step title="Dienste starten lassen">
+
+Zum Schluss startet WPorbit Colima und Vault: „Dienste werden gestartet…“. Beim allerersten Start lädt Colima ein VM-Abbild von rund 500 MB und fährt danach die virtuelle Maschine hoch. Das passiert nur dieses eine Mal. Lass das Fenster offen.
+
+</Step>
+
+<Step title="Zusammenfassung prüfen">
+
+Am Ende steht der tatsächliche Zustand jeder Komponente:
+
+- **Alles bereit!** Die Container-Laufzeit, Vault und die lokalen Domains laufen.
+- **Fast fertig** Etwas Wichtiges läuft noch nicht, meistens die Container-Laufzeit. Unter der Liste steht dann genau ein Knopf, der das behebt, zum Beispiel **Colima installieren**, **Colima jetzt starten** oder **Vault starten**. Mit **Voraussetzungen erneut prüfen** fragt WPorbit den Zustand noch einmal ab.
+
+Ein orangefarbenes Warnzeichen bei „Lokale Domains“ blockiert nichts. Alles andere funktioniert trotzdem.
+
+{/* SCREENSHOT 04-alles-bereit: Abschluss-Bildschirm „Alles bereit!“ mit drei grünen Zeilen (Container-Laufzeit (Colima), Vault, Lokale Domains) und darunter „Wie möchtest du starten?“. Einrichtung erfolgreich abgeschlossen. */}
+
+{/* SCREENSHOT 05-fast-fertig: Abschluss-Bildschirm „Fast fertig“ mit roter Zeile bei der Container-Laufzeit, dem Button „Colima jetzt starten“ und dem Link „Voraussetzungen erneut prüfen“. Colima installiert, aber gestoppt. */}
+
+</Step>
+
+<Step title="Wie möchtest du starten?">
+
+Wähle, womit du beginnst:
+
+- **Demo-Projekt ausprobieren** öffnet das vorbereitete Projekt „Mein erstes WordPress“. Siehe [Demo-Projekt ausprobieren](/anleitungen/erste-schritte/demo-projekt-ausprobieren).
+- **Projekt hinzufügen** öffnet direkt den Assistenten für ein neues oder bestehendes Projekt. Siehe [Erstes Projekt anlegen](/anleitungen/erste-schritte/erstes-projekt-anlegen).
+
+Solange die Container-Laufzeit fehlt, sind beide Knöpfe ausgegraut. Ohne sie lässt sich kein Projekt einrichten oder starten.
+
+</Step>
+
+</Steps>
+
+## Wenn die Einrichtung abbricht
+
+Schlägt ein Schritt fehl, erscheint „Einrichtung fehlgeschlagen“ mit dem Grund. Darunter stehen zwei Wege:
+
+- **Erneut versuchen** startet die Einrichtung noch einmal. Bereits installierte Programme werden übersprungen.
+- **Lokale Domains überspringen** schliesst die Einrichtung ohne lokale Domains ab. Das ist sinnvoll, wenn genau dieser Schritt scheitert.
+
+Die häufigsten Ursachen und ihre Lösungen stehen unter [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
+
+## Bei jedem weiteren Start
+
+Die Einrichtung läuft nur einmal. Bei jedem weiteren Start zeigt WPorbit kurz „Umgebung wird gestartet“ und prüft Colima, Docker und Vault. Läuft alles, schliesst sich das Fenster von selbst. Fehlt etwas, bleibt es offen und bietet die passende Reparatur an.
+
+Updates bekommst du direkt in der App über **Nach Updates suchen…**. Mehr dazu in [WPorbit aktualisieren](/anleitungen/wartung/wporbit-aktualisieren).
+
+<KeyTakeaways>
+
+- WPorbit braucht macOS 15 oder neuer und Homebrew. Alles andere installiert der Einrichtungsassistent.
+- Die Projekte laufen in Containern über Colima. Docker Desktop brauchst du nicht.
+- Der erste Start lädt rund 500 MB und fragt einmal nach deinem Mac-Passwort für die lokalen Domains.
+- „Fast fertig“ heisst: Ein Knopf unter der Liste behebt, was noch fehlt.
+
+</KeyTakeaways>

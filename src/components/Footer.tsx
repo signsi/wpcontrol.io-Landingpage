@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { footerNav } from '../config/navigation'
+import NewsletterSignup from './blog/NewsletterSignup'
 
 function GdprBadge() {
   return (
@@ -33,21 +35,15 @@ function SwissBadge() {
 export default function Footer() {
   return (
     <footer className="border-t border-line px-6 pt-16 pb-10">
+      <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1fr_0.9fr] lg:gap-8">
 
-      {/* Main grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr_1fr] gap-12 lg:gap-8">
-
-        {/* Brand column */}
+        {/* Brand */}
         <div className="flex flex-col gap-6">
           <Link to="/" className="w-fit">
-            <img
-              src="/wporbit-quer.svg"
-              alt="WPorbit"
-              className="h-9 w-auto opacity-90"
-            />
+            <img src="/wporbit-quer.svg" alt="WPorbit" className="h-9 w-auto opacity-90" />
           </Link>
 
-          <p className="text-secondary text-[0.875rem] leading-[1.65] max-w-[26ch]">
+          <p className="max-w-[26ch] text-[0.875rem] leading-[1.65] text-secondary">
             Alle WordPress-Projekte, Zugänge und Veröffentlichungen übersichtlich an einem Ort.
           </p>
 
@@ -55,56 +51,35 @@ export default function Footer() {
             <GdprBadge />
             <SwissBadge />
           </div>
+
+          <NewsletterSignup variant="footer" />
         </div>
 
-        {/* Produkt */}
-        <div className="flex flex-col gap-5">
-          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
-            Produkt
-          </p>
-          <nav className="flex flex-col gap-4" aria-label="Produkt-Navigation">
-            <a href="#produkt"    className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Überblick</a>
-            <Link to="/standalone" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Standalone</Link>
-            <Link to="/cloud" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Cloud</Link>
-            <a href="#vergleich"  className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Vergleich</a>
-            <a href="#preise"     className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Preise</a>
-            <a href="#faq"        className="text-[0.875rem] text-secondary hover:text-primary transition-colors">FAQ</a>
-          </nav>
-        </div>
-
-        {/* Pläne */}
-        <div className="flex flex-col gap-5">
-          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
-            Pläne
-          </p>
-          <nav className="flex flex-col gap-4" aria-label="Pläne-Navigation">
-            <Link to="/standalone" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Standalone</Link>
-            <Link to="/cloud"      className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Cloud</Link>
-            <Link to="/custom"     className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Massgeschneidert</Link>
-            <a href="#demo"        className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Gratis testen</a>
-          </nav>
-        </div>
-
-        {/* Legal */}
-        <div className="flex flex-col gap-5">
-          <p className="font-bold text-[0.75rem] uppercase tracking-[0.13em] text-tertiary">
-            Legal
-          </p>
-          <nav className="flex flex-col gap-4" aria-label="Legal-Navigation">
-            <a href="/impressum"   className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Impressum</a>
-            <a href="/datenschutz" className="text-[0.875rem] text-secondary hover:text-primary transition-colors">Datenschutz</a>
-            <a href="/agb"         className="text-[0.875rem] text-secondary hover:text-primary transition-colors">AGB</a>
-          </nav>
-        </div>
+        {footerNav.map((column) => (
+          <div key={column.heading} className="flex flex-col gap-5">
+            <p className="text-[0.75rem] font-bold uppercase tracking-[0.13em] text-tertiary">
+              {column.heading}
+            </p>
+            <nav className="flex flex-col gap-4" aria-label={`${column.heading}-Navigation`}>
+              {column.items.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="text-[0.875rem] text-secondary transition-colors hover:text-primary"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        ))}
       </div>
 
-      {/* Bottom bar */}
-      <div className="mt-14 pt-6 border-t border-line">
-        <p className="text-tertiary text-[0.75rem]">
-          © 2026 WPorbit. Alle Rechte vorbehalten.
+      <div className="mt-14 border-t border-line pt-6">
+        <p className="text-[0.75rem] text-tertiary">
+          © {__BUILD_YEAR__} WPorbit. Alle Rechte vorbehalten.
         </p>
       </div>
-
     </footer>
   )
 }

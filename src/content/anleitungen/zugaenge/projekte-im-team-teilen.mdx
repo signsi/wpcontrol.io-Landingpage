@@ -1,0 +1,153 @@
+---
+title: "Projekte im Team teilen"
+description: "Ein Projekt samt Server-Zugang ins Team stellen, ein Team-Projekt auf deinem Mac einrichten und Abweichungen zwischen deinem Stand und dem des Teams abgleichen."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - zugaenge/neuen-mac-im-team-anmelden
+  - zugaenge/zugangsdaten-im-vault
+  - zugaenge/teammitglied-verlaesst-das-team
+  - wartung/ueberwachung-einschalten
+draft: true
+---
+
+Ohne Team liegt ein Projekt nur auf dem Mac, auf dem es angelegt wurde. Wer es übernehmen soll, bekommt Host, Web-Root und Passwort sonst per Chat. Mit einem Team stellst du das Projekt einmal ins Team, und alle Mitglieder können es auf ihrem Mac mit einem Klick einrichten.
+
+<Callout variant="hinweis" title="Teams richtet WPorbit ein">
+Ein Team legst du derzeit nicht selbst an. WPorbit richtet es für dich ein und nimmt die Mitglieder auf. Einladungen aus der App gibt es noch nicht. Wenn du ein Team möchtest oder jemand dazukommen soll, melde dich beim [Support](/support).
+</Callout>
+
+## Voraussetzungen
+
+- Du bist in WPorbit angemeldet und gehörst zu einem Team. Unter **Einstellungen → Allgemein → Team** steht dann der Name des Teams mit seinen Mitgliedern.
+- Dieser Mac ist im Team freigegeben. Dort steht unter „Dieser Mac“: „Gehört zum Team.“ Wie das geht, steht unter [Neuen Mac im Team anmelden](/anleitungen/zugaenge/neuen-mac-im-team-anmelden).
+
+Solange ein Mac nicht freigegeben ist, sieht er keine Team-Projekte und kann nichts teilen.
+
+## Was geteilt wird und was auf deinem Mac bleibt
+
+WPorbit teilt nur, was das Projekt beschreibt und was ein Kollege braucht, um es selbst einzurichten. Alles, was zu deiner lokalen Installation gehört, bleibt auf deinem Mac.
+
+| Geteilt | Bleibt lokal |
+|---|---|
+| Live-Adresse (`REMOTE_URL`) | Werte der lokalen Datenbank (`MYSQL_*`) |
+| SSH-Host, -Benutzer und -Port, Web-Root | WordPress-Admin der lokalen Installation |
+| Theme- und Child-Theme-Einstellungen | Ports und lokale Adressen |
+| PHP- und WordPress-Version, Tabellenpräfix | PHP-Einstellungen des lokalen Containers |
+| SSH-Passwort (`SSH_PW`) | alle Schlüssel, die WPorbit nicht kennt |
+
+Ein Schlüssel, den du selbst in die `.env` geschrieben hast, bleibt also lokal. So landet nichts versehentlich im Team.
+
+## Wie die Daten geschützt sind
+
+Alles, was du teilst, verschlüsselt WPorbit auf deinem Mac, bevor es den WPorbit-Server erreicht. Der Server speichert nur verschlüsselte Daten und kann sie nicht lesen, auch nicht der Betreiber. Entschlüsseln können sie nur die freigegebenen Macs der Team-Mitglieder. Das nennt man Ende-zu-Ende-Verschlüsselung.
+
+<Callout variant="achtung" title="Alle im Team sehen alle Zugangsdaten">
+Jedes Mitglied hat Zugang zu allen geteilten Zugangsdaten des Teams. Verlässt jemand das Team, hat diese Person sie gesehen. Was dann zu tun ist, steht unter [Teammitglied verlässt das Team](/anleitungen/zugaenge/teammitglied-verlaesst-das-team).
+</Callout>
+
+Eine Ausnahme gibt es, wenn du die Überwachung einschaltest: Dann braucht der WPorbit-Server die Adresse der Seite und den SSH-Lesezugang im Klartext. Passwörter gehören nicht dazu. Mehr dazu unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).
+
+## Ein Projekt ins Team teilen
+
+<Steps>
+
+<Step title="Projektmenü öffnen">
+
+Klicke in der Seitenleiste mit der rechten Maustaste auf das Projekt. Dasselbe Menü öffnet sich auch über den Projektnamen oben in der Projektansicht.
+
+</Step>
+
+<Step title="Ins Team teilen wählen">
+
+Wähle **Ins Team teilen**. WPorbit verschlüsselt die teilbaren Werte und legt das Projekt im Team an. Danach steht dort „Das Projekt liegt jetzt im Team.“
+
+</Step>
+
+</Steps>
+
+![Kontextmenü eines Projekts in der Seitenleiste mit hervorgehobenem Eintrag „Ins Team teilen“](/anleitungen/zugaenge/projekte-im-team-teilen/01-menue-ins-team-teilen.webp)
+
+Hat das Team dasselbe Projekt schon, legt WPorbit kein zweites an. Es erkennt das Projekt an seiner Live-Adresse, dem SSH-Server und dem Web-Root. Staging und Produktion bleiben dabei getrennte Projekte.
+
+Klappt das Teilen nicht, erscheint „Das hat nicht geklappt“ mit dem Grund.
+
+## Mit einem bestehenden Team-Projekt verknüpfen
+
+Hat ein Kollege dasselbe Projekt unabhängig von dir angelegt und bereits geteilt, steht im Projektmenü statt „Ins Team teilen“ der Eintrag **Mit dem Team-Projekt verknüpfen**. Er verbindet dein lokales Projekt mit dem im Team, ohne etwas zu überschreiben. Danach steht „Verknüpft.“
+
+## Ein Team-Projekt auf deinem Mac einrichten
+
+Projekte, die das Team hat und dein Mac noch nicht, stehen in der Seitenleiste unter **IM TEAM**.
+
+<Steps>
+
+<Step title="Einrichten klicken">
+
+Klicke neben dem Projekt auf **Einrichten**. Es öffnet sich derselbe Dialog wie beim Anlegen eines Projekts, bereits ausgefüllt mit Name, Live-Adresse, Server-Zugang und Versionen aus dem Team.
+
+</Step>
+
+<Step title="Anlegen">
+
+Prüfe die Angaben und schliesse den Dialog mit **Projekt anlegen** ab. WPorbit verknüpft das neue lokale Projekt automatisch mit dem Team-Projekt. Es verschwindet aus „IM TEAM“ und steht oben bei deinen Projekten.
+
+</Step>
+
+</Steps>
+
+{/* SCREENSHOT 02-seitenleiste-im-team: Seitenleiste mit eigenen Projekten oben und dem Abschnitt „IM TEAM“ darunter, ein bis zwei Team-Projekte mit Link „Einrichten“. Team mit mindestens einem geteilten Projekt, das auf diesem Mac fehlt. */}
+
+<Callout variant="tipp" title="Leerer Abschnitt ist der Normalfall">
+Hast du alle Team-Projekte eingerichtet, erscheint „IM TEAM“ gar nicht. Das ist so gewollt: Jedes Projekt steht nur einmal in der Liste.
+</Callout>
+
+## Mit dem Team abgleichen
+
+Ändert ein Kollege zum Beispiel den SSH-Benutzer und du hast noch den alten Wert, laufen die Stände auseinander. Für verknüpfte Projekte steht im Projektmenü **Mit dem Team abgleichen**.
+
+<Steps>
+
+<Step title="Abgleich starten">
+
+Wähle im Projektmenü **Mit dem Team abgleichen**. WPorbit vergleicht deine Werte mit denen im Team. Gibt es keine Unterschiede, öffnet sich nichts.
+
+</Step>
+
+<Step title="Pro Wert entscheiden">
+
+Das Fenster „Abweichungen“ zeigt nur die Werte, die sich unterscheiden. Pro Wert wählst du **Meiner** oder **Team**. Passwörter bleiben verdeckt, du siehst nur, dass sie sich unterscheiden.
+
+WPorbit schlägt eine Wahl vor: Was nur im Team geändert wurde, wird übernommen. Was nur du geändert hast, bleibt. Haben beide Seiten geändert, ist dein eigener Wert vorausgewählt.
+
+</Step>
+
+<Step title="Übernehmen">
+
+Klicke auf **Übernehmen**. Die Team-Werte, die du gewählt hast, landen in deinen Zugangsdaten. Deine eigenen Werte schreibt WPorbit ins Team. Danach steht „Abgeglichen.“ Mit **Später** schliesst du das Fenster, ohne etwas zu ändern.
+
+</Step>
+
+</Steps>
+
+{/* SCREENSHOT 03-abweichungen: Fenster „Abweichungen“ mit zwei Werten, je eine Auswahl „Meiner: …“ / „Team: …“, eines davon ein verdecktes Passwort; darunter der Hinweis „Die .env im Projektordner weicht ab“. Knöpfe „Später“ und „Übernehmen“. Verknüpftes Projekt, bei dem lokal und im Team verschiedene Werte stehen. */}
+
+Weicht die `.env` im Projektordner ab, weil jemand sie von Hand bearbeitet hat, zeigt das Fenster das separat an. Beim nächsten Start gilt, was in den Zugangsdaten steht, und die Datei wird dabei neu geschrieben.
+
+## Ein Projekt aus dem Team lösen
+
+Bei einem verknüpften Projekt steht im Projektmenü **Aus dem Team lösen**. Das entfernt nur die Verknüpfung auf deinem Mac. Dein lokales Projekt und seine Zugangsdaten bleiben, und das Projekt bleibt für die anderen im Team bestehen.
+
+<KeyTakeaways>
+
+- Teams richtet derzeit WPorbit ein. Dein Mac muss im Team freigegeben sein.
+- **Ins Team teilen**, **Mit dem Team-Projekt verknüpfen** und **Aus dem Team lösen** findest du im Projektmenü.
+- Team-Projekte, die dir fehlen, richtest du unter **IM TEAM** mit **Einrichten** ein.
+- Geteilt wird nur, was das Projekt beschreibt, dazu das SSH-Passwort. Alles Lokale bleibt auf deinem Mac.
+- Der Server sieht nur verschlüsselte Daten, alle Mitglieder sehen alle Zugangsdaten.
+
+</KeyTakeaways>

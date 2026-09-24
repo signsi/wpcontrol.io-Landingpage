@@ -1,0 +1,86 @@
+---
+title: "Den Sicherheits-Tab im Dashboard verstehen"
+description: "Was WP_DEBUG, Cron, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren im Team-Dashboard bedeuten, und was du jeweils tun solltest."
+order: 30
+updated: 2026-09-24
+type: referenz
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - wartung/team-dashboard-nutzen
+  - wartung/ueberwachung-einschalten
+  - entwicklung/datenbank-wp-cli-und-terminal
+  - veroeffentlichen/live-seite-sicher-aktualisieren
+draft: true
+---
+
+Im Team-Dashboard hat jedes Projekt einen Tab **Sicherheit**. Er fasst zusammen, was das Inventar über den Zustand einer Live-Seite verrät. Keiner der Punkte ist für sich ein Sicherheitsvorfall. Zusammen zeigen sie aber, wo eine Seite gepflegt werden sollte.
+
+<Callout variant="hinweis" title="Nur mit Lesezugang">
+Der Tab braucht das Inventar, also die Überwachung mit Lesezugang per SSH. Bei Projekten, die nur von aussen überwacht werden, steht dort ein Hinweis statt Daten. Siehe [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).
+</Callout>
+
+Die Werte stammen aus dem letzten Inventar, das der Server alle 6 Stunden liest. Eine Änderung auf der Live-Seite siehst du also erst nach dem nächsten Lauf.
+
+{/* SCREENSHOT 01-sicherheit-tab: Web-Dashboard, Tab „Sicherheit“ eines Projekts mit Lesezugang; idealerweise WP_DEBUG „an“ und mindestens ein inaktives Plugin, darunter die Tabelle „Administratoren“ mit zwei bis drei Logins */}
+
+## WP_DEBUG
+
+**Was es zeigt:** ob in der `wp-config.php` der Live-Seite `WP_DEBUG` eingeschaltet ist. Steht dort „an, auf Produktion vermeiden“, ist der Debug-Modus aktiv.
+
+**Warum es zählt:** Mit WP_DEBUG gibt WordPress Warnungen und Fehlermeldungen aus. Je nach Einstellung landen sie sichtbar auf der Seite. Solche Meldungen verraten Dateipfade, Plugin-Namen und manchmal Datenbankdetails, also genau das, was ein Angreifer sucht.
+
+**Was du tun solltest:** Setze auf der Live-Seite `WP_DEBUG` auf `false`. Wenn du eine Fehlersuche auf dem Live-Server brauchst, schalte es nur für die Dauer der Suche ein. Fehler suchst du besser in der lokalen Umgebung, siehe [Logs lesen](/anleitungen/entwicklung/logs-lesen).
+
+## Cron und nächster Cron-Event
+
+**Was es zeigt:** ob geplante Aufgaben von WordPress rechtzeitig laufen. „läuft“ heisst, dass nichts überfällig ist. „N Events überfällig“ heisst, dass Aufgaben seit mehr als 10 Minuten hätten laufen sollen. Darunter steht, wann der nächste geplante Event fällig ist.
+
+**Warum es zählt:** Über WP-Cron laufen zum Beispiel geplante Beiträge, die Suche nach Updates, automatische Updates und Aufgaben vieler Plugins wie Backups oder Newsletter. Bleiben sie liegen, merkt das oft niemand, bis etwas fehlt.
+
+**Was du tun solltest:** WP-Cron läuft nur, wenn jemand die Seite aufruft. Bei wenig besuchten Seiten ist ein einzelner überfälliger Event daher noch kein Problem. Bleibt die Zahl über mehrere Inventare hoch:
+
+- Prüfe, ob in der `wp-config.php` `DISABLE_WP_CRON` gesetzt ist. Wenn ja, braucht es einen echten Cron-Job beim Hoster, der `wp-cron.php` regelmässig aufruft.
+- Sieh dir mit WP-CLI an, welche Events hängen: `wp cron event list`. Oft gehört ein hängender Event zu einem Plugin, das nicht mehr gebraucht wird.
+
+## Plugins mit Auto-Update
+
+**Was es zeigt:** bei wie vielen Plugins die automatischen Updates von WordPress eingeschaltet sind, etwa „3 von 18“.
+
+**Warum es zählt:** Sicherheitslücken in Plugins gehören zu den häufigsten Wegen in eine WordPress-Seite. Automatische Updates schliessen sie schnell, können aber auch eine Seite unbemerkt verändern.
+
+**Was du tun solltest:** Es gibt keine richtige Zahl. Entscheide pro Seite bewusst: Bei kleinen, einfachen Plugins sind Auto-Updates meist ein Gewinn. Bei zentralen Plugins wie Shop oder Formularen testest du Updates lieber zuerst lokal, siehe [Live-Seite sicher aktualisieren](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren). Welche Plugins ein Update offen haben, zeigt der Tab **Plugins** mit dem Filter **Mit Update**.
+
+## Inaktive Plugins
+
+**Was es zeigt:** wie viele Plugins installiert, aber nicht aktiviert sind.
+
+**Warum es zählt:** Ein inaktives Plugin tut nichts, aber seine Dateien liegen auf dem Server. Je nach Plugin lassen sich einzelne Dateien direkt aufrufen, und Lücken darin bleiben ausnutzbar. Dazu kommt, dass inaktive Plugins selten aktualisiert werden, weil niemand an sie denkt.
+
+**Was du tun solltest:** Lösche Plugins, die nicht mehr gebraucht werden, statt sie nur zu deaktivieren. Welche es sind, zeigt der Tab **Plugins** mit dem Filter **Inaktiv**. Mach vorher ein Backup, siehe [Backups erstellen](/anleitungen/wartung/backups-erstellen).
+
+## Datenbankgrösse
+
+**Was es zeigt:** wie gross die Datenbank der Live-Seite ist.
+
+**Warum es zählt:** Die Zahl ist kein Warnsignal an sich. Auffällig ist ein Sprung: Wächst die Datenbank plötzlich stark, können Protokolltabellen eines Plugins, Spam-Kommentare, alte Revisionen oder verwaiste Daten dahinterstecken. Eine grosse Datenbank macht auch Backups und das Holen auf den Mac langsamer.
+
+**Was du tun solltest:** Behalte die Grösse im Auge. Wächst sie unerwartet, hol die Datenbank in die lokale Umgebung und sieh dort nach, welche Tabellen gross sind, siehe [Datenbank, WP-CLI und Terminal](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal).
+
+## Administratoren
+
+**Was es zeigt:** alle Konten mit der Rolle Administrator, mit Login und Registrierungsdatum. E-Mail-Adressen liest der Server absichtlich nicht.
+
+**Warum es zählt:** Ein Administrator kann auf einer WordPress-Seite alles, auch Plugins installieren und damit Code ausführen. Jedes Admin-Konto ist ein Zugang, den jemand erraten, abfangen oder vergessen kann. Ein unbekanntes, frisch registriertes Admin-Konto ist ausserdem ein typisches Zeichen dafür, dass jemand eingedrungen ist.
+
+**Was du tun solltest:**
+
+- Geh die Liste regelmässig durch. Kennst du jedes Login? Gehört jedes zu einer Person, die heute noch Admin-Rechte braucht?
+- Entferne Konten von ehemaligen Mitarbeitenden und Dienstleistern, oder stufe sie herunter.
+- Taucht ein Konto auf, das niemand kennt, behandle das als möglichen Vorfall: Konto sperren, Passwörter ändern, Seite prüfen.
+- Vermeide Logins wie `admin`, sie werden bei Angriffen als Erstes probiert.
+
+<Callout variant="tipp" title="Regelmässig statt anlassbezogen">
+Der Tab lohnt sich vor allem im Vergleich. Wer bei jeder Wartung kurz durch die Projekte klickt, sieht ein neues Admin-Konto oder eine wachsende Datenbank, bevor jemand danach fragt.
+</Callout>

@@ -1,0 +1,43 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22.23.2"
+
+# Alte Pfade aus der Landingpage-Phase.
+[[redirects]]
+  from = "/features"
+  to = "/produkt/funktionen"
+  status = 301
+
+[[redirects]]
+  from = "/custom"
+  to = "/massgeschneidert"
+  status = 301
+
+# Anker, die es nie gab: früher verlinkt, nie vorhanden.
+[[redirects]]
+  from = "/waitlist"
+  to = "/demo"
+  status = 301
+
+# Kein SPA-Fallback: jede Route liegt als echte HTML-Datei vor. Ein
+# "/* -> /index.html 200" würde 404-Fälle verdecken und Tippfehler-URLs
+# mit einer leeren Hülle beantworten.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

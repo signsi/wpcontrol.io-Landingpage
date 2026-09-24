@@ -1,0 +1,135 @@
+---
+title: "Anmelden und Lizenz aktivieren"
+description: "Mit deiner E-Mail-Adresse registrieren, den Anmelde-Link einlösen und verstehen, wie Testzeitraum, Geräte-Aktivierung und Offline-Betrieb funktionieren."
+order: 15
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/wporbit-installieren
+  - zugaenge/neuen-mac-im-team-anmelden
+  - fehlerbehebung/diagnose-und-support
+draft: true
+---
+
+WPorbit hat kein Passwort. Du meldest dich mit deiner E-Mail-Adresse an und bekommst einen Anmelde-Link per E-Mail. Solange du nicht angemeldet bist, bleibt die App gesperrt. Diese Anleitung zeigt die Anmeldung und erklärt, was danach im Hintergrund passiert.
+
+## Registrieren oder anmelden
+
+Beim ersten Start erscheint das Fenster „WPorbit-Lizenz“ mit dem Untertitel „Anmelden oder registrieren“.
+
+{/* SCREENSHOT 01-lizenz-login: Anmeldefenster „WPorbit-Lizenz“ mit dem Feld E-Mail-Adresse, den Buttons „Neu registrieren“ und „Anmelde-Link senden“ und dem zugeklappten Bereich „Ich habe schon einen Token“. App abgemeldet. */}
+
+<Steps>
+
+<Step title="E-Mail-Adresse eingeben">
+
+Trag deine Adresse ins Feld **E-Mail-Adresse** ein.
+
+</Step>
+
+<Step title="Den richtigen Knopf wählen">
+
+- **Neu registrieren**, wenn du WPorbit zum ersten Mal nutzt. Damit legst du dein Konto an, und dein Testzeitraum beginnt.
+- **Anmelde-Link senden**, wenn du schon ein Konto hast, zum Beispiel nach einer Abmeldung.
+
+<Callout variant="achtung" title="Keine E-Mail erhalten?">
+Aus Sicherheitsgründen sagt der Lizenzserver nicht, ob eine Adresse bekannt ist. **Neu registrieren** verschickt bei einer bereits registrierten Adresse nichts, **Anmelde-Link senden** bei einer unbekannten auch nicht. Kommt nichts an, nimm den anderen Knopf und prüf den Spam-Ordner.
+</Callout>
+
+</Step>
+
+<Step title="Postfach prüfen">
+
+WPorbit wechselt zu „Prüfe dein Postfach“. Öffne die E-Mail und klicke auf den Link darin.
+
+Hier kannst du auch **Erneut senden** wählen oder mit **Andere E-Mail-Adresse verwenden** zurück zum Formular gehen.
+
+</Step>
+
+<Step title="Link in WPorbit öffnen">
+
+Der Link öffnet im Browser die Seite „Bei WPorbit anmelden“. Klicke dort auf **In WPorbit öffnen**. WPorbit übernimmt die Anmeldung und entsperrt sich.
+
+Öffne den Link auf dem Mac, auf dem WPorbit läuft. Er gilt nur einmal und läuft nach kurzer Zeit ab. Ist er abgelaufen, forderst du in der App einen neuen an.
+
+{/* SCREENSHOT 02-login-seite: Browserseite „Bei WPorbit anmelden“ mit dem Button „In WPorbit öffnen“. Frisch angeforderter Anmelde-Link. */}
+
+</Step>
+
+</Steps>
+
+Nach der Anmeldung geht es mit dem Einrichtungsassistenten weiter, siehe [WPorbit installieren und einrichten](/anleitungen/erste-schritte/wporbit-installieren).
+
+### Wenn sich WPorbit nicht öffnet: Token einlösen
+
+Passiert nach dem Klick auf **In WPorbit öffnen** nichts, kannst du den Link von Hand einlösen:
+
+<Steps>
+
+<Step title="Token kopieren">
+
+Kopiere aus dem Anmelde-Link in der E-Mail den Teil nach `?token=`.
+
+</Step>
+
+<Step title="Token einfügen">
+
+Klapp im Anmeldefenster **Ich habe schon einen Token** auf, füge den Wert ins Feld ein und klicke auf **Token einlösen**.
+
+</Step>
+
+</Steps>
+
+## Ein Mac pro Lizenz
+
+Bei der ersten Anmeldung aktiviert WPorbit deinen Mac automatisch für die Lizenz. Eine Lizenz erlaubt genau ein aktives Gerät gleichzeitig.
+
+Meldest du dich auf einem zweiten Mac an, lehnt der Lizenzserver das ab. WPorbit meldet dann: „Diese Lizenz ist bereits auf einem anderen Gerät aktiv. Sie erlaubt genau ein Gerät gleichzeitig.“ In der App kannst du das alte Gerät nicht selbst freigeben. Wenn du den Mac gewechselt hast, melde dich beim [Support](/support). Sobald das alte Gerät freigegeben ist, klickst du in den Einstellungen auf **Gerät neu aktivieren**.
+
+## Lizenz in den Einstellungen
+
+Den Stand deiner Lizenz findest du unter **Einstellungen → Allgemein** im Abschnitt zur Lizenz.
+
+{/* SCREENSHOT 03-einstellungen-lizenz: Einstellungen, Tab Allgemein, Lizenzbereich mit Status-Chip „Aktiv (… Tage übrig)“, Lizenzdetails mit „Testzeitraum läuft bis“ und „Angemeldet als:“, Abschnitt Gerät und die Aktionen „Status prüfen“, „Gerät neu aktivieren“, „Abmelden…“. Aktive Testlizenz. */}
+
+| Bereich | Was du dort siehst oder tust |
+| --- | --- |
+| **Lizenzdetails** | Status, bei einer Testlizenz „Testzeitraum läuft bis“ mit den verbleibenden Tagen, und „Angemeldet als:“ mit deiner E-Mail-Adresse |
+| **Gerät** | den Geräte-Namen (änderbar, mit **Speichern** übernehmen) und die Geräte-ID |
+| **Aktionen** | **Status prüfen** fragt den Lizenzserver sofort ab. **Gerät neu aktivieren** aktiviert diesen Mac erneut, etwa nach einer Freigabe durch den Support. **Abmelden…** meldet dich ab |
+
+Den Abschnitt „Server (erweitert)“ brauchst du im Normalfall nicht. Lass das Feld leer.
+
+## Testzeitraum
+
+Mit **Neu registrieren** beginnt dein Testzeitraum. Wie viele Tage übrig sind, zeigen der Status-Chip und die Zeile „Testzeitraum läuft bis“.
+
+Ist der Testzeitraum vorbei, sperrt sich WPorbit mit „Testzeitraum abgelaufen“. Deine Projektordner und Daten bleiben unangetastet. Kontaktiere den Support, um die Lizenz zu verlängern, und klicke danach auf **Lizenz erneut prüfen**.
+
+## Ohne Internet arbeiten
+
+WPorbit prüft die Lizenz bei jedem Start. Die Sitzung erneuert es dabei selbst, du musst dich also nicht regelmässig neu anmelden.
+
+Ist der Lizenzserver nicht erreichbar, läuft WPorbit bis zu drei Tage nach der letzten erfolgreichen Prüfung weiter. Am letzten Tag erscheint ein Hinweis oben im Fenster. In den Einstellungen steht dann zum Beispiel „Offline (noch 2 Tage ohne Prüfung)“.
+
+Nach Ablauf dieser Frist sperrt sich WPorbit mit „Keine Verbindung“, bis der Lizenzserver wieder erreichbar ist. Prüfe die Internetverbindung und klicke auf **Lizenz erneut prüfen**.
+
+## Abmelden
+
+Klicke unter **Einstellungen → Allgemein** auf **Abmelden…** und bestätige die Rückfrage „Abmelden?“ mit **Abmelden**.
+
+<Callout variant="wichtig" title="Danach ist WPorbit gesperrt">
+Nach dem Abmelden bleibt WPorbit gesperrt, bis du dich wieder anmeldest. Dafür brauchst du einen neuen Anmelde-Link per E-Mail. Deine Projekte und Zugangsdaten bleiben auf dem Mac.
+</Callout>
+
+<KeyTakeaways>
+
+- Neu bei WPorbit: **Neu registrieren**. Schon registriert: **Anmelde-Link senden**.
+- Der Link aus der E-Mail gilt einmal, kurze Zeit und auf dem Mac mit WPorbit. Im Notfall hilft **Token einlösen**.
+- Eine Lizenz gilt für genau einen Mac. Für einen Wechsel braucht es den Support.
+- Ohne Verbindung zum Lizenzserver läuft WPorbit bis zu drei Tage weiter.
+
+</KeyTakeaways>

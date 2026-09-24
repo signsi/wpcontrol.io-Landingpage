@@ -1,0 +1,166 @@
+---
+title: "Ein Projekt aus einem Backup importieren"
+description: "Ein WordPress-Backup als .tar.gz in WPorbit einspielen: als neues Projekt oder in ein bestehendes. Mit Archivformat, .env-Import und den Grenzen des Imports."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "10–15 Minuten"
+appliesTo: [Standalone]
+related:
+  - projekte/bestehende-website-uebernehmen
+  - wartung/backups-erstellen
+  - zugaenge/zugangsdaten-im-vault
+  - fehlerbehebung/url-ersetzen-und-wp-config-reparieren
+draft: true
+---
+
+Nicht jede Website erreichst du per SSH. Manchmal bekommst du nur ein Backup, oder ein altes Projekt lag bisher in MAMP oder einem eigenen Docker-Setup. Dann importierst du das Backup: WPorbit richtet seine eigene Umgebung ein und spielt Datenbank und `wp-content` hinein.
+
+## Welches Format WPorbit liest
+
+WPorbit importiert ein **`.tar.gz`-Archiv** (auch `.tgz`), dessen Inhalt relativ zur Archivwurzel liegt:
+
+```
+./db/wordpress.sql          Datenbank-Dump
+./wp-content/plugins/…      optional
+./wp-content/themes/…       optional
+./wp-content/uploads/…      optional
+```
+
+- Die Datenbank ist irgendeine Datei `db/*.sql`. Der Name ist frei, gibt es mehrere, gewinnt die erste in alphabetischer Reihenfolge.
+- Ein Archiv nur mit Datenbank oder nur mit Dateien ist gültig.
+- ZIP-Dateien und Formate von Backup-Plugins liest WPorbit nicht. Pack solche Backups vorher in die obige Struktur um.
+
+Backups, die du mit WPorbit selbst erstellst, haben dieses Format bereits. Ein Archiv aus einer beliebigen WordPress-Instanz baust du auf dem Server so:
+
+```bash
+cd /var/www/html                      # der WordPress-Root
+mkdir -p /tmp/wp-export/db
+wp db export /tmp/wp-export/db/wordpress.sql
+cp -a wp-content /tmp/wp-export/
+cd /tmp/wp-export
+tar -czf ~/kunde_$(date +%Y-%m-%d_%H-%M-%S).tar.gz .
+```
+
+<Callout variant="achtung" title="Der Punkt am Ende zählt">
+Das Archiv muss `./db/…` enthalten, nicht `./wp-export/db/…`. Prüfe das mit `tar -tzf kunde_*.tar.gz | head`.
+</Callout>
+
+## Als neues Projekt importieren
+
+<Steps>
+
+<Step title="Anlage-Art wählen">
+
+Klicke in der Seitenleiste auf **Projekt hinzufügen** und wähle die Karte **Aus einem Backup importieren**. Vergib unter „Name des Imports“ einen Namen.
+
+</Step>
+
+<Step title="Archiv wählen">
+
+Unter „Backup-Archiv“ trägst du den Pfad ein oder wählst die Datei über **Wählen…**.
+
+{/* SCREENSHOT 01-backup-modus: „Projekt hinzufügen“, Schritt 2 von 2 im Modus „Aus Backup importieren“, Bereich „Backup-Archiv“ mit gewähltem .tar.gz und „Konfiguration & Zugangsdaten“ */}
+
+</Step>
+
+<Step title="Zugangsdaten mitgeben">
+
+Unter „Konfiguration & Zugangsdaten“ lädst du die passenden Werte über „Aus Vault laden“ → **Durchsuchen** oder über **.env importieren**. Das Tabellen-Präfix und die Datenbank-Zugangsdaten müssen zum Backup passen. **Analysieren** zeigt die Import-Analyse. Sie prüft dieselben Pflichtfelder wie beim Verbinden mit einem Server: Live-Adresse, Server, Benutzer und Web-Root. Fehlt einer davon in der `.env`, bleibt **Projekt anlegen** gesperrt.
+
+Trag vor allem die **Live-Adresse** (`REMOTE_URL`) der Quellseite ein. Nur mit ihr weiss WPorbit, welche Adresse in der Datenbank es durch die lokale ersetzen soll.
+
+</Step>
+
+<Step title="Zielpfad prüfen und anlegen">
+
+Unter **Erweiterte Einstellungen** steht der „Zielpfad“. Nimm ein neues, leeres Verzeichnis, keinen bestehenden Projektordner. Klicke dann auf **Projekt anlegen**. WPorbit setzt ein frisches WordPress auf und spielt das Archiv anschliessend hinein.
+
+</Step>
+
+</Steps>
+
+<Callout variant="hinweis" title="Wenn Docker oder Vault nicht bereit sind">
+Dann legt WPorbit das Projekt trotzdem an und meldet, dass WordPress nicht eingerichtet wurde. Starte die Einrichtung später über **Lokale Umgebung einrichten…** und importiere das Backup danach wie unten beschrieben.
+</Callout>
+
+## In ein bestehendes Projekt importieren
+
+Öffne das Projekt, wechsle in den Tab **Backup** und klicke in der Karte „Backups“ auf **Backup importieren…**. Den gleichen Eintrag findest du im Kontextmenü des Projekts. Du kannst eine `.tar.gz`-Datei auch direkt auf die Karte ziehen.
+
+Das Fenster listet unter „Verfügbare Backups“ die Archive aus dem Ordner `.backups/` im Projektordner. Aufgeführt werden Dateien, deren Name einen Zeitstempel `JJJJ-MM-TT_HH-MM-SS` enthält. Ein Archiv ohne Zeitstempel wählst du über **Aus Finder wählen…**.
+
+![Fenster „Backup importieren“ mit drei verfügbaren Backups, eines ausgewählt, unten „Import starten“](/anleitungen/projekte/projekt-aus-backup-importieren/02-backup-importieren.webp)
+
+Klicke auf **Import starten**. WPorbit fragt nach: „Backup importieren?“ mit dem Hinweis, dass die aktuelle Datenbank überschrieben und vorhandene Dateien in `wp-content` ersetzt werden. Bestätige mit **Import starten**.
+
+## Was beim Import passiert
+
+1. **Präfix erkennen**: WPorbit liest das Tabellen-Präfix aus dem Dump. Weicht es ab, übernimmt WPorbit es und startet den Container neu. Im Protokoll steht „Erkanntes Tabellen-Präfix“ oder „Kein Präfix erkannt“.
+2. **Sicherheitskopie**: Die aktuelle Datenbank wird als `pre-import_<zeitstempel>.sql` gesichert. Klappt das nicht, bricht der Import ab, ohne etwas zu löschen.
+3. **Datenbank ersetzen**: Scheitert das Einspielen, stellt WPorbit die vorherige Datenbank automatisch wieder her.
+4. **URLs ersetzen**: Die Live-Adresse wird durch die lokale ersetzt.
+5. **wp-content kopieren**: Vorhandene Dateien werden überschrieben, Dateien, die nicht im Archiv sind, bleiben liegen.
+6. **Berechtigungen korrigieren**.
+
+Der Import führt also nichts zusammen. Wenn du einen ganz sauberen Stand willst, installiere WordPress vorher neu.
+
+![„Backup importieren“ nach dem Lauf: Protokoll mit Sicherheitskopie der aktuellen Datenbank und „Import erfolgreich abgeschlossen.“](/anleitungen/projekte/projekt-aus-backup-importieren/03-import-protokoll.webp)
+
+## Grenzen
+
+- **Nicht übernommen** werden `wp-config.php` (WPorbit erzeugt sie selbst), Serverkonfiguration, Cronjobs und alles ausserhalb von `wp-content/`.
+- **Block-Editor-URLs** in der Form `https:\/\/kunde.ch\/…` ersetzt der Backup-Import nicht. Zeigen Bilder in Blöcken noch auf die Live-Seite, lass danach **URL ersetzen…** laufen. Du findest es in der Übersicht in der Karte „Wartung“.
+- **Multisite** ist nicht getestet.
+
+## .env später neu importieren
+
+Die Konfiguration eines Projekts liegt in Vault. Eine `.env` ist nur das Transportformat. Wenn du nach dem Anlegen eine neue `.env` bekommst, spielst du sie so ein:
+
+<Steps>
+
+<Step title="Technische Details einschalten">
+
+Schalte unter **Einstellungen → Allgemein** die Option **Technische Details anzeigen** ein.
+
+</Step>
+
+<Step title="Panel öffnen">
+
+In der Übersicht des Projekts steht in der Karte „Zugangsdaten“ jetzt der Bereich „.env neu importieren“. Klicke auf **.env importieren**. Liegt schon eine `.env` im Projektordner, kannst du sie über **.env aus dem Projektordner laden** übernehmen.
+
+</Step>
+
+<Step title="Analysieren und übernehmen">
+
+Füge den Inhalt ein oder klicke auf **.env-Datei wählen**, dann auf **Analysieren**. Die Tabelle zeigt jeden Schlüssel mit seinem Status. Unbekannte Schlüssel kannst du **übernehmen** oder **ignorieren**. Mit **In Vault übernehmen** speicherst du die Werte. WPorbit schreibt sie zusätzlich als `.env` in den Projektordner.
+
+![Karte „Zugangsdaten“ mit geöffnetem Bereich „.env neu importieren“: eingefügte .env mit Fantasiewerten und Import-Analyse „bereit zum Speichern“](/anleitungen/projekte/projekt-aus-backup-importieren/04-env-neu-importieren.webp)
+
+</Step>
+
+</Steps>
+
+Fremde `.env`-Dateien benennen manches anders. WPorbit ordnet verbreitete Schreibweisen selbst zu:
+
+| WPorbit erwartet | erkennt auch |
+|---|---|
+| `REMOTE_URL` | `LIVE_URL`, `PRODUCTION_URL`, `PROD_URL`, `STAGING_URL`, `SITE_DOMAIN`, `WP_HOME`, `WP_SITEURL`, `SITE_URL` |
+| `WORDPRESS_TABLE_PREFIX` | `TABLE_PREFIX` |
+| `SELECTED_PHP_VERSION` | `PHP_VERSION` |
+| `SELECTED_WP_VERSION` | `WP_VERSION`, `WORDPRESS_VERSION` |
+| `SSH_PW` | `SSH_ROOT_PW` |
+
+<Callout variant="wichtig" title="Klartext im Projektordner">
+`.env` und `.env.import.backup` im Projektordner enthalten Zugangsdaten im Klartext. Sie gehören nicht in ein Git-Repository.
+</Callout>
+
+<KeyTakeaways>
+
+- WPorbit importiert `.tar.gz` mit `db/*.sql` und/oder `wp-content/`.
+- Neues Projekt: **Projekt hinzufügen** → **Aus einem Backup importieren**. Bestehendes Projekt: Tab **Backup** → **Backup importieren…**.
+- Trag die Live-Adresse ein, sonst zeigt die lokale Seite weiter auf die Live-Seite.
+- Vor dem Import sichert WPorbit die aktuelle Datenbank und stellt sie bei einem Fehler wieder her.
+
+</KeyTakeaways>

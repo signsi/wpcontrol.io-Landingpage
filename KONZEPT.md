@@ -70,8 +70,11 @@ Ein einziges Tool ersetzt den fragmentierten Stack aus lokalen Entwicklungstools
 - Direkter App-Download
 - *Einsteigen ohne Risiko – für Entscheider und Teams gleichermassen*
 
-### Standalone — ab 40 CHF / Person / Monat
-- Max. 3 Projekte
+> **Hinweis:** Preise und Limits werden im Code an einer einzigen Stelle gepflegt:
+> `src/data/plans.ts`. Änderungen bitte dort vornehmen und hier nachführen.
+
+### Standalone — ab 290 CHF / Person / Monat
+- Max. 10 Projekte
 - Lokale Entwicklungsumgebung
 - Vault für Zugangsdaten
 - Deploy- und Pull-Prozesse
@@ -125,7 +128,13 @@ Die Landing Page spricht **Agenturinhaberinnen und Projektverantwortliche** an. 
 
 ### Content-Hebel
 - ROI- und Migrations-Checkliste (Incentive nach Demo-Signup)
-- FAQ als SEO-Asset (Einwände direkt auf der LP entkräften)
+- FAQ als SEO-Asset unter `/faq` (Einwände entkräften, `FAQPage`-Markup)
+- **Blog** (`/blog`): Tipps, Tricks und Praxiswissen für Agenturen — organische Reichweite
+- **Hilfe-Center** (`/anleitungen`): Schritt-für-Schritt-Anleitungen — bindet Bestandskunden
+- **Changelog** (`/changelog`): stärkster Wiederkehr-Grund für bestehende Kunden
+
+Redaktion: MDX-Dateien unter `src/content/`. Metadaten, Lesezeit und
+Inhaltsverzeichnis entstehen beim Build (`build/content-index.ts`).
 
 ---
 

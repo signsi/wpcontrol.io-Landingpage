@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
-import Topbar from '../components/Topbar'
-import Footer from '../components/Footer'
+import Seo from '../components/Seo'
+import PageHero from '../components/PageHero'
+import NumberedFeatures from '../components/NumberedFeatures'
+import CTABand from '../components/CTABand'
+import { breadcrumbLd } from '../lib/jsonld'
 
 const features = [
   {
@@ -25,76 +28,50 @@ const features = [
   },
 ]
 
+const crumbs = [{ label: 'Massgeschneidert', path: '/massgeschneidert' }]
+
 export default function CustomPage() {
   return (
-    <div className="min-h-screen bg-base text-primary">
-      <Topbar variant="features" />
-      <main className="pt-[3.25rem]">
+    <>
+      <Seo
+        title="Massgeschneidert"
+        description="WPorbit nach Mass: CRM- und ERP-Integrationen, eigene Workflows, individuelle Auswertungen und dedizierter Support für deine Agentur."
+        path="/massgeschneidert"
+        jsonLd={breadcrumbLd(crumbs)}
+      />
 
-        {/* Hero */}
-        <section className="px-6 pt-16 pb-14 border-b border-line">
-          <p className="font-bold text-[0.67rem] uppercase tracking-[0.13em] text-accent mb-3">
-            Custom
-          </p>
-          <h1 className="font-heading font-semibold text-[clamp(2.1rem,4.5vw,3.25rem)] leading-[1.05] tracking-[-0.035em] mb-4 max-w-2xl">
-            WPorbit nach Mass.<br />Für deine Agentur.
-          </h1>
-          <p className="text-secondary leading-[1.75] text-[1rem] max-w-[52ch] mb-5">
-            CRM- und ERP-Integrationen, eigene Workflows, Custom Abfragen und dedizierter Support – alles aufgebaut auf dem Cloud-Plan, abgestimmt auf die Prozesse deiner Agentur.
-          </p>
-          <div className="inline-flex items-center gap-3 bg-surface border border-line rounded-xl px-5 py-3.5 mb-8">
-            <span className="font-heading font-semibold text-[1.5rem] tracking-[-0.02em] text-primary leading-none">Auf Anfrage</span>
-            <span className="text-tertiary text-[0.8rem] leading-snug border-l border-line pl-3">Individuelles Angebot<br />nach Anforderung</span>
-          </div>
-          <div className="flex gap-3 flex-wrap">
-            <Link to="/#waitlist" className="btn btn-primary btn-md">
-              Anfrage stellen
-            </Link>
-            <Link to="/#preise" className="btn btn-secondary btn-md">
-              Alle Pläne vergleichen
-            </Link>
-          </div>
-        </section>
+      <PageHero
+        kicker="Massgeschneidert"
+        title={<>WPorbit nach Mass.<br />Für deine Agentur.</>}
+        lead="CRM- und ERP-Integrationen, eigene Workflows, eigene Auswertungen und dedizierter Support – alles aufgebaut auf dem Cloud-Plan, abgestimmt auf die Prozesse deiner Agentur."
+        crumbs={crumbs}
+        actions={
+          <>
+            <Link to="/kontakt" className="btn btn-primary btn-md">Anfrage stellen</Link>
+            <Link to="/preise" className="btn btn-secondary btn-md">Alle Pläne vergleichen</Link>
+          </>
+        }
+      >
+        <div className="mt-5 inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-3.5">
+          <span className="font-heading text-[1.5rem] font-semibold leading-none tracking-[-0.02em] text-primary">
+            Auf Anfrage
+          </span>
+          <span className="border-l border-line pl-3 text-[0.8rem] leading-snug text-tertiary">
+            Individuelles Angebot
+            <br />
+            nach Anforderung
+          </span>
+        </div>
+      </PageHero>
 
-        {/* Features */}
-        {features.map((f, i) => (
-          <section key={f.title} className="px-6 py-14 border-b border-line last:border-b-0">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-10 items-start max-w-4xl">
-              <div>
-                <p className="font-bold text-[0.62rem] uppercase tracking-[0.13em] text-tertiary mb-3">
-                  {String(i + 1).padStart(2, '0')}
-                </p>
-                <h2 className="font-heading font-semibold text-[clamp(1.3rem,2.4vw,1.7rem)] leading-[1.2] tracking-[-0.02em] text-primary">
-                  {f.title}
-                </h2>
-              </div>
-              <p className="text-secondary text-[0.95rem] leading-[1.78] lg:pt-8">
-                {f.detail}
-              </p>
-            </div>
-          </section>
-        ))}
+      <NumberedFeatures features={features} />
 
-        {/* CTA */}
-        <section className="px-6 py-20 bg-surface border-t border-line text-center">
-          <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-3 max-w-[28ch] mx-auto">
-            Klingt nach deiner Agentur?
-          </h2>
-          <p className="text-secondary text-[0.95rem] leading-[1.75] max-w-[44ch] mx-auto mb-7">
-            Schreib uns, was du dir vorstellst. Wir schauen gemeinsam, was sich sinnvoll umsetzen lässt – ohne Overhead.
-          </p>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <Link to="/#waitlist" className="btn btn-primary btn-md">
-              Anfrage stellen
-            </Link>
-            <Link to="/cloud" className="btn btn-secondary btn-md">
-              Cloud-Plan ansehen
-            </Link>
-          </div>
-        </section>
-
-      </main>
-      <Footer />
-    </div>
+      <CTABand
+        title="Klingt nach deiner Agentur?"
+        text="Schreib uns, was du dir vorstellst. Wir schauen gemeinsam, was sich sinnvoll umsetzen lässt – ohne Overhead."
+        primary={{ label: 'Anfrage stellen', to: '/kontakt' }}
+        secondary={{ label: 'Cloud-Plan ansehen', to: '/cloud' }}
+      />
+    </>
   )
 }

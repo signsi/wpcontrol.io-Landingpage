@@ -1,0 +1,138 @@
+---
+title: "Dein erstes Projekt in WPorbit anlegen"
+description: "Ein neues, lokales WordPress-Projekt anlegen, einrichten lassen, starten und im Browser öffnen."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/demo-projekt-ausprobieren
+  - erste-schritte/oberflaeche-im-ueberblick
+  - projekte/bestehende-website-uebernehmen
+  - entwicklung/php-und-wordpress-version-wechseln
+draft: true
+---
+
+Diese Anleitung führt dich vom fertig eingerichteten WPorbit zum ersten eigenen WordPress-Projekt auf deinem Mac. Du brauchst dafür keine Vorkenntnisse in Docker, NGINX oder PHP-Konfiguration.
+
+<Callout variant="hinweis" title="Voraussetzung">
+WPorbit ist installiert, du bist angemeldet, und der Einrichtungsassistent ist durchgelaufen. Falls nicht, beginne mit [WPorbit installieren und einrichten](/anleitungen/erste-schritte/wporbit-installieren).
+</Callout>
+
+## Projekt anlegen
+
+<Steps>
+
+<Step title="Assistenten öffnen">
+
+Klicke unten in der Seitenleiste auf **Projekt hinzufügen**, oder drück ⌘N. Direkt nach der Einrichtung führt auch der Knopf **Projekt hinzufügen** auf dem Abschluss-Bildschirm hierher.
+
+</Step>
+
+<Step title="Anlage-Art wählen">
+
+Im ersten Schritt stehen drei Karten zur Wahl:
+
+- **Ein neues Projekt erstellen**: eine frische WordPress-Installation. Diese wählst du für diese Anleitung.
+- **Mit einem Server verbinden**: eine bestehende Website vom Server holen. Siehe [Bestehende Website übernehmen](/anleitungen/projekte/bestehende-website-uebernehmen).
+- **Aus einem Backup importieren**: ein vorhandenes Backup lokal einspielen. Siehe [Projekt aus Backup importieren](/anleitungen/projekte/projekt-aus-backup-importieren).
+
+Ein Klick auf die Karte bringt dich direkt zu Schritt 2.
+
+![Assistent „Projekt hinzufügen“, Schritt 1 mit den drei Karten](/anleitungen/erste-schritte/erstes-projekt-anlegen/01-anlage-art.webp)
+
+</Step>
+
+<Step title="Namen vergeben">
+
+Trag unter **Name des Projekts** einen Namen ein, zum Beispiel „Muster Website“. Mehr ist für ein neues Projekt nicht nötig.
+
+Aus dem Namen leitet WPorbit den Projektordner ab, standardmässig `~/Studio/<name>`, und die lokale Adresse, etwa `https://muster-website.wporbit`.
+
+<Callout variant="tipp" title="Benennung von Anfang an durchziehen">
+Bei fünfzehn Projekten macht eine einheitliche Benennung den Unterschied. Ein Muster wie „Kunde Projekt“ funktioniert gut: „Muster Website“, „Muster Shop“. So stehen die Projekte desselben Kunden beieinander, und der Filter in der Seitenleiste findet sie.
+</Callout>
+
+![Schritt 2: Name des Projekts „Muster Website“ eingetragen](/anleitungen/erste-schritte/erstes-projekt-anlegen/02-name.webp)
+
+</Step>
+
+<Step title="Bei Bedarf: Erweiterte Einstellungen">
+
+Die Vorgaben passen für die meisten Projekte. Unter **Erweiterte Einstellungen** kannst du sie ändern:
+
+| Einstellung | Wofür |
+| --- | --- |
+| **Lokaler Pfad** | wo der Projektordner liegt. Über das Ordner-Symbol wählst du einen anderen Ort |
+| **PHP-Version** und **WordPress-Version** | die Laufzeit dieses Projekts. Andere Projekte sind davon nicht betroffen |
+| **Optionale Angaben** | **Kunde**, **Verantwortlich**, **Tag** und **Hoster**, damit du Projekte später leichter findest |
+| **Notizen** | freier Text zum Projekt |
+| **WordPress automatisch einrichten** | ist eingeschaltet. Schaltest du es aus, legt WPorbit nur ein leeres Projekt an |
+| **Parent- und Child-Theme klonen** | holt Theme-Repositories per SSH und führt den Build aus. Für ein erstes Projekt kannst du das ausgeschaltet lassen |
+
+Die PHP- und WordPress-Version lässt sich später jederzeit ändern, siehe [PHP- und WordPress-Version wechseln](/anleitungen/entwicklung/php-und-wordpress-version-wechseln).
+
+</Step>
+
+<Step title="Projekt anlegen">
+
+Klicke auf **Projekt anlegen**. WPorbit legt das Projekt an und beginnt sofort mit der Einrichtung: Template kopieren, Container starten, WordPress installieren. Ein Fenster mit dem Projektnamen zeigt, was gerade passiert, und darunter die Schritte Template, Docker, WordPress, Theme, Repo und Fertig.
+
+Mit **Im Hintergrund weiter** kannst du währenddessen anderes tun. Den Fortschritt siehst du dann in der Statuszeile am unteren Fensterrand.
+
+![Einrichtung läuft: Schrittzeile von Template bis Fertig](/anleitungen/erste-schritte/erstes-projekt-anlegen/03-einrichtung.webp)
+
+</Step>
+
+</Steps>
+
+<Callout variant="achtung" title="Projekt angelegt, aber nicht eingerichtet?">
+Läuft die Container-Laufzeit oder Vault gerade nicht, legt WPorbit das Projekt trotzdem an und meldet „WordPress wurde nicht eingerichtet. Das Projekt ist trotzdem angelegt.“ Behebe zuerst, was in der Seitenleiste unten angezeigt wird, zum Beispiel „Colima ist nicht gestartet“. Danach klickst du im Projekt auf **Einrichten…** oder **Lokale Umgebung einrichten…**.
+</Callout>
+
+## Starten und im Browser öffnen
+
+Nach der Einrichtung läuft das Projekt. Du erkennst das an zwei Stellen:
+
+- In der Seitenleiste ist der Punkt vor dem Projektnamen gefüllt, und der Name steht fett.
+- Oben rechts steht im Schalter **Läuft**.
+
+Unter dem Projektnamen oben erscheinen dann zwei Links:
+
+- **Lokale Website ↗** öffnet die Website im Browser.
+- **WP-Admin ↗** öffnet das WordPress-Backend.
+
+Den Admin-Zugang zu WordPress findest du im Tab **Übersicht** in der Karte **Zugangsdaten**. Du musst ihn dir nicht notieren.
+
+Die Seite siehst du ausserdem direkt in WPorbit im Tab **Vorschau** (⌘2).
+
+![Muster Website läuft: Kopfzeile mit WP-Admin, Lokale Website und Schalter „Läuft“](/anleitungen/erste-schritte/erstes-projekt-anlegen/04-projekt-laeuft.webp)
+
+### Stoppen und wieder starten
+
+- Klicke oben rechts auf den Schalter **Läuft**, um das Projekt zu stoppen. Er zeigt danach **Gestoppt**, ein weiterer Klick startet es wieder.
+- In der Seitenleiste erscheint beim Überfahren einer Projektzeile ein kleiner Start- oder Stopp-Knopf.
+- Mit ⌘R startest oder stoppst du das ausgewählte Projekt.
+
+Beim Starten zeigt der Schalter zuerst **Startet…**. Grün wird er erst, wenn die Website tatsächlich antwortet. Mehrere Projekte können gleichzeitig laufen, jedes mit eigener Datenbank und eigener PHP-Version.
+
+<Callout variant="hinweis" title="Adresse mit localhost-Port">
+Hast du bei der Einrichtung die lokalen Domains übersprungen, ist das Projekt nicht unter `https://….wporbit`, sondern über einen localhost-Port erreichbar. Die Links oben führen trotzdem an die richtige Adresse.
+</Callout>
+
+## Nächste Schritte
+
+- **[Oberfläche im Überblick](/anleitungen/erste-schritte/oberflaeche-im-ueberblick)**: wo Tabs, Menüs und Werkzeuge liegen.
+- **[Bestehende Website übernehmen](/anleitungen/projekte/bestehende-website-uebernehmen)**, wenn du mit echten Kundenprojekten arbeiten willst.
+- **[Holen, Senden, Deployen](/anleitungen/veroeffentlichen/holen-senden-deployen)**, damit Änderungen kontrolliert live gehen.
+
+<KeyTakeaways>
+
+- **Projekt hinzufügen** (⌘N) → **Ein neues Projekt erstellen** → Namen eingeben → **Projekt anlegen**.
+- Die Einrichtung startet automatisch. Danach läuft das Projekt.
+- **Lokale Website ↗** und **WP-Admin ↗** oben im Projekt öffnen die Seite und das Backend.
+- Starten und stoppen: Schalter oben rechts, Knopf in der Seitenleiste oder ⌘R.
+
+</KeyTakeaways>

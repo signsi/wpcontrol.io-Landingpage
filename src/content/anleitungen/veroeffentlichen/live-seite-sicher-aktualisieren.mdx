@@ -1,0 +1,145 @@
+---
+title: "Eine Live-Seite sicher aktualisieren"
+description: "Lokale Datenbank und Inhalte mit ›Zum Server senden‹ auf eine Live-Seite bringen: Sicherung vorher, Verbindungsprüfung, Bestätigung per Zieladresse und was nach dem Lauf zu prüfen ist."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "15 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/holen-senden-deployen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - wartung/backups-erstellen
+  - fehlerbehebung/deploy-schlaegt-fehl
+draft: false
+---
+
+Mit **Zum Server senden** überträgst du die lokale Datenbank und, wenn du willst, Plugins, Uploads und Themes auf den Server. Auf einer Live-Seite ist das ein Eingriff, der sich nicht rückgängig machen lässt. Diese Anleitung führt dich so durch den Ablauf, dass du vorher weisst, wohin die Daten gehen, und nachher einen Rückweg hast.
+
+<Callout variant="hinweis" title="Voraussetzung">
+Für das Projekt ist ein Server hinterlegt, und die Verbindung funktioniert. Wie du das prüfst, steht unter [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten). Wenn du nur das Theme ändern willst, ist [Theme per rsync deployen](/anleitungen/veroeffentlichen/theme-per-rsync-deployen) der schonendere Weg.
+</Callout>
+
+## Vorher: Sicherungen
+
+<Callout variant="wichtig" title="WPorbit sichert den Server nicht">
+Vor dem Senden legt WPorbit auf dem Server keine Sicherung an. Was dort überschrieben wird, ist danach weg. Erstelle deshalb vor jedem Senden auf eine Live-Seite eine Sicherung beim Hoster, zum Beispiel über dessen Backup-Funktion im Hosting-Backend.
+</Callout>
+
+Sinnvoll ist ausserdem eine Sicherung deines lokalen Stands. Öffne dazu im Projekt den Tab **Backup** und wähle **Backup erstellen…**. Das sichert die lokale Datenbank und, je nach Auswahl, Plugins, Uploads und Themes. Falls beim Senden etwas schiefgeht, kommst du so zuverlässig auf den Stand zurück, den du senden wolltest. Mehr dazu unter [Backups erstellen](/anleitungen/wartung/backups-erstellen).
+
+<Callout variant="achtung" title="Redaktionelle Inhalte auf der Live-Seite">
+Die Datenbank zu senden ersetzt die Datenbank auf dem Server. Beiträge, Bestellungen, Kommentare oder Formulareinträge, die seit deinem letzten **Holen** live entstanden sind, gehen dabei verloren. Sende die Datenbank nur, wenn auf der Live-Seite seither niemand gearbeitet hat.
+</Callout>
+
+## Verbindung prüfen
+
+Öffne den Tab **Remote**. Beim Öffnen prüft WPorbit die Verbindung im Hintergrund, ohne etwas zu verändern. Ist alles in Ordnung, steht in der Statuskarte eine grüne Zeile wie „Verbindung geprüft · vor 3 Minuten“.
+
+Steht dort „Letzte Prüfung fehlgeschlagen“, nennt die Karte, was fehlt und ob das Senden daran abbricht, etwa „Senden bricht daran ab, Holen läuft.“ Die Zeile **Zum Server senden** trägt dann ein orangefarbenes Warndreieck. Behebe das zuerst. Mit **Verbindung prüfen** stösst du eine frische, gründlichere Prüfung an.
+
+![Tab „Remote“ mit grüner Zeile „Verbindung geprüft · gerade eben“ und dem Link „Verbindung prüfen“](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren/01-status-bereit.webp)
+
+## Senden
+
+<Steps>
+
+<Step title="Assistenten öffnen">
+
+Klicke in der Karte **Übertragen** bei **Zum Server senden** auf **Senden…**. Es öffnet sich das Fenster „Zum Server senden“ mit dem ersten Schritt „Was senden?“.
+
+</Step>
+
+<Step title="Auswählen, was übertragen wird">
+
+Wähle die Bereiche:
+
+- **Datenbank**: Lokale Datenbank zum Server senden (vorausgewählt)
+- **Plugins**: Plugin-Dateien synchronisieren
+- **Uploads**: Media-Bibliothek übertragen
+- **Themes**: Theme-Ordner synchronisieren
+
+Unten zeigt WPorbit eine Zusammenfassung und eine geschätzte Dauer. Nimm nur mit, was sich wirklich geändert hat. Klicke auf **Weiter**.
+
+</Step>
+
+<Step title="Ziel lesen">
+
+Der zweite Schritt zeigt eine Warnkarte „Achtung“. Sie nennt, was überschrieben wird, zum Beispiel „Dies überschreibt **Datenbank, Plugins** auf:“, und darunter das Ziel in grosser Schrift. Dazu die Live-Adresse, den SSH-Zugang und den Satz „Die Aktion kann nicht rückgängig gemacht werden.“
+
+Lies die Adresse bewusst. Die häufigste Verwechslung ist nicht ein Tippfehler, sondern ein falsch ausgewähltes Projekt.
+
+Steht statt einer Adresse „Ziel unbekannt“, fehlen im Projekt Live-Adresse und SSH-Host. Brich dann ab und trag den Server-Zugang nach.
+
+![„Zum Server senden“, Schritt „Senden“: Warnkarte „Achtung“ mit der Ziel-Domain, Hinweis „Live, öffentlich erreichbar“, Zieladresse halb eingetippt, Sendeknopf noch inaktiv (Serverzeile unkenntlich gemacht)](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren/02-bestaetigung-zieladresse.webp)
+
+</Step>
+
+<Step title="Zieladresse eintippen">
+
+Ist die Seite öffentlich erreichbar, verlangt WPorbit einen weiteren Schritt. Über dem Eingabefeld steht, was WPorbit über die Live-Seite weiss, etwa „Live, öffentlich erreichbar“. Darunter: „Tippe zur Bestätigung die Zieladresse ein:“.
+
+Tippe die angezeigte Adresse ab. Gross- und Kleinschreibung spielen keine Rolle, ein fehlendes oder zusätzliches `www.` schon. Erst wenn die Eingabe stimmt, wird der Knopf **Jetzt an kunde.ch senden** aktiv (mit deiner Domain statt `kunde.ch`).
+
+Das Eintippen entfällt nur, wenn WPorbit für genau diese Adresse festgestellt hat, dass die Seite hinter einem Passwortschutz liegt, etwa bei einer Staging-Umgebung. In der Seitenleiste ist sie dann als „geschützt“ markiert.
+
+Mit **Zurück** kehrst du zur Auswahl zurück, ohne dass etwas gesendet wurde.
+
+</Step>
+
+<Step title="Senden starten">
+
+Klicke auf **Jetzt an … senden**. Der Assistent zeigt die Schritte des Laufs:
+
+- **Verbindung prüfen**
+- **Datenbank**
+- **Dateien**
+- **Cache & Permalinks**
+
+Du kannst das Fenster schliessen, der Lauf geht weiter. Er bleibt in der Statuszeile der App sichtbar, mit Protokoll und der Möglichkeit abzubrechen. Im Fenster selbst stoppt **Senden abbrechen** den Lauf. WPorbit stellt danach die lokalen Adressen wieder her. Was bereits auf dem Server angekommen ist, bleibt dort.
+
+</Step>
+
+</Steps>
+
+## Was die Prüfung vor dem Senden abfängt
+
+Bevor WPorbit die lokale Datenbank für den Export umschreibt, prüft es den Server in einem einzigen, rein lesenden Aufruf. Beim Senden bricht der Lauf ab, wenn eines davon fehlt:
+
+- SSH-Verbindung, Web-Root und WordPress-Installation
+- PHP und WP-CLI, weil der Import auf dem Server mit WP-CLI läuft
+- die Datenbank, wenn du die Datenbank sendest
+- ein passendes Tabellen-Präfix, wenn du die Datenbank sendest. Weicht es ab, würde die Live-`wp-config.php` die neuen Tabellen nicht finden.
+
+Die Meldung lautet dann zum Beispiel:
+
+```text
+Senden nicht gestartet — die Verbindung zu kunde.ch erfüllt nicht, was dafür nötig ist:
+  • WP-CLI: wp antwortet nicht mit einer Version
+Es wurde nichts verändert. Prüfe die Zugangsdaten des Projekts in der Übersicht.
+```
+
+„Es wurde nichts verändert“ heisst hier wirklich: Auf dem Server wurde nichts angefasst. Es gibt keinen Schalter, der die Prüfung übergeht.
+
+## Nach dem Lauf
+
+Endet der Lauf mit „Senden erfolgreich abgeschlossen.“, öffne die Live-Seite im Browser und prüfe Startseite, eine Unterseite und das Backend.
+
+Steht dort „Senden abgeschlossen, aber mit Hinweisen“, lies die Karte **Hinweise**. Zwei Hinweise kommen vor:
+
+- **Cache und Permalinks konnten nicht geleert werden.** Die Inhalte sind auf dem Server, erscheinen aber unter Umständen erst nach einem Cache-Leeren beim Hoster oder im Caching-Plugin.
+- **Die Dateirechte auf dem Server konnten nicht korrigiert werden.** Übertragene Dateien gehören dann unter Umständen dem falschen Benutzer. Prüfe das mit deinem Hoster.
+
+Schlägt der Lauf fehl, sucht WPorbit automatisch nach der Ursache und zeigt unter der Fehlermeldung „Woran es liegen könnte“. Hat es einen eindeutigen Vorschlag, steht ein Knopf wie **REMOTE_URL auf „https://kunde.ch“ setzen** daneben. Mehr zu den Fehlerbildern unter [Deploy schlägt fehl](/anleitungen/fehlerbehebung/deploy-schlaegt-fehl).
+
+![„Zum Server senden“ nach dem Lauf: „Senden abgeschlossen“, Schritte Verbindung prüfen, Datenbank sowie Cache & Permalinks mit „OK“, darunter das Protokoll (Serveradresse unkenntlich gemacht)](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren/03-senden-abgeschlossen.webp)
+
+<KeyTakeaways>
+
+- WPorbit legt vor dem Senden keine Sicherung auf dem Server an. Sichere beim Hoster, bevor du sendest.
+- Die Datenbank zu senden ersetzt die Live-Datenbank samt allem, was dort seit dem letzten Holen entstanden ist.
+- Bei öffentlich erreichbaren Live-Seiten tippst du die Zieladresse ab, bevor gesendet wird.
+- Fehlt auf dem Server etwas Nötiges, bricht WPorbit ab, bevor etwas verändert wird.
+
+</KeyTakeaways>

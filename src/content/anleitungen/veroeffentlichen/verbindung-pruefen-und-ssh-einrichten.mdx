@@ -1,0 +1,127 @@
+---
+title: "Server-Zugang einrichten und Verbindung prüfen"
+description: "SSH-Zugang eines Projekts eintragen, Schlüssel statt Passwort nutzen und mit ›Verbindung prüfen‹ und ›Verbindung ausführlich testen‹ herausfinden, ob Holen, Senden und Deployen funktionieren."
+order: 40
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "10 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - veroeffentlichen/holen-senden-deployen
+  - veroeffentlichen/live-seite-sicher-aktualisieren
+  - zugaenge/zugangsdaten-im-vault
+  - fehlerbehebung/deploy-schlaegt-fehl
+draft: true
+---
+
+Damit WPorbit Daten holen, senden oder ein Theme deployen kann, braucht es einen SSH-Zugang zum Server. Diese Anleitung zeigt, wo du ihn einträgst, wie WPorbit sich anmeldet und wie du herausfindest, ob alles bereit ist.
+
+## Server-Zugang eintragen
+
+Es gibt zwei Stellen, an denen du den Zugang einträgst.
+
+**Beim Anlegen des Projekts.** Wählst du im Projekt-Assistenten „Mit einem Server verbinden“, enthält der nächste Schritt den Bereich „Mit Server verbinden“ mit dem Block „SSH-Zugang“. Siehe [Bestehende Website übernehmen](/anleitungen/projekte/bestehende-website-uebernehmen). Dort kannst du die Werte auch aus einer `.env`-Datei übernehmen: **.env-Datei importieren** oder **Aus Zwischenablage einfügen**.
+
+**Später, in der Übersicht.** Hat ein Projekt noch keinen Server, steht in der Karte **Projektdetails** „Remote: Nicht konfiguriert“ und daneben **Server-Zugang hinterlegen…**. Ein Klick öffnet die Karte **Zugangsdaten** im Bearbeitungsmodus, mit leeren Feldern für den Server-Zugang. Trag die Werte ein und klicke auf **Speichern**.
+
+Bestehende Werte änderst du in derselben Karte über **Werte bearbeiten**.
+
+![Tab „Übersicht“, Karte „Projektdetails“: „Remote · Nicht konfiguriert“ mit dem Link „Server-Zugang hinterlegen…“](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten/01-server-zugang-hinterlegen.webp)
+
+### Die Felder
+
+| Feld | Schlüssel | Was hinein gehört |
+|---|---|---|
+| Live-Adresse | `REMOTE_URL` | Die Adresse der Live-Seite, z. B. `kunde.ch`. `https://` ergänzt WPorbit. |
+| Server | `SSH_HOST` | Nur Hostname oder IP, ohne `https://`, ohne Benutzer, ohne Port. |
+| Benutzer | `SSH_USER` | Der SSH-Benutzer beim Hoster. |
+| Port (optional) | `SSH_PORT` | Leer lassen für 22. |
+| Passwort (optional) | `SSH_PW` | Nur nötig, wenn für diesen Server kein SSH-Schlüssel hinterlegt ist. |
+| Web-Root | `WEB_ROOT` | Absoluter Pfad auf dem Server, beginnt mit `/`. Dort liegt die `wp-config.php`. |
+
+Beim Speichern prüft WPorbit die Eingaben und meldet zum Beispiel „Der Web-Root muss ein absoluter Pfad sein und mit / beginnen, z. B. /var/www/html.“ oder „Der Port muss eine Zahl zwischen 1 und 65535 sein.“
+
+<Callout variant="tipp" title="Web-Root beim Hoster nachsehen">
+Viele Hoster liefern die Website aus einem Unterordner wie `public_html`, `httpdocs` oder `www` aus. Der Web-Root ist der Ordner, in dem die `wp-config.php` liegt. Stimmt er nicht, findet ihn die Prüfung weiter unten oft von selbst.
+</Callout>
+
+## Schlüssel statt Passwort
+
+WPorbit meldet sich bei jedem Serverzugriff mit einem SSH-Schlüssel an, nie interaktiv mit Passwort. Verwendet wird der Schlüssel deines Macs, zum Beispiel `~/.ssh/id_ed25519`.
+
+Ist für ein Projekt ein Passwort hinterlegt und die Anmeldung mit Schlüssel schlägt fehl, nutzt WPorbit das Passwort genau einmal: Es hinterlegt den öffentlichen Schlüssel deines Macs auf dem Server und prüft danach, ob die Anmeldung ohne Passwort funktioniert. Im Protokoll steht dann „Anmeldung mit Schlüssel funktioniert jetzt.“ Ab da läuft alles über den Schlüssel.
+
+Liegt auf deinem Mac kein Schlüssel und ist kein Passwort hinterlegt, meldet die Prüfung „Weder SSH-Schlüssel noch Passwort“. Einen Schlüssel erzeugst du im Terminal mit:
+
+```bash
+ssh-keygen -t ed25519
+```
+
+## Den Verbindungsstatus lesen
+
+Öffne im Projekt den Tab **Remote**. Beim Öffnen prüft WPorbit die Verbindung im Hintergrund: SSH, Web-Root, WordPress-Installation, PHP, WP-CLI, Datenbank und Tabellen-Präfix, in einem einzigen, rein lesenden Aufruf. Ein Ergebnis, das jünger als zehn Minuten ist und zu den aktuellen Zugangsdaten gehört, wird wiederverwendet.
+
+Die Statuskarte zeigt das Ergebnis in einer Zeile:
+
+| Zeile | Bedeutung |
+|---|---|
+| „Verbindung noch nie geprüft“ | Unbekannt, kein Fehler. |
+| „Verbindung wird geprüft…“ | Die Prüfung läuft. |
+| „Verbindung geprüft · vor 3 Minuten“ | Alles bestanden. Details wie PHP-Version siehst du beim Überfahren mit der Maus. |
+| „Letzte Prüfung fehlgeschlagen · gestern“ | Etwas fehlt. Darunter steht was, und ob Holen, Senden oder beide daran abbrechen. |
+| „Zugangsdaten geändert — Prüfung nicht mehr aktuell“ | Das Ergebnis gehört zu alten Zugangsdaten. |
+
+## Verbindung prüfen
+
+Der Knopf **Verbindung prüfen** in der Statuskarte stellt eine gründlichere Frage. Er prüft neben der Verbindung auch die Konfiguration:
+
+- ob im Web-Root eine WordPress-Installation liegt, und wenn nicht, ob sie in einem üblichen Unterordner oder eine Ebene höher liegt
+- ob der Web-Root beschreibbar ist
+- ob der Theme-Ordner auf dem Server und im lokalen Container existiert
+- ob die Live-Seite sich unter derselben Adresse kennt, die hinterlegt ist
+- ob Datenbankname und Datenbank-Benutzer mit der `wp-config.php` des Servers übereinstimmen (Passwörter liest WPorbit dabei nicht)
+- ob auf dem Server genug Speicherplatz frei ist
+
+Für die Schreibprobe legt WPorbit kurz eine leere Testdatei im Web-Root an und löscht sie im selben Befehl wieder. Sonst verändert die Prüfung nichts.
+
+Die Befunde erscheinen in der Statuskarte, mit dem Zeitpunkt der Prüfung darunter. Ist ein Wert eindeutig zu bestimmen, bietet WPorbit einen Knopf an, der ihn einträgt, zum Beispiel **WEB_ROOT auf „/home/kunde/public_html“ setzen**. Steht daneben „wahrscheinlich“, ist der Vorschlag eine naheliegende Vermutung, keine Gewissheit. Gibt es zwei gleich gute Kandidaten, macht WPorbit keinen Vorschlag.
+
+![Tab „Remote“ nach „Verbindung prüfen“: Befunde zu Theme-Ordner, Datenbankname und Datenbank-Benutzer, mit Vorschlagsknöpfen „… setzen“ und „wahrscheinlich“ (Serveradresse unkenntlich gemacht)](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten/02-befunde-mit-vorschlag.webp)
+
+Schlägt ein Holen, Senden oder Deployen fehl, läuft dieselbe Prüfung automatisch und zeigt ihre Befunde im Assistenten unter „Woran es liegen könnte“.
+
+## Verbindung ausführlich testen
+
+Unter der Statuskarte liegt der aufklappbare Bereich **Alle Prüfungen einzeln**. Darin startest du mit **Verbindung ausführlich testen** eine Testreihe, die jeden Schritt einzeln ausführt und mit eigenem Ergebnis zeigt:
+
+- Docker-Container (wenn das lokale Projekt läuft)
+- SSH-Verbindung
+- Web-Root auf dem Server
+- WordPress-Installation
+- PHP
+- WP-CLI
+- Datenbankverbindung
+- Tabellen-Präfix
+
+Oben steht danach „Alle Prüfungen erfolgreich“ oder die Zahl der fehlgeschlagenen Tests. Bei einem Fehler zeigt die Zeile **Fehlerdetails** und, wo vorhanden, **Lösungshinweise**. Bei Datenbankfehlern erscheint zusätzlich **Beheben**. Das versucht, die Datenbank auf dem Server anzulegen.
+
+Hat sich seit dem letzten vollständig bestandenen Test nichts an den Zugangsdaten geändert, führt WPorbit nur eine Kurzprüfung aus (SSH, Web-Root, WordPress).
+
+Den Test findest du auch im Kontextmenü eines Projekts.
+
+{/* SCREENSHOT 03-ausfuehrlicher-test: Bereich „Alle Prüfungen einzeln“ aufgeklappt, Ergebnis mit einer fehlgeschlagenen Zeile „Datenbankverbindung“, Fehlerdetails und Knopf „Beheben“ */}
+
+<Callout variant="achtung" title="Dieser Test kann den Server verändern">
+Anders als **Verbindung prüfen** ist der ausführliche Test nicht rein lesend. Findet er keine Datenbank, legt er sie an. Findet er eine leere Datenbank, installiert er WordPress auf dem Server. Das ist für einen neuen, leeren Server gedacht. Nutze bei einer bestehenden Live-Seite zuerst **Verbindung prüfen**.
+</Callout>
+
+## Welche Prüfung wann?
+
+| Situation | Nimm |
+|---|---|
+| Kurz sehen, ob Holen und Senden gehen | die Statuszeile im Tab **Remote** |
+| Neuer Server-Zugang, oder etwas schlägt fehl | **Verbindung prüfen** |
+| Neuen, leeren Server einrichten oder einzelne Schritte nachvollziehen | **Verbindung ausführlich testen** |
+
+Holen und Senden prüfen vor jedem Lauf ohnehin selbst und brechen ab, bevor etwas verändert wird. Die Prüfungen hier sagen dir das nur früher.

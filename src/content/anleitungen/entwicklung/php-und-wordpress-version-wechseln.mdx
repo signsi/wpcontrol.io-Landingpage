@@ -1,0 +1,109 @@
+---
+title: "PHP- und WordPress-Version wechseln"
+description: "Die PHP- oder WordPress-Version eines lokalen Projekts sicher wechseln, WP_DEBUG einschalten und PHP-Grenzwerte anpassen."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - entwicklung/logs-lesen
+  - projekte/projekte-organisieren-und-loeschen
+  - wartung/backups-erstellen
+draft: false
+---
+
+Jedes Projekt in WPorbit hat seine eigene PHP- und WordPress-Version. Ein altes Kundenprojekt auf einer älteren Version und ein neues auf der aktuellen laufen nebeneinander, ohne sich zu stören. Diese Anleitung zeigt, wie du die Versionen eines Projekts wechselst.
+
+## Wo du die Versionen siehst
+
+In der Übersicht des Projekts steht in der Karte „Verbindungen“ die Zeile „Umgebung“, zum Beispiel `WP 6.7 · PHP 8.3`. Weicht die installierte WordPress-Version davon ab, steht darunter „Installiert ist WordPress …“.
+
+## Version wechseln
+
+<Steps>
+
+<Step title="Dialog öffnen">
+
+Klicke in der Zeile „Umgebung“ auf **Ändern…**. Den gleichen Dialog öffnest du über **PHP-/WordPress-Version ändern…** in der Karte „Wartung“ oder im Fenster **Bearbeiten…**.
+
+</Step>
+
+<Step title="Neue Versionen wählen">
+
+Der Dialog „PHP- und WordPress-Version“ zeigt für WordPress und PHP je die Spalten „Jetzt“ und „Neu“. Wähle in den Menüs die gewünschten Versionen. Welche PHP-Versionen angeboten werden, hängt von der gewählten WordPress-Version ab.
+
+Unter der Auswahl steht eine Zeile, die sagt, was passieren wird, zum Beispiel „Das Projekt wird vorher automatisch gesichert.“ oder „Die neue Version wird heruntergeladen. …“.
+
+![Dialog „PHP- und WordPress-Version“ mit neuer Auswahl und dem Hinweis „Das Projekt wird vorher automatisch gesichert.“](/anleitungen/entwicklung/php-und-wordpress-version-wechseln/01-version-dialog.webp)
+
+</Step>
+
+<Step title="Wechseln">
+
+Klicke auf **Wechseln**. Wählst du eine ältere WordPress-Version, fragt WPorbit zuerst: „Ältere WordPress-Version verwenden?“. Manche Plugins setzen eine neuere Version voraus.
+
+Der Wechsel dauert meist ein bis zwei Minuten. Der Dialog zeigt den aktuellen Schritt, etwa „Sichere das Projekt…“ oder „Aktualisiere die Datenbank…“. Unter **Details** siehst du das vollständige Protokoll.
+
+</Step>
+
+</Steps>
+
+## Wie WPorbit den Wechsel absichert
+
+WPorbit prüft zuerst alles, was sich vorher prüfen lässt: ob es die Kombination gibt, ob das Image geladen werden kann und ob genug Platz für die Sicherungen da ist. Erst dann sichert es Datenbank und Volumes und wechselt. Die neuen Versionen speichert WPorbit erst, wenn die Seite danach läuft.
+
+Das Ergebnis steht am Ende im Dialog:
+
+| Meldung | Bedeutung |
+|---|---|
+| Gewechselt | Das Projekt läuft mit den neuen Versionen. |
+| Keine Änderung | Das Projekt hatte diese Versionen bereits. |
+| Nicht begonnen | Eine Vorprüfung ist gescheitert. Am Projekt wurde nichts verändert. |
+| Nicht gewechselt | Der Wechsel hat nicht geklappt. WPorbit hat den vorherigen Zustand wiederhergestellt. |
+
+Konnte WPorbit den vorherigen Zustand nicht vollständig wiederherstellen, bietet der Dialog **Sicherung im Finder zeigen** an. Dort liegt die Sicherung von vorher.
+
+![„Gewechselt“: WordPress 7.0.4 · PHP 8.4, darunter aufklappbare Details](/anleitungen/entwicklung/php-und-wordpress-version-wechseln/02-gewechselt.webp)
+
+<Callout variant="hinweis" title="Nur PHP bei manchen Projekten">
+Findet WPorbit im Projekt kein WordPress, das es austauschen kann, steht im Dialog „In diesem Projekt lässt sich nur die PHP-Version wechseln.“ Die WordPress-Auswahl ist dann gesperrt.
+</Callout>
+
+<Callout variant="tipp" title="Bei Altprojekten zuerst angleichen">
+Übernimmst du ein altes Projekt, stell zuerst die Versionen ein, mit denen es live läuft. Ein grosser PHP-Sprung bringt bei alten Plugins oft mehr Ärger als der Import selbst.
+</Callout>
+
+## WP_DEBUG einschalten
+
+In der Übersicht in der Karte „Projektdetails“ steht der Schalter **WP_DEBUG**. Darunter siehst du „Debug-Logging aktiv“ oder „Debug-Logging inaktiv“. Denselben Schalter findest du im Tab **Logs**, wenn links „debug.log“ ausgewählt ist.
+
+Eingeschaltet setzt WPorbit `WP_DEBUG` und `WP_DEBUG_LOG` in der `wp-config.php`. `WP_DEBUG_DISPLAY` bleibt immer aus: Fehler landen im `debug.log`, nicht in der Seite. So gehen keine JSON-Antworten kaputt und keine Pfade in den Browser.
+
+![Karte „Projektdetails“ mit eingeschaltetem WP_DEBUG und den PHP-Einstellungen](/anleitungen/entwicklung/php-und-wordpress-version-wechseln/03-wp-debug.webp)
+
+Wie du das Log liest, steht unter [Logs lesen](/anleitungen/entwicklung/logs-lesen).
+
+## PHP-Grenzwerte anpassen
+
+Direkt unter WP_DEBUG liegen die „PHP-Einstellungen“ (php.ini-Konfiguration):
+
+| Einstellung | Standard |
+|---|---|
+| Speicherlimit | 256M |
+| Upload-Grösse | 64M |
+| POST-Grösse | 64M |
+| Ausführungszeit | 300 Sekunden |
+| Input-Variablen | 3000 |
+| Fehlerausgabe | Off |
+
+Speichern startet das Projekt neu, die Container werden neu erstellt.
+
+<KeyTakeaways>
+
+- Versionen wechselst du über **Ändern…** in der Zeile „Umgebung“ oder **PHP-/WordPress-Version ändern…**.
+- WPorbit sichert vorher und stellt bei einem Fehler den alten Zustand wieder her.
+- **WP_DEBUG** schreibt Fehler ins `debug.log`, nie in die Seite.
+
+</KeyTakeaways>

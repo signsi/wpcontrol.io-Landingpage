@@ -1,22 +1,13 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ViteReactSSG } from 'vite-react-ssg'
 import './index.css'
-import App from './App.tsx'
-import StandalonePage from './pages/StandalonePage.tsx'
-import CloudPage from './pages/CloudPage.tsx'
-import CustomPage from './pages/CustomPage.tsx'
+import { routes } from './routes'
 
-const router = createBrowserRouter([
-  { path: '/', element: <App /> },
-  { path: '/features', element: <StandalonePage /> },
-  { path: '/standalone', element: <StandalonePage /> },
-  { path: '/cloud', element: <CloudPage /> },
-  { path: '/custom', element: <CustomPage /> },
-])
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-)
+/**
+ * Einstiegspunkt für Prerendering und Hydration.
+ *
+ * ViteReactSSG übernimmt beide Seiten: beim Build rendert es jede Route in
+ * statisches HTML, im Browser löst es die passenden `lazy`-Routen auf und
+ * hydratisiert erst danach — deshalb blitzt kein leerer Zustand auf.
+ * Kein manueller `createRoot`-Aufruf, die Bibliothek besitzt die Wurzel.
+ */
+export const createRoot = ViteReactSSG({ routes })

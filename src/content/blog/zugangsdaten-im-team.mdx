@@ -1,0 +1,60 @@
+---
+title: "Zugangsdaten im Team: warum Passwörter nichts in Slack zu suchen haben"
+description: "Wie Zugangsdaten in Agenturen tatsächlich zirkulieren, welches Risiko dabei entsteht und wie ein Ablauf aussieht, den das Team auch einhält."
+date: 2026-07-29
+category: sicherheit
+tags: [zugaenge, vault, dsgvo]
+author: patrick
+draft: false
+---
+
+Frag in einer beliebigen WordPress-Agentur, wo die FTP-Zugänge für Kunde Müller liegen. Die ehrliche Antwort lautet fast nie „im Passwortmanager". Sie lautet: in einem Chatverlauf von 2023, in einer Tabelle auf dem Server, in einer Notiz auf dem Laptop von jemandem, der letzten Sommer gekündigt hat — und in allen dreien gleichzeitig, in unterschiedlichen Versionen.
+
+Das ist kein Zeichen von Nachlässigkeit. Es ist die logische Folge davon, dass der bequeme Weg und der sichere Weg nicht derselbe sind.
+
+## Was tatsächlich passiert
+
+Ein Zugang wird angelegt, einmal geteilt und danach kopiert. Jede Kopie ist ein eigener Aufbewahrungsort mit eigener Lebensdauer.
+
+- **Der Chatverlauf.** Slack, Teams und WhatsApp durchsuchen ihren Verlauf hervorragend. Genau das macht sie zum bequemsten Passwortspeicher der Agentur — und zum unkontrolliertesten.
+- **Die Tabelle.** Meist gut gemeint, oft auf einem geteilten Laufwerk, selten mit Zugriffsbeschränkung, nie mit einer Historie darüber, wer wann was gelesen hat.
+- **Die E-Mail an den Kunden.** Landet in zwei Postfächern, wird auf zwei Geräten synchronisiert und bleibt dort für immer.
+- **Der Kopf einer einzelnen Person.** Funktioniert erstaunlich gut, bis diese Person in den Ferien ist.
+
+<Callout variant="achtung" title="Der Austritt ist der eigentliche Ernstfall">
+Wenn jemand die Agentur verlässt, kannst du den Zugang zu deinen Systemen entziehen. Die Zugangsdaten in exportierten Chatverläufen, lokalen Notizen und alten Tabellen kannst du nicht zurückholen. Sie bleiben gültig, bis jemand sie aktiv ändert — und genau das passiert selten, weil niemand weiss, welche das sind.
+</Callout>
+
+## Das Risiko ist nicht nur technisch
+
+Bei einem Vorfall ist die erste Frage nicht, ob etwas passiert ist, sondern was genau betroffen war. Wer Zugangsdaten über verstreute Kanäle verteilt, kann diese Frage nicht beantworten.
+
+Für Schweizer Agenturen kommt die rechtliche Seite dazu. Wer Kundendaten bearbeitet, muss nach revDSG und DSGVO angemessene technische und organisatorische Massnahmen treffen. Ein geteilter Chatverlauf mit Produktivzugängen ist keine solche Massnahme. Im Schadensfall haftet nicht der Chat, sondern die Agentur.
+
+Und es gibt einen dritten Punkt, der im Alltag am meisten wiegt: Zeit. Die Suche nach einem Zugang dauert selten lang, aber sie passiert ständig. Bei fünfzehn Projekten und mehreren Personen summieren sich fünf Minuten hier und zehn Minuten dort auf mehrere Arbeitstage im Jahr.
+
+## Was ein tragfähiger Ablauf leisten muss
+
+Die meisten Regelwerke zu diesem Thema scheitern nicht am Inhalt, sondern daran, dass sie den Alltag schwerfälliger machen. Ein Ablauf wird nur eingehalten, wenn er schneller ist als der Umweg.
+
+**Erstens: ein Ort pro Projekt.** Zugangsdaten gehören dorthin, wo auch das Projekt liegt. Wer für Zugänge das Werkzeug wechseln muss, wechselt irgendwann zurück zum Chat.
+
+**Zweitens: verschlüsselt gespeichert, gezielt freigegeben.** Nicht jede Person braucht jeden Zugang. Freigabe auf Projektebene löst das, ohne dass jemand Listen pflegen muss.
+
+**Drittens: nachvollziehbar.** Es muss beantwortbar sein, wer Zugriff hat. Nicht für ein Audit, sondern für den Tag, an dem jemand geht.
+
+**Viertens: kein Kopieren nötig.** Sobald ein Zugang irgendwo eingefügt werden muss, entsteht eine neue Kopie. Der beste Ablauf ist der, bei dem die Anwendung den Zugang direkt verwendet.
+
+<Callout variant="tipp" title="Der pragmatische erste Schritt">
+Du musst nicht alles auf einmal umstellen. Nimm die fünf Projekte mit den sensibelsten Zugängen, hinterlege sie sauber an einem Ort und ändere die Passwörter, die je durch einen Chat gelaufen sind. Danach gilt für neue Projekte die neue Regel. Der Altbestand löst sich über die Zeit.
+</Callout>
+
+## Die unbequeme Frage
+
+Es gibt einen einfachen Test für den Zustand in deiner Agentur. Stell dir vor, morgen kündigt die Person, die am längsten dabei ist.
+
+Kannst du innerhalb eines Tages sagen, auf welche Kundensysteme sie Zugriff hatte? Und kannst du diesen Zugriff entziehen, ohne dass ein Projekt stillsteht?
+
+Wenn die Antwort zweimal Ja lautet, ist alles in Ordnung. Wenn nicht, ist das der Punkt, an dem sich Aufräumen am meisten lohnt — und zwar bevor es einen Anlass gibt.
+
+In WPorbit liegen Zugangsdaten verschlüsselt beim jeweiligen Projekt und werden gezielt freigegeben. Wie das eingerichtet wird, steht unter [Anleitungen](/anleitungen).

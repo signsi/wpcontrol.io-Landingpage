@@ -1,0 +1,119 @@
+---
+title: "Das Team-Dashboard nutzen"
+description: "Alle überwachten WordPress-Seiten deines Teams im Browser: anmelden per Link, nach Zustand filtern, suchen, sortieren und einzelne Projekte im Detail ansehen."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - wartung/ueberwachung-einschalten
+  - wartung/sicherheits-tab-verstehen
+  - zugaenge/projekte-im-team-teilen
+draft: true
+---
+
+Das Team-Dashboard unter [dashboard.wporbit.ch](https://dashboard.wporbit.ch) zeigt dir alle überwachten Projekte deiner Teams im Browser. Du siehst auf einen Blick, welche Seite down ist, wo ein Zertifikat abläuft und wo Updates offen sind. Das Dashboard zeigt nur an. Ändern kannst du dort nichts.
+
+<Callout variant="hinweis" title="Voraussetzung">
+Du bist in WPorbit Mitglied eines Teams, und für mindestens ein Projekt ist die Überwachung eingeschaltet. Wie das geht, steht unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).
+</Callout>
+
+## Anmelden
+
+<Steps>
+
+<Step title="Login-Link anfordern">
+
+Öffne [dashboard.wporbit.ch](https://dashboard.wporbit.ch), gib die E-Mail-Adresse ein, mit der du in WPorbit im Team bist, und wähle **Login-Link schicken**.
+
+Das Dashboard antwortet immer gleich: „Falls diese Adresse zu einem Team gehört, ist ein Login-Link unterwegs.“ So verrät es nicht, welche Adressen in einem Team sind.
+
+{/* SCREENSHOT 01-login: Web-Dashboard, Anmeldeseite „Team-Dashboard“ mit E-Mail-Feld und Knopf „Login-Link schicken“, nach dem Absenden mit der Bestätigungsmeldung */}
+
+</Step>
+
+<Step title="Link im selben Browser öffnen">
+
+Öffne den Link aus der E-Mail im selben Browser. Er gilt 15 Minuten und nur einmal. Mail-Scanner, die Links vorab aufrufen, verbrauchen ihn nicht.
+
+Ist der Link abgelaufen oder schon benutzt, erscheint „Login-Link ungültig oder abgelaufen“. Fordere dann einfach einen neuen an.
+
+</Step>
+
+</Steps>
+
+Die Anmeldung gilt für diesen Browser-Tab. Schliesst du ihn, meldest du dich beim nächsten Mal wieder per Link an. Oben rechts beendet **Abmelden** die Sitzung sofort.
+
+## Teams
+
+Bist du in einem einzigen Team, öffnet das Dashboard direkt dessen Übersicht. Bist du in mehreren, wählst du unter „Deine Teams“ eines aus. Jede Karte zeigt, wie viele Projekte überwacht und wie viele geteilt sind. Mit **Team wechseln** oben in der Leiste kommst du jederzeit zu dieser Auswahl zurück.
+
+Links in der Leiste stehen die überwachten Projekte des Teams, wie in der Seitenleiste der App: zuoberst **Alle Projekte**, darunter jedes Projekt mit seiner Zustandsform, die dringendsten zuerst. Ein Klick öffnet das Projekt, das geöffnete ist hervorgehoben.
+
+## Die Übersicht eines Teams
+
+{/* SCREENSHOT 02-team-uebersicht: Web-Dashboard, Übersicht eines Teams mit Zustandsbalken, Legende, Suchfeld und Tabelle; Team mit etwa 8 überwachten Projekten in gemischten Zuständen (mindestens eines mit offenen Updates, eines mit SSL bald fällig, eines „nur extern“) */}
+
+### Der Zustandsbalken
+
+Der farbige Balken oben zeigt, wie sich die Projekte auf die Zustände verteilen. Die Legende darunter nennt die Zahlen:
+
+| Zustand | Bedeutung |
+|---|---|
+| **Down** | Die Seite war bei der letzten Messung nicht erreichbar. |
+| **SSL kritisch** | Das Zertifikat läuft in weniger als 7 Tagen ab oder ist abgelaufen. |
+| **Pflege nötig** | Updates sind offen, das Zertifikat läuft in weniger als 21 Tagen ab, oder das letzte Inventar ist fehlgeschlagen. |
+| **Unbekannt** | Für die Seite gibt es noch keine Messung. |
+| **OK** | Nichts zu tun. |
+
+Ein Klick auf ein Segment oder einen Eintrag der Legende filtert die Tabelle auf diesen Zustand. Ein zweiter Klick hebt den Filter wieder auf.
+
+### Suchen
+
+Das Suchfeld durchsucht Name, Kunde und Adresse. Drückst du irgendwo auf der Seite die Taste `/`, springt der Cursor direkt in die Suche. Passt nichts zu Filter und Suche, setzt **Alle zeigen** beides zurück.
+
+Filter, Sortierung und Suche bleiben pro Team erhalten, auch wenn du zwischendurch ein Projekt öffnest.
+
+### Die Tabelle
+
+Ein Klick auf eine Spaltenüberschrift sortiert danach, ein zweiter Klick dreht die Reihenfolge um. Standardmässig stehen die dringendsten Projekte oben.
+
+| Spalte | Inhalt |
+|---|---|
+| **Status** | Der Zustand wie im Balken, genauer beschriftet, z. B. „Updates offen“ oder „SSL bald fällig“. |
+| **Projekt** | Name, darunter Kunde und Adresse. |
+| **Updates** | Anzahl offener Updates, aufgeteilt in Plugins, Themes und Core. |
+| **WordPress**, **PHP** | Die installierten Versionen. |
+| **SSL** | Tage bis zum Ablauf des Zertifikats. |
+| **Antwort** | Antwortzeit der letzten Messung in Millisekunden. |
+| **Inventar** | Wann das Inventar zuletzt gelesen wurde, „ausstehend“, „Fehler“ oder „nur extern“. |
+
+Projekte, die nur von aussen überwacht werden, haben kein Inventar. Bei ihnen bleiben Updates leer, und die Spalte Inventar zeigt „nur extern“.
+
+Unter der Tabelle steht, wie viele geteilte Projekte des Teams nicht überwacht sind. Von diesen hat der Server nur verschlüsselte Daten, deshalb kann er dir weder Namen noch Adresse zeigen.
+
+## Ein Projekt im Detail
+
+Ein Klick auf den Projektnamen öffnet die Detailseite. Oben stehen vier Kennzahlen: **SSL**, **Antwort**, **Verfügbarkeit** über 7 Tage und wann das **Inventar** zuletzt gelesen wurde. Ist die Seite down, steht darunter seit wann.
+
+{/* SCREENSHOT 03-projekt-uebersicht: Web-Dashboard, Detailseite eines Projekts mit Lesezugang, Tab „Übersicht“ mit Kennzahlen und Tabelle „Anstehende Updates“ */}
+
+Die Tabs:
+
+- **Übersicht:** anstehende Updates von Core, Plugins und Themes, dazu die Details wie Kunde, Adresse, Art der Überwachung, letzte Messung, letztes Inventar und seit wann überwacht wird.
+- **Plugins** und **Themes:** Name, Version, Status, verfügbares Update und ob Auto-Update an ist. Filtern lässt sich nach **Alle**, **Mit Update** und **Inaktiv**. Die Zahl am Tab zeigt, wie viele ein Update haben.
+- **Umgebung:** WordPress, Core-Update, PHP, Datenbank, Multisite, WP_DEBUG, Server, Web-Root und wann das Inventar gelesen wurde.
+- **Erreichbarkeit:** die Antwortzeit der letzten 7 Tage als Verlauf. Ausfälle sind als rote Bänder markiert, mit der Maus siehst du jede einzelne Messung. Darunter die Ausfälle der letzten 30 Tage mit Beginn, Ende und Dauer.
+- **Sicherheit:** Hinweise zu WP_DEBUG, Cron, Auto-Updates, inaktiven Plugins, Datenbankgrösse und Administratoren. Was die einzelnen Punkte bedeuten, erklärt [Den Sicherheits-Tab verstehen](/anleitungen/wartung/sicherheits-tab-verstehen).
+
+{/* SCREENSHOT 04-erreichbarkeit: Web-Dashboard, Tab „Erreichbarkeit“ mit Antwortzeit-Verlauf über 7 Tage, idealerweise mit einem markierten Ausfall, und der Tabelle „Ausfälle“ */}
+
+<Callout variant="tipp" title="Warum Plugins, Themes und Umgebung leer sind">
+Ohne Lesezugang sieht der Server nur, was öffentlich erreichbar ist. Diese Tabs zeigen dann einen Hinweis statt Daten. Das Inventar holst du in der App nach: Rechtsklick auf das Projekt in der Seitenleiste, dann **Inventar einrichten…**.
+</Callout>
+
+## Wie aktuell die Daten sind
+
+Erreichbarkeit, Antwortzeit und SSL misst der Server mehrmals pro Stunde. Das Inventar liest er alle 6 Stunden. Ist der letzte Inventar-Lauf fehlgeschlagen, zeigt das Dashboard den letzten guten Stand und sagt, von wann er ist.

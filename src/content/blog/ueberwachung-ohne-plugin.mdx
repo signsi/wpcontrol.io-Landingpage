@@ -1,0 +1,86 @@
+---
+title: "WordPress überwachen, ohne ein Plugin zu installieren"
+description: "Warum WPorbit Kundenseiten ohne Status-Plugin und ohne gespeichertes Passwort überwacht, was ein beschränkter SSH-Schlüssel stattdessen leistet und wo die ehrliche Grenze liegt."
+date: 2026-09-24
+category: sicherheit
+tags: [ueberwachung, ssh, plugins]
+author: patrick
+draft: true
+---
+
+<KeyTakeaways>
+
+- Jedes Plugin, das eine Kundenseite nach aussen öffnet, ist Angriffsfläche. Das gilt auch für ein Überwachungs-Plugin.
+- Seit Version 1.8.0 installiert WPorbit kein Status-Plugin mehr und speichert keinen Hauptzugang zu Kundenservern.
+- Stattdessen bekommt der WPorbit-Server einen eigenen SSH-Schlüssel, der nur ein einziges Skript mit zwei festen Lesebefehlen starten kann.
+- Wo das nicht geht, misst WPorbit nur von aussen: Erreichbarkeit, SSL, Antwortzeit. Auf der Kundenseite liegt dann gar nichts.
+- Die Grenze ist benannt: Wer den Überwachungsdienst übernimmt, kann Versionen, Plugin-Listen und Admin-Logins lesen, aber keine Dateien, Datenbanken oder Passwörter.
+
+</KeyTakeaways>
+
+Wer mehrere WordPress-Seiten betreut, will wissen, wo Updates offen sind, welches Zertifikat bald abläuft und welche Seite gerade nicht antwortet. Der übliche Weg dahin ist ein Plugin: installieren, mit einem Dienst verbinden, fertig. Er ist bequem. Er hat aber einen Preis, den man selten ausrechnet.
+
+## Das Problem mit dem Überwachungs-Plugin
+
+Ein Überwachungs-Plugin muss Auskunft geben, und zwar über das Web. Es braucht dafür einen Endpunkt, der von aussen erreichbar ist, und einen Schlüssel, der Anfragen berechtigt. Damit hat jede überwachte Seite eine Tür mehr.
+
+Das ist keine theoretische Sorge. Sicherheitslücken in Plugins gehören zu den häufigsten Wegen in eine WordPress-Seite. Ein Plugin, das auf jeder Kundenseite läuft, ist für Angreifer besonders interessant: Eine Lücke darin öffnet nicht eine Seite, sondern alle.
+
+Viele Dienste gehen noch einen Schritt weiter und speichern Zugangsdaten zum Kundenserver, um Updates aus der Ferne auszuführen. Damit liegt beim Dienst ein Passwort, das auf dem Kundenserver alles darf.
+
+WPorbit hat beides bis Version 1.7 selbst angeboten, als zusätzliche Stufen neben dem Lesezugang: ein kleines Status-Plugin und einen verschlüsselt hinterlegten Hauptzugang. Mit 1.8.0 sind beide weg. Der Server lehnt sie ab, und die Datenbankspalten dafür gibt es nicht mehr. Die Begründung steht so im Changelog: Das Plugin war auf jeder Kundenseite öffentliche Angriffsfläche, der Hauptzugang ein Passwort beim Server.
+
+## Was stattdessen passiert
+
+Beim Einschalten der Überwachung richtet die App auf deinem Mac einen Lesezugang ein. Nicht der Server: Er hat die Zugangsdaten gar nicht, sie liegen nur auf dem Mac.
+
+Die App legt dafür ein kleines Skript im Home-Verzeichnis des SSH-Kontos ab, ausserhalb des Web-Roots und damit nicht übers Web erreichbar. Dann trägt sie den öffentlichen Schlüssel des WPorbit-Servers in `authorized_keys` ein, aber nicht als gewöhnlichen Schlüssel:
+
+```
+restrict,command="/home/kunde/.wporbit/agent.sh" ssh-ed25519 AAAA… wporbit-worker agentur 2026-09-24
+```
+
+Diese eine Zeile trägt den grössten Teil der Sicherheit:
+
+- **`restrict`** nimmt dem Schlüssel Terminal, Port-Weiterleitung und Agent-Weitergabe.
+- **`command=`** startet immer das Skript, egal was verlangt wird. Eine Shell gibt es nicht, auch `scp` und `sftp` gehen nicht.
+- **Das Skript** kennt genau zwei Befehle, `inventory` und `version`, ohne Argumente. Alles andere lehnt es ab und protokolliert die Ablehnung.
+- **WP-CLI** läuft nur mit lesenden Befehlen und für die meisten Abfragen ohne Plugins und Themes zu laden. Ein kompromittiertes Plugin kann die Antwort so nicht verfälschen.
+
+Der WPorbit-Server bekommt damit, was er für ein Dashboard braucht: WordPress-, PHP- und Datenbankversion, Plugins und Themes mit offenen Updates, die Logins der Administratoren ohne E-Mail, WP_DEBUG, überfällige Cron-Events, die Datenbankgrösse. Mehr nicht.
+
+## Die Schichten dahinter
+
+Ein eingeschränkter Schlüssel ist gut. Er ist nicht genug, wenn der Rest nachlässig ist. Deshalb gibt es weitere Schichten:
+
+**Der private Schlüssel liegt nur im Überwachungsprozess.** Die Web-API, die das Dashboard ausliefert, hat ihn nicht. Eine Lücke in einer ihrer Routen reicht also nicht, um die Lesezugänge zu benutzen.
+
+**Host-Key-Pinning.** Die App liest beim Einrichten den Host-Schlüssel des Kundenservers und prüft ihn, wo möglich, gegen die Datei auf dem Server. Der Überwachungsdienst verbindet sich nur, wenn der Schlüssel passt. Eine umgeleitete Verbindung bricht vor der Anmeldung ab.
+
+**Kein root.** Als root richtet die App keinen Lesezugang ein. WP-CLI liefe sonst mit vollen Rechten, und damit auch der Code jedes Plugins.
+
+**Protokoll auf beiden Seiten.** Jeder Abruf steht im Prüfpfad des Teams. Das Skript schreibt zusätzlich ein Log auf dem Kundenserver. Wer den WPorbit-Server übernimmt, kann dieses Log nicht nachträglich schönen.
+
+**Transparenz für den Kunden.** Der Kommentar in `authorized_keys` nennt Team und Datum. Der Kunde sieht den Zugang und kann ihn jederzeit selbst löschen. Schaltest du die Überwachung ab, entfernt die App Zeile und Skript. Nur das Log bleibt stehen, als Nachweis.
+
+## Und wenn kein SSH möglich ist?
+
+Nicht jedes Hosting erlaubt das. Manchmal gibt es nur SFTP, manchmal ist das einzige Konto root, manchmal schreibt ein Panel `authorized_keys` regelmässig neu. Dann sagt die App, woran es liegt, und bietet an, nur von aussen zu überwachen.
+
+Der Server prüft dann Erreichbarkeit, SSL und Antwortzeit über die öffentliche Adresse, genau wie ein Besucher. Auf der Kundenseite liegt nichts. Plugins und Updates sieht das Dashboard so nicht. Das ist weniger Information, aber es ist ein ehrlicher Tausch: lieber eine Lücke im Dashboard als eine auf der Kundenseite.
+
+## Die ehrliche Grenze
+
+Sicherheit, die ihre Grenzen verschweigt, ist Marketing. Also:
+
+Wer den Überwachungsdienst selbst übernimmt, kann das Inventar aller Seiten mit Lesezugang lesen: Versionen, Plugin-Listen, Admin-Logins. Das ist für einen Angreifer nützlich, weil er daraus ableiten kann, wo eine bekannte Lücke offen ist. Zugangsdaten, Dateien und Kundendatenbanken bekommt er so aber nicht, und er kann nichts verändern.
+
+Ausserdem liegen für überwachte Projekte die Adresse, der Projektname und der Kunde im Klartext beim Server. Ohne Adresse kann er keine Seite aufrufen. Die Ausnahme gilt nur für Projekte, bei denen jemand die Überwachung ausdrücklich einschaltet, und die App sagt das in der Rückfrage vorher.
+
+Und schliesslich: Updates aus der Ferne gibt es in WPorbit heute nicht. Das Dashboard zeigt, was ansteht. Aktualisiert wird so, wie du es ohnehin tun solltest: lokal testen, dann ausrollen.
+
+## Was das für den Alltag heisst
+
+Für dich ändert sich wenig. Die Überwachung schaltest du mit einem Befehl ein, und das Team-Dashboard zeigt dieselben Informationen wie vorher. Für deine Kunden ändert sich mehr, als sie merken: Auf ihrer Seite läuft kein zusätzlicher Code, der von aussen erreichbar ist, und bei WPorbit liegt kein Passwort, das auf ihrem Server etwas ändern könnte.
+
+Wie die Überwachung eingerichtet wird, steht unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).

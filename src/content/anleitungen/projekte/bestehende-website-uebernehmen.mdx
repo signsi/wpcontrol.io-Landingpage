@@ -1,0 +1,124 @@
+---
+title: "Eine bestehende Website übernehmen"
+description: "Eine Live-Seite per SSH mit WPorbit verbinden, Datenbank und Inhalte vom Server holen und lokal daran weiterarbeiten."
+order: 10
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "10–20 Minuten"
+appliesTo: [Standalone]
+related:
+  - veroeffentlichen/holen-senden-deployen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - projekte/projekt-aus-backup-importieren
+  - zugaenge/zugangsdaten-im-vault
+draft: true
+---
+
+Die meisten Kundenprojekte gibt es schon: Die Website läuft bei einem Hoster, und du willst lokal daran arbeiten. Dafür verbindest du WPorbit per SSH mit dem Server. WPorbit holt Datenbank und Inhalte, baut daraus eine lokale Umgebung und ersetzt die Live-Adresse durch die lokale.
+
+<Callout variant="hinweis" title="Was du brauchst">
+Einen SSH-Zugang zum Server (Hostname, Benutzer, eventuell Port und Passwort) und den Pfad, unter dem WordPress auf dem Server liegt. Docker (Colima) und Vault müssen laufen, damit WPorbit die lokale Umgebung einrichten kann.
+</Callout>
+
+## Projekt mit dem Server verbinden
+
+<Steps>
+
+<Step title="Anlage-Art wählen">
+
+Klicke in der Seitenleiste auf **Projekt hinzufügen**. Im ersten Schritt wählst du die Karte **Mit einem Server verbinden**.
+
+![„Projekt hinzufügen“, Schritt 1: drei Karten, „Mit einem Server verbinden“ hervorgehoben](/anleitungen/projekte/bestehende-website-uebernehmen/01-anlage-art.webp)
+
+</Step>
+
+<Step title="Namen vergeben">
+
+Trag unter „Name des Projekts“ einen Namen ein. Daraus leitet WPorbit den lokalen Ordner ab, standardmässig `~/Studio/<name>`. Den Pfad kannst du unter **Erweiterte Einstellungen** ändern.
+
+</Step>
+
+<Step title="SSH-Zugang eintragen">
+
+Im Bereich „SSH-Zugang“ stehen die Felder, mit denen WPorbit den Server erreicht:
+
+| Feld | Was hinein gehört |
+|---|---|
+| Server | Nur Hostname oder IP, ohne `https://`, ohne Benutzer, ohne Port |
+| Benutzer | Der SSH-Benutzer beim Hoster |
+| Passwort (optional) | Nur nötig, wenn für diesen Server kein SSH-Schlüssel hinterlegt ist |
+| Port (optional) | Leer lassen für 22 |
+| Web-Root | Absoluter Pfad auf dem Server, beginnt mit `/`, dort liegt die `wp-config.php` |
+
+Ganz unten trägst du die **Live-Adresse** ein, zum Beispiel `kunde.ch`. `https://` ergänzt WPorbit selbst.
+
+![Schritt 2 „Mit Server verbinden“: Projektname, Server, Benutzer, Port und Web-Root mit Beispieldaten](/anleitungen/projekte/bestehende-website-uebernehmen/02-ssh-zugang.webp)
+
+</Step>
+
+<Step title="Optional: Werte aus Vault oder einer .env übernehmen">
+
+Statt alles einzutippen, kannst du die Werte übernehmen:
+
+- **Aus Vault laden**: Über **Durchsuchen** suchst du nach einer Domain und klickst bei einem Eintrag auf **Übernehmen**.
+- **.env-Datei importieren** oder **Aus Zwischenablage einfügen**: WPorbit liest die Datei und zeigt eine „Import-Analyse“ mit jedem Schlüssel und seinem Status.
+
+Pflicht sind vier Werte: Live-Adresse, Server, Benutzer und Web-Root. Fehlt einer, steht das in der Analyse, und **Projekt anlegen** bleibt gesperrt, bis du ihn ergänzt hast. Was du ins Formular tippst, hat Vorrang vor der Datei.
+
+![Import-Analyse nach dem Einfügen einer .env mit Fantasiewerten: Status „Bereit zum Speichern“, Werte übernommen ins Formular](/anleitungen/projekte/bestehende-website-uebernehmen/03-import-analyse.webp)
+
+</Step>
+
+<Step title="Direkt einrichten oder später">
+
+Nach einer erfolgreichen Analyse erscheint der Schalter **Lokale Installation direkt einrichten**. Ist er an, holt WPorbit nach dem Anlegen sofort die Daten vom Server, ohne leere WordPress-Zwischeninstallation. Geholt werden dann Datenbank, Plugins und Uploads.
+
+Klicke auf **Projekt anlegen**. Hast du Werte aus einer `.env` oder aus Vault übernommen, speichert WPorbit sie in Vault, legt eine `.env` im Projektordner ab und prüft danach die Verbindung zum Server.
+
+</Step>
+
+</Steps>
+
+## Lokale Umgebung einrichten
+
+Hast du nicht direkt eingerichtet, zeigt die Übersicht des Projekts den Hinweis „Lokale Umgebung einrichten“. Klicke dort, im Kontextmenü des Projekts oder auf den Status-Knopf oben (er heisst dann **Einrichten…**) auf **Lokale Umgebung einrichten…**. Es öffnet sich ein Assistent in drei Schritten:
+
+1. **Was holen?** Wähle Datenbank, Plugins, Uploads und Themes. Datenbank, Plugins und Uploads sind vorgewählt.
+2. **Optionen**: „Template & Docker“ ist ein Pflichtschritt. **Theme einrichten** (Theme klonen, npm installieren, Build ausführen) kannst du abwählen.
+3. **Einrichten**: Klicke auf **Starten**. WPorbit misst zuerst die Grösse auf dem Server und startet dann den Ablauf. Das Protokoll kannst du über **Protokoll kopieren** in die Zwischenablage legen.
+
+{/* SCREENSHOT 04-einrichten-assistent: Assistent „Lokale Umgebung einrichten“, Schritt „Was holen?“ mit den vier Optionen */}
+
+## Grosse Websites: Upload-Ordner auswählen
+
+Ist die Website grösser als 200 MB oder liegen die Uploads in mehreren Jahresordnern, fragt WPorbit vor dem Übertragen nach. Das Fenster zeigt Gesamtgrösse, geschätzte Dauer, Datenbank und Dateien. Bei vielen Daten steht oben „Grosse Datenmenge erkannt“.
+
+Unter „Verzeichnisse“ wählst du mit **Alle**, **2 Jahre** oder **1 Jahr**, welche Upload-Jahre mitkommen, und schaltest einzelne grosse Ordner ab. Danach geht es mit **Holen** oder **Trotzdem holen** weiter. WPorbit merkt sich die Auswahl für das Projekt.
+
+{/* SCREENSHOT 05-grosse-datenmenge: Fenster „Grosse Datenmenge erkannt“ mit Zusammenfassung und Jahres-Voreinstellungen; Projekt mit mehreren Upload-Jahren und über 200 MB */}
+
+<Callout variant="tipp" title="Nur holen, was du brauchst">
+Für die meisten Arbeiten am Theme reichen Datenbank und die Uploads der letzten ein bis zwei Jahre. Das spart Zeit und Platz auf dem Mac.
+</Callout>
+
+Brichst du hier beim Anlegen ab, bleibt das Projekt bestehen. WPorbit meldet dann „Projekt angelegt, Import abgebrochen“, und du holst den Import später über **Lokale Umgebung einrichten…** nach.
+
+## Später erneut vom Server holen
+
+Wenn sich auf der Live-Seite etwas geändert hat, holst du den aktuellen Stand im Tab **Remote** über **Holen…** oder im Kontextmenü über **Vom Server holen…**. Der Assistent fragt „Was holen?“, standardmässig nur die Datenbank, und zeigt danach den Fortschritt mit geschätzter Restzeit. Du kannst den Lauf mit **Holen abbrechen** stoppen.
+
+<Callout variant="achtung" title="Holen überschreibt lokal">
+Die geholte Datenbank ersetzt die lokale. Änderungen, die du nur lokal in der Datenbank gemacht hast, sind danach weg. Sichere sie vorher mit **Backup erstellen…**.
+</Callout>
+
+Mehr zu Holen, Senden und Deployen steht unter [Holen, Senden und Deployen](/anleitungen/veroeffentlichen/holen-senden-deployen). Wenn die Verbindung zum Server nicht klappt, hilft [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
+
+<KeyTakeaways>
+
+- **Projekt hinzufügen** → **Mit einem Server verbinden**: Pflicht sind Live-Adresse, Server, Benutzer und Web-Root.
+- Eine `.env` oder ein Vault-Eintrag füllt das Formular vor. Was du tippst, hat Vorrang.
+- **Lokale Umgebung einrichten…** baut Docker und WordPress auf und holt die gewählten Daten.
+- Bei grossen Websites wählst du vor dem Übertragen die Upload-Ordner aus.
+
+</KeyTakeaways>
