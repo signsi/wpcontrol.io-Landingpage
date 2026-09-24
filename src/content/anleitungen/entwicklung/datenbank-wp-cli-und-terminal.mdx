@@ -1,0 +1,91 @@
+---
+title: "Datenbank, WP-CLI und Terminal"
+description: "Die lokale Datenbank in phpMyAdmin öffnen, WP-CLI-Befehle im Projekt ausführen und ein Terminal im Container oder per SSH auf dem Server öffnen."
+order: 20
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - entwicklung/vs-code-und-dev-container
+  - entwicklung/logs-lesen
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+draft: false
+---
+
+Für die Arbeit direkt an Datenbank und Dateien bringt WPorbit vier Werkzeuge mit: einen Datenbank-Betrachter, ein Fenster für WP-CLI, ein Terminal im Container und ein SSH-Terminal zum Server. Alle findest du im Menü **Öffnen in…** rechts in der Tab-Leiste des Projekts.
+
+![Geöffnetes Menü „Öffnen in…“: Terminal, Terminal (root), VS Code, Datenbank öffnen, Im Finder zeigen, WP-CLI… und SSH-Terminal](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal/01-oeffnen-in.webp)
+
+| Eintrag | Was es tut | Voraussetzung |
+|---|---|---|
+| **Terminal** | Shell im WordPress-Container als `www-data` | Projekt läuft |
+| **Terminal (root)** | Shell im WordPress-Container als `root` | Projekt läuft |
+| **Datenbank öffnen** | phpMyAdmin im Browser, bereits angemeldet | Projekt läuft |
+| **WP-CLI…** | Fenster für einzelne WP-CLI-Befehle | Projekt läuft |
+| **SSH-Terminal** | SSH-Sitzung auf dem Server | Server hinterlegt |
+
+## Datenbank öffnen
+
+Klicke auf **Öffnen in…** → **Datenbank öffnen**. WPorbit startet phpMyAdmin im Netzwerk des Projekts und öffnet es im Browser. Du bist direkt angemeldet, ein Login-Formular gibt es nicht.
+
+Beim ersten Mal lädt WPorbit den Datenbank-Betrachter herunter, rund 800 MB. Das passiert nur einmal pro Mac, und WPorbit sagt es vorher in der Statuszeile. Danach öffnet er sich in wenigen Sekunden.
+
+Der Betrachter läuft nur, wenn du ihn öffnest. Beim Löschen des Projekts wird er mit entfernt.
+
+![phpMyAdmin nach „Datenbank öffnen“: links die Projektdatenbank „wordpress“ mit ihren Tabellen](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal/02-phpmyadmin.webp)
+
+<Callout variant="achtung" title="Lokal, nicht live">
+phpMyAdmin zeigt die Datenbank deiner lokalen Umgebung. Änderungen dort erreichen die Live-Seite erst, wenn du sie mit **Zum Server senden…** überträgst.
+</Callout>
+
+## WP-CLI ausführen
+
+**Öffnen in…** → **WP-CLI…** öffnet ein Fenster mit dem Feld „Befehl“. Das `wp` davor ist schon gesetzt, du tippst nur den Rest, zum Beispiel `plugin list --status=active`. **Ausführen** oder die Eingabetaste startet den Befehl. Die Ausgabe erscheint darunter.
+
+Unter „Schnellzugriff“ liegen häufige Befehle. Ein Klick trägt den Befehl ein und führt ihn sofort aus:
+
+| Knopf | Befehl |
+|---|---|
+| Cache leeren | `wp cache flush` |
+| Plugins auflisten | `wp plugin list` |
+| Themes auflisten | `wp theme list` |
+| Benutzer auflisten | `wp user list` |
+| DB optimieren | `wp db optimize` |
+| Permalinks neu schreiben | `wp rewrite flush` |
+| DB-Grösse | `wp db size --tables --human-readable` |
+| WordPress-Version | `wp core version` |
+
+![Fenster „WP-CLI“ mit der Ausgabe von „Plugins auflisten“](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal/03-wp-cli.webp)
+
+Die Befehle laufen im lokalen WordPress-Container, nie auf dem Server.
+
+## Terminal im Container
+
+**Terminal** öffnet ein neues Fenster in der macOS-App Terminal. Du landest im WordPress-Verzeichnis des Containers, als Benutzer `www-data`, also mit denselben Rechten wie WordPress selbst. Das ist der richtige Weg für Git, Composer oder WP-CLI-Befehle, die mehrere Schritte brauchen.
+
+**Terminal (root)** öffnet dieselbe Shell als `root`. Nutze sie nur, wenn du etwas brauchst, das `www-data` nicht darf, etwa Pakete im Container installieren.
+
+<Callout variant="tipp" title="Permission denied nach root-Arbeit">
+Dateien, die du als `root` anlegst, gehören danach `root`. Scheitern später Uploads oder Plugin-Updates mit „Permission denied“, hilft **Berechtigungen korrigieren** in der Karte „Wartung“.
+</Callout>
+
+## SSH-Terminal zum Server
+
+**SSH-Terminal** öffnet eine SSH-Sitzung mit dem Benutzer, Server und Port aus den Zugangsdaten des Projekts. Ist ein Web-Root hinterlegt, landest du direkt dort. Ist für den Server kein SSH-Schlüssel eingerichtet, fragt SSH im Terminal nach dem Passwort.
+
+Der Eintrag ist ausgegraut, solange für das Projekt kein Server hinterlegt ist. Wie du den Zugang einrichtest, steht unter [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
+
+<Callout variant="wichtig" title="Hier arbeitest du live">
+Im SSH-Terminal bist du auf dem Server der Live-Seite. Befehle wirken sofort und ohne Sicherung durch WPorbit.
+</Callout>
+
+<KeyTakeaways>
+
+- Alle Werkzeuge liegen im Menü **Öffnen in…** in der Tab-Leiste.
+- **Datenbank öffnen** startet phpMyAdmin, bereits angemeldet. Der erste Start lädt rund 800 MB.
+- **WP-CLI…** führt einzelne Befehle im lokalen Container aus.
+- **Terminal** arbeitet als `www-data`, **Terminal (root)** als `root`, **SSH-Terminal** auf dem Server.
+
+</KeyTakeaways>

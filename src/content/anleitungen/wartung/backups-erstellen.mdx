@@ -1,0 +1,134 @@
+---
+title: "Backups erstellen"
+description: "Ein Backup eines lokalen Projekts erstellen, wissen, wo es liegt, und wann ein Volume-Abbild oder der Dateitransfer die bessere Wahl ist."
+order: 40
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - projekte/projekt-aus-backup-importieren
+  - veroeffentlichen/live-seite-sicher-aktualisieren
+  - entwicklung/datenbank-wp-cli-und-terminal
+draft: false
+---
+
+Bevor du an einem Projekt etwas Grösseres änderst, lohnt sich ein Backup. WPorbit sichert die lokale Umgebung eines Projekts, also Datenbank und Inhalte aus dem Container auf deinem Mac. Die Live-Seite auf dem Server ist davon nicht betroffen.
+
+Alles zu Backups findest du im Tab **Backup** eines Projekts.
+
+## Drei Wege im Überblick
+
+| | Backup erstellen… | Volumes sichern… | Dateitransfer öffnen… |
+|---|---|---|---|
+| Was | Datenbank, Plugins, Uploads, Themes nach Wahl | exaktes Abbild der Datenbank- und WordPress-Volumes | einzelne Dateien |
+| Wohin | in den Projektordner, Unterordner `.backups` | in einen Ordner, den du wählst | an einen Ort, den du wählst |
+| Zurückspielen | in WPorbit mit **Importieren…** | von Hand | von Hand |
+| Für wen | für alle, der Normalfall | für Fortgeschrittene | für gezielte Eingriffe |
+
+Im Zweifel ist **Backup erstellen…** die richtige Wahl.
+
+## Ein Backup erstellen
+
+<Callout variant="hinweis" title="Voraussetzung">
+WPorbit liest die Daten aus dem Container des Projekts. Starte das Projekt deshalb vorher mit **Starten**.
+</Callout>
+
+<Steps>
+
+<Step title="Backup-Tab öffnen">
+
+Wähle das Projekt und öffne den Tab **Backup**. Die Karte „Backups“ zeigt, wann das letzte Backup entstanden ist, und listet die neuesten fünf.
+
+</Step>
+
+<Step title="Backup erstellen wählen">
+
+Klicke auf **Backup erstellen…**. Denselben Eintrag gibt es auch im Projektmenü (Rechtsklick auf das Projekt in der Seitenleiste).
+
+</Step>
+
+<Step title="Inhalt wählen">
+
+Unter „Was sichern?“ wählst du, was ins Backup soll: **Datenbank**, **Plugins**, **Uploads** und **Themes**. Für ein vollständiges Backup lässt du alle vier eingeschaltet.
+
+</Step>
+
+<Step title="Backup starten">
+
+Klicke auf **Backup starten**. WPorbit zeigt die einzelnen Schritte, etwa Container, Datenbank, Dateien und Archiv. Am Ende steht „Backup abgeschlossen“ mit dem Dateinamen des Archivs.
+
+</Step>
+
+<Step title="Archiv ansehen">
+
+**Im Finder zeigen** öffnet den Ordner mit dem Archiv. Mit **Schliessen** kehrst du zum Tab zurück, wo das neue Backup jetzt in der Liste steht.
+
+</Step>
+
+</Steps>
+
+![Fenster „Backup erstellen“, Schritt „Was sichern?“: Datenbank, Plugins, Uploads und Themes eingeschaltet](/anleitungen/wartung/backups-erstellen/01-backup-was-sichern.webp)
+
+![„Backup abgeschlossen“: alle Schritte OK, darunter das Archiv mit „Im Finder zeigen“](/anleitungen/wartung/backups-erstellen/02-backup-abgeschlossen.webp)
+
+## Wo die Backups liegen
+
+WPorbit legt jedes Backup als `.tar.gz`-Archiv im Projektordner ab, im Unterordner `.backups`:
+
+```
+<Projektordner>/.backups/wphub_backup_<Inhalt>_<Datum>_<Uhrzeit>.tar.gz
+```
+
+Der Ordner beginnt mit einem Punkt und ist im Finder deshalb normalerweise ausgeblendet. Am einfachsten erreichst du ihn über **Im Finder zeigen** nach einem Backup. Im Finder blendest du versteckte Ordner mit ⇧⌘. ein und aus.
+
+<Callout variant="achtung" title="Ein Backup auf demselben Mac ist nur die halbe Sicherung">
+Die Archive liegen auf demselben Mac wie das Projekt. Geht der Mac verloren, sind auch sie weg. Kopiere wichtige Stände zusätzlich auf ein externes Laufwerk oder in deine übliche Datensicherung.
+</Callout>
+
+## Ein Backup zurückspielen
+
+In der Liste im Tab **Backup** hat jedes Archiv einen Knopf **Importieren…**. Damit ersetzt du den aktuellen Stand des Projekts durch den des Backups. Ein Archiv von anderswo ziehst du einfach auf die Karte „Backups“, oder du wählst **Backup importieren…**. Wie das im Detail abläuft, steht unter [Projekt aus Backup importieren](/anleitungen/projekte/projekt-aus-backup-importieren).
+
+![Tab „Backup“ mit drei Backups, jeweils mit Inhalt, Grösse und „Importieren…“](/anleitungen/wartung/backups-erstellen/03-backup-tab-liste.webp)
+
+## Volumes sichern
+
+**Volumes sichern…** erstellt ein exaktes Abbild der beiden Docker-Volumes des Projekts, der Datenbank (MariaDB) und von WordPress. Das ist für Fortgeschrittene gedacht, zum Beispiel vor einem Eingriff, bei dem du den exakten Zustand der Volumes behalten willst.
+
+<Steps>
+
+<Step title="Zielordner wählen">
+
+Im Fenster „Docker-Volumes sichern“ klickst du bei „Zielordner“ auf **Auswählen…** und wählst einen Ordner.
+
+</Step>
+
+<Step title="Sichern">
+
+Klicke auf **Volumes sichern**. Damit der Stand konsistent ist, stoppt WPorbit beide Container kurz und startet sie danach wieder. Am Ende steht „Backup erfolgreich erstellt“ mit den beiden Archiven.
+
+</Step>
+
+</Steps>
+
+<Callout variant="wichtig" title="Kein Zurückspielen in der App">
+Für ein Volume-Abbild gibt es in WPorbit keine Wiederherstellung. Du spielst es bei Bedarf von Hand zurück. Für den Alltag nimm **Backup erstellen…**.
+</Callout>
+
+## Einzelne Dateien mit dem Dateitransfer
+
+Brauchst du nur eine einzelne Datei, etwa ein Bild aus den Uploads oder ein Log, ist **Dateitransfer öffnen…** schneller als ein ganzes Backup.
+
+Im Fenster „Dateitransfer“ wählst du die Richtung **In Container kopieren** oder **Aus Container kopieren**. Den Pfad im Container gibst du relativ zum WordPress-Verzeichnis an, zum Beispiel `wp-content/uploads/bild.jpg`, oder du suchst ihn mit **Browser**. Beim Kopieren aus dem Container wählst du vorher den lokalen Speicherort. **Kopieren** startet den Transfer.
+
+<KeyTakeaways>
+
+- **Backup erstellen…** im Tab **Backup** ist der Normalfall. Das Projekt muss dafür laufen.
+- Die Archive liegen im Projektordner unter `.backups`.
+- Zurückspielen mit **Importieren…** in der Liste oder per Drag & Drop.
+- **Volumes sichern…** ist ein exaktes Abbild ohne Wiederherstellung in der App.
+- Sichere wichtige Backups zusätzlich ausserhalb deines Macs.
+
+</KeyTakeaways>

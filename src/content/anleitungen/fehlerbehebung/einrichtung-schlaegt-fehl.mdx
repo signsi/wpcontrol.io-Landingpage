@@ -1,0 +1,189 @@
+---
+title: "Einrichtung schlägt fehl: Colima, Vault, Domains"
+description: "Wenn der Einrichtungsassistent abbricht, Colima nicht startet, Programme fehlen oder WPorbit gar nicht erst startet: Fehlerbilder erkennen und mit den Reparaturen der App beheben."
+order: 10
+updated: 2026-09-24
+type: fehlerbehebung
+audience: einsteiger
+duration: "10 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/wporbit-installieren
+  - fehlerbehebung/diagnose-und-support
+  - wartung/wporbit-aktualisieren
+draft: true
+---
+
+WPorbit braucht im Hintergrund eine Container-Laufzeit (Colima), Docker, Vault und für die lokalen Domains einen kleinen Webserver. Fehlt eines davon oder startet es nicht, zeigt die App das an der Stelle, an der es auffällt, und bietet meistens direkt die passende Reparatur an. Diese Seite ist nach Fehlerbild sortiert: Such, was du siehst, und arbeite die Schritte von oben nach unten ab.
+
+<Callout variant="tipp" title="Erst lesen, dann klicken">
+WPorbit schreibt den Grund fast immer dazu, oft mit einer Zeile „Grund:“ oder „Meldung:“. Lies sie vollständig, bevor du etwas neu installierst. Viele Fehler lassen sich mit genau einem Knopf beheben.
+</Callout>
+
+## „Homebrew wird benötigt“
+
+**Fehlerbild:** Der Einrichtungsassistent stoppt gleich nach **Einrichten** mit „Homebrew wird benötigt“.
+
+**Ursache:** WPorbit installiert Colima, Docker, Vault und die lokalen Domains über Homebrew. Ohne Homebrew geht das nicht.
+
+**Lösung:**
+
+<Steps>
+
+<Step title="Befehl kopieren">
+
+Kopiere den angezeigten Befehl über das Kopier-Symbol.
+
+</Step>
+
+<Step title="Homebrew installieren">
+
+Öffne das Programm Terminal, füge den Befehl ein und folge den Anweisungen. Die Anleitung von Homebrew selbst erreichst du über **Anleitung: brew.sh**.
+
+</Step>
+
+<Step title="Weitermachen">
+
+Wechsle zurück zu WPorbit und klicke auf **Erneut suchen**. Hilft das nicht, beende WPorbit und starte es neu.
+
+</Step>
+
+</Steps>
+
+## „Einrichtung fehlgeschlagen“
+
+**Fehlerbild:** Der Assistent zeigt „Einrichtung fehlgeschlagen“ und darunter eine Erklärung mit „Grund:“.
+
+**Ursache:** Meistens ist die Installation eines Programms über Homebrew gescheitert, etwa wegen einer unterbrochenen Verbindung. Seltener scheitert die Einrichtung der lokalen Domains.
+
+**Lösung:**
+
+1. Prüfe die Internetverbindung und klicke auf **Erneut versuchen**. Bereits Installiertes wird übersprungen.
+2. Nennt die Meldung ein bestimmtes Programm, kannst du es auch von Hand installieren. Die Befehle stehen in der Tabelle unten.
+3. Scheitert der Schritt „Lokale Domains“, klicke auf **Lokale Domains überspringen**. WPorbit schliesst die Einrichtung dann ohne lokale Domains ab. Deine Projekte sind vorerst über ihren localhost-Port erreichbar. Nachholen kannst du die Domains später mit **Einrichtungsassistent neu starten**.
+
+{/* SCREENSHOT 01-einrichtung-fehlgeschlagen: Einrichtungsassistent „Einrichtung fehlgeschlagen“ mit Fehlertext inkl. „Grund:“, Buttons „Erneut versuchen“ und „Lokale Domains überspringen“. Z. B. Installation ohne Internetverbindung ausgelöst. */}
+
+| Programm | Befehl im Terminal |
+| --- | --- |
+| Container-Laufzeit (Colima) | `brew install colima` |
+| Docker CLI | `brew install docker` |
+| Docker Compose | `brew install docker-compose` |
+| HashiCorp Vault | `brew install hashicorp/tap/vault` |
+| certutil (nss), optional | `brew install nss` |
+
+## „Fast fertig“ statt „Alles bereit!“
+
+**Fehlerbild:** Die Einrichtung endet mit „Fast fertig“. Bei der Container-Laufzeit oder bei Vault steht ein rotes Zeichen, und die Knöpfe unter „Wie möchtest du starten?“ sind ausgegraut.
+
+**Ursache:** Die Programme sind installiert, aber ein Dienst läuft noch nicht. Ohne Container-Laufzeit lässt sich kein Projekt einrichten oder starten.
+
+**Lösung:** Unter der Liste steht genau ein Knopf für das, was als Erstes fehlt:
+
+| Knopf | Was er tut |
+| --- | --- |
+| **Colima installieren** | installiert die Container-Laufzeit über Homebrew |
+| **Colima jetzt starten** | startet die Container-Laufzeit. Beim allerersten Start lädt Colima ein VM-Abbild und braucht einige Minuten |
+| **Vault starten** | startet Vault erneut |
+
+Während der Knopf arbeitet, zeigt WPorbit den Fortschritt von Colima direkt darunter an. Danach baut sich die Liste neu auf. Mit **Voraussetzungen erneut prüfen** fragst du den Zustand noch einmal ab, etwa nachdem du im Terminal etwas nachinstalliert hast.
+
+Ein orangefarbenes Zeichen bei „Lokale Domains“ oder bei einem optionalen Programm blockiert nichts.
+
+## Colima startet nicht
+
+**Fehlerbild:** Beim Start von Colima erscheint eine rote Meldung, zum Beispiel im Einrichtungsassistenten, im Fenster „Umgebung nicht vollständig gestartet“ oder in der Seitenleiste als „Colima ist nicht gestartet“.
+
+**Ursache und Lösung:** WPorbit erkennt die häufigsten Ursachen und bietet dann direkt einen Reparaturknopf an:
+
+| Meldung sinngemäss | Reparatur |
+| --- | --- |
+| Der zwischengespeicherte Download des VM-Abbilds ist unvollständig oder beschädigt | **Cache leeren und erneut starten**. Entfernt nur Colimas Download-Cache. VMs, Container und Volumes bleiben unangetastet |
+| Der Download des VM-Abbilds wurde unterbrochen | Internetverbindung prüfen und Colima erneut starten. Hilft das nicht: **Cache leeren und erneut starten** |
+| Rosetta steht auf diesem Mac nicht zur Verfügung | **Ohne Rosetta starten** |
+| Apples Virtualisierung wird nicht angeboten | **Auf QEMU umstellen und erneut starten**. QEMU ist etwas langsamer, sonst gleichwertig |
+| Zu wenig Platz auf der Festplatte | einige GB freigeben und Colima erneut starten |
+
+Ein Startversuch ohne Reparatur scheitert bei einem beschädigten Download jedes Mal gleich. Nimm deshalb den angebotenen Knopf statt einfach erneut zu starten.
+
+{/* SCREENSHOT 02-umgebung-unvollstaendig: Startfenster „Umgebung nicht vollständig gestartet“ mit Zeilen Colima (rot), Docker, Vault, roter Fehlermeldung und dem Button „Cache leeren und erneut starten“ plus „Weiter“. Colima-Start mit beschädigtem Download-Cache. */}
+
+## „Umgebung nicht vollständig gestartet“ beim App-Start
+
+**Fehlerbild:** Nach dem Start von WPorbit bleibt das Fenster „Umgebung nicht vollständig gestartet“ offen. Eine der Zeilen **Colima**, **Docker** oder **Vault** ist rot.
+
+**Lösung:** Das Fenster bietet unten die passende Reparatur an:
+
+- **Colima starten**, wenn Colima nicht läuft.
+- **Vault starten**, wenn Vault nicht antwortet.
+- **Auf Colima umstellen**, wenn bei Docker „Falscher Docker-Kontext gewählt“ steht. Docker zeigt dann auf eine andere Laufzeit, zum Beispiel auf ein nicht laufendes Docker Desktop.
+
+Mit **Weiter** schliesst du das Fenster ohne Reparatur. Projekte starten dann aber nicht, bis das Problem behoben ist.
+
+## Gelber oder oranger Balken oben im Fenster
+
+**Fehlerbild:** Über den Projekten steht ein Balken wie „Docker CLI fehlt — WPorbit ist noch nicht vollständig eingerichtet.“ oder „WPorbit läuft. Ohne … fehlen einzelne Funktionen.“
+
+**Ursache:** Ein Programm, das WPorbit braucht, ist nicht (mehr) installiert. Das passiert zum Beispiel nach einem Aufräumen mit Homebrew.
+
+**Lösung:**
+
+1. Klicke auf **Details**. Du siehst jedes fehlende Programm, was ohne es nicht geht, und den Installationsbefehl mit Kopier-Symbol.
+2. Klicke auf **Jetzt installieren**. WPorbit startet den Einrichtungsassistenten erneut und installiert, was fehlt. Der Knopf erscheint nur, wenn Homebrew vorhanden ist.
+3. Alternativ führst du den Befehl im Terminal aus. Sobald du zu WPorbit zurückkehrst, prüft die App erneut und blendet den Balken aus.
+
+Fehlt nur ein optionales Programm, etwa VS Code oder certutil, kannst du den Hinweis mit dem × ausblenden. Ein fehlendes benötigtes Programm lässt sich nicht ausblenden.
+
+{/* SCREENSHOT 03-abhaengigkeits-balken: Hauptfenster mit orangem Balken „Docker CLI fehlt — WPorbit ist noch nicht vollständig eingerichtet.“, aufgeklappten Details mit Installationsbefehl und dem Button „Jetzt installieren“. Docker CLI deinstalliert. */}
+
+## Browser warnt bei `*.wporbit`-Adressen
+
+**Fehlerbild:** Der Browser zeigt ein lokales Projekt als „nicht sicher“ an.
+
+**Lösung:**
+
+- Tritt es nur in Firefox oder Chrome auf, fehlt vermutlich certutil. Installiere es mit `brew install nss`. Safari ist davon nicht betroffen.
+- Sonst öffne **Einstellungen → Diagnose & Support** und klicke unter „SSL-Zertifikat reparieren“ auf **Zertifikat neu vertrauen…**. WPorbit trägt das lokale Zertifikat erneut als vertrauenswürdig im macOS-Schlüsselbund ein.
+
+## „WPorbit konnte nicht gestartet werden“
+
+**Fehlerbild:** Statt des Hauptfensters erscheint nur „WPorbit konnte nicht gestartet werden“ mit einer Fehlermeldung.
+
+**Ursache:** WPorbit kann seine Projektdatenbank nicht öffnen. Häufig öffnet eine ältere WPorbit-Version eine Datenbank, die eine neuere geschrieben hat.
+
+**Lösung:** Die Knöpfe sind von harmlos nach einschneidend sortiert:
+
+1. Installiere zuerst die neueste WPorbit-Version, siehe [WPorbit aktualisieren](/anleitungen/wartung/wporbit-aktualisieren), und starte neu.
+2. **Kopie sichern…** legt eine Kopie der Datenbank an einem Ort deiner Wahl ab. Mach das, bevor du weitermachst.
+3. **Im Finder zeigen** zeigt die Datei, etwa um sie an den Support zu schicken.
+4. **Zur Seite legen und neu starten…** benennt die Datenbank um, nach einer Rückfrage. WPorbit startet danach mit leerer Projektliste. Die Datei wird nicht gelöscht, und deine Zugangsdaten in Vault und die Projektordner auf der Festplatte bleiben unverändert.
+
+## Reparaturen unter „Diagnose & Support“
+
+Unter **Einstellungen → Diagnose & Support** findest du alle Werkzeuge an einem Ort:
+
+| Abschnitt | Wofür |
+| --- | --- |
+| **Benötigte Programme** | zeigt jedes Programm mit Zustand und, falls es fehlt, dem Installationsbefehl |
+| **Debug-Bericht** | **Debug-Bericht kopieren** sammelt Infrastruktur-Status, laufende Container, DNS-Auflösung und das App-Protokoll für den Support |
+| **Einrichtungsassistent** | **Einrichtungsassistent neu starten**, etwa wenn Colima, Vault oder die lokalen Domains nach einer Neuinstallation nicht mehr laufen |
+| **SSL-Zertifikat reparieren** | **Zertifikat neu vertrauen…** |
+| **Schnellstart lokal** | **Lokal alles bereit machen** startet Colima, speichert das Vault-Token im Schlüsselbund und startet Vault. Dazu **Infrastruktur vorbereiten** und **Alles aktualisieren** |
+| **Colima-Diagnose** und **Vault-Protokoll** | die Ausgaben von Colima und Vault zum Nachlesen und Kopieren |
+
+![Einstellungen → Diagnose & Support mit „Benötigte Programme“, „Debug-Bericht“ und „Einrichtungsassistent“](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl/04-diagnose-tab.webp)
+
+<Callout variant="achtung" title="„App zurücksetzen“ nur als letzter Schritt">
+**Alles zurücksetzen und neu starten…** setzt WPorbit in den Auslieferungszustand zurück und löscht unwiderruflich alle Projekte aus der Datenbank, sämtliche in Vault gespeicherten Zugangsdaten, die Lizenz-Aktivierung dieses Geräts und alle Einstellungen. Projektordner und Docker-Volumes bleiben erhalten. Nutze das nur, wenn nichts anderes hilft, und nachdem du die Zugangsdaten gesichert hast.
+</Callout>
+
+Kommst du nicht weiter, kopiere den Debug-Bericht und wende dich an den Support. Wie das geht, steht in [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support).
+
+<KeyTakeaways>
+
+- Fast jede Fehlermeldung bringt ihren eigenen Reparaturknopf mit. Nimm ihn, statt einfach erneut zu starten.
+- Ohne Homebrew geht nichts. Alles andere installiert WPorbit selbst nach.
+- Die lokalen Domains lassen sich überspringen und später nachholen.
+- Alle Werkzeuge liegen unter **Einstellungen → Diagnose & Support**. Das Zurücksetzen der App ist der letzte Schritt.
+
+</KeyTakeaways>

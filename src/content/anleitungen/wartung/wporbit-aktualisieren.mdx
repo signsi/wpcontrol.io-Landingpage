@@ -1,0 +1,78 @@
+---
+title: "WPorbit aktualisieren"
+description: "Wie neue WPorbit-Versionen auf deinen Mac kommen, wie du von Hand nach Updates suchst und welche Version du gerade hast."
+order: 50
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "2 Minuten"
+appliesTo: [Standalone, Cloud]
+related:
+  - erste-schritte/wporbit-installieren
+  - fehlerbehebung/diagnose-und-support
+draft: true
+---
+
+Neue Versionen von WPorbit kommen direkt über die App. Du musst dafür nichts von der Website herunterladen. WPorbit prüft bei einem Update-Server, ob es eine neuere Version gibt, zeigt sie dir an und installiert sie auf Wunsch.
+
+Jedes Update ist signiert. WPorbit installiert nur Versionen, deren Signatur zu WPorbit passt.
+
+## Welche Version habe ich?
+
+Öffne **Einstellungen → Allgemein**. Im Abschnitt **Updates** steht „Version …“ mit der Nummer, die gerade läuft.
+
+![Einstellungen → Allgemein: Abschnitt „Updates“ mit „Version 1.8.0“ und „Nach Updates suchen…“](/anleitungen/wartung/wporbit-aktualisieren/01-einstellungen-updates.webp)
+
+## Von Hand nach Updates suchen
+
+<Steps>
+
+<Step title="Suche starten">
+
+Wähle in der Menüleiste **WPorbit → Nach Updates suchen…**. Denselben Knopf gibt es in **Einstellungen → Allgemein** im Abschnitt **Updates**.
+
+</Step>
+
+<Step title="Ergebnis ansehen">
+
+Gibt es eine neuere Version, öffnet sich ein Fenster mit der neuen Versionsnummer und den Änderungen. Bist du schon auf dem neuesten Stand, sagt dir das Fenster auch das.
+
+</Step>
+
+<Step title="Installieren">
+
+Wähle im Fenster, dass das Update installiert werden soll. WPorbit lädt die neue Version, prüft die Signatur, ersetzt die App und startet neu. Du kannst das Update im selben Fenster auch auf später verschieben oder die Version überspringen.
+
+</Step>
+
+</Steps>
+
+![Menü „WPorbit“ in der Menüleiste: „Nach Updates suchen…“ direkt unter „Über „WPorbit““](/anleitungen/wartung/wporbit-aktualisieren/02-update-menue.webp)
+
+{/* SCREENSHOT 03-update-fenster: Das Update-Fenster mit neuer Versionsnummer und Änderungen. Braucht einen Build, für den eine neuere Version im Appcast steht. */}
+
+<Callout variant="tipp" title="Vor dem Update">
+Schliesse laufende Vorgänge wie Holen, Senden oder ein Backup ab, bevor du das Update installierst. WPorbit startet dabei neu, und ein Vorgang, der gerade läuft, würde abgebrochen.
+</Callout>
+
+## Automatische Suche
+
+WPorbit kann auch selbständig nach Updates suchen. Ob es das tun darf, fragt dich die App einmal nach einem der ersten Starts. Egal wie du dich entscheidest: **Nach Updates suchen…** funktioniert immer.
+
+## Was ein Update nicht ändert
+
+Ein Update ersetzt nur die App. Deine Projekte, ihre Ordner, die Zugangsdaten im Vault und deine Einstellungen bleiben, wie sie sind.
+
+Die Werkzeuge, die WPorbit nutzt, etwa Colima oder Vault, aktualisiert ein App-Update nicht. Welche davon installiert sind, siehst du unter **Einstellungen → Diagnose & Support** im Abschnitt „Benötigte Programme“. Mehr dazu unter [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support).
+
+<Callout variant="achtung" title="Update schlägt fehl?">
+Lässt sich ein Update nicht installieren, lade die aktuelle Version von der Seite [Downloads](/downloads) und installiere sie wie beim ersten Mal, siehe [WPorbit installieren](/anleitungen/erste-schritte/wporbit-installieren). Deine Projekte und Einstellungen bleiben dabei erhalten.
+</Callout>
+
+<KeyTakeaways>
+
+- Updates kommen direkt über die App, signiert und geprüft.
+- Von Hand: **WPorbit → Nach Updates suchen…** oder **Einstellungen → Allgemein → Updates**.
+- Ein Update ändert nichts an Projekten, Zugangsdaten und Einstellungen.
+
+</KeyTakeaways>

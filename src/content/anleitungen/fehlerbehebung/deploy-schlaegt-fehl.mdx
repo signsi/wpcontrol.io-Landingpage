@@ -1,96 +1,132 @@
 ---
-title: "Deploy schlägt fehl: die häufigsten Ursachen"
-description: "Fehlerbilder beim Veröffentlichen erkennen und beheben: abgewiesene Verbindungen, fehlende Rechte, falsche Pfade und abgebrochene Pipelines."
+title: "Senden oder Deployen schlägt fehl: die häufigsten Ursachen"
+description: "Die Fehlermeldungen beim Senden und beim Theme-Deployment verstehen und beheben: abgewiesene Anmeldung, fehlende Voraussetzungen auf dem Server, falsche Pfade und Theme-Ordner."
 order: 20
-updated: 2026-08-18
+updated: 2026-09-24
 type: fehlerbehebung
 audience: fortgeschritten
 duration: "10 Minuten"
 appliesTo: [Standalone, Cloud]
 related:
-  - veroeffentlichen/gitlab-deployment-einrichten
-draft: false
+  - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
+  - veroeffentlichen/live-seite-sicher-aktualisieren
+  - veroeffentlichen/theme-per-rsync-deployen
+  - fehlerbehebung/diagnose-und-support
+draft: true
 ---
 
-Wenn ein Deployment abbricht, liegt die Ursache fast immer in einer von vier Kategorien. Diese Seite ist nach Fehlerbild sortiert: such das, was du siehst, und arbeite die Prüfschritte von oben nach unten ab.
+Wenn **Senden** oder **Theme deployen** abbricht, nennt WPorbit die Ursache in der Fehlermeldung und sucht danach automatisch weiter. Diese Seite ist nach Meldung sortiert: Such den Text, den du siehst, und arbeite die Schritte darunter ab.
 
-<Callout variant="tipp" title="Zuerst das Protokoll lesen">
-Die Fehlermeldung der Pipeline nennt in fast allen Fällen die Ursache. Es lohnt sich, die letzten Zeilen vollständig zu lesen, bevor man zu raten beginnt.
+<Callout variant="tipp" title="Zuerst ›Woran es liegen könnte‹ lesen">
+Nach einem Fehlschlag prüft WPorbit den Server selbst und zeigt die Befunde unter der Fehlermeldung im Abschnitt „Woran es liegen könnte“. Gibt es einen eindeutigen Wert, steht ein Knopf wie **WEB_ROOT auf „/home/kunde/public_html“ setzen** daneben. Das ist oft schon die Lösung. Nach einem Abbruch durch dich läuft diese Suche nicht.
 </Callout>
 
-## Verbindung wird abgewiesen
+{/* SCREENSHOT 01-woran-es-liegen-koennte: Push-Assistent nach Fehlschlag, rote Fehlermeldung, darunter orange hinterlegter Bereich „Woran es liegen könnte“ mit einem Befund und Knopf „… auf „…“ setzen“ */}
 
-**Fehlerbild:** `Permission denied (publickey)` oder `Connection refused`.
+## „Senden nicht gestartet — die Verbindung zu … erfüllt nicht, was dafür nötig ist“
 
-**Ursache:** Der SSH-Schlüssel ist auf dem Zielsystem nicht hinterlegt, gehört zum falschen Benutzer, oder das Hosting erwartet einen anderen Port.
+**Was passiert ist:** Vor dem Senden prüft WPorbit den Server. Mindestens eine Voraussetzung fehlt, und der Lauf wurde abgebrochen, bevor etwas angefasst wurde. Die Meldung endet mit „Es wurde nichts verändert.“
+
+Unter der Überschrift steht, was fehlt. Die häufigsten Zeilen:
+
+| Zeile | Was zu tun ist |
+|---|---|
+| **SSH-Verbindung**: … | Die Anmeldung klappt nicht. Siehe die Abschnitte zu SSH weiter unten. |
+| **Web-Root**: … | Der Pfad in `WEB_ROOT` existiert nicht. Nimm **Verbindung prüfen** im Tab **Remote**. Es sucht die WordPress-Installation in üblichen Unterordnern und schlägt den richtigen Pfad vor. |
+| **WordPress-Installation**: … | Im Web-Root liegt keine `wp-config.php` oder kein `wp-content`. Meist ist der Web-Root eine Ebene zu hoch oder zu tief. |
+| **PHP** oder **WP-CLI**: … | Das Senden spielt die Datenbank auf dem Server mit WP-CLI ein. Frag deinen Hoster, ob WP-CLI verfügbar ist. Liegt es unter einem anderen Pfad, trag ihn in den Zugangsdaten als `REMOTE_BIN_WP` ein (für PHP: `REMOTE_BIN_PHP`). |
+| **Datenbank**: … | Die Datenbank auf dem Server antwortet nicht. Das zählt nur, wenn du die Datenbank sendest. |
+| **Tabellen-Präfix**: Remote …, lokal … | Das Präfix der lokalen Datenbank passt nicht zur `wp-config.php` des Servers. |
+
+Zum **Tabellen-Präfix**: Würde WPorbit trotzdem senden, läge die Datenbank unter Tabellennamen auf dem Server, die die Live-Seite nicht liest. Deshalb gibt es hier keinen Weg vorbei. Wenn du die Datenbank einmal vom Server holst, übernimmt WPorbit das Präfix des Servers auch lokal. Das ersetzt aber deine lokale Datenbank. Sichere sie vorher mit **Backup erstellen…**.
+
+## „SSH-Anmeldung abgelehnt: Der Server hat den hinterlegten Schlüssel nicht akzeptiert“
+
+**Ursache:** Der Server kennt den SSH-Schlüssel deines Macs nicht, oder der Benutzername stimmt nicht.
 
 **Prüfschritte:**
 
-1. Teste die Verbindung von Hand:
+1. Teste die Anmeldung im Terminal, mit den Werten aus den Zugangsdaten des Projekts:
 
    ```bash
-   ssh -p 22 benutzer@hosting.example.ch
+   ssh -p 22 benutzer@server.example.com
    ```
 
-2. Schlägt das ebenfalls fehl, liegt es nicht am Deployment, sondern am Zugang. Prüf, ob der öffentliche Schlüssel im Zielsystem hinterlegt ist.
-3. Manche Schweizer Hoster nutzen einen abweichenden SSH-Port. Trag ihn explizit ein, statt dich auf die Standardeinstellung zu verlassen.
+2. Fragt der Server dort nach einem Passwort, fehlt dein öffentlicher Schlüssel auf dem Server. Trag das SSH-Passwort in den Zugangsdaten unter **Passwort** (`SSH_PW`) ein. Bei der nächsten Prüfung hinterlegt WPorbit den Schlüssel deines Macs einmalig selbst, sofern einer vorhanden ist, und meldet sich danach ohne Passwort an.
+3. Klappt es im Terminal ebenfalls nicht, prüf Benutzernamen und Port beim Hoster.
 
-<Callout variant="achtung" title="Passphrase-geschützte Schlüssel">
-Ein Schlüssel mit Passphrase funktioniert interaktiv, aber nicht in einer Pipeline — dort kann niemand die Passphrase eingeben. Für Deployments braucht es einen eigenen Schlüssel ohne Passphrase, dessen Rechte auf das Zielverzeichnis beschränkt sind.
+<Callout variant="hinweis" title="Warum kein Passwort-Login?">
+WPorbit meldet sich bei jedem Serverzugriff mit Schlüssel an, ohne Rückfrage. Ein Passwort dient nur dazu, den Schlüssel einmal zu hinterlegen. Mehr dazu unter [Verbindung prüfen und SSH einrichten](/anleitungen/veroeffentlichen/verbindung-pruefen-und-ssh-einrichten).
 </Callout>
 
-## Keine Schreibrechte im Zielverzeichnis
+## Verbindung kommt nicht zustande
 
-**Fehlerbild:** `rsync: mkstemp failed: Permission denied` oder `Read-only file system`.
+Je nach Ursache lautet die Meldung:
 
-**Ursache:** Der Deployment-Benutzer darf im Zielverzeichnis nicht schreiben.
+- „Der Servername konnte nicht aufgelöst werden.“ Der Hostname in **Server** (`SSH_HOST`) ist falsch geschrieben oder enthält etwas anderes als den reinen Namen, etwa `https://`.
+- „Verbindung abgelehnt. Prüfe Host und Port und ob der Dienst läuft.“ Häufig ist der Port falsch. Manche Hoster nutzen für SSH nicht Port 22.
+- „Zeitüberschreitung beim Verbindungsaufbau. Prüfe Netzwerk und Firewall.“ Eine Firewall blockiert, oder der Hoster erlaubt SSH nur von bestimmten IP-Adressen.
+- „Die SSH-Verbindung ist fehlgeschlagen (Exit 255). Prüfe Host, Port und Schlüssel.“ Die Verbindung scheiterte ohne genauere Angabe. Der Terminal-Test oben zeigt meist mehr.
 
-**Prüfschritte:**
+## „Auf dem Server liess sich kein Arbeitsverzeichnis anlegen“
 
-1. Verbinde dich per SSH und prüf die Rechte:
+**Ursache:** Beim Senden legt WPorbit im Web-Root einen temporären Ordner `.wphub-temp` an. Das ging nicht, weil `WEB_ROOT` nicht stimmt oder der SSH-Benutzer dort nicht schreiben darf.
 
-   ```bash
-   ls -la /pfad/zum/zielverzeichnis
-   ```
-
-2. Vergleich den Besitzer mit dem Benutzer, unter dem das Deployment läuft.
-3. Bei manchen Managed-Hostings ist ein Teil des Verzeichnisbaums bewusst schreibgeschützt. Prüf in dem Fall, ob der Zielpfad überhaupt der richtige ist.
-
-## Falscher Pfad
-
-**Fehlerbild:** Die Pipeline meldet Erfolg, aber auf der Website ändert sich nichts.
-
-**Ursache:** Die Dateien landen an einer Stelle, die vom Webserver nicht ausgeliefert wird. Das passiert besonders oft, wenn der Hoster ein Unterverzeichnis wie `httpdocs`, `public_html` oder `www` als Dokumentwurzel verwendet.
+Die Meldung sagt ausdrücklich: „Es wurde nichts übertragen und nichts verändert.“
 
 **Prüfschritte:**
 
-1. Prüf per SSH, ob die Dateien tatsächlich am erwarteten Ort liegen und wann sie zuletzt geändert wurden:
+1. Klicke im Tab **Remote** auf **Verbindung prüfen**. Der Befund „Web-Root ist nicht beschreibbar“ nennt auch den Eigentümer des Verzeichnisses.
+2. Stimmt der Pfad, muss der Hoster dem SSH-Benutzer Schreibrechte im Web-Root geben.
 
-   ```bash
-   ls -la /pfad/zum/zielverzeichnis/wp-content/themes/mein-theme
-   ```
+## „Die URLs konnten lokal nicht auf … umgestellt werden“
 
-2. Vergleich diesen Pfad mit der Dokumentwurzel aus dem Hosting-Backend.
-3. Wenn die Dateien am richtigen Ort liegen und trotzdem nichts sichtbar ist, ist meist ein Cache im Spiel — beim Hoster, in einem Caching-Plugin oder vorgelagert.
+**Ursache:** Für das Senden der Datenbank schreibt WPorbit die Adressen in der lokalen Datenbank auf die Live-Adresse um. Das ist fehlgeschlagen. WPorbit hat deshalb abgebrochen, „damit keine localhost-URLs auf den Live-Server gelangen“.
 
-## Pipeline bricht vor dem Deployment ab
+Verwandt ist „Lokale URL konnte nicht aufgelöst werden.“ Dann fehlt WPorbit die lokale Adresse des Projekts. Prüfe in den Zugangsdaten die Einträge `LOCAL_DOMAIN`, `LOCAL_URL` oder `PORT_WP`.
 
-**Fehlerbild:** Der Durchlauf endet, bevor Dateien übertragen werden.
+## Hinweis: „Lokale URLs konnten nach dem Export nicht vollständig wiederhergestellt werden“
 
-**Ursache:** Ein vorgelagerter Schritt schlägt fehl, meist die Installation von Abhängigkeiten oder ein Build-Vorgang.
+Das Senden hat funktioniert, aber die lokale Datenbank zeigt möglicherweise noch auf die Live-Adresse. Links auf der lokalen Seite führen dann auf die Live-Seite. Stell die Adressen mit **URL ersetzen…** in der Karte **Wartung** zurück, siehe [URL ersetzen und wp-config reparieren](/anleitungen/fehlerbehebung/url-ersetzen-und-wp-config-reparieren).
 
-**Prüfschritte:**
+## „Deploy konnte nicht ausgeführt werden: …“
 
-1. Sieh nach, welcher Schritt abgebrochen ist. Der Fehler liegt fast nie im Deployment selbst.
-2. Prüf, ob die Node- oder PHP-Version in der Pipeline zu der passt, mit der lokal gebaut wird. Abweichungen hier sind die häufigste Ursache für „lokal geht es, in der Pipeline nicht".
-3. Prüf, ob alle benötigten CI/CD-Variablen gesetzt sind. Eine fehlende Variable führt oft zu einer irreführenden Folgefehlermeldung.
+Diese Meldung kommt vom Theme-Deployment. Was nach dem Doppelpunkt steht, ist die eigentliche Ursache:
+
+- **„THEME_FOLDER fehlt in den Zugangsdaten des Projekts.“** Wähle im Deploy-Fenster unter **Lokales Theme** einen Ordner oder trag `THEME_FOLDER` in den Zugangsdaten ein.
+- **„THEME_FOLDER_REMOTE ist leer.“** Trag im Feld **Remote-Ordner überschreiben (optional)** den Ordnernamen auf dem Server ein.
+- **„Docker läuft nicht. Starte Colima (oder Docker) und versuche es erneut.“** Das Theme wird aus dem lokalen Container exportiert. Starte das Projekt.
+- **SSH-Meldungen** wie oben. Das Deployment prüft den Server vorher nicht eigens, deshalb zeigen sich Anmeldeprobleme erst hier.
+
+Unter „Woran es liegen könnte“ steht bei einem Deployment meist „Theme-Ordner „…“ gibt es auf dem Server nicht“ oder „… gibt es lokal nicht“, mit den vorhandenen Ordnern. Ein Vorschlag, den du übernimmst, lädt die Vorschau im Deploy-Fenster neu.
+
+## Erfolgreich, aber auf der Website ändert sich nichts
+
+**Mögliche Ursachen:**
+
+1. **Cache.** Lautet das Ergebnis „Senden abgeschlossen, aber mit Hinweisen“ und steht unter **Hinweise** „Cache und Permalinks konnten nicht geleert werden“, sind die Daten auf dem Server, aber noch nicht sichtbar. Leere den Cache beim Hoster oder im Caching-Plugin. Auch ohne diesen Hinweis kann ein vorgelagerter Cache den alten Stand zeigen.
+2. **Falsches Ziel.** Beim Deployment zeigt die **Vorschau** unter **Ziel** den Pfad auf dem Server. Liegt er nicht im Web-Root der Live-Seite, landet das Theme an einer Stelle, die niemand ausliefert.
+3. **Falsche Adresse.** Der Befund „Die Live-Seite nennt eine andere Adresse“ bedeutet: Die Live-Seite kennt sich unter einer anderen Adresse als der hinterlegten `REMOTE_URL`. Beim Senden der Datenbank schreibt WPorbit dann die falsche Adresse hinein. Übernimm den Vorschlag, bevor du erneut sendest.
+
+## „Der Vorgang endete ohne Rückmeldung“
+
+WPorbit hat keine Fehlermeldung erhalten. Das Protokoll im Assistenten zeigt nach einem Fehlschlag immer, was zuletzt geschah. Mehr steht im App-Protokoll unter **Einstellungen → Diagnose & Support**.
+
+## GitLab-Pipeline schlägt fehl
+
+Läuft das Deployment über eine GitLab-Pipeline, siehst du den Fehler in GitLab, nicht in WPorbit. Die zwei häufigsten Ursachen:
+
+- `SSH_KEY` oder `SSH_KNOWN_HOSTS` ist als gewöhnliche Variable angelegt statt mit dem Typ **File**. Die Zeilenumbrüche gehen verloren, und die Anmeldung schlägt fehl.
+- Der öffentliche Deploy-Key ist nicht in `authorized_keys` auf dem Server. Das Protokoll von **Pipeline einrichten…** zeigt dann „Konnte authorized_keys nicht schreiben“ und den Befehl zum Nachholen.
+
+Mehr dazu unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
 
 ## Wenn nichts davon passt
 
-Sammle vor der Support-Anfrage:
+Sammle vor einer Support-Anfrage:
 
-- den vollständigen Auszug aus dem Pipeline-Protokoll
-- Projektname und Zielumgebung
-- was zuletzt geändert wurde, bevor der Fehler auftrat
+- den vollständigen Text der Fehlermeldung und, falls angezeigt, die Befunde unter „Woran es liegen könnte“
+- das Protokoll des Laufs
+- Projektname und was zuletzt geändert wurde
 
-Mit diesen drei Angaben lässt sich fast jeder Fall ohne Rückfragen einordnen. Schreib uns über den [Support](/support).
+Wie du Diagnosedaten aus der App exportierst, steht unter [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support). Schreib uns über den [Support](/support).

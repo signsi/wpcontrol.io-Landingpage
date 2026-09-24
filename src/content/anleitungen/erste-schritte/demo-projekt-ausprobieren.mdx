@@ -1,0 +1,110 @@
+---
+title: "Das Demo-Projekt ausprobieren"
+description: "Was das vorbereitete Projekt „Mein erstes WordPress“ ist, wie du es einrichtest und startest und wie du es wieder loswirst."
+order: 30
+updated: 2026-09-24
+type: anleitung
+audience: einsteiger
+duration: "5 Minuten"
+appliesTo: [Standalone]
+related:
+  - erste-schritte/wporbit-installieren
+  - erste-schritte/erstes-projekt-anlegen
+  - erste-schritte/oberflaeche-im-ueberblick
+  - projekte/projekte-organisieren-und-loeschen
+draft: true
+---
+
+Damit du WPorbit nicht vor einer leeren Liste kennenlernst, legt die App beim ersten Start ein Übungsprojekt an: **Mein erstes WordPress**. Es ist eine leere WordPress-Installation, die nur auf deinem Mac läuft. Es gibt keinen Server und keine Verbindung zu einer echten Website. Du kannst also nichts kaputtmachen.
+
+## Was das Demo-Projekt ist
+
+| Eigenschaft | Wert |
+| --- | --- |
+| Name in der Seitenleiste | Mein erstes WordPress |
+| Projektordner | `~/Sites/mein-erstes-wordpress` |
+| PHP-Version | 8.4 |
+| WordPress-Version | die neueste |
+| Server | keiner, das Projekt ist rein lokal |
+
+WPorbit legt es nur an, wenn die Projektliste leer ist, also beim ersten Start. Zu Beginn ist es noch nicht eingerichtet: Es gibt noch keine Container und keine WordPress-Installation. Das übernimmt der erste Schritt unten.
+
+## Demo-Projekt öffnen
+
+Am Ende der Einrichtung fragt WPorbit „Wie möchtest du starten?“. Klicke auf **Demo-Projekt ausprobieren**. Das Hauptfenster öffnet sich, und das Demo-Projekt ist bereits ausgewählt.
+
+Hast du stattdessen **Projekt hinzufügen** gewählt oder die App neu gestartet, findest du **Mein erstes WordPress** jederzeit in der Seitenleiste.
+
+## Demo-Projekt einrichten und starten
+
+<Steps>
+
+<Step title="Den Willkommens-Hinweis lesen">
+
+In der **Übersicht** steht oben der Kasten „Willkommen bei WPorbit!“ mit drei kurzen Schritten. Er erscheint nur beim Demo-Projekt und nur so lange, bis es eingerichtet ist. Mit dem kleinen × blendest du ihn aus.
+
+{/* SCREENSHOT 01-willkommen-kasten: Projekt „Mein erstes WordPress“, Tab Übersicht, oben der Kasten „Willkommen bei WPorbit!“ mit drei nummerierten Schritten und dem Button „Lokale Umgebung einrichten…“. Frisch angelegtes, noch nicht eingerichtetes Demo-Projekt. */}
+
+</Step>
+
+<Step title="Lokale Umgebung einrichten">
+
+Klicke im Kasten auf **Lokale Umgebung einrichten…**. Denselben Assistenten öffnet auch der Schalter oben rechts, der bei einem nicht eingerichteten Projekt **Einrichten…** zeigt.
+
+Der Assistent erkennt, dass es keinen Server gibt, und zeigt „Rein lokales Projekt“: Es gibt nichts zu holen. Klicke auf **Weiter**.
+
+</Step>
+
+<Step title="Optionen bestätigen und starten">
+
+Im Schritt „Optionen“ ist **Template & Docker** fest gesetzt. **Theme einrichten** ist für das Demo-Projekt ausgeschaltet. Lass es so und klicke auf **Starten**.
+
+WPorbit setzt das Template auf, startet die Container und installiert WordPress. Das Protokoll läuft live mit. Wenn alles durch ist, klickst du auf **Schliessen**.
+
+{/* SCREENSHOT 02-assistent-lokal: Assistent „Lokale Umgebung einrichten“, erster Schritt „Was holen?“ mit dem Hinweis „Rein lokales Projekt – Für dieses Projekt ist kein Server hinterlegt“. Demo-Projekt, nicht eingerichtet. */}
+
+</Step>
+
+<Step title="Website öffnen">
+
+Das Projekt läuft jetzt. In der Kopfzeile erscheinen **Lokale Website ↗** und **WP-Admin ↗**. Der erste Link öffnet die Seite im Browser, der zweite das WordPress-Backend. Den Admin-Zugang findest du in der **Übersicht** in der Karte **Zugangsdaten**.
+
+{/* SCREENSHOT 03-demo-laeuft: Demo-Projekt läuft, Kopfzeile mit „WP-Admin ↗“ und „Lokale Website ↗“, Schalter „Läuft“, daneben im Browser die frische WordPress-Startseite. */}
+
+</Step>
+
+</Steps>
+
+<Callout variant="hinweis" title="Knöpfe ausgegraut?">
+Solange Colima oder Vault nicht laufen, lässt sich nichts einrichten oder starten. Unten in der Seitenleiste steht dann zum Beispiel „Colima ist nicht gestartet“. Ein Klick darauf behebt es. Mehr dazu in [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
+</Callout>
+
+## Was du am Demo-Projekt ausprobieren kannst
+
+- Projekt stoppen und wieder starten, mit dem Schalter oben rechts oder mit ⌘R.
+- Die Seite im Tab **Vorschau** direkt in WPorbit ansehen.
+- Über **Öffnen in…** ein Terminal, VS Code, die Datenbank oder WP-CLI öffnen.
+- Im Tab **Backup** eine Sicherung erstellen.
+- Unter **Umgebung** in der Übersicht mit **Ändern…** die PHP- oder WordPress-Version wechseln.
+
+Wo diese Stellen genau liegen, zeigt [Oberfläche im Überblick](/anleitungen/erste-schritte/oberflaeche-im-ueberblick).
+
+Einen Server kannst du dem Demo-Projekt später über **Server-Zugang hinterlegen…** hinzufügen. Für Tests mit einer echten Website ist aber ein eigenes Projekt der bessere Weg, siehe [Bestehende Website übernehmen](/anleitungen/projekte/bestehende-website-uebernehmen).
+
+## Demo-Projekt entfernen
+
+Brauchst du es nicht mehr, klick in der Seitenleiste mit der rechten Maustaste auf **Mein erstes WordPress**:
+
+- **Aus der Liste entfernen** blendet es aus. Das lässt sich rückgängig machen.
+- **Komplett löschen…** entfernt es endgültig, nach einer Rückfrage.
+
+Details stehen in [Projekte organisieren und löschen](/anleitungen/projekte/projekte-organisieren-und-loeschen).
+
+<KeyTakeaways>
+
+- Das Demo-Projekt heisst „Mein erstes WordPress“ und ist eine leere, rein lokale WordPress-Installation.
+- **Lokale Umgebung einrichten…** → **Weiter** → **Starten** richtet es ein und startet es.
+- Danach öffnen **Lokale Website ↗** und **WP-Admin ↗** die Seite und das Backend.
+- WPorbit legt es nur bei leerer Projektliste an. Entfernen kannst du es jederzeit.
+
+</KeyTakeaways>

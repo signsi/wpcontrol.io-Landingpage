@@ -1,0 +1,97 @@
+---
+title: "Wenn ein Teammitglied das Team verlässt"
+description: "Was nach einem Austritt oder einem gesperrten Mac zu tun ist: Zugangsdaten erneuern und die Passwörter der betroffenen Projekte ändern."
+order: 40
+updated: 2026-09-24
+type: anleitung
+audience: fortgeschritten
+duration: "15 Minuten plus Passwortwechsel"
+appliesTo: [Standalone, Cloud]
+related:
+  - zugaenge/projekte-im-team-teilen
+  - zugaenge/neuen-mac-im-team-anmelden
+  - zugaenge/zugangsdaten-im-vault
+draft: true
+---
+
+Im Team sehen alle Mitglieder alle geteilten Zugangsdaten. Verlässt jemand das Team oder wird ein Mac gesperrt, sind zwei Dinge zu tun:
+
+1. **Zugangsdaten erneuern**: Das Team bekommt einen neuen Schlüssel. Die Person, die gegangen ist, und der gesperrte Mac können künftige Stände nicht mehr lesen.
+2. **Passwörter ändern**: Was die Person schon gesehen hat, kann sie weiterhin kennen. Das schützt nur ein neues Passwort auf dem Server.
+
+Den ersten Schritt erledigt WPorbit auf Knopfdruck. Den zweiten musst du selbst machen, WPorbit sagt dir aber, welche Projekte betroffen sind.
+
+## Das Mitglied aus dem Team nehmen
+
+Mitglieder nimmt derzeit WPorbit auf und entfernt sie auch. Melde dich beim [Support](/support), sobald jemand das Team verlässt. Hat die Person ihren Mac noch, kann sie ihn vorher unter **Einstellungen → Allgemein → Team** mit **Diesen Mac sperren…** selbst sperren. Ist ein Mac verloren, lässt du ihn ebenfalls über den Support sperren.
+
+## Zugangsdaten erneuern
+
+Sobald jemand ausgetreten oder ein Mac gesperrt ist, erscheint bei allen verbleibenden Mitgliedern unter **Einstellungen → Allgemein → Team** der Hinweis „Das Team hat sich verändert.“ Es genügt, wenn eine Person im Team den nächsten Schritt ausführt.
+
+<Steps>
+
+<Step title="Einstellungen öffnen">
+
+Öffne **Einstellungen → Allgemein** und scrolle zur Gruppe **Team**. Unter dem Team steht „Das Team hat sich verändert.“
+
+</Step>
+
+<Step title="Zugangsdaten erneuern">
+
+Klicke auf **Zugangsdaten erneuern**. WPorbit erzeugt einen neuen Team-Schlüssel und verteilt ihn an alle Macs, die noch zum Team gehören. Danach steht dort „Das Team hat einen neuen Schlüssel.“
+
+</Step>
+
+</Steps>
+
+{/* SCREENSHOT 01-team-veraendert: Einstellungen → Allgemein, Gruppe „Team“ mit dem grau hinterlegten Hinweis „Das Team hat sich verändert.“ und dem Knopf „Zugangsdaten erneuern“. Team, in dem kürzlich ein Mitglied entfernt oder ein Mac gesperrt wurde. */}
+
+## Die Checkliste abarbeiten
+
+Nach dem Erneuern erscheint der Abschnitt **Passwörter ändern**. Er listet alle Team-Projekte, für die Zugangsdaten geteilt sind, zum Beispiel ein SSH-Passwort.
+
+{/* SCREENSHOT 02-checkliste-passwoerter: Abschnitt „Passwörter ändern“ mit dem Text „Wer ausgetreten ist, hat diese Zugangsdaten gesehen. …“, drei Projektnamen als Aufzählung und Knopf „Erledigt“. Direkt nach „Zugangsdaten erneuern“. */}
+
+<Callout variant="achtung" title="Das neue Verschlüsseln ändert nichts an alten Passwörtern">
+Ein neuer Team-Schlüssel schützt nur, was ab jetzt gespeichert wird. Wer ausgetreten ist, hat die bisherigen Zugangsdaten gesehen. Sie bleiben gültig, bis jemand sie auf dem Server ändert.
+</Callout>
+
+Gehe die Liste Projekt für Projekt durch:
+
+<Steps>
+
+<Step title="Passwort auf dem Server ändern">
+
+Ändere das Passwort dort, wo es gilt, meist im Control Panel deines Hosters oder direkt auf dem Server. WPorbit kann das nicht für dich tun, weil es nicht weiss, wo überall ein Passwort hinterlegt ist.
+
+</Step>
+
+<Step title="Neues Passwort in WPorbit eintragen">
+
+Öffne das Projekt, klappe in der Übersicht die Karte **Zugangsdaten** auf, klicke auf **Werte bearbeiten**, trage das neue Passwort ein und klicke auf **Speichern**. Details stehen unter [Zugangsdaten im Vault verwalten](/anleitungen/zugaenge/zugangsdaten-im-vault).
+
+</Step>
+
+<Step title="Mit dem Team abgleichen">
+
+Wähle im Projektmenü **Mit dem Team abgleichen**. Im Fenster „Abweichungen“ ist bei deinem geänderten Passwort **Meiner** vorausgewählt. Mit **Übernehmen** geht der neue Wert verschlüsselt ins Team, und die anderen bekommen ihn beim nächsten Abgleich.
+
+</Step>
+
+</Steps>
+
+Wenn alle Projekte erledigt sind, klicke unter „Passwörter ändern“ auf **Erledigt**. Die Liste verschwindet.
+
+<Callout variant="tipp" title="Nicht nur die geteilten Passwörter">
+Die Liste nennt die Projekte, deren Zugangsdaten im Team geteilt sind. Hatte die Person noch andere Zugänge, etwa ein eigenes WordPress-Konto auf der Live-Seite oder einen eigenen SSH-Schlüssel auf dem Server, entferne diese ebenfalls.
+</Callout>
+
+<KeyTakeaways>
+
+- Austritte und Sperren laufen derzeit über den WPorbit-Support.
+- Danach klickt eine Person im Team auf **Zugangsdaten erneuern**.
+- Die Checkliste **Passwörter ändern** nennt die betroffenen Projekte. Ändere die Passwörter auf dem Server und gleiche sie mit dem Team ab.
+- Erst dann **Erledigt** klicken.
+
+</KeyTakeaways>
