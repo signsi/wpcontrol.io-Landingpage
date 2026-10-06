@@ -2,7 +2,7 @@
 title: "Zugangsdaten im Vault verwalten"
 description: "Wo WPorbit SSH-Zugänge, Passwörter und Projektwerte ablegt, wie du sie im Projekt ansiehst und bearbeitest und wie du sie exportierst."
 order: 10
-updated: 2026-09-24
+updated: 2026-10-06
 type: anleitung
 audience: einsteiger
 duration: "10 Minuten"
@@ -34,7 +34,9 @@ Wähle das Projekt in der Seitenleiste. Im Tab **Übersicht** findest du unter �
 
 <Step title="Karte aufklappen">
 
-Klicke auf die Kartenüberschrift. Die Einträge erscheinen gruppiert, Passwörter sind durch Punkte verdeckt. Mit dem Häkchen **Werte zeigen** blendest du sie ein. Über das Symbol neben einem Eintrag kopierst du den Wert in die Zwischenablage.
+Klicke auf die Kartenüberschrift. Die Einträge erscheinen gruppiert: **Server-Zugang**, **Theme**, **Child-Theme**, **Server-Programme** und darunter **Weitere**. Passwörter sind durch Punkte verdeckt. Mit dem Häkchen **Werte zeigen** blendest du sie ein. Über das Symbol neben einem Eintrag kopierst du den Wert in die Zwischenablage.
+
+Die Felder, die fast jedes Projekt braucht, stehen immer da, auch wenn sie noch leer sind, zum Beispiel `THEME_SSH` oder `THEME_FOLDER` bei einem Projekt, das du ohne `.env` vom Server eingerichtet hast. Ein leeres Feld zeigt „nicht gesetzt“ und den Knopf **Ergänzen**. Der öffnet das Bearbeiten und setzt den Cursor direkt in dieses Feld.
 
 Steht dort „Noch nicht geladen — klicke auf ›Aus Vault neu laden‹.“, liest **Aus Vault neu laden** die Werte frisch aus dem Vault.
 
@@ -62,7 +64,9 @@ Klicke in der aufgeklappten Karte auf **Werte bearbeiten**. Hat das Projekt noch
 
 <Step title="Werte ändern">
 
-Ändere die Felder direkt. Einen zusätzlichen Eintrag legst du unten mit Schlüssel und Wert an und bestätigst mit **Hinzufügen**.
+Ändere die Felder direkt. Leere Felder füllst du einfach aus. Was leer bleibt, speichert WPorbit nicht, der Vault bleibt also aufgeräumt.
+
+Einen zusätzlichen Eintrag legst du unten mit **Eintrag hinzufügen** an. Das Listensymbol neben dem Schlüsselfeld zeigt alle Schlüssel, die WPorbit kennt und die dem Projekt noch fehlen. So musst du nicht nachschlagen, wie ein Feld genau heisst. Bestätige mit **Hinzufügen**.
 
 </Step>
 
@@ -133,6 +137,7 @@ Ist der Vault versiegelt, erscheint der Abschnitt **Vault entsperren**. Dort gib
 
 - Zugangsdaten liegen lokal im Vault auf deinem Mac, der Token im macOS-Schlüsselbund.
 - Im Projekt: Übersicht → Karte **Zugangsdaten**, bearbeiten mit **Werte bearbeiten** und **Speichern**.
+- Fehlende Felder wie `THEME_SSH` stehen als „nicht gesetzt“ da. **Ergänzen** füllt sie, gespeichert wird nur, was einen Wert hat.
 - Alle Projekte, Export und Löschen: **Einstellungen → Infrastruktur → Vault → Vault-Projekte (Ablage)**.
 - Exporte sind Klartext. Behandle sie wie ein Passwort.
 
