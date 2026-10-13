@@ -11,7 +11,7 @@ related:
   - wartung/ueberwachung-einschalten
   - wartung/sicherheits-tab-verstehen
   - zugaenge/projekte-im-team-teilen
-draft: true
+draft: false
 ---
 
 Das Team-Dashboard unter [dashboard.wporbit.ch](https://dashboard.wporbit.ch) zeigt dir alle überwachten Projekte deiner Teams im Browser. Du siehst auf einen Blick, welche Seite down ist, wo ein Zertifikat abläuft und wo Updates offen sind. Das Dashboard zeigt nur an. Ändern kannst du dort nichts.
@@ -96,7 +96,7 @@ Unter der Tabelle steht, wie viele geteilte Projekte des Teams nicht überwacht 
 
 ## Ein Projekt im Detail
 
-Ein Klick auf den Projektnamen öffnet die Detailseite. Oben stehen vier Kennzahlen: **SSL**, **Antwort**, **Verfügbarkeit** über 7 Tage und wann das **Inventar** zuletzt gelesen wurde. Ist die Seite down, steht darunter seit wann.
+Ein Klick auf den Projektnamen öffnet die Detailseite. Oben stehen vier Kennzahlen: **SSL**, **Antwort**, **Verfügbarkeit** über 30 Tage und wann das **Inventar** zuletzt gelesen wurde. Ist die Seite down, steht darunter seit wann.
 
 ![Team-Dashboard, Projektseite mit Tab „Übersicht“: Kennzahlen SSL, Antwort, Verfügbarkeit, Inventar und die Liste „Anstehende Updates“](/anleitungen/wartung/team-dashboard-nutzen/03-projekt-uebersicht.webp)
 
@@ -105,10 +105,10 @@ Die Tabs:
 - **Übersicht:** anstehende Updates von Core, Plugins und Themes, dazu die Details wie Kunde, Adresse, Art der Überwachung, letzte Messung, letztes Inventar und seit wann überwacht wird.
 - **Plugins** und **Themes:** Name, Version, Status, verfügbares Update und ob Auto-Update an ist. Filtern lässt sich nach **Alle**, **Mit Update** und **Inaktiv**. Die Zahl am Tab zeigt, wie viele ein Update haben.
 - **Umgebung:** WordPress, Core-Update, PHP, Datenbank, Multisite, WP_DEBUG, Server, Web-Root und wann das Inventar gelesen wurde.
-- **Erreichbarkeit:** die Antwortzeit der letzten 7 Tage als Verlauf. Ausfälle sind als rote Bänder markiert, mit der Maus siehst du jede einzelne Messung. Darunter die Ausfälle der letzten 30 Tage mit Beginn, Ende und Dauer.
+- **Erreichbarkeit:** oben die Verfügbarkeit über 30 und 90 Tage und ein Streifen mit einem Feld pro Tag. Darunter die Antwortzeit der letzten 7 Tage als Verlauf. Ausfälle sind als rote Bänder markiert, mit der Maus siehst du jede einzelne Messung. Danach folgen die Ausfälle der letzten 90 Tage mit Beginn, Ende und Dauer.
 - **Sicherheit:** Hinweise zu WP_DEBUG, Cron, Auto-Updates, inaktiven Plugins, Datenbankgrösse und Administratoren. Was die einzelnen Punkte bedeuten, erklärt [Den Sicherheits-Tab verstehen](/anleitungen/wartung/sicherheits-tab-verstehen).
 
-{/* SCREENSHOT 04-erreichbarkeit: Web-Dashboard, Tab „Erreichbarkeit“ mit Antwortzeit-Verlauf über 7 Tage, idealerweise mit einem markierten Ausfall, und der Tabelle „Ausfälle“ */}
+![Web-Dashboard, Tab „Erreichbarkeit“: Verfügbarkeit, Antwortzeit der letzten 7 Tage mit markiertem Ausfall und Tabelle „Ausfälle“](/anleitungen/wartung/team-dashboard-nutzen/04-erreichbarkeit.webp)
 
 <Callout variant="tipp" title="Warum Plugins, Themes und Umgebung leer sind">
 Ohne Lesezugang sieht der Server nur, was öffentlich erreichbar ist. Diese Tabs zeigen dann einen Hinweis statt Daten. Das Inventar holst du in der App nach: Rechtsklick auf das Projekt in der Seitenleiste, dann **Inventar einrichten…**.
