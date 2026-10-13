@@ -6,7 +6,7 @@
  * die Marke im Code ist durchgehend "WPorbit".
  */
 export const SITE = {
-  url: 'https://wporbit.io',
+  url: 'https://wporbit.ch',
   name: 'WPorbit',
   titleTemplate: '%s | WPorbit',
   defaultTitle: 'WPorbit — Vom Setup bis zur Wartung. Ein Cockpit.',
@@ -18,7 +18,7 @@ export const SITE = {
   defaultOgImage: '/og/default.jpg',
   blogOgImage: '/og/blog.jpg',
   guideOgImage: '/og/anleitungen.jpg',
-  email: 'hallo@wporbit.io',
+  email: 'hallo@wporbit.ch',
   /** Anmeldung zum Testen auf dem Lizenz-Server: schickt den Link und zeigt den Download. */
   trialUrl: 'https://license.wporbit.ch/testen',
   country: 'CH',

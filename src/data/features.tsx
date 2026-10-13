@@ -46,7 +46,7 @@ export const allFeatures: ShowcaseFeature[] = [
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <div className="ml-3 flex-1 bg-raised rounded-full px-3 py-1 text-[0.68rem] text-tertiary font-mono">
-            preview.wporbit.io/redesign-2024
+            preview.wporbit.ch/redesign-2024
           </div>
         </div>
         <div className="flex-1 p-4 flex flex-col gap-3 relative">
