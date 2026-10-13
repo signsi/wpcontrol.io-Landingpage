@@ -35,7 +35,7 @@ export default function DownloadsPage() {
         crumbs={crumbs}
         actions={
           <>
-            <Link to="/demo" className="btn btn-primary btn-md">Download anfordern</Link>
+            <Link to="/testen" className="btn btn-primary btn-md">Download anfordern</Link>
             <Link to="/changelog" className="btn btn-secondary btn-md">Changelog ansehen</Link>
           </>
         }

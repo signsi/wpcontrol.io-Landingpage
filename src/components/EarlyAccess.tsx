@@ -1,26 +1,62 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { OrbitDivider } from './OrbitMotif'
-import { isValidEmail, submitForm, type FormStatus } from '../lib/forms'
 import { TRIAL_DAYS } from '../data/plans'
+import { isValidEmail } from '../lib/forms'
+import { downloadUrl, requestTrialLink, trialErrorText } from '../lib/trial'
 
+type Phase = 'ask' | 'sending' | 'done'
+
+/**
+ * Anmeldung zum Testen. Der Lizenz-Server schickt den Link zum Anmelden; die
+ * Bestätigung zeigt gleich den Download, denn der Link öffnet nur die
+ * installierte App.
+ */
 export default function EarlyAccess() {
   const [email, setEmail] = useState('')
   const [honeypot, setHoneypot] = useState('')
-  const [status, setStatus] = useState<FormStatus>('idle')
-  const [message, setMessage] = useState('')
+  const [phase, setPhase] = useState<Phase>('ask')
+  const [error, setError] = useState('')
+  const [sentTo, setSentTo] = useState('')
+  const [againNote, setAgainNote] = useState('')
+  const [againBusy, setAgainBusy] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (!isValidEmail(email)) {
-      setStatus('error')
-      setMessage('Bitte gib eine gültige geschäftliche E-Mail-Adresse ein.')
+    const address = email.trim()
+    if (!isValidEmail(address)) {
+      setError(address ? trialErrorText(400) : 'Gib deine E-Mail-Adresse ein.')
+      inputRef.current?.focus()
       return
     }
+    setError('')
+    setPhase('sending')
+    // Honeypot: von echten Personen nie ausgefüllt. Der Bot sieht Erfolg und
+    // erfährt nichts über den Filter.
+    const status = honeypot ? 200 : await requestTrialLink(address)
+    if (status !== 200) {
+      setPhase('ask')
+      setError(trialErrorText(status))
+      inputRef.current?.focus()
+      return
+    }
+    setSentTo(address)
+    setAgainNote('')
+    setPhase('done')
+  }
 
-    setStatus('submitting')
-    const result = await submitForm('demo', { email, website: honeypot })
-    setStatus(result.ok ? 'success' : 'error')
-    setMessage(result.message)
+  async function sendAgain() {
+    setAgainBusy(true)
+    setAgainNote('Wird gesendet …')
+    const status = await requestTrialLink(sentTo)
+    setAgainBusy(false)
+    setAgainNote(status === 200 ? `Neuer Link an ${sentTo} ist unterwegs.` : trialErrorText(status))
+  }
+
+  function changeAddress() {
+    setPhase('ask')
+    setAgainNote('')
+    requestAnimationFrame(() => inputRef.current?.select())
   }
 
   return (
@@ -40,7 +76,7 @@ export default function EarlyAccess() {
             10 Tage gratis. Ohne Risiko.
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[44ch] mb-6">
-            Geschäftliche E-Mail eingeben, WPorbit herunterladen und direkt loslegen. Ein Projekt mit allen verfügbaren Funktionen, ohne Kreditkarte.
+            E-Mail-Adresse eingeben, WPorbit herunterladen und direkt loslegen. Ein Projekt mit allen verfügbaren Funktionen, ohne Kreditkarte.
           </p>
           <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {[
@@ -57,15 +93,58 @@ export default function EarlyAccess() {
         </div>
 
         <div className="reveal-up rounded-panel border border-line bg-surface p-6 shadow-card">
-          {status === 'success' ? (
-            <div className="flex flex-col items-start gap-3 py-4" role="status">
-              <span className="grid h-10 w-10 place-items-center rounded-full border border-success/30 bg-success/10 text-success">
-                ✓
-              </span>
-              <p className="font-heading text-[1.0625rem] font-semibold text-primary">
-                Fast geschafft
-              </p>
-              <p className="text-[0.875rem] leading-[1.7] text-secondary">{message}</p>
+          {phase === 'done' ? (
+            <div className="flex flex-col gap-5">
+              <div>
+                <h3
+                  className="font-heading text-[1.25rem] font-semibold text-primary outline-none"
+                  tabIndex={-1}
+                  ref={(el) => el?.focus()}
+                >
+                  Prüfe deine E-Mails
+                </h3>
+                <p className="mt-2 text-[0.875rem] leading-[1.7] text-secondary">
+                  Wir haben einen Link an <strong className="break-all font-semibold text-primary">{sentTo}</strong> geschickt.
+                  Er gilt 30 Minuten.
+                </p>
+              </div>
+
+              <ol className="flex flex-col gap-3 list-none p-0 m-0">
+                <li className="flex gap-3 rounded-lg border border-line p-4">
+                  <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full border border-line font-heading text-[0.75rem] font-semibold text-primary">1</span>
+                  <div>
+                    <p className="font-heading text-[0.9375rem] font-semibold text-primary">WPorbit für macOS laden</p>
+                    <p className="mt-1 text-[0.8125rem] leading-[1.6] text-secondary">
+                      Datei öffnen und WPorbit in den Ordner „Programme“ ziehen.
+                    </p>
+                    <a href={downloadUrl} className="btn btn-primary btn-md mt-3">WPorbit laden</a>
+                  </div>
+                </li>
+                <li className="flex gap-3 rounded-lg border border-line p-4">
+                  <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full border border-line font-heading text-[0.75rem] font-semibold text-primary">2</span>
+                  <div>
+                    <p className="font-heading text-[0.9375rem] font-semibold text-primary">Link aus der E-Mail auf diesem Mac öffnen</p>
+                    <p className="mt-1 text-[0.8125rem] leading-[1.6] text-secondary">
+                      WPorbit startet und meldet dich an. Bist du gerade nicht am Mac, öffne die E-Mail später dort.
+                    </p>
+                  </div>
+                </li>
+              </ol>
+
+              <div className="border-t border-line pt-4 text-[0.8125rem] text-secondary">
+                <p>Keine E-Mail? Schau im Spam-Ordner nach.</p>
+                <p className="mt-1 flex flex-wrap gap-x-5">
+                  <button type="button" onClick={sendAgain} disabled={againBusy}
+                    className="min-h-11 font-semibold text-accent-strong underline underline-offset-[3px] disabled:opacity-60">
+                    Nochmals senden
+                  </button>
+                  <button type="button" onClick={changeAddress}
+                    className="min-h-11 font-semibold text-accent-strong underline underline-offset-[3px]">
+                    Andere Adresse eingeben
+                  </button>
+                </p>
+                <p role="status" className="empty:hidden">{againNote}</p>
+              </div>
             </div>
           ) : (
             <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
@@ -80,38 +159,42 @@ export default function EarlyAccess() {
 
               <div className="flex flex-col gap-1.5">
                 <label className="text-[0.75rem] font-semibold text-secondary" htmlFor="email-main">
-                  Geschäftliche E-Mail
+                  E-Mail-Adresse
                 </label>
                 <input
                   id="email-main"
+                  ref={inputRef}
                   type="email"
-                  placeholder="team@agentur.ch"
+                  placeholder="du@agentur.ch"
                   required
+                  autoComplete="email"
+                  autoCapitalize="off"
+                  spellCheck={false}
                   value={email}
-                  onChange={(e) => { setEmail(e.target.value); if (status === 'error') setStatus('idle') }}
-                  aria-invalid={status === 'error'}
-                  aria-describedby={status === 'error' ? 'email-main-error' : undefined}
-                  className={`bg-base border text-primary text-sm px-3.5 py-2.5 rounded-lg placeholder:text-tertiary outline-none transition-colors ${
-                    status === 'error' ? 'border-danger' : 'border-line focus:border-accent'
+                  onChange={(e) => { setEmail(e.target.value); if (error) setError('') }}
+                  aria-invalid={Boolean(error)}
+                  aria-describedby={error ? 'email-main-error' : undefined}
+                  className={`bg-base border text-primary text-sm px-3.5 py-2.5 rounded-lg placeholder:text-tertiary outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent/40 ${
+                    error ? 'border-danger' : 'border-line focus:border-accent'
                   }`}
                 />
-                {status === 'error' && (
+                {error && (
                   <p id="email-main-error" className="text-[0.75rem] text-danger" role="alert">
-                    {message}
+                    {error}
                   </p>
                 )}
               </div>
 
               <button
                 type="submit"
-                disabled={status === 'submitting'}
+                disabled={phase === 'sending'}
                 className="btn btn-primary btn-md mt-1 disabled:opacity-60"
               >
-                {status === 'submitting' ? 'Einen Moment …' : 'Kostenlos testen →'}
+                {phase === 'sending' ? 'Wird gesendet …' : 'Kostenlos testen →'}
               </button>
 
               <p className="text-[0.75rem] text-tertiary text-center">
-                Keine Kreditkarte. {TRIAL_DAYS} Tage gratis. Voller Funktionsumfang.
+                WPorbit ist eine App für macOS. Keine Kreditkarte, {TRIAL_DAYS} Tage gratis.
               </p>
             </form>
           )}

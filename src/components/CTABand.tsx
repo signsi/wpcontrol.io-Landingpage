@@ -14,7 +14,7 @@ interface CTABandProps {
 export default function CTABand({
   title,
   text,
-  primary = { label: '10 Tage gratis testen', to: '/demo' },
+  primary = { label: '10 Tage gratis testen', to: '/testen' },
   secondary,
 }: CTABandProps) {
   return (

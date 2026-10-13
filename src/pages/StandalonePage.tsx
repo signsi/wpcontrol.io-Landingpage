@@ -54,7 +54,7 @@ export default function StandalonePage() {
         crumbs={crumbs}
         actions={
           <>
-            <Link to="/demo" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
+            <Link to="/testen" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
             <Link to="/preise" className="btn btn-secondary btn-md">Alle Pläne vergleichen</Link>
           </>
         }

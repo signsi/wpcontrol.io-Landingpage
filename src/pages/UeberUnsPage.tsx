@@ -90,7 +90,7 @@ export default function UeberUnsPage() {
         title="Reden wir über deine Agentur."
         text="Erzähl uns, wo bei euch der Aufwand entsteht. Oft ist die Antwort schon im Produkt, manchmal wird sie zur nächsten Funktion."
         primary={{ label: 'Kontakt aufnehmen', to: '/kontakt' }}
-        secondary={{ label: '10 Tage gratis testen', to: '/demo' }}
+        secondary={{ label: '10 Tage gratis testen', to: '/testen' }}
       />
     </>
   )

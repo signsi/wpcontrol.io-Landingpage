@@ -54,7 +54,7 @@ export default function ProduktPage() {
         crumbs={crumbs}
         actions={
           <>
-            <Link to="/demo" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
+            <Link to="/testen" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
             <Link to="/produkt/funktionen" className="btn btn-secondary btn-md">Alle Funktionen ansehen</Link>
           </>
         }

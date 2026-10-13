@@ -4,7 +4,7 @@
   "redirects": [
     { "source": "/features", "destination": "/produkt/funktionen", "permanent": true },
     { "source": "/custom", "destination": "/massgeschneidert", "permanent": true },
-    { "source": "/waitlist", "destination": "/demo", "permanent": true }
+    { "source": "/waitlist", "destination": "/testen", "permanent": true }
   ],
   "headers": [
     {

@@ -1,14 +1,15 @@
 /**
- * Gemeinsame Absende-Schnittstelle für Demo-Anmeldung, Kontakt und Newsletter.
+ * Gemeinsame Absende-Schnittstelle für Kontakt und Newsletter. Die Anmeldung
+ * zum Testen läuft über den Lizenz-Server (`lib/trial.ts`).
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ ANSCHLUSSPUNKT: Aktuell wird kein Backend angesprochen. Sobald ein   │
- * │ Endpunkt existiert, genügt es, `submitForm` zu ersetzen — alle drei  │
+ * │ Endpunkt existiert, genügt es, `submitForm` zu ersetzen — beide       │
  * │ Formulare hängen daran und brauchen keine Änderung.                  │
  * └──────────────────────────────────────────────────────────────────────┘
  */
 
-export type FormKind = 'demo' | 'kontakt' | 'newsletter'
+export type FormKind = 'kontakt' | 'newsletter'
 
 export type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -24,7 +25,6 @@ export function isValidEmail(value: string): boolean {
 }
 
 const successMessages: Record<FormKind, string> = {
-  demo: 'Danke! Der Download-Link ist unterwegs zu dir.',
   kontakt: 'Danke für deine Nachricht. Wir melden uns innerhalb von zwei Arbeitstagen.',
   newsletter: 'Danke! Du erhältst neue Beiträge künftig per E-Mail.',
 }

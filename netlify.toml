@@ -19,7 +19,7 @@
 # Anker, die es nie gab: früher verlinkt, nie vorhanden.
 [[redirects]]
   from = "/waitlist"
-  to = "/demo"
+  to = "/testen"
   status = 301
 
 # Kein SPA-Fallback: jede Route liegt als echte HTML-Datei vor. Ein

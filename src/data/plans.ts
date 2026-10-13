@@ -38,7 +38,7 @@ export const plans: Plan[] = [
     badge: `${TRIAL_DAYS} Tage · 1 Projekt`,
     features: ['Voller Funktionsumfang', 'Direkter Download', 'Keine Kreditkarte'],
     highlighted: false,
-    href: '/demo',
+    href: '/testen',
     cta: 'Kostenlos testen',
   },
   {
