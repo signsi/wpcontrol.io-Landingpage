@@ -1,8 +1,8 @@
 ---
 title: "Den Sicherheits-Tab im Dashboard verstehen"
-description: "Was WP_DEBUG, Cron, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren im Team-Dashboard bedeuten, und was du jeweils tun solltest."
+description: "Was bekannte Sicherheitslücken, WP_DEBUG, Cron, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren im Team-Dashboard bedeuten, und was du jeweils tun solltest."
 order: 30
-updated: 2026-09-24
+updated: 2026-10-13
 type: referenz
 audience: fortgeschritten
 duration: "10 Minuten"
@@ -15,7 +15,7 @@ related:
 draft: false
 ---
 
-Im Team-Dashboard hat jedes Projekt einen Tab **Sicherheit**. Er fasst zusammen, was das Inventar über den Zustand einer Live-Seite verrät. Keiner der Punkte ist für sich ein Sicherheitsvorfall. Zusammen zeigen sie aber, wo eine Seite gepflegt werden sollte.
+Im Team-Dashboard hat jedes Projekt einen Tab **Sicherheit**. Er zeigt zuerst bekannte Sicherheitslücken in der installierten Software und fasst dann zusammen, was das Inventar über den Zustand einer Live-Seite verrät. Die Hinweise nach den Lücken sind für sich keine Sicherheitsvorfälle. Zusammen zeigen sie aber, wo eine Seite gepflegt werden sollte.
 
 <Callout variant="hinweis" title="Nur mit Lesezugang">
 Der Tab braucht das Inventar, also die Überwachung mit Lesezugang per SSH. Bei Projekten, die nur von aussen überwacht werden, steht dort ein Hinweis statt Daten. Siehe [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).
@@ -23,7 +23,17 @@ Der Tab braucht das Inventar, also die Überwachung mit Lesezugang per SSH. Bei 
 
 Die Werte stammen aus dem letzten Inventar, das der Server alle 6 Stunden liest. Eine Änderung auf der Live-Seite siehst du also erst nach dem nächsten Lauf.
 
-![Team-Dashboard, Tab „Sicherheit“: WP_DEBUG, Cron, nächster Cron-Event, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren](/anleitungen/wartung/sicherheits-tab-verstehen/01-sicherheit-tab.webp)
+![Team-Dashboard, Tab „Sicherheit“: Abschnitt „Sicherheitslücken“, darunter WP_DEBUG, Cron, nächster Cron-Event, Auto-Updates, inaktive Plugins, Datenbankgrösse und die Liste der Administratoren](/anleitungen/wartung/sicherheits-tab-verstehen/01-sicherheit-tab.webp)
+
+## Sicherheitslücken
+
+**Was es zeigt:** bekannte Lücken in WordPress, Plugins und Themes, abgeglichen mit der Datenbank von Wordfence Intelligence bei jedem Inventar-Lauf. Pro Lücke stehen die betroffene Software, die Lücke mit CVE-Nummer, die Schwere mit CVSS-Wert, die installierte Version, ob ein Update sie behebt, und seit wann sie bekannt ist. Die rote Zahl am Tab nennt die Anzahl Lücken. Steht „Keine bekannten Lücken“, ist für die installierten Versionen nichts gemeldet.
+
+**Warum es zählt:** Bekannte Lücken werden gezielt und automatisiert ausgenutzt, oft wenige Tage nach der Veröffentlichung. Eine Lücke mit hoher oder kritischer Schwere setzt das Projekt im Dashboard auf **SSL kritisch**, eine weniger schwere auf **Pflege nötig**.
+
+**Was du tun solltest:** Steht „Update auf X behebt sie“, aktualisiere so bald wie möglich, siehe [Live-Seite sicher aktualisieren](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren). Steht „noch kein Update“, prüfe, ob du das Plugin vorübergehend deaktivieren oder ersetzen kannst. Welche Plugins betroffen sind, zeigt auch der Tab **Plugins** mit dem Filter **Mit Lücke**.
+
+Die Prüfung auf Sicherheitslücken ist Teil des bezahlten WPorbit-Plans. Ohne ihn steht an dieser Stelle ein Hinweis.
 
 ## WP_DEBUG
 
@@ -50,7 +60,7 @@ Die Werte stammen aus dem letzten Inventar, das der Server alle 6 Stunden liest.
 
 **Warum es zählt:** Sicherheitslücken in Plugins gehören zu den häufigsten Wegen in eine WordPress-Seite. Automatische Updates schliessen sie schnell, können aber auch eine Seite unbemerkt verändern.
 
-**Was du tun solltest:** Es gibt keine richtige Zahl. Entscheide pro Seite bewusst: Bei kleinen, einfachen Plugins sind Auto-Updates meist ein Gewinn. Bei zentralen Plugins wie Shop oder Formularen testest du Updates lieber zuerst lokal, siehe [Live-Seite sicher aktualisieren](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren). Welche Plugins ein Update offen haben, zeigt der Tab **Plugins** mit dem Filter **Mit Update**.
+**Was du tun solltest:** Es gibt keine richtige Zahl. Entscheide pro Seite bewusst: Bei kleinen, einfachen Plugins sind Auto-Updates meist ein Gewinn. Bei zentralen Plugins wie Shop oder Formularen testest du Updates lieber zuerst lokal, siehe [Live-Seite sicher aktualisieren](/anleitungen/veroeffentlichen/live-seite-sicher-aktualisieren). Welche Plugins ein Update offen haben, zeigt der Tab **Plugins** mit dem Filter **Mit Update**. Der Filter erscheint nur, wenn mindestens ein Plugin passt.
 
 ## Inaktive Plugins
 
@@ -58,7 +68,7 @@ Die Werte stammen aus dem letzten Inventar, das der Server alle 6 Stunden liest.
 
 **Warum es zählt:** Ein inaktives Plugin tut nichts, aber seine Dateien liegen auf dem Server. Je nach Plugin lassen sich einzelne Dateien direkt aufrufen, und Lücken darin bleiben ausnutzbar. Dazu kommt, dass inaktive Plugins selten aktualisiert werden, weil niemand an sie denkt.
 
-**Was du tun solltest:** Lösche Plugins, die nicht mehr gebraucht werden, statt sie nur zu deaktivieren. Welche es sind, zeigt der Tab **Plugins** mit dem Filter **Inaktiv**. Mach vorher ein Backup, siehe [Backups erstellen](/anleitungen/wartung/backups-erstellen).
+**Was du tun solltest:** Lösche Plugins, die nicht mehr gebraucht werden, statt sie nur zu deaktivieren. Welche es sind, zeigt der Tab **Plugins** mit dem Filter **Inaktiv**, sobald es mindestens eines gibt. Mach vorher ein Backup, siehe [Backups erstellen](/anleitungen/wartung/backups-erstellen).
 
 ## Datenbankgrösse
 
