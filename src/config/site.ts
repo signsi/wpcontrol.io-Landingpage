@@ -19,5 +19,7 @@ export const SITE = {
   blogOgImage: '/og/blog.jpg',
   guideOgImage: '/og/anleitungen.jpg',
   email: 'hallo@wporbit.io',
+  /** Anmeldung zum Testen auf dem Lizenz-Server: schickt den Link und zeigt den Download. */
+  trialUrl: 'https://license.wporbit.ch/testen',
   country: 'CH',
 } as const

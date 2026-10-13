@@ -1,28 +1,12 @@
-import { useState, type FormEvent } from 'react'
 import { OrbitDivider } from './OrbitMotif'
-import { isValidEmail, submitForm, type FormStatus } from '../lib/forms'
 import { TRIAL_DAYS } from '../data/plans'
+import { SITE } from '../config/site'
 
+/**
+ * Einstieg zum Testen. Die Anmeldung selbst liegt auf dem Lizenz-Server
+ * (`/testen`): Dort kommen Link, Download und klare Fehlermeldungen her.
+ */
 export default function EarlyAccess() {
-  const [email, setEmail] = useState('')
-  const [honeypot, setHoneypot] = useState('')
-  const [status, setStatus] = useState<FormStatus>('idle')
-  const [message, setMessage] = useState('')
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    if (!isValidEmail(email)) {
-      setStatus('error')
-      setMessage('Bitte gib eine gültige geschäftliche E-Mail-Adresse ein.')
-      return
-    }
-
-    setStatus('submitting')
-    const result = await submitForm('demo', { email, website: honeypot })
-    setStatus(result.ok ? 'success' : 'error')
-    setMessage(result.message)
-  }
-
   return (
     <section
       className="relative px-6 py-24 overflow-hidden"
@@ -57,64 +41,26 @@ export default function EarlyAccess() {
         </div>
 
         <div className="reveal-up rounded-panel border border-line bg-surface p-6 shadow-card">
-          {status === 'success' ? (
-            <div className="flex flex-col items-start gap-3 py-4" role="status">
-              <span className="grid h-10 w-10 place-items-center rounded-full border border-success/30 bg-success/10 text-success">
-                ✓
-              </span>
-              <p className="font-heading text-[1.0625rem] font-semibold text-primary">
-                Fast geschafft
-              </p>
-              <p className="text-[0.875rem] leading-[1.7] text-secondary">{message}</p>
-            </div>
-          ) : (
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
-              {/* Honeypot: für Menschen unsichtbar, Bots füllen ihn aus. */}
-              <label className="absolute left-[-9999px] h-px w-px overflow-hidden" aria-hidden="true">
-                Website
-                <input
-                  type="text" tabIndex={-1} autoComplete="off"
-                  value={honeypot} onChange={(e) => setHoneypot(e.target.value)}
-                />
-              </label>
-
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[0.75rem] font-semibold text-secondary" htmlFor="email-main">
-                  Geschäftliche E-Mail
-                </label>
-                <input
-                  id="email-main"
-                  type="email"
-                  placeholder="team@agentur.ch"
-                  required
-                  value={email}
-                  onChange={(e) => { setEmail(e.target.value); if (status === 'error') setStatus('idle') }}
-                  aria-invalid={status === 'error'}
-                  aria-describedby={status === 'error' ? 'email-main-error' : undefined}
-                  className={`bg-base border text-primary text-sm px-3.5 py-2.5 rounded-lg placeholder:text-tertiary outline-none transition-colors ${
-                    status === 'error' ? 'border-danger' : 'border-line focus:border-accent'
-                  }`}
-                />
-                {status === 'error' && (
-                  <p id="email-main-error" className="text-[0.75rem] text-danger" role="alert">
-                    {message}
-                  </p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="btn btn-primary btn-md mt-1 disabled:opacity-60"
-              >
-                {status === 'submitting' ? 'Einen Moment …' : 'Kostenlos testen →'}
-              </button>
-
-              <p className="text-[0.75rem] text-tertiary text-center">
-                Keine Kreditkarte. {TRIAL_DAYS} Tage gratis. Voller Funktionsumfang.
-              </p>
-            </form>
-          )}
+          <ol className="flex flex-col gap-3 list-none p-0 m-0 mb-6">
+            {[
+              'E-Mail-Adresse eingeben',
+              'WPorbit für macOS laden',
+              'Link aus der E-Mail auf dem Mac öffnen',
+            ].map((step, i) => (
+              <li key={step} className="flex items-center gap-3 text-[0.875rem] text-primary">
+                <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full border border-line font-heading text-[0.75rem] font-semibold">
+                  {i + 1}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
+          <a href={SITE.trialUrl} className="btn btn-primary btn-md w-full">
+            Kostenlos testen →
+          </a>
+          <p className="mt-4 text-[0.75rem] text-tertiary text-center">
+            Keine Kreditkarte. {TRIAL_DAYS} Tage gratis. Voller Funktionsumfang.
+          </p>
         </div>
       </div>
     </section>
