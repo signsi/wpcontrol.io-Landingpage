@@ -19,7 +19,10 @@ export const SITE = {
   blogOgImage: '/og/blog.jpg',
   guideOgImage: '/og/anleitungen.jpg',
   email: 'hallo@wporbit.ch',
-  /** Anmeldung zum Testen auf dem Lizenz-Server: schickt den Link und zeigt den Download. */
-  trialUrl: 'https://license.wporbit.ch/testen',
+  /**
+   * Lizenz-Server: nimmt die Anmeldung zum Testen an (`/auth/signup`, CORS nur
+   * für diese Website) und liefert die aktuelle App (`/download`).
+   */
+  licenseUrl: 'https://license.wporbit.ch',
   country: 'CH',
 } as const

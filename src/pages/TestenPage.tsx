@@ -5,7 +5,7 @@ import FAQ from '../components/FAQ'
 import { TRIAL_DAYS } from '../data/plans'
 import { breadcrumbLd } from '../lib/jsonld'
 
-const crumbs = [{ label: 'Gratis testen', path: '/demo' }]
+const crumbs = [{ label: 'Gratis testen', path: '/testen' }]
 
 const steps = [
   {
@@ -14,7 +14,7 @@ const steps = [
   },
   {
     title: 'WPorbit herunterladen',
-    text: 'Du erhältst den Download-Link direkt per E-Mail und kannst sofort installieren.',
+    text: 'Direkt nach der Anmeldung lädst du die App. Den Link zum Anmelden bekommst du per E-Mail.',
   },
   {
     title: 'Erstes Projekt anlegen',
@@ -24,12 +24,12 @@ const steps = [
 
 const demoFaq = [
   {
-    q: 'Was ist in der Demo enthalten?',
+    q: 'Was ist im Test enthalten?',
     a: `Der volle Funktionsumfang für ein Projekt, ${TRIAL_DAYS} Tage lang. Es gibt keine gesperrten Funktionen.`,
   },
   {
-    q: 'Was passiert nach den zehn Tagen?',
-    a: 'Die Demo endet automatisch. Es entstehen keine Kosten und du musst nichts kündigen.',
+    q: `Was passiert nach den ${TRIAL_DAYS} Tagen?`,
+    a: 'Der Test endet automatisch. Es entstehen keine Kosten und du musst nichts kündigen.',
   },
   {
     q: 'Kann ich ein echtes Kundenprojekt testen?',
@@ -41,20 +41,20 @@ const demoFaq = [
   },
 ]
 
-export default function DemoPage() {
+export default function TestenPage() {
   return (
     <>
       <Seo
         title={`${TRIAL_DAYS} Tage gratis testen`}
         description={`WPorbit ${TRIAL_DAYS} Tage kostenlos testen: voller Funktionsumfang, ein Projekt, keine Kreditkarte. Nur E-Mail-Adresse eingeben und herunterladen.`}
-        path="/demo"
+        path="/testen"
         jsonLd={breadcrumbLd(crumbs)}
       />
 
       <PageHero
-        kicker="Demo"
+        kicker="Gratis testen"
         title={<>{TRIAL_DAYS} Tage gratis.<br />Ohne Risiko.</>}
-        lead="Der schnellste Weg, WPorbit zu beurteilen, ist ein echtes Kundenprojekt. Genau dafür ist die Demo gebaut."
+        lead="Der schnellste Weg, WPorbit zu beurteilen, ist ein echtes Kundenprojekt. Genau dafür ist der Test gebaut."
         crumbs={crumbs}
         bordered={false}
       />
@@ -82,7 +82,7 @@ export default function DemoPage() {
         </ol>
       </section>
 
-      <FAQ items={demoFaq} heading="Fragen zur Demo" />
+      <FAQ items={demoFaq} heading="Fragen zum Test" />
     </>
   )
 }

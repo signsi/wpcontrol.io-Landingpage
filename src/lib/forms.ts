@@ -1,6 +1,6 @@
 /**
  * Gemeinsame Absende-Schnittstelle für Kontakt und Newsletter. Die Anmeldung
- * zum Testen läuft über den Lizenz-Server (`SITE.trialUrl`).
+ * zum Testen läuft über den Lizenz-Server (`lib/trial.ts`).
  *
  * ┌──────────────────────────────────────────────────────────────────────┐
  * │ ANSCHLUSSPUNKT: Aktuell wird kein Backend angesprochen. Sobald ein   │

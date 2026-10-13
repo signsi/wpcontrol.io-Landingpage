@@ -86,7 +86,7 @@ export const routes: RouteRecord[] = [
       { path: 'massgeschneidert', lazy: () => import('./pages/CustomPage').then((m) => ({ Component: m.default })) },
       { path: 'vergleich', lazy: () => import('./pages/VergleichPage').then((m) => ({ Component: m.default })) },
       { path: 'preise', lazy: () => import('./pages/PreisePage').then((m) => ({ Component: m.default })) },
-      { path: 'demo', lazy: () => import('./pages/DemoPage').then((m) => ({ Component: m.default })) },
+      { path: 'testen', lazy: () => import('./pages/TestenPage').then((m) => ({ Component: m.default })) },
       { path: 'faq', lazy: () => import('./pages/FaqPage').then((m) => ({ Component: m.default })) },
 
       // Ressourcen

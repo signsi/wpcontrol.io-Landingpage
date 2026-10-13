@@ -77,7 +77,7 @@ export const primaryNav: NavGroup[] = [
 
 /** Sekundäres Ziel für Bestandskunden, primäres für Interessenten. */
 export const secondaryCta = { label: 'Anleitungen', to: '/anleitungen' }
-export const primaryCta = { label: 'Gratis testen', to: '/demo' }
+export const primaryCta = { label: 'Gratis testen', to: '/testen' }
 
 export interface FooterColumn {
   heading: string
@@ -113,7 +113,7 @@ export const footerNav: FooterColumn[] = [
       { label: 'Über uns', to: '/ueber-uns' },
       { label: 'Kontakt', to: '/kontakt' },
       { label: 'Support', to: '/support' },
-      { label: 'Gratis testen', to: '/demo' },
+      { label: 'Gratis testen', to: '/testen' },
     ],
   },
   {
