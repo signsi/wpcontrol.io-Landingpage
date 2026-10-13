@@ -11,7 +11,7 @@ related:
   - erste-schritte/wporbit-installieren
   - fehlerbehebung/diagnose-und-support
   - wartung/wporbit-aktualisieren
-draft: true
+draft: false
 ---
 
 WPorbit braucht im Hintergrund eine Container-Laufzeit (Colima), Docker, Vault und für die lokalen Domains einen kleinen Webserver. Fehlt eines davon oder startet es nicht, zeigt die App das an der Stelle, an der es auffällt, und bietet meistens direkt die passende Reparatur an. Diese Seite ist nach Fehlerbild sortiert: Such, was du siehst, und arbeite die Schritte von oben nach unten ab.
@@ -62,7 +62,7 @@ Wechsle zurück zu WPorbit und klicke auf **Erneut suchen**. Hilft das nicht, be
 2. Nennt die Meldung ein bestimmtes Programm, kannst du es auch von Hand installieren. Die Befehle stehen in der Tabelle unten.
 3. Scheitert der Schritt „Lokale Domains“, klicke auf **Lokale Domains überspringen**. WPorbit schliesst die Einrichtung dann ohne lokale Domains ab. Deine Projekte sind vorerst über ihren localhost-Port erreichbar. Nachholen kannst du die Domains später mit **Einrichtungsassistent neu starten**.
 
-{/* SCREENSHOT 01-einrichtung-fehlgeschlagen: Einrichtungsassistent „Einrichtung fehlgeschlagen“ mit Fehlertext inkl. „Grund:“, Buttons „Erneut versuchen“ und „Lokale Domains überspringen“. Z. B. Installation ohne Internetverbindung ausgelöst. */}
+![Einrichtungsassistent „Einrichtung fehlgeschlagen“ mit Grund und den Buttons „Erneut versuchen“ und „Lokale Domains überspringen“](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl/01-einrichtung-fehlgeschlagen.webp)
 
 | Programm | Befehl im Terminal |
 | --- | --- |
@@ -106,7 +106,7 @@ Ein orangefarbenes Zeichen bei „Lokale Domains“ oder bei einem optionalen Pr
 
 Ein Startversuch ohne Reparatur scheitert bei einem beschädigten Download jedes Mal gleich. Nimm deshalb den angebotenen Knopf statt einfach erneut zu starten.
 
-{/* SCREENSHOT 02-umgebung-unvollstaendig: Startfenster „Umgebung nicht vollständig gestartet“ mit Zeilen Colima (rot), Docker, Vault, roter Fehlermeldung und dem Button „Cache leeren und erneut starten“ plus „Weiter“. Colima-Start mit beschädigtem Download-Cache. */}
+![Fenster „Umgebung nicht vollständig gestartet“: Colima rot, Fehlermeldung und Button „Cache leeren und erneut starten“](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl/02-umgebung-unvollstaendig.webp)
 
 ## „Umgebung nicht vollständig gestartet“ beim App-Start
 
@@ -134,7 +134,7 @@ Mit **Weiter** schliesst du das Fenster ohne Reparatur. Projekte starten dann ab
 
 Fehlt nur ein optionales Programm, etwa VS Code oder certutil, kannst du den Hinweis mit dem × ausblenden. Ein fehlendes benötigtes Programm lässt sich nicht ausblenden.
 
-{/* SCREENSHOT 03-abhaengigkeits-balken: Hauptfenster mit orangem Balken „Docker CLI fehlt — WPorbit ist noch nicht vollständig eingerichtet.“, aufgeklappten Details mit Installationsbefehl und dem Button „Jetzt installieren“. Docker CLI deinstalliert. */}
+![Oranger Balken „Docker CLI fehlt“ mit aufgeklappten Details und dem Button „Jetzt installieren“](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl/03-abhaengigkeits-balken.webp)
 
 ## Browser warnt bei `*.wporbit`-Adressen
 
