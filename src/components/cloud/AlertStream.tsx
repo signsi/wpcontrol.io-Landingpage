@@ -61,27 +61,37 @@ export default function AlertStream() {
   }))
 
   return (
-    <div ref={ref} className="flex w-full max-w-[22rem] flex-col gap-2" aria-label="Beispiele für Alarme im Team-Kanal">
-      <p className="mb-1 flex items-center gap-2 text-[0.72rem] font-semibold text-tertiary">
+    // Ein geschlossenes, deckendes Kanal-Fenster: nichts vom Screenshot darunter
+    // scheint durch. Ältere Meldungen treten über die Textfarbe zurück, nicht
+    // über Transparenz.
+    <div
+      ref={ref}
+      className="w-full max-w-[22rem] overflow-hidden rounded-panel border border-line bg-surface shadow-overlay"
+      aria-label="Beispiele für Alarme im Team-Kanal"
+    >
+      <p className="flex items-center gap-2 border-b border-line bg-raised px-4 py-2.5 text-[0.76rem] font-semibold text-primary">
         <span className="relative flex size-2" aria-hidden="true">
           <span className="absolute inline-flex size-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
           <span className="relative inline-flex size-2 rounded-full bg-accent" />
         </span>
         #wartung
+        <span className="ml-auto font-normal text-tertiary">Slack</span>
       </p>
-      {shown.map(({ alert, key, depth }) => (
-        <div
-          key={key}
-          className={`rounded-control border border-line bg-surface/95 px-3.5 py-2.5 shadow-overlay backdrop-blur-sm transition-[opacity,transform] duration-500 ease-out-expo ${depth === 0 ? 'animate-alert-in' : ''}`}
-          style={{ opacity: 1 - depth * 0.28, transform: `scale(${1 - depth * 0.03})`, transformOrigin: 'top center' }}
-        >
-          <p className="flex items-center gap-2 text-[0.82rem] font-semibold text-primary">
-            <span className={`size-2 shrink-0 rounded-full ${dot[alert.tone]}`} aria-hidden="true" />
-            {alert.title}
-          </p>
-          <p className="mt-0.5 pl-4 text-[0.74rem] text-tertiary">{alert.detail}</p>
-        </div>
-      ))}
+      <ul className="divide-y divide-line">
+        {shown.map(({ alert, key, depth }) => (
+          <li key={key} className={`px-4 py-3 ${depth === 0 ? 'animate-alert-in' : ''}`}>
+            <p
+              className={`flex items-center gap-2 text-[0.82rem] font-semibold transition-colors duration-500 ${
+                depth === 0 ? 'text-primary' : 'text-secondary'
+              }`}
+            >
+              <span className={`size-2 shrink-0 rounded-full ${dot[alert.tone]}`} aria-hidden="true" />
+              <span className="truncate">{alert.title}</span>
+            </p>
+            <p className="mt-0.5 truncate pl-4 text-[0.74rem] text-tertiary">{alert.detail}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
