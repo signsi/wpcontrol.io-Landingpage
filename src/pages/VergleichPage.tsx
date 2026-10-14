@@ -6,6 +6,26 @@ import { breadcrumbLd } from '../lib/jsonld'
 
 const crumbs = [{ label: 'Vergleich', path: '/vergleich' }]
 
+/**
+ * Wartung und Überwachung. Nur Angaben, die auf den Seiten der Anbieter
+ * stehen (Stand und Quellen: content-plan/cloud-seite.md). Vor jeder
+ * Änderung neu prüfen; vergleichende Werbung muss nachprüfbar sein.
+ */
+const maintenanceTools = ['WPorbit Cloud', 'WP Umbrella', 'ManageWP', 'MainWP', 'WP Remote'] as const
+const maintenanceRows: { label: string; values: string[] }[] = [
+  { label: 'Verbindung zur Kundenseite', values: ['Beschränkter SSH-Schlüssel oder nur von aussen', 'Plugin', 'Plugin', 'Plugin', 'Plugin'] },
+  { label: 'Betrieb', values: ['Dienst, Schweiz', 'Dienst, EU', 'Dienst', 'Eigener Server', 'Dienst'] },
+  { label: 'Erreichbarkeit', values: ['Alle 5 Min.', 'Ja', 'Zusatz, 60 s', 'Ja', 'Ja'] },
+  { label: 'Bekannte Sicherheitslücken', values: ['Ja', 'Ja', 'Zusatz', 'Ja', 'Ja'] },
+  { label: 'Performance (PageSpeed)', values: ['Ja', 'Ja', 'Zusatz', 'Zusatz', 'k. A.'] },
+  { label: 'Barrierefreiheits-Wert', values: ['Ja, Teil-Check', '–', '–', 'Zusatz', '–'] },
+  { label: 'Mailtest und SPF/DKIM/DMARC', values: ['Ja', '–', '–', '–', '–'] },
+  { label: 'Updates aus der Ferne', values: ['Bis zum Release', 'Ja', 'Ja', 'Ja', 'Ja'] },
+  { label: 'Backups', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Über Plugins', 'Ja'] },
+  { label: 'Kundenberichte mit eigenem Logo', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Pro', 'Ja'] },
+  { label: 'Lokale Entwicklung im selben Werkzeug', values: ['Ja, mit der App', '–', '–', '–', '–'] },
+]
+
 const positions = [
   {
     tool: 'Local WP',
@@ -31,8 +51,8 @@ export default function VergleichPage() {
   return (
     <>
       <Seo
-        title="WPorbit im Vergleich zu Local WP und WordPress Studio"
-        description="Wie unterscheidet sich WPorbit von Local WP und WordPress Studio? Ein ehrlicher Vergleich für Agenturen, die mit mehreren Hosting-Anbietern arbeiten."
+        title="WPorbit im Vergleich: Local WP, WordPress Studio, WP Umbrella, ManageWP"
+        description="Wie unterscheidet sich WPorbit von Local WP und WordPress Studio, und WPorbit Cloud von WP Umbrella, ManageWP, MainWP und WP Remote? Ein ehrlicher Vergleich für Agenturen."
         path="/vergleich"
         jsonLd={breadcrumbLd(crumbs)}
       />
@@ -85,6 +105,45 @@ export default function VergleichPage() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section id="wartung" className="border-t border-line px-6 py-20">
+        <div className="reveal-up mb-10 max-w-[46rem]">
+          <h2 className="font-heading text-[clamp(1.75rem,3.4vw,2.125rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+            Wartung und Überwachung: WPorbit Cloud im Vergleich
+          </h2>
+          <p className="mt-3 text-[0.95rem] leading-[1.75] text-secondary">
+            WP Umbrella, ManageWP, MainWP und WP Remote sind bewährte Wartungsdienste. Sie verbinden sich über ein
+            Plugin auf jeder Kundenseite. WPorbit Cloud braucht keines und kommt zusammen mit der App für die lokale
+            Arbeit. Cloud ist in Entwicklung, der Release folgt bis Ende 2026.
+          </p>
+        </div>
+        <div className="overflow-x-auto rounded-xl border border-line">
+          <table className="w-full min-w-[48rem] text-left text-[0.84rem]">
+            <thead className="bg-raised text-[0.7rem] uppercase tracking-[0.08em] text-tertiary">
+              <tr>
+                <th className="px-4 py-3 font-semibold"></th>
+                {maintenanceTools.map((tool, i) => (
+                  <th key={tool} className={`px-4 py-3 font-semibold ${i === 0 ? 'text-accent' : ''}`}>{tool}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {maintenanceRows.map((row) => (
+                <tr key={row.label} className="border-t border-line">
+                  <td className="px-4 py-3 text-primary">{row.label}</td>
+                  {row.values.map((value, i) => (
+                    <td key={i} className={`px-4 py-3 ${i === 0 ? 'font-medium text-primary' : 'text-secondary'}`}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 max-w-[60ch] text-[0.82rem] leading-[1.65] text-tertiary">
+          Stand Oktober 2026, nach Angaben auf den Websites der Anbieter. „Zusatz“ heisst: als kostenpflichtige
+          Erweiterung. „–“: dort nicht gefunden. „k. A.“: keine Angabe gefunden. Preise vergleichen wir bewusst nicht, weil Cloud die App für die lokale Entwicklung einschliesst.
+        </p>
       </section>
 
       <CTABand

@@ -10,16 +10,16 @@ export default function CloudTeaser() {
         <div className="reveal-up">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-on-dark/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-on-dark/70">
             <span className="size-1.5 rounded-full bg-accent" />
-            In Entwicklung
+            In Entwicklung · Release bis Ende 2026
           </div>
           <h2 className="max-w-[18ch] font-heading text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-on-dark">
-            Standalone ist das Werkzeug. Cloud wird der gemeinsame Arbeitsbereich.
+            Standalone ist das Werkzeug. Cloud behält alle Kundenseiten im Blick.
           </h2>
         </div>
 
         <div className="reveal-up lg:pb-1">
           <p className="mb-6 max-w-[38ch] text-[0.95rem] leading-[1.75] text-on-dark/70">
-            Cloud hält Projekte, Arbeitsstände und Standards im Team auf demselben Stand. Wissen bleibt verfügbar, auch wenn Aufgaben oder Verantwortlichkeiten wechseln.
+            Das Team-Dashboard zeigt Erreichbarkeit, Updates, Sicherheitslücken und Performance aller Websites, ohne Plugin auf der Kundenseite. Projekte und Zugänge teilt das Team verschlüsselt.
           </p>
           <Link
             to="/cloud"
