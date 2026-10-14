@@ -18,7 +18,7 @@ const lifecycle = [
   {
     phase: 'Entwickeln',
     title: 'Lokal arbeiten, ohne Setup-Aufwand',
-    text: 'Jedes Projekt bekommt eine eigene, abgestimmte Umgebung. Kein Docker, keine Server-Konfiguration, keine Diskussion über PHP-Versionen.',
+    text: 'Jedes Projekt bekommt eine eigene, abgestimmte Umgebung. Kein Docker Desktop, keine Server-Konfiguration, keine Diskussion über PHP-Versionen.',
   },
   {
     phase: 'Zeigen',
@@ -100,7 +100,7 @@ export default function ProduktPage() {
 
       <CTABand
         title="Am schnellsten überzeugt die Anwendung selbst."
-        text="Zehn Tage, ein Projekt, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
+        text="Zehn Tage, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
         secondary={{ label: 'Alle Funktionen ansehen', to: '/produkt/funktionen' }}
       />
     </>

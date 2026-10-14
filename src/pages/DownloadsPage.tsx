@@ -9,11 +9,11 @@ import { breadcrumbLd } from '../lib/jsonld'
 const crumbs = [{ label: 'Downloads', path: '/downloads' }]
 
 const requirements = [
-  { label: 'Betriebssystem', value: 'macOS 14 Sonoma oder neuer' },
+  { label: 'Betriebssystem', value: 'macOS 15 Sequoia oder neuer' },
   { label: 'Prozessor', value: 'Apple Silicon oder Intel' },
   { label: 'Arbeitsspeicher', value: 'Mindestens 8 GB, empfohlen 16 GB' },
   { label: 'Speicherplatz', value: 'Rund 2 GB, zusätzlich Platz pro Projekt' },
-  { label: 'Zusätzlich nötig', value: 'Kein Docker, kein lokaler Webserver' },
+  { label: 'Zusätzlich nötig', value: 'Nichts. Colima und die Docker-Werkzeuge richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
 ]
 
 export default function DownloadsPage() {
@@ -97,7 +97,7 @@ export default function DownloadsPage() {
 
       <CTABand
         title="Noch keine Lizenz?"
-        text="Teste WPorbit zehn Tage lang mit einem Projekt. Nur eine E-Mail-Adresse, keine Kreditkarte."
+        text="Teste WPorbit zehn Tage lang. Nur eine E-Mail-Adresse, keine Kreditkarte."
         secondary={{ label: 'Preise ansehen', to: '/preise' }}
       />
     </>

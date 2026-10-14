@@ -35,7 +35,7 @@ export const plans: Plan[] = [
     priceSub: '',
     priceValue: 0,
     note: `${TRIAL_DAYS} Tage gratis. Voller Funktionsumfang. Kein Risiko.`,
-    badge: `${TRIAL_DAYS} Tage · 1 Projekt`,
+    badge: `${TRIAL_DAYS} Tage · voller Umfang`,
     features: ['Voller Funktionsumfang', 'Direkter Download', 'Keine Kreditkarte'],
     highlighted: false,
     href: '/testen',
@@ -100,7 +100,7 @@ export const customPlan = {
 export const pricingFaq = [
   {
     q: 'Fallen bei der Demo Kosten an?',
-    a: `Nein. Die Demo läuft ${TRIAL_DAYS} Tage mit vollem Funktionsumfang und einem Projekt. Es braucht nur eine E-Mail-Adresse, keine Kreditkarte, und sie endet automatisch.`,
+    a: `Nein. Die Demo läuft ${TRIAL_DAYS} Tage mit vollem Funktionsumfang. Es braucht nur eine E-Mail-Adresse, keine Kreditkarte, und sie endet automatisch.`,
   },
   {
     q: 'Wird pro Person oder pro Projekt abgerechnet?',

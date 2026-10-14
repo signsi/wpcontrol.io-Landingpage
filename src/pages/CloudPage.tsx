@@ -97,7 +97,7 @@ export default function CloudPage() {
 
       <CTABand
         title="Heute mit Standalone starten."
-        text="Die lokale App funktioniert unabhängig von Cloud. Du kannst sie bereits heute zehn Tage lang mit einem Projekt testen."
+        text="Die lokale App funktioniert unabhängig von Cloud. Du kannst sie bereits heute zehn Tage lang testen."
         primary={{ label: 'Standalone testen', to: '/testen' }}
         secondary={{ label: 'Standalone-Plan ansehen', to: '/standalone' }}
       />

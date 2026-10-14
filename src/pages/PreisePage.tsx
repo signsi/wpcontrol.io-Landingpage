@@ -42,7 +42,7 @@ export default function PreisePage() {
 
       <CTABand
         title="Erst testen, dann entscheiden."
-        text="Zehn Tage, ein Projekt, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
+        text="Zehn Tage, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
         secondary={{ label: 'Kontakt aufnehmen', to: '/kontakt' }}
       />
     </>

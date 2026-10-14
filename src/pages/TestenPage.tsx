@@ -25,7 +25,7 @@ const steps = [
 const demoFaq = [
   {
     q: 'Was ist im Test enthalten?',
-    a: `Der volle Funktionsumfang für ein Projekt, ${TRIAL_DAYS} Tage lang. Es gibt keine gesperrten Funktionen.`,
+    a: `Der volle Funktionsumfang, ${TRIAL_DAYS} Tage lang. Es gibt keine gesperrten Funktionen.`,
   },
   {
     q: `Was passiert nach den ${TRIAL_DAYS} Tagen?`,
@@ -46,7 +46,7 @@ export default function TestenPage() {
     <>
       <Seo
         title={`${TRIAL_DAYS} Tage gratis testen`}
-        description={`WPorbit ${TRIAL_DAYS} Tage kostenlos testen: voller Funktionsumfang, ein Projekt, keine Kreditkarte. Nur E-Mail-Adresse eingeben und herunterladen.`}
+        description={`WPorbit ${TRIAL_DAYS} Tage kostenlos testen: voller Funktionsumfang, keine Kreditkarte. Nur E-Mail-Adresse eingeben und herunterladen.`}
         path="/testen"
         jsonLd={breadcrumbLd(crumbs)}
       />

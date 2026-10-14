@@ -80,7 +80,7 @@ export default function FeaturesPage() {
 
       <CTABand
         title="Bereit, den WordPress-Alltag zu vereinfachen?"
-        text="Teste WPorbit zehn Tage lang mit einem Projekt und vollem Funktionsumfang. Keine Kreditkarte nötig."
+        text="Teste WPorbit zehn Tage lang mit vollem Funktionsumfang. Keine Kreditkarte nötig."
         secondary={{ label: 'Preise ansehen', to: '/preise' }}
       />
     </>
