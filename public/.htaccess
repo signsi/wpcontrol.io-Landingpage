@@ -1,0 +1,26 @@
+# wporbit.ch auf Apache (Plesk): saubere Adressen für die vorgerenderten Seiten.
+#
+# Der Build legt jede Seite als <pfad>.html ab, z. B. kontakt.html,
+# blog/kategorie/sicherheit.html. Ohne diese Regeln liefert der Server für
+# /kontakt ein 404 und für /cloud (gleichnamiger Bilderordner) ein 403.
+
+Options -Indexes -MultiViews
+# Kein automatischer Schrägstrich bei Ordnern: /cloud ist die Seite, nicht der
+# Ordner mit den Bildern.
+DirectorySlash Off
+
+RewriteEngine On
+
+# /pfad/ → /pfad (eine Adresse pro Seite)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# /pfad → /pfad.html, wenn es die Seite gibt
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+)$ /$1.html [L]
+
+ErrorDocument 404 /404.html
+
+# Interne Build-Dateien nicht ausliefern
+RedirectMatch 404 ^/\.vite(/|$)
