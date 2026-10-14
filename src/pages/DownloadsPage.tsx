@@ -13,7 +13,7 @@ const requirements = [
   { label: 'Prozessor', value: 'Apple Silicon oder Intel' },
   { label: 'Arbeitsspeicher', value: 'Mindestens 8 GB, empfohlen 16 GB' },
   { label: 'Speicherplatz', value: 'Rund 2 GB, zusätzlich Platz pro Projekt' },
-  { label: 'Zusätzlich nötig', value: 'Homebrew. Colima, die Docker-Werkzeuge und Vault richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
+  { label: 'Zusätzlich nötig', value: 'Homebrew (auf Entwicklungs-Macs meist schon vorhanden). Colima, die Docker-Werkzeuge und Vault richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
 ]
 
 const installSteps = [

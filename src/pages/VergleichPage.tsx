@@ -13,19 +13,19 @@ const crumbs = [{ label: 'Vergleich', path: '/vergleich' }]
  * stehen (Stand und Quellen: content-plan/cloud-seite.md). Vor jeder
  * Änderung neu prüfen; vergleichende Werbung muss nachprüfbar sein.
  */
-const maintenanceTools = ['WPorbit Cloud', 'WP Umbrella', 'ManageWP', 'MainWP', 'WP Remote'] as const
+const maintenanceTools = ['WPorbit Cloud', 'WP Umbrella', 'ManageWP', 'MainWP', 'InfiniteWP', 'WP Remote'] as const
 const maintenanceRows: { label: string; values: string[] }[] = [
-  { label: 'Verbindung zur Kundenseite', values: ['Beschränkter SSH-Schlüssel oder nur von aussen', 'Plugin', 'Plugin', 'Plugin', 'Plugin'] },
-  { label: 'Betrieb', values: ['Dienst, Schweiz', 'Dienst, EU', 'Dienst', 'Eigener Server', 'Dienst'] },
-  { label: 'Erreichbarkeit', values: ['Alle 5 Min.', 'Ja', 'Zusatz, 60 s', 'Ja', 'Ja'] },
-  { label: 'Bekannte Sicherheitslücken', values: ['Ja', 'Ja', 'Zusatz', 'Ja', 'Ja'] },
-  { label: 'Performance (PageSpeed)', values: ['Ja', 'Ja', 'Zusatz', 'Zusatz', 'k. A.'] },
-  { label: 'Barrierefreiheits-Wert', values: ['Ja, Teil-Check', '–', '–', 'Zusatz', '–'] },
-  { label: 'Mailtest und SPF/DKIM/DMARC', values: ['Ja', '–', '–', '–', '–'] },
-  { label: 'Updates aus der Ferne', values: ['Bis zum Release', 'Ja', 'Ja', 'Ja', 'Ja'] },
-  { label: 'Backups', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Über Plugins', 'Ja'] },
-  { label: 'Kundenberichte mit eigenem Logo', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Pro', 'Ja'] },
-  { label: 'Lokale Entwicklung im selben Werkzeug', values: ['Ja, mit der App', '–', '–', '–', '–'] },
+  { label: 'Verbindung zur Kundenseite', values: ['Beschränkter SSH-Schlüssel oder nur von aussen', 'Plugin', 'Plugin', 'Plugin', 'Plugin', 'Plugin'] },
+  { label: 'Betrieb', values: ['Dienst, Schweiz', 'Dienst, EU', 'Dienst', 'Eigener Server', 'Eigener Server', 'Dienst'] },
+  { label: 'Erreichbarkeit', values: ['Alle 5 Min.', 'Ja', 'Zusatz, 60 s', 'Ja', 'Zusatz', 'Ja'] },
+  { label: 'Bekannte Sicherheitslücken', values: ['Ja', 'Ja', 'Zusatz', 'Ja', 'Teilweise', 'Ja'] },
+  { label: 'Performance (PageSpeed)', values: ['Ja', 'Ja', 'Zusatz', 'Zusatz', 'k. A.', 'k. A.'] },
+  { label: 'Barrierefreiheits-Wert', values: ['Ja, Teil-Check', '–', '–', 'Zusatz', 'k. A.', '–'] },
+  { label: 'Mailtest und SPF/DKIM/DMARC', values: ['Ja', '–', '–', '–', '–', '–'] },
+  { label: 'Updates aus der Ferne', values: ['Bis zum Release', 'Ja', 'Ja', 'Ja', 'Ja', 'Ja'] },
+  { label: 'Backups', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Über Plugins', 'Ja', 'Ja'] },
+  { label: 'Kundenberichte mit eigenem Logo', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Pro', 'Zusatz', 'Ja'] },
+  { label: 'Lokale Entwicklung im selben Werkzeug', values: ['Ja, mit der App', '–', '–', '–', '–', '–'] },
 ]
 
 const positions = [
@@ -115,7 +115,7 @@ export default function VergleichPage() {
             Wartung und Überwachung: WPorbit Cloud im Vergleich
           </h2>
           <p className="mt-3 text-[0.95rem] leading-[1.75] text-secondary">
-            WP Umbrella, ManageWP, MainWP und WP Remote sind bewährte Wartungsdienste. Sie verbinden sich über ein
+            WP Umbrella, ManageWP, MainWP, InfiniteWP und WP Remote sind bewährte Wartungsdienste. Sie verbinden sich über ein
             Plugin auf jeder Kundenseite. WPorbit Cloud braucht keines und kommt zusammen mit der App für die lokale
             Arbeit. Cloud ist in Entwicklung, der Release folgt bis Ende 2026.
           </p>

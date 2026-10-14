@@ -231,7 +231,7 @@ export function guideLd(guide: Guide): Node {
     dateModified: guide.updated,
     inLanguage: SITE.lang,
     image: abs(SITE.guideOgImage),
-    author: ref(ORGANIZATION_ID),
+    author: ref(PERSON_ID),
     publisher: ref(ORGANIZATION_ID),
     isPartOf: ref(WEBSITE_ID),
     mainEntityOfPage: ref(webPageId(guide.path)),
