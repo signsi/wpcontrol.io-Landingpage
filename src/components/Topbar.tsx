@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import OrbitMark from './OrbitMark'
 import MobileNav from './nav/MobileNav'
+import CloudBadge from './CloudBadge'
 import { primaryCta, primaryNav, secondaryCta, type NavGroup } from '../config/navigation'
 
 function isGroupActive(group: NavGroup, pathname: string): boolean {
@@ -145,6 +146,8 @@ export default function Topbar() {
           </nav>
 
           <div className="ml-4 flex items-center gap-2">
+            <span className="hidden lg:inline-flex xl:hidden"><CloudBadge compact /></span>
+            <span className="hidden xl:inline-flex"><CloudBadge /></span>
             <Link
               to={secondaryCta.to}
               className="rounded-lg px-3 py-2 text-[0.875rem] font-medium text-secondary transition-colors hover:text-primary"
@@ -157,6 +160,7 @@ export default function Topbar() {
           </div>
         </div>
 
+        <div className="ml-auto mr-3 md:hidden"><CloudBadge compact /></div>
         <button
           className="md:hidden flex h-8 w-8 flex-col items-center justify-center gap-1.5"
           aria-label={mobileOpen ? 'Navigation schliessen' : 'Navigation öffnen'}

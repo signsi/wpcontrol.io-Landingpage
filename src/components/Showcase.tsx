@@ -6,7 +6,7 @@ import { OrbitArc } from './OrbitMotif'
 export default function Showcase() {
   const [active, setActive] = useState(0)
   return (
-    <section className="relative px-6 py-20" id="detail">
+    <section className="relative overflow-x-clip px-6 py-20" id="detail">
       <OrbitArc
         rotate={-14}
         className="hidden lg:block absolute -right-16 -top-10 w-[420px] h-[420px] text-line opacity-50 pointer-events-none"

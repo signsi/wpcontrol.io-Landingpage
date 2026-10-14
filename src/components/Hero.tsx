@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 export default function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border-soft px-6 pb-20 pt-16 text-center sm:pb-24 sm:pt-20">
@@ -6,6 +7,16 @@ export default function Hero() {
       </div>
 
       <div className="relative mx-auto flex max-w-[48rem] flex-col items-center">
+        <Link
+          to="/cloud"
+          className="hero-kicker group mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 text-left text-[0.84rem] text-secondary shadow-card transition-colors duration-200 hover:border-accent/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        >
+          <span className="shrink-0 rounded-full bg-accent px-2.5 py-0.5 text-[0.72rem] font-semibold text-on-accent">Neu</span>
+          <span className="truncate">
+            <strong className="font-semibold text-primary">WPorbit Cloud:</strong> alle Kundenseiten im Blick, ohne Plugin
+          </span>
+          <span className="shrink-0 text-accent transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">→</span>
+        </Link>
         <p className="hero-kicker mb-5 flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.1em] text-accent-strong before:size-1.5 before:rounded-full before:bg-accent">
           Für professionelle WordPress-Entwicklung
         </p>
@@ -22,7 +33,7 @@ export default function Hero() {
           </a>
           <a href="#vergleich" className="btn btn-secondary btn-lg">Standalone vergleichen</a>
         </div>
-        <p className="mt-5 text-[0.78rem] font-medium text-tertiary">Keine Kreditkarte. Voller Funktionsumfang. Ein Projekt.</p>
+        <p className="mt-5 text-[0.78rem] font-medium text-tertiary">Keine Kreditkarte. Voller Funktionsumfang.</p>
       </div>
     </section>
   )
