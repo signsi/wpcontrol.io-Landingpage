@@ -11,6 +11,7 @@ export default function Showcase() {
         rotate={-14}
         className="hidden lg:block absolute -right-16 -top-10 w-[420px] h-[420px] text-line opacity-50 pointer-events-none"
       />
+      <h2 className="sr-only">Funktionen im Detail</h2>
       <div className="reveal-up relative grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-10 items-start">
 
         <div className="flex">
@@ -29,11 +30,10 @@ export default function Showcase() {
                 }`}>
                   {f.title}
                 </p>
-                {i === active && (
-                  <p className="text-secondary text-[0.9375rem] leading-[1.7] mt-3 max-w-[36ch]">
-                    {f.text}
-                  </p>
-                )}
+                {/* Immer im HTML, für Suchmaschinen; sichtbar nur beim aktiven Punkt. */}
+                <p hidden={i !== active} className="text-secondary text-[0.9375rem] leading-[1.7] mt-3 max-w-[36ch]">
+                  {f.text}
+                </p>
               </button>
             ))}
           </div>

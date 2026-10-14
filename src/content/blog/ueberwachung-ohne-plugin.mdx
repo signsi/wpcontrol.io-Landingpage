@@ -1,6 +1,7 @@
 ---
 title: "WordPress überwachen, ohne ein Plugin zu installieren"
-description: "Warum WPorbit Kundenseiten ohne Status-Plugin und ohne gespeichertes Passwort überwacht, was ein beschränkter SSH-Schlüssel stattdessen leistet und wo die ehrliche Grenze liegt."
+seoTitle: "WordPress überwachen ohne Plugin"
+description: "WordPress-Seiten ohne Status-Plugin und ohne gespeichertes Passwort überwachen: was ein beschränkter SSH-Schlüssel leistet und wo die Grenze liegt."
 date: 2026-09-24
 category: sicherheit
 tags: [ueberwachung, ssh, plugins]
@@ -65,7 +66,7 @@ Ein eingeschränkter Schlüssel ist gut. Er ist nicht genug, wenn der Rest nachl
 
 ## Und wenn kein SSH möglich ist?
 
-Nicht jedes Hosting erlaubt das. Manchmal gibt es nur SFTP, manchmal ist das einzige Konto root, manchmal schreibt ein Panel `authorized_keys` regelmässig neu. Dann sagt die App, woran es liegt, und bietet an, nur von aussen zu überwachen.
+Nicht jedes Hosting erlaubt das. Manchmal gibt es nur SFTP, manchmal ist das einzige Konto root, manchmal schreibt ein Panel `authorized_keys` regelmässig neu. Dann sagt die App, woran es liegt, und bietet an, nur von aussen zu überwachen. Die häufigsten Ursachen und ihre Lösung stehen unter [„Lesezugang nicht möglich“](/anleitungen/fehlerbehebung/lesezugang-nicht-moeglich).
 
 Der Server prüft dann Erreichbarkeit, SSL und Antwortzeit über die öffentliche Adresse, genau wie ein Besucher. Auf der Kundenseite liegt nichts. Plugins und Updates sieht das Dashboard so nicht. Das ist weniger Information, aber es ist ein ehrlicher Tausch: lieber eine Lücke im Dashboard als eine auf der Kundenseite.
 
@@ -81,6 +82,6 @@ Und schliesslich: Updates aus der Ferne gibt es in WPorbit heute nicht. Das Dash
 
 ## Was das für den Alltag heisst
 
-Für dich ändert sich wenig. Die Überwachung schaltest du mit einem Befehl ein, und das Team-Dashboard zeigt dieselben Informationen wie vorher. Für deine Kunden ändert sich mehr, als sie merken: Auf ihrer Seite läuft kein zusätzlicher Code, der von aussen erreichbar ist, und bei WPorbit liegt kein Passwort, das auf ihrem Server etwas ändern könnte.
+Für dich ändert sich wenig. Die Überwachung schaltest du mit einem Befehl ein, und das Team-Dashboard von [WPorbit Cloud](/cloud) zeigt dieselben Informationen wie vorher. Für deine Kunden ändert sich mehr, als sie merken: Auf ihrer Seite läuft kein zusätzlicher Code, der von aussen erreichbar ist, und bei WPorbit liegt kein Passwort, das auf ihrem Server etwas ändern könnte.
 
 Wie die Überwachung eingerichtet wird, steht unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).

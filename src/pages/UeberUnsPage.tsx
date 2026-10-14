@@ -1,7 +1,7 @@
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import CTABand from '../components/CTABand'
-import { breadcrumbLd, organizationLd } from '../lib/jsonld'
+import { breadcrumbLd } from '../lib/jsonld'
 
 const crumbs = [{ label: 'Über uns', path: '/ueber-uns' }]
 
@@ -28,10 +28,10 @@ export default function UeberUnsPage() {
   return (
     <>
       <Seo
-        title="Über uns"
+        title="Über uns: WordPress-Tools aus der Schweiz"
         description="WPorbit entsteht aus dem Agenturalltag: warum wir es bauen, wofür wir stehen und weshalb die Daten in der Schweiz liegen."
         path="/ueber-uns"
-        jsonLd={[breadcrumbLd(crumbs), organizationLd()]}
+        jsonLd={breadcrumbLd(crumbs)}
       />
 
       <PageHero

@@ -8,6 +8,10 @@ import rehypeSlug from 'rehype-slug'
 import type { ViteReactSSGOptions } from 'vite-react-ssg'
 import { contentIndexPlugin } from './build/content-index'
 import { writeSeoFiles } from './build/seo'
+import { writeImageSizes } from './build/image-sizes'
+
+// Bildmasse für MdxImage (CLS), vor Dev-Server und Build.
+writeImageSizes()
 
 // vite-react-ssg 0.9.2 erweitert Vites `UserConfig` nicht um `ssgOptions`.
 // Über eine typisierte Variable statt eines Objektliterals greift die

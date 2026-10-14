@@ -22,7 +22,7 @@ export default function FeatureGrid() {
         {featureCards.map((card) => (
           <article key={card.title} className="group flex flex-col gap-4 bg-surface p-6 transition-colors hover:bg-raised">
             <PlanetDot color={card.dot} size={16} ring ringPadding={9} />
-            <p className="font-heading font-semibold text-[0.9375rem] tracking-[-0.01em] text-primary leading-snug">{card.title}</p>
+            <h3 className="font-heading font-semibold text-[0.9375rem] tracking-[-0.01em] text-primary leading-snug">{card.title}</h3>
             <p className="text-secondary text-[0.875rem] leading-[1.65]">{card.text}</p>
           </article>
         ))}

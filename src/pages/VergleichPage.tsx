@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import Comparison from '../components/Comparison'
 import CTABand from '../components/CTABand'
 import { breadcrumbLd } from '../lib/jsonld'
+import { alternativePath, alternatives } from '../data/alternatives'
 
 const crumbs = [{ label: 'Vergleich', path: '/vergleich' }]
 
@@ -51,16 +53,16 @@ export default function VergleichPage() {
   return (
     <>
       <Seo
-        title="Vergleich mit Local WP, ManageWP und WP Umbrella"
-        description="Wie unterscheidet sich WPorbit von Local WP und WordPress Studio, und WPorbit Cloud von WP Umbrella, ManageWP, MainWP und WP Remote? Ein ehrlicher Vergleich für Agenturen."
+        title="WPorbit im Vergleich: Entwicklung und Wartung"
+        description="WPorbit im Vergleich mit Local WP und WordPress Studio, WPorbit Cloud mit ManageWP, MainWP und WP Umbrella. Ein ehrlicher Vergleich für Agenturen."
         path="/vergleich"
         jsonLd={breadcrumbLd(crumbs)}
       />
 
       <PageHero
         kicker="Vergleich"
-        title="WPorbit, Local WP und WordPress Studio"
-        lead="Alle drei starten WordPress lokal. Der Unterschied zeigt sich, sobald mehrere Kundenprojekte, mehrere Hosting-Anbieter und mehrere Personen im Spiel sind."
+        title="WPorbit im Vergleich"
+        lead="Local WP und WordPress Studio starten WordPress lokal, WPorbit auch. Der Unterschied zeigt sich, sobald mehrere Kundenprojekte, mehrere Hosting-Anbieter und mehrere Personen im Spiel sind. Für Wartung und Überwachung folgt weiter unten der Vergleich von WPorbit Cloud."
         crumbs={crumbs}
         bordered={false}
       />
@@ -144,6 +146,33 @@ export default function VergleichPage() {
           Stand Oktober 2026, nach Angaben auf den Websites der Anbieter. „Zusatz“ heisst: als kostenpflichtige
           Erweiterung. „–“: dort nicht gefunden. „k. A.“: keine Angabe gefunden. Preise vergleichen wir bewusst nicht, weil Cloud die App für die lokale Entwicklung einschliesst.
         </p>
+      </section>
+
+      <section id="einzelvergleiche" className="border-t border-line px-6 py-20">
+        <div className="reveal-up mb-8 max-w-[46rem]">
+          <h2 className="font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+            Einzelvergleiche
+          </h2>
+          <p className="mt-3 text-[0.95rem] leading-[1.75] text-secondary">
+            Was der jeweilige Dienst gut macht, was bei WPorbit anders ist und für wen was passt.
+          </p>
+        </div>
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {alternatives.map((alt) => (
+            <li key={alt.slug}>
+              <Link
+                to={alternativePath(alt.slug)}
+                className="group flex h-full items-center justify-between gap-4 rounded-xl border border-line bg-surface px-5 py-4 transition-colors hover:border-accent/40 hover:bg-raised"
+              >
+                <span>
+                  <span className="block font-heading text-[1rem] font-semibold text-primary">{alt.name} Alternative</span>
+                  <span className="mt-0.5 block text-[0.8rem] text-tertiary">WPorbit Cloud und {alt.name} im Vergleich</span>
+                </span>
+                <span aria-hidden="true" className="text-tertiary transition-colors group-hover:text-accent">→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <CTABand

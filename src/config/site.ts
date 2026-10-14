@@ -11,7 +11,7 @@ export const SITE = {
   titleTemplate: '%s | WPorbit',
   defaultTitle: 'WPorbit: WordPress-Workspace für Agenturen aus der Schweiz',
   defaultDescription:
-    'Der Desktop-Workspace für WordPress-Agenturen: Projekte, Zugänge und Veröffentlichungen an einem Ort. Ohne Hoster-Bindung, entwickelt und gehostet in der Schweiz.',
+    'Desktop-Workspace für WordPress-Agenturen: Projekte, Zugänge und Deployments an einem Ort. Ohne Hoster-Bindung, entwickelt und gehostet in der Schweiz.',
   locale: 'de_CH',
   lang: 'de-CH',
   timeZone: 'Europe/Zurich',

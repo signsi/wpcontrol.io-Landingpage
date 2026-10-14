@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { NoIcon, YesIcon } from './icons'
 
-type Mark = 'yes' | 'no' | 'partly' | 'soon'
+export type Mark = 'yes' | 'no' | 'partly' | 'soon'
 
 interface Point {
   mark: Mark
@@ -30,7 +30,7 @@ const orbit: Point[] = [
   { mark: 'yes', text: 'Mit der App für die lokale Entwicklung' },
 ]
 
-function MarkIcon({ mark }: { mark: Mark }) {
+export function MarkIcon({ mark }: { mark: Mark }) {
   if (mark === 'yes')
     return (
       <span className="grid size-5 shrink-0 place-items-center rounded-full bg-accent-tint text-accent">
@@ -67,7 +67,7 @@ function MarkIcon({ mark }: { mark: Mark }) {
 }
 
 /** Eine Kundenseite als Kachel, mit dem, was darauf liegt. */
-function SiteTile({ badge }: { badge: ReactNode }) {
+export function SiteTile({ badge }: { badge: ReactNode }) {
   return (
     <div className="relative flex-1 rounded-[8px] border border-line bg-base p-2">
       <div className="mb-1.5 flex gap-1" aria-hidden="true">
@@ -83,7 +83,7 @@ function SiteTile({ badge }: { badge: ReactNode }) {
   )
 }
 
-const PluginBadge = () => (
+export const PluginBadge = () => (
   <span className="grid size-6 place-items-center rounded-full border border-line bg-surface text-tertiary shadow-card" title="Plugin">
     <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0zM12 16v5" />
@@ -91,7 +91,7 @@ const PluginBadge = () => (
   </span>
 )
 
-const KeyBadge = () => (
+export const KeyBadge = () => (
   <span className="grid size-6 place-items-center rounded-full bg-accent text-on-accent shadow-action" title="Lese-Schlüssel">
     <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="8" cy="15" r="4" />

@@ -42,7 +42,7 @@ export default function ProduktPage() {
     <>
       <Seo
         title="WordPress-Projekte von Setup bis Wartung"
-        description="WPorbit deckt den ganzen Verlauf eines WordPress-Projekts ab: aufsetzen, entwickeln, abstimmen, veröffentlichen und betreiben. In einer Anwendung, ohne Hoster-Bindung."
+        description="WPorbit deckt ein WordPress-Projekt von Anfang bis Ende ab: aufsetzen, entwickeln, veröffentlichen und betreiben. In einer App, ohne Hoster-Bindung."
         path="/produkt"
         jsonLd={[breadcrumbLd(crumbs), softwareApplicationLd()]}
       />

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import imageSizes from '../../data/image-sizes.json'
 
 /** Interne Links laufen über den Router, externe öffnen in einem neuen Tab. */
 export function MdxLink({ href = '', children, ...rest }: ComponentPropsWithoutRef<'a'>) {
@@ -35,7 +36,11 @@ export function MdxTable(props: ComponentPropsWithoutRef<'table'>) {
  * Natives <dialog> — Esc, Fokus und Screenreader-Semantik kommen vom Browser.
  * Schliessen per Klick irgendwo, Esc oder Knopf.
  */
+/** Masse aus build/image-sizes.ts, damit der Text beim Laden nicht springt. */
+const sizes = imageSizes as Record<string, number[] | undefined>
+
 export function MdxImage({ alt = '', title, src, ...rest }: ComponentPropsWithoutRef<'img'>) {
+  const size = src ? sizes[src] : undefined
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [open, setOpen] = useState(false)
   const caption = title ?? alt
@@ -65,7 +70,7 @@ export function MdxImage({ alt = '', title, src, ...rest }: ComponentPropsWithou
         aria-label={caption ? `Bild vergrössern: ${caption}` : 'Bild vergrössern'}
         className="group relative block w-full cursor-zoom-in rounded-panel border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       >
-        <img alt={alt} src={src} loading="lazy" decoding="async" {...rest} />
+        <img alt={alt} src={src} width={size?.[0]} height={size?.[1]} loading="lazy" decoding="async" {...rest} />
         <span
           aria-hidden="true"
           className="pointer-events-none absolute right-3 bottom-3 flex size-8 items-center justify-center rounded-full bg-primary/70 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"

@@ -13,7 +13,22 @@ const requirements = [
   { label: 'Prozessor', value: 'Apple Silicon oder Intel' },
   { label: 'Arbeitsspeicher', value: 'Mindestens 8 GB, empfohlen 16 GB' },
   { label: 'Speicherplatz', value: 'Rund 2 GB, zusätzlich Platz pro Projekt' },
-  { label: 'Zusätzlich nötig', value: 'Nichts. Colima und die Docker-Werkzeuge richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
+  { label: 'Zusätzlich nötig', value: 'Homebrew. Colima, die Docker-Werkzeuge und Vault richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
+]
+
+const installSteps = [
+  {
+    title: 'Download anfordern',
+    text: 'Auf der Seite Gratis testen deine E-Mail-Adresse eingeben und WPorbit direkt laden. Den Link zum Anmelden bekommst du per E-Mail.',
+  },
+  {
+    title: 'In den Programme-Ordner legen',
+    text: 'Die .dmg-Datei öffnen und WPorbit in den Ordner Programme ziehen. Beim ersten Öffnen fragt macOS einmal nach, weil die App aus dem Internet stammt.',
+  },
+  {
+    title: 'Umgebung einrichten lassen',
+    text: 'Nach der Anmeldung richtet der Assistent Colima, Docker, Vault und lokale Domains ein. Dabei lädt er rund 500 MB und fragt einmal nach deinem Mac-Passwort.',
+  },
 ]
 
 export default function DownloadsPage() {
@@ -22,8 +37,8 @@ export default function DownloadsPage() {
   return (
     <>
       <Seo
-        title="WPorbit für macOS herunterladen"
-        description="WPorbit herunterladen: aktuelle Version, Systemvoraussetzungen und Installationshinweise für macOS."
+        title="Download für macOS: WordPress-App für Agenturen"
+        description="WPorbit für macOS herunterladen: aktuelle Version, Systemvoraussetzungen, Installation in drei Schritten und Updates direkt über die App."
         path="/downloads"
         jsonLd={breadcrumbLd(crumbs)}
       />
@@ -86,10 +101,41 @@ export default function DownloadsPage() {
           </article>
         </div>
 
-        <p className="mt-8 text-[0.875rem] leading-[1.7] text-secondary">
-          Hilfe bei der Installation findest du in der Anleitung{' '}
+        <h2 className="mb-6 mt-16 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+          Installation in drei Schritten
+        </h2>
+
+        <ol className="grid list-none gap-4 p-0 md:grid-cols-3">
+          {installSteps.map((step, i) => (
+            <li key={step.title} className="rounded-panel border border-line bg-surface p-6">
+              <p className="text-[0.6875rem] font-bold uppercase tracking-[0.13em] text-tertiary">Schritt {i + 1}</p>
+              <h3 className="mt-2 font-heading text-[1.0625rem] font-semibold text-primary">{step.title}</h3>
+              <p className="mt-2 text-[0.875rem] leading-[1.65] text-secondary">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-6 text-[0.875rem] leading-[1.7] text-secondary">
+          Jeden Schritt mit Bildern zeigt die Anleitung{' '}
           <Link to="/anleitungen/erste-schritte/wporbit-installieren" className="text-accent-strong underline">
-            WPorbit installieren und Lizenz aktivieren
+            WPorbit installieren und einrichten
+          </Link>
+          . Bricht die Einrichtung ab, hilft{' '}
+          <Link to="/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl" className="text-accent-strong underline">
+            Einrichtung schlägt fehl
+          </Link>
+          .
+        </p>
+
+        <h2 className="mb-3 mt-16 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+          Updates kommen über die App
+        </h2>
+        <p className="max-w-[60ch] text-[0.9375rem] leading-[1.7] text-secondary">
+          Einmal installiert, musst du nichts mehr von dieser Seite laden. WPorbit sucht selbst nach
+          neuen Versionen, zeigt dir die Änderungen und installiert das Update auf Wunsch. Jedes
+          Update ist signiert. Von Hand prüfst du über WPorbit → Nach Updates suchen…, mehr dazu in{' '}
+          <Link to="/anleitungen/wartung/wporbit-aktualisieren" className="text-accent-strong underline">
+            WPorbit aktualisieren
           </Link>
           .
         </p>

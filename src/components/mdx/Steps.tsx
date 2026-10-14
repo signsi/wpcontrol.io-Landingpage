@@ -39,7 +39,7 @@ export function Steps({ children }: { children: ReactNode }) {
   const steps = Children.toArray(children).filter(isValidElement) as ReactElement<StepProps>[]
 
   return (
-    <ol className="prose-bleed my-8 list-none p-0">
+    <ol className="prose-bleed my-8 list-none! p-0!">
       {steps.map((step, i) =>
         cloneElement(step, { key: i, number: i + 1, isLast: i === steps.length - 1 }),
       )}

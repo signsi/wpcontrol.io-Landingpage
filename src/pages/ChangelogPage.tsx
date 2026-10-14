@@ -34,8 +34,8 @@ export default function ChangelogPage({ bodies }: ChangelogPageProps) {
   return (
     <>
       <Seo
-        title="Changelog"
-        description="Alle Änderungen an WPorbit: neue Funktionen, Verbesserungen und Korrekturen, chronologisch dokumentiert."
+        title="Changelog: neue Funktionen und Updates"
+        description="Alle Änderungen an WPorbit: neue Funktionen, Verbesserungen und Korrekturen pro Version, chronologisch dokumentiert und mit Datum versehen."
         path="/changelog"
         jsonLd={breadcrumbLd(crumbs)}
       />

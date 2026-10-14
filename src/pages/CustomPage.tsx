@@ -34,7 +34,7 @@ export default function CustomPage() {
   return (
     <>
       <Seo
-        title="Massgeschneidert"
+        title="WordPress-Lösungen nach Mass für Agenturen"
         description="WPorbit nach Mass: CRM- und ERP-Integrationen, eigene Workflows, individuelle Auswertungen und dedizierter Support für deine Agentur."
         path="/massgeschneidert"
         jsonLd={breadcrumbLd(crumbs)}

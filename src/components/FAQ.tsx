@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { faqItems } from '../data/landing'
 
@@ -19,6 +19,7 @@ export default function FAQ({
   intro,
 }: FAQProps) {
   const [open, setOpen] = useState<number | null>(null)
+  const base = useId()
 
   return (
     <section className="px-6 py-24" id="faq">
@@ -56,6 +57,7 @@ export default function FAQ({
                   className="w-full flex items-start justify-between gap-4 px-5 py-4 text-left cursor-pointer bg-transparent border-0"
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
+                  aria-controls={`${base}-a${i}`}
                 >
                   <span className={`font-medium text-[0.9375rem] leading-snug transition-colors ${
                     isOpen ? 'text-primary' : 'text-secondary'
@@ -68,11 +70,15 @@ export default function FAQ({
                     {isOpen ? '×' : '+'}
                   </span>
                 </button>
-                {isOpen && (
-                  <p className="px-5 pb-5 text-secondary text-[0.875rem] leading-[1.75]">
-                    {item.a}
-                  </p>
-                )}
+                {/* Immer im HTML, nur verborgen: Suchmaschinen lesen die Antworten
+                    (und die FAQPage-Daten zeigen auf sichtbaren Inhalt). */}
+                <p
+                  id={`${base}-a${i}`}
+                  hidden={!isOpen}
+                  className="px-5 pb-5 text-secondary text-[0.875rem] leading-[1.75]"
+                >
+                  {item.a}
+                </p>
               </div>
             )
           })}
