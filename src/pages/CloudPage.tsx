@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import CTABand from '../components/CTABand'
+import { CLOUD_INCLUDED_SEATS, plans } from '../data/plans'
 import { breadcrumbLd } from '../lib/jsonld'
+
+const cloud = plans.find((p) => p.id === 'cloud')!
 
 const crumbs = [{ label: 'Cloud', path: '/cloud' }]
 
@@ -176,12 +179,21 @@ export default function CloudPage() {
         crumbs={crumbs}
         actions={
           <>
-            <Link to="/kontakt" className="btn btn-primary btn-md">Zum Release informiert werden</Link>
+            <Link to="/preise" className="btn btn-primary btn-md">Alle Pläne vergleichen</Link>
             <Link to="/vergleich#wartung" className="btn btn-secondary btn-md">Im Vergleich</Link>
           </>
         }
       >
-        <p className="mt-5 text-[0.82rem] text-tertiary">Release spätestens Ende 2026. Preis folgt.</p>
+        <div className="mt-5 flex items-end gap-2 leading-none">
+          <span className="font-heading text-[2.8rem] font-semibold leading-none tracking-[-0.03em] text-primary">
+            {cloud.priceMain}
+          </span>
+          <span className="mb-1.5 text-[0.88rem] leading-tight text-secondary">
+            {cloud.priceSub}
+            <br />
+            <span className="text-[0.78rem] text-tertiary">{CLOUD_INCLUDED_SEATS} Personen inkl. · Release bis Ende 2026</span>
+          </span>
+        </div>
       </PageHero>
 
       <section className="border-b border-line px-6 py-16">
@@ -309,7 +321,7 @@ export default function CloudPage() {
         title="Heute mit Standalone starten."
         text="Die App läuft schon heute. Cloud mit Team-Dashboard folgt bis Ende 2026, deine Projekte nimmst du mit."
         primary={{ label: 'Standalone testen', to: '/testen' }}
-        secondary={{ label: 'Zum Release informiert werden', to: '/kontakt' }}
+        secondary={{ label: 'Preise ansehen', to: '/preise' }}
       />
     </>
   )
