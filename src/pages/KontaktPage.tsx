@@ -115,6 +115,12 @@ export default function KontaktPage() {
                   {errors.nachricht && <p className="text-[0.75rem] text-danger" role="alert">{errors.nachricht}</p>}
                 </div>
 
+                {status === 'error' && message && Object.keys(errors).length === 0 && (
+                  <p className="rounded-control border border-danger/30 bg-danger/5 px-3.5 py-2.5 text-[0.875rem] text-danger" role="alert">
+                    {message}
+                  </p>
+                )}
+
                 <button type="submit" disabled={status === 'submitting'} className="btn btn-primary btn-md self-start disabled:opacity-60">
                   {status === 'submitting' ? 'Wird gesendet …' : 'Nachricht senden'}
                 </button>
