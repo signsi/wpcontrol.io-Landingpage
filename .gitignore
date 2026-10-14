@@ -25,3 +25,6 @@ dist-ssr
 
 # Interne Arbeitsnotizen (Server-Details, nicht veröffentlichen)
 content-plan/
+
+# Zugang für npm run deploy (Vorlage: .env.deploy.example)
+.env.deploy
