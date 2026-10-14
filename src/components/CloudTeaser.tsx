@@ -19,7 +19,7 @@ export default function CloudTeaser() {
 
         <div className="reveal-up lg:pb-1">
           <p className="mb-6 max-w-[38ch] text-[0.95rem] leading-[1.75] text-on-dark/70">
-            Das Team-Dashboard zeigt Erreichbarkeit, Updates, Sicherheitslücken und Performance aller Websites, ohne Plugin auf der Kundenseite. Projekte und Zugänge teilt das Team verschlüsselt.
+            Aus dem Agenturalltag gebaut: Das Team-Dashboard beantwortet die Fragen, die sich jede Webagentur stellt, für alle Kundenseiten und ohne Plugin. Das spart Geld und Nerven und macht aus Wartung eine Dienstleistung, die man vorzeigen kann.
           </p>
           <Link
             to="/cloud"

@@ -9,6 +9,58 @@ const cloud = plans.find((p) => p.id === 'cloud')!
 
 const crumbs = [{ label: 'Cloud', path: '/cloud' }]
 
+/** Die Fragen, die sich jede Webagentur stellt, und die Antwort aus dem Dashboard. */
+const questions = [
+  {
+    title: '„Ist die Seite vom Kunden noch online?“',
+    detail: 'Das Dashboard misst alle 5 Minuten und meldet einen Ausfall in Slack oder per Mail. Du weisst es, bevor der Kunde anruft.',
+  },
+  {
+    title: '„Wo sind Updates offen, und welche sind dringend?“',
+    detail: 'Alle offenen Updates aller Kundenseiten in einer Liste, mit den Lücken, die sie schliessen. Kein Einloggen Seite für Seite.',
+  },
+  {
+    title: '„Hat irgendein Plugin eine Sicherheitslücke?“',
+    detail: 'Bekannte Lücken werden mit jedem Inventar abgeglichen. Betroffene Seiten stehen oben, mit dem Update, das hilft.',
+  },
+  {
+    title: '„Kommen die Mails vom Kontaktformular noch an?“',
+    detail: 'Einmal am Tag schickt jede Seite eine Testmail über ihren echten Mailweg. Ein stilles Formular fällt auf, nicht erst nach Wochen.',
+  },
+  {
+    title: '„Läuft bald ein Zertifikat oder eine Domain ab?“',
+    detail: 'SSL- und Domain-Ablauf werden überwacht und rechtzeitig gemeldet, statt dass die Seite plötzlich eine Warnung zeigt.',
+  },
+  {
+    title: '„Wer hat da einen neuen Admin angelegt?“',
+    detail: 'Jede Änderung wird festgehalten, ein neuer Administrator löst sofort einen Alarm aus.',
+  },
+  {
+    title: '„Wo ist nochmal das Passwort für diesen Server?“',
+    detail: 'Zugänge liegen verschlüsselt im Projekt und sind für das Team da, ohne Chat, Excel oder Zettel.',
+  },
+  {
+    title: '„Wer kümmert sich, wenn ich in den Ferien bin?“',
+    detail: 'Alle im Team sehen denselben Stand und dieselben Alarme. Übernehmen geht ohne Übergabe-Mail.',
+  },
+]
+
+/** Was die Agentur davon hat. */
+const benefits = [
+  {
+    title: 'Spart Geld',
+    detail: 'Ein Werkzeug statt mehrerer Dienste und Plugins pro Seite. Keine Kontrollgänge von Hand, und Probleme werden klein entdeckt, nicht erst, wenn sie teuer sind.',
+  },
+  {
+    title: 'Spart Nerven',
+    detail: 'Keine Überraschungsanrufe, kein Plugin, das auf jeder Kundenseite gepflegt werden muss, keine Suche nach Zugängen. Alarme kommen dann, wenn es zählt, mit Ruhezeiten.',
+  },
+  {
+    title: 'Professionelle Dienstleistung für deine Kunden',
+    detail: 'Du meldest dich, bevor der Kunde etwas merkt, und kannst zeigen, was du in der Wartung tust. Bis zum Release kommen Berichte im Auftritt deiner Agentur dazu.',
+  },
+]
+
 /** In drei Schritten: was die App einrichtet und was auf dem Kundenserver bleibt. */
 const steps = [
   {
@@ -171,15 +223,15 @@ export default function CloudPage() {
     <>
       <Seo
         title="Cloud"
-        description="WPorbit Cloud: alle Kundenseiten im Team-Dashboard, ohne Plugin auf der Kundenseite und ohne gespeicherte Passwörter. Entwickelt und gehostet in der Schweiz. Release bis Ende 2026."
+        description="WPorbit Cloud löst die Fragen, die sich Webagenturen jeden Tag stellen: Ist die Seite online, wo sind Updates und Lücken offen, kommen die Mails an? Ohne Plugin auf der Kundenseite, entwickelt und gehostet in der Schweiz."
         path="/cloud"
         jsonLd={breadcrumbLd(crumbs)}
       />
 
       <PageHero
-        kicker="Cloud · in Entwicklung"
-        title={<>Alle Kundenseiten im Blick.<br />Ohne Plugin auf der Kundenseite.</>}
-        lead="Cloud ist das Team-Dashboard zur App: Erreichbarkeit, Updates, Sicherheitslücken, Performance und Mail-Zustellung aller Websites an einem Ort, für das ganze Team. Eingerichtet aus der App, mit einem beschränkten Lese-Schlüssel statt eines Plugins."
+        kicker="Cloud · für Webagenturen"
+        title={<>Die Fragen jeder Webagentur.<br />Beantwortet, bevor der Kunde anruft.</>}
+        lead="Cloud ist aus dem Agenturalltag entstanden. Das Team-Dashboard zur App zeigt, welche Kundenseite down ist, wo Updates und Lücken offen sind und ob das Kontaktformular noch Mails verschickt, ohne Plugin auf der Kundenseite. Das spart Geld und Nerven, und deine Kunden bekommen eine Wartung, die man vorzeigen kann."
         crumbs={crumbs}
         actions={
           <>
@@ -199,6 +251,23 @@ export default function CloudPage() {
           </span>
         </div>
       </PageHero>
+
+      <section className="border-b border-line px-6 py-16">
+        <SectionHead
+          kicker="Aus der Praxis"
+          title="Gebaut für die Fragen, die im Agenturalltag wirklich kommen"
+          lead="Jede Agentur mit Wartungskunden kennt sie. Cloud beantwortet sie für alle Kundenseiten auf einmal."
+        />
+        <CardGrid items={questions} />
+      </section>
+
+      <section className="border-b border-line bg-raised px-6 py-16">
+        <SectionHead
+          kicker="Was es bringt"
+          title="Weniger Aufwand, weniger Ärger, mehr Wert für deine Kunden"
+        />
+        <CardGrid items={benefits} tone="accent" />
+      </section>
 
       <section className="border-b border-line px-6 py-16">
         <SectionHead
