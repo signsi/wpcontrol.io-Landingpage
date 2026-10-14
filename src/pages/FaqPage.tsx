@@ -19,7 +19,7 @@ export default function FaqPage() {
   return (
     <>
       <Seo
-        title="Häufige Fragen"
+        title="Häufige Fragen zu WPorbit"
         description="Antworten auf die häufigsten Fragen zu WPorbit: Hosting-Unabhängigkeit, Standalone und Cloud, Zugangsdaten, Veröffentlichungen, Preise und Abrechnung."
         path="/faq"
         jsonLd={[breadcrumbLd(crumbs), faqPageLd(allFaq)]}

@@ -14,7 +14,7 @@ export default function HelpIndexPage() {
   return (
     <>
       <Seo
-        title="Anleitungen"
+        title="Anleitungen und Hilfe zu WPorbit"
         description="Das Hilfe-Center für WPorbit: Schritt-für-Schritt-Anleitungen zu Installation, Projekten, lokaler Entwicklung, Deployment, Vault und Fehlerbehebung."
         path="/anleitungen"
         jsonLd={breadcrumbLd(crumbs)}

@@ -51,7 +51,7 @@ export default function VergleichPage() {
   return (
     <>
       <Seo
-        title="WPorbit im Vergleich: Local WP, WordPress Studio, WP Umbrella, ManageWP"
+        title="Vergleich mit Local WP, ManageWP und WP Umbrella"
         description="Wie unterscheidet sich WPorbit von Local WP und WordPress Studio, und WPorbit Cloud von WP Umbrella, ManageWP, MainWP und WP Remote? Ein ehrlicher Vergleich für Agenturen."
         path="/vergleich"
         jsonLd={breadcrumbLd(crumbs)}

@@ -13,7 +13,7 @@ export default function PreisePage() {
   return (
     <>
       <Seo
-        title="Preise"
+        title="Preise für Standalone und Cloud"
         description="WPorbit Preise im Überblick: Demo kostenlos, Standalone ab 290 CHF pro Person und Monat, Cloud ab 1200 CHF pro Monat. Monatlich kündbar, ohne Hoster-Bindung."
         path="/preise"
         jsonLd={[breadcrumbLd(crumbs), softwareApplicationLd(), faqPageLd(pricingFaq)]}

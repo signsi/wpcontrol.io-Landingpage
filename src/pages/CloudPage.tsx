@@ -247,9 +247,10 @@ export default function CloudPage() {
   return (
     <>
       <Seo
-        title="Cloud"
-        description="WPorbit Cloud löst die Fragen, die sich Webagenturen jeden Tag stellen: Ist die Seite online, wo sind Updates und Lücken offen, kommen die Mails an? Ohne Plugin auf der Kundenseite, entwickelt und gehostet in der Schweiz."
+        title="WordPress-Wartung ohne Plugin für Agenturen"
+        description="Alle Kundenseiten im Blick: Erreichbarkeit, Updates, Sicherheitslücken und Mail-Zustellung. Ohne Plugin auf der Kundenseite, gehostet in der Schweiz."
         path="/cloud"
+        image="/og/cloud.jpg"
         jsonLd={breadcrumbLd(crumbs)}
       />
 

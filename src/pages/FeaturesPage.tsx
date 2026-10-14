@@ -14,7 +14,7 @@ export default function FeaturesPage() {
   return (
     <>
       <Seo
-        title="Alle Funktionen"
+        title="Alle Funktionen für WordPress-Agenturen"
         description="Von der lokalen Entwicklung bis zur automatisierten Wartung: alle Funktionen von WPorbit im Detail."
         path="/produkt/funktionen"
         jsonLd={breadcrumbLd(crumbs)}

@@ -22,7 +22,7 @@ export default function DownloadsPage() {
   return (
     <>
       <Seo
-        title="Downloads"
+        title="WPorbit für macOS herunterladen"
         description="WPorbit herunterladen: aktuelle Version, Systemvoraussetzungen und Installationshinweise für macOS."
         path="/downloads"
         jsonLd={breadcrumbLd(crumbs)}

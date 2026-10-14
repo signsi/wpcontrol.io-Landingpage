@@ -45,7 +45,7 @@ export default function TestenPage() {
   return (
     <>
       <Seo
-        title={`${TRIAL_DAYS} Tage gratis testen`}
+        title={`WPorbit ${TRIAL_DAYS} Tage gratis testen`}
         description={`WPorbit ${TRIAL_DAYS} Tage kostenlos testen: voller Funktionsumfang, keine Kreditkarte. Nur E-Mail-Adresse eingeben und herunterladen.`}
         path="/testen"
         jsonLd={breadcrumbLd(crumbs)}

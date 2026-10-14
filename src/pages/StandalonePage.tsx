@@ -41,7 +41,7 @@ export default function StandalonePage() {
   return (
     <>
       <Seo
-        title="Standalone"
+        title="WordPress lokal entwickeln und veröffentlichen"
         description={`WPorbit Standalone: WordPress-Projekte unabhängig organisieren, Zugänge sicher verwahren und Änderungen veröffentlichen. Ab ${standalone.priceMain.replace('ab ', '')} CHF pro Person und Monat.`}
         path="/standalone"
         jsonLd={breadcrumbLd(crumbs)}

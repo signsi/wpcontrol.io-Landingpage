@@ -50,7 +50,7 @@ export default function KontaktPage() {
   return (
     <>
       <Seo
-        title="Kontakt"
+        title="Kontakt und Demo-Termin"
         description="Fragen zu WPorbit, ein Demo-Termin oder eine Offerte für eine massgeschneiderte Lösung? Schreib uns."
         path="/kontakt"
         jsonLd={breadcrumbLd(crumbs)}
