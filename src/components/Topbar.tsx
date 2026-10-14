@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import OrbitMark from './OrbitMark'
 import MobileNav from './nav/MobileNav'
 import CloudBadge from './CloudBadge'
+import { track } from '../lib/analytics'
 import { primaryCta, primaryNav, secondaryCta, type NavGroup } from '../config/navigation'
 
 function isGroupActive(group: NavGroup, pathname: string): boolean {
@@ -154,7 +155,7 @@ export default function Topbar() {
             >
               {secondaryCta.label}
             </Link>
-            <Link to={primaryCta.to} className="btn btn-primary btn-sm">
+            <Link to={primaryCta.to} onClick={() => track('cta_click', { location: 'nav', target: primaryCta.to })} className="btn btn-primary btn-sm">
               {primaryCta.label}
             </Link>
           </div>

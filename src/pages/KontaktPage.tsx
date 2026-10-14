@@ -5,6 +5,7 @@ import PageHero from '../components/PageHero'
 import { isValidEmail, submitForm, type FormStatus } from '../lib/forms'
 import { SITE } from '../config/site'
 import { breadcrumbLd } from '../lib/jsonld'
+import { track } from '../lib/analytics'
 
 const crumbs = [{ label: 'Kontakt', path: '/kontakt' }]
 
@@ -42,6 +43,7 @@ export default function KontaktPage() {
     setStatus('submitting')
     const result = await submitForm('kontakt', data)
     setStatus(result.ok ? 'success' : 'error')
+    if (result.ok && !data.website) track('generate_lead', { form: 'kontakt', topic: data.thema || undefined })
     setMessage(result.message)
   }
 

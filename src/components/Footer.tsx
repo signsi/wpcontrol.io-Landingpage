@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { footerNav } from '../config/navigation'
+import { openConsentSettings } from '../lib/analytics'
 import NewsletterSignup from './blog/NewsletterSignup'
 
 function GdprBadge() {
@@ -70,6 +71,15 @@ export default function Footer() {
                   {item.label}
                 </Link>
               ))}
+              {column.heading === 'Rechtliches' && (
+                <button
+                  type="button"
+                  onClick={openConsentSettings}
+                  className="w-fit text-left text-[0.875rem] text-secondary transition-colors hover:text-primary"
+                >
+                  Cookie-Einstellungen
+                </button>
+              )}
             </nav>
           </div>
         ))}

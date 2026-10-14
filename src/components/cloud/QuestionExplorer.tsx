@@ -1,6 +1,7 @@
 import { useId, useRef, useState } from 'react'
 import type { KeyboardEvent } from 'react'
 import BrowserFrame from './BrowserFrame'
+import { track } from '../../lib/analytics'
 
 export interface AnsweredQuestion {
   question: string
@@ -23,9 +24,16 @@ export default function QuestionExplorer({ items }: { items: AnsweredQuestion[] 
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const base = useId()
 
+  /** Wechselt die Frage und misst, welche Fragen Agenturen interessieren. */
+  const pick = (i: number) => {
+    if (i === active) return
+    setActive(i)
+    track('cloud_question', { question: items[i].question.replace(/[„“]/g, '') })
+  }
+
   const select = (i: number) => {
     const next = (i + items.length) % items.length
-    setActive(next)
+    pick(next)
     tabs.current[next]?.focus()
   }
 
@@ -83,7 +91,7 @@ export default function QuestionExplorer({ items }: { items: AnsweredQuestion[] 
                 aria-selected={selected}
                 aria-controls={`${base}-panel-${i}`}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => setActive(i)}
+                onClick={() => pick(i)}
                 onKeyDown={(e) => onKey(e, i)}
                 className={`group w-full border-l px-5 py-3.5 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
                   selected ? 'border-accent bg-accent-tint/40' : 'border-line hover:bg-raised'

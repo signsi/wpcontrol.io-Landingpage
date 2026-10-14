@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { track } from '../lib/analytics'
 
 /**
  * Störer in der Navigation: weist auf WPorbit Cloud hin. Auf /cloud selbst
@@ -11,6 +12,7 @@ export default function CloudBadge({ compact = false }: { compact?: boolean }) {
   return (
     <Link
       to="/cloud"
+      onClick={() => track('cta_click', { location: compact ? 'nav_badge_compact' : 'nav_badge', target: '/cloud' })}
       className="group inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-tint px-3 py-1.5 text-[0.78rem] font-semibold text-accent-strong transition-colors duration-200 hover:border-accent/60 hover:bg-accent/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
       <span className="relative flex size-2" aria-hidden="true">

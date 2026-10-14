@@ -2,6 +2,37 @@
 <html lang="de-CH">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Google Tag Manager mit Consent Mode v2. Standard: alles verweigert, bis
+      jemand im Banner zustimmt (src/components/ConsentBanner.tsx). Geladen wird
+      nur auf wporbit.ch, lokal mit ?gtm=1. GA4 (G-CBW0NBCT9H) ist im GTM
+      eingerichtet, nicht hier.
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        wait_for_update: 500
+      });
+      try {
+        if (localStorage.getItem('wporbit-consent') === 'granted') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+        }
+      } catch (e) {}
+      (function (w, d, id) {
+        var live = /(^|\.)wporbit\.ch$/.test(location.hostname) || /[?&]gtm=1/.test(location.search);
+        if (!live || id.indexOf('XXXX') !== -1) return;
+        w.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var s = d.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+        d.head.appendChild(s);
+      })(window, document, 'GTM-WTF9L7WF');
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
