@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Interne Arbeitsnotizen (Server-Details, nicht veröffentlichen)
+content-plan/
