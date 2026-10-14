@@ -7,6 +7,13 @@ import AlertStream from '../components/cloud/AlertStream'
 import QuestionExplorer from '../components/cloud/QuestionExplorer'
 import type { AnsweredQuestion } from '../components/cloud/QuestionExplorer'
 import KeyFlow from '../components/cloud/KeyFlow'
+import SafeUpdateDemo from '../components/cloud/SafeUpdateDemo'
+import ReportMock from '../components/cloud/ReportMock'
+import {
+  BriefcaseIcon, CalmIcon, CoinsIcon, LayersIcon, LinkIcon, NoIcon, PatchIcon, PinIcon, PipelineIcon,
+  ShieldIcon, UserKeyIcon, YesIcon,
+} from '../components/cloud/icons'
+import type { ReactNode } from 'react'
 import { CLOUD_INCLUDED_SEATS, plans } from '../data/plans'
 import { breadcrumbLd } from '../lib/jsonld'
 
@@ -69,14 +76,17 @@ const questions: AnsweredQuestion[] = [
 /** Was die Agentur davon hat. */
 const benefits = [
   {
+    icon: <CoinsIcon />,
     title: 'Spart Geld',
     detail: 'Ein Werkzeug statt mehrerer Dienste und Plugins pro Seite. Keine Kontrollgänge von Hand, und Probleme werden klein entdeckt, nicht erst, wenn sie teuer sind.',
   },
   {
+    icon: <CalmIcon />,
     title: 'Spart Nerven',
     detail: 'Keine Überraschungsanrufe, kein Plugin, das auf jeder Kundenseite gepflegt werden muss, keine Suche nach Zugängen. Alarme kommen dann, wenn es zählt, mit Ruhezeiten.',
   },
   {
+    icon: <BriefcaseIcon />,
     title: 'Professionelle Dienstleistung für deine Kunden',
     detail: 'Du meldest dich, bevor der Kunde etwas merkt, und kannst zeigen, was du in der Wartung tust. Bis zum Release kommen Berichte im Auftritt deiner Agentur dazu.',
   },
@@ -153,26 +163,32 @@ const comingSoon = [
 /** Mit Cloud möglich: Bausteine, die es lokal schon gibt oder die auf Wunsch kommen. */
 const possible = [
   {
+    icon: <LayersIcon />,
     title: 'Staging und Vorschau im Dashboard',
     detail: 'Staging-Umgebungen und Vorschauen gibt es lokal in der App. In der Cloud liessen sie sich hinterlegen und als Link mit dem Kunden teilen.',
   },
   {
+    icon: <PipelineIcon />,
     title: 'Pipeline-Status im Dashboard',
     detail: 'Deploys über GitLab oder GitHub laufen heute schon aus der App. Der Stand jeder Pipeline könnte im Dashboard neben Updates und Erreichbarkeit stehen.',
   },
   {
+    icon: <UserKeyIcon />,
     title: 'Zugriff pro Projekt',
     detail: 'Heute sehen alle Mitglieder eines Teams alle Projekte. Wer Freelancer oder Kunden einbinden will, bekommt gezielten Zugriff auf einzelne Projekte.',
   },
   {
+    icon: <LinkIcon />,
     title: 'Link-Monitor',
     detail: 'Defekte Links auf den Kundenseiten finden, bevor es Besucher oder Suchmaschinen tun.',
   },
   {
+    icon: <ShieldIcon />,
     title: 'Firewall über Cloudflare oder den Hoster',
     detail: 'Eine Firewall gehört vor die Website, nicht als Plugin in sie hinein. WPorbit bindet sie dort an, wo sie hingehört: bei Cloudflare oder beim Hoster.',
   },
   {
+    icon: <PatchIcon />,
     title: 'Virtual Patching über einen Partner',
     detail: 'Bekannte Lücken abfangen, bis das Update eingespielt ist, über einen spezialisierten Partner statt eines eigenen Plugins.',
   },
@@ -180,14 +196,31 @@ const possible = [
 
 /** Kurzvergleich. Namen der Anbieter und Details stehen auf /vergleich. */
 const comparisonRows: { label: string; orbit: string; others: string }[] = [
-  { label: 'Plugin auf jeder Kundenseite', orbit: 'Nein', others: 'Ja, ein Verbindungs-Plugin' },
-  { label: 'Zugangsdaten beim Dienst', orbit: 'Nein, nur ein beschränkter Lese-Schlüssel', others: 'Je nach Dienst' },
-  { label: 'Mailtest über den echten Mailweg', orbit: 'Ja', others: 'Nicht gefunden' },
-  { label: 'Änderungsverlauf und Alarm bei neuem Admin', orbit: 'Ja', others: 'Teilweise, meist als Zusatz' },
-  { label: 'Lokale Entwicklung im selben Werkzeug', orbit: 'Ja, mit der App', others: 'Nein' },
-  { label: 'Updates und Backups aus der Ferne', orbit: 'Bis zum Release', others: 'Ja' },
-  { label: 'Standort', orbit: 'Schweiz', others: 'EU, USA oder eigener Server' },
+  { label: 'Ohne Plugin auf der Kundenseite', orbit: 'Ja', others: 'Nein' },
+  { label: 'Ohne gespeicherte Zugangsdaten beim Dienst', orbit: 'Ja', others: 'Je nach Dienst' },
+  { label: 'Mailtest über den echten Mailweg', orbit: 'Ja', others: 'Nein' },
+  { label: 'Änderungsverlauf und Alarm bei neuem Admin', orbit: 'Ja', others: 'Teilweise, als Zusatz' },
+  { label: 'Lokale Entwicklung im selben Werkzeug', orbit: 'Ja', others: 'Nein' },
+  { label: 'Updates und Backups aus der Ferne', orbit: 'Bis Ende 2026', others: 'Ja' },
+  { label: 'Entwickelt und gehostet in der Schweiz', orbit: 'Ja', others: 'Selten' },
 ]
+
+/** Ja und Nein als Zeichen, alles andere als Text. */
+function Verdict({ value, strong = false }: { value: string; strong?: boolean }) {
+  if (value === 'Ja')
+    return (
+      <span className={`inline-flex items-center gap-1.5 ${strong ? 'text-accent' : 'text-secondary'}`}>
+        <YesIcon /> <span className="sr-only">Ja</span>
+      </span>
+    )
+  if (value === 'Nein')
+    return (
+      <span className="inline-flex items-center gap-1.5 text-tertiary">
+        <NoIcon /> <span className="sr-only">Nein</span>
+      </span>
+    )
+  return <span className={strong ? 'font-medium text-primary' : 'text-secondary'}>{value}</span>
+}
 
 function SectionHead({ kicker, title, lead }: { kicker: string; title: string; lead?: string }) {
   return (
@@ -215,7 +248,7 @@ function FeatureList({ items }: { items: { title: string; detail: string }[] }) 
   )
 }
 
-function CardGrid({ items, tone = 'plain' }: { items: { title: string; detail: string }[]; tone?: 'plain' | 'accent' | 'dashed' }) {
+function CardGrid({ items, tone = 'plain' }: { items: { icon?: ReactNode; title: string; detail: string }[]; tone?: 'plain' | 'accent' | 'dashed' }) {
   const card =
     tone === 'accent'
       ? 'rounded-xl border border-accent/30 bg-accent/10 p-5'
@@ -226,6 +259,9 @@ function CardGrid({ items, tone = 'plain' }: { items: { title: string; detail: s
     <div className="stagger-group grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {items.map((item) => (
         <article key={item.title} className={card}>
+          {item.icon && (
+            <span className="mb-3 grid size-9 place-items-center rounded-control bg-surface text-accent shadow-card">{item.icon}</span>
+          )}
           <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">{item.title}</h3>
           <p className="text-[0.86rem] leading-[1.65] text-secondary">{item.detail}</p>
         </article>
@@ -327,7 +363,11 @@ export default function CloudPage() {
           title="Kommt vor Ende 2026"
           lead="Damit wird aus dem Überblick eine vollständige Wartung: aktualisieren, absichern, berichten."
         />
-        <CardGrid items={comingSoon} tone="accent" />
+        <div className="mb-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+          <SafeUpdateDemo />
+          <ReportMock />
+        </div>
+        <FeatureList items={comingSoon} />
       </section>
 
       <section className="border-b border-line bg-raised px-6 py-16">
@@ -349,7 +389,8 @@ export default function CloudPage() {
           title="Ein Team, ein Stand, geteilte Zugänge"
           lead="Projekte und Zugangsdaten teilt das Team Ende-zu-Ende-verschlüsselt. Auch wir sehen sie nicht. Teams und Rollen sind eingebaut, ein neuer Mac kommt erst nach Freigabe durch einen Kollegen dazu."
         />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+        <div className="grid grid-cols-1 gap-4">
           <article className="rounded-xl border border-line bg-surface p-5">
             <p className="mb-2 text-[0.66rem] uppercase tracking-[0.12em] text-tertiary">Standalone</p>
             <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">Die App für dich allein</h3>
@@ -365,6 +406,23 @@ export default function CloudPage() {
             </p>
           </article>
         </div>
+        <figure>
+          <div className="overflow-hidden rounded-panel border border-line bg-surface shadow-card">
+            <img
+              src="/cloud/q-team.webp"
+              alt="WPorbit-App, Einstellungen: Team mit drei Mitgliedern, ein Mac wartet auf Freigabe"
+              width={1440}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full"
+            />
+          </div>
+          <figcaption className="mt-2.5 text-[0.76rem] text-tertiary">
+            Ein neuer Mac kommt erst dazu, wenn ein Kollege ihn mit einem Code freigibt.
+          </figcaption>
+        </figure>
+        </div>
       </section>
 
       <section className="border-b border-line bg-raised px-6 py-16">
@@ -373,6 +431,22 @@ export default function CloudPage() {
           title="Entwickelt, gehostet und gespeichert in der Schweiz"
           lead="WPorbit wird in der Schweiz entwickelt. Server und Datenbank des Dashboards stehen in der Schweiz."
         />
+        <ul className="stagger-group mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {[
+            { what: 'Entwickelt', where: 'Rotkreuz ZG', who: 'viwiv GmbH' },
+            { what: 'Gehostet', where: 'Zürich', who: 'Rechenzentren von Nine' },
+            { what: 'Gespeichert', where: 'Zürich', who: 'Datenbank und Sicherungen' },
+          ].map((place) => (
+            <li key={place.what} className="flex items-start gap-3 rounded-panel border border-line bg-surface p-5">
+              <span className="grid size-9 shrink-0 place-items-center rounded-control bg-accent-tint text-accent"><PinIcon /></span>
+              <span>
+                <span className="block text-[0.72rem] text-tertiary">{place.what}</span>
+                <span className="block font-heading text-[1.05rem] font-semibold text-primary">{place.where}</span>
+                <span className="block text-[0.8rem] text-secondary">{place.who}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
         <p className="max-w-[60ch] text-[0.82rem] leading-[1.65] text-tertiary">
           Für Performance-Messungen fragt das Dashboard Google PageSpeed an, dabei geht die Adresse der Website an
           Google. Alarme in Slack sind optional. Details in der{' '}
@@ -386,7 +460,7 @@ export default function CloudPage() {
           title="Was anders ist als bei üblichen Wartungsdiensten"
           lead="Übliche Wartungsdienste verbinden sich über ein Plugin auf jeder Kundenseite. Preislich lässt sich das schlecht vergleichen: Cloud kommt zusammen mit der App für die lokale Arbeit."
         />
-        <div className="overflow-x-auto rounded-xl border border-line">
+        <div className="relative overflow-x-auto rounded-xl border border-line">
           <table className="w-full min-w-[34rem] text-left text-[0.86rem]">
             <thead className="bg-raised text-[0.72rem] uppercase tracking-[0.08em] text-tertiary">
               <tr>
@@ -399,8 +473,8 @@ export default function CloudPage() {
               {comparisonRows.map((row) => (
                 <tr key={row.label} className="border-t border-line">
                   <td className="px-4 py-3 text-primary">{row.label}</td>
-                  <td className="px-4 py-3 font-medium text-primary">{row.orbit}</td>
-                  <td className="px-4 py-3 text-secondary">{row.others}</td>
+                  <td className="px-4 py-3"><Verdict value={row.orbit} strong /></td>
+                  <td className="px-4 py-3"><Verdict value={row.others} /></td>
                 </tr>
               ))}
             </tbody>
