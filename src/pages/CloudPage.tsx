@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import CTABand from '../components/CTABand'
+import BrowserFrame from '../components/cloud/BrowserFrame'
+import AlertStream from '../components/cloud/AlertStream'
+import QuestionExplorer from '../components/cloud/QuestionExplorer'
+import type { AnsweredQuestion } from '../components/cloud/QuestionExplorer'
+import KeyFlow from '../components/cloud/KeyFlow'
 import { CLOUD_INCLUDED_SEATS, plans } from '../data/plans'
 import { breadcrumbLd } from '../lib/jsonld'
 
@@ -10,38 +15,54 @@ const cloud = plans.find((p) => p.id === 'cloud')!
 const crumbs = [{ label: 'Cloud', path: '/cloud' }]
 
 /** Die Fragen, die sich jede Webagentur stellt, und die Antwort aus dem Dashboard. */
-const questions = [
+const questions: AnsweredQuestion[] = [
   {
-    title: '„Ist die Seite vom Kunden noch online?“',
-    detail: 'Das Dashboard misst alle 5 Minuten und meldet einen Ausfall in Slack oder per Mail. Du weisst es, bevor der Kunde anruft.',
+    question: '„Ist die Seite vom Kunden noch online?“',
+    answer: 'Das Dashboard misst alle 5 Minuten und meldet einen Ausfall in Slack oder per Mail. Du weisst es, bevor der Kunde anruft.',
+    image: '/cloud/q-online.webp', alt: 'Tab Erreichbarkeit: Verfügbarkeit über 30 und 90 Tage und Antwortzeit der letzten 7 Tage mit markiertem Ausfall',
+    url: 'dashboard.wporbit.ch', width: 1408, height: 1646,
   },
   {
-    title: '„Wo sind Updates offen, und welche sind dringend?“',
-    detail: 'Alle offenen Updates aller Kundenseiten in einer Liste, mit den Lücken, die sie schliessen. Kein Einloggen Seite für Seite.',
+    question: '„Wo sind Updates offen, und welche sind dringend?“',
+    answer: 'Alle offenen Updates aller Kundenseiten in einer Liste, mit den Lücken, die sie schliessen. Kein Einloggen Seite für Seite.',
+    image: '/cloud/q-updates.webp', alt: 'Projektseite mit Kennzahlen und der Liste „Anstehende Updates“',
+    url: 'dashboard.wporbit.ch', width: 1408, height: 1144,
   },
   {
-    title: '„Hat irgendein Plugin eine Sicherheitslücke?“',
-    detail: 'Bekannte Lücken werden mit jedem Inventar abgeglichen. Betroffene Seiten stehen oben, mit dem Update, das hilft.',
+    question: '„Hat irgendein Plugin eine Sicherheitslücke?“',
+    answer: 'Bekannte Lücken werden mit jedem Inventar abgeglichen. Betroffene Seiten stehen oben, mit dem Update, das hilft.',
+    image: '/cloud/q-luecken.webp', alt: 'Tab Sicherheit mit einer bekannten Lücke in einem Plugin und dem Update, das sie behebt',
+    url: 'dashboard.wporbit.ch', width: 1728, height: 442,
   },
   {
-    title: '„Kommen die Mails vom Kontaktformular noch an?“',
-    detail: 'Einmal am Tag schickt jede Seite eine Testmail über ihren echten Mailweg. Ein stilles Formular fällt auf, nicht erst nach Wochen.',
+    question: '„Kommen die Mails vom Kontaktformular noch an?“',
+    answer: 'Einmal am Tag schickt jede Seite eine Testmail über ihren echten Mailweg. Ein stilles Formular fällt auf, nicht erst nach Wochen.',
+    image: '/cloud/q-mail.webp', alt: 'Tab Mail: SPF, DKIM und DMARC bewertet, die letzte Testmail angekommen',
+    url: 'dashboard.wporbit.ch', width: 1408, height: 1534,
   },
   {
-    title: '„Läuft bald ein Zertifikat oder eine Domain ab?“',
-    detail: 'SSL- und Domain-Ablauf werden überwacht und rechtzeitig gemeldet, statt dass die Seite plötzlich eine Warnung zeigt.',
+    question: '„Läuft bald ein Zertifikat oder eine Domain ab?“',
+    answer: 'SSL- und Domain-Ablauf werden überwacht und rechtzeitig gemeldet, statt dass die Seite plötzlich eine Warnung zeigt.',
+    image: '/cloud/q-ablauf.webp', alt: 'Tab Umgebung mit Domain, Ablaufdatum, Nameservern und Hoster',
+    url: 'dashboard.wporbit.ch', width: 1408, height: 820,
   },
   {
-    title: '„Wer hat da einen neuen Admin angelegt?“',
-    detail: 'Jede Änderung wird festgehalten, ein neuer Administrator löst sofort einen Alarm aus.',
+    question: '„Wer hat da einen neuen Admin angelegt?“',
+    answer: 'Jede Änderung wird festgehalten, ein neuer Administrator löst sofort einen Alarm aus.',
+    image: '/cloud/q-admin.webp', alt: 'Tab Änderungen mit hervorgehobenem Eintrag „Neuer Administrator“',
+    url: 'dashboard.wporbit.ch', width: 1408, height: 1094,
   },
   {
-    title: '„Wo ist nochmal das Passwort für diesen Server?“',
-    detail: 'Zugänge liegen verschlüsselt im Projekt und sind für das Team da, ohne Chat, Excel oder Zettel.',
+    question: '„Wo ist nochmal das Passwort für diesen Server?“',
+    answer: 'Zugänge liegen verschlüsselt im Projekt und sind für das Team da, ohne Chat, Excel oder Zettel.',
+    image: '/cloud/q-passwort.webp', alt: 'WPorbit-App: geteilte Zugänge eines Projekts, Passwörter verdeckt',
+    width: 1120, height: 920,
   },
   {
-    title: '„Wer kümmert sich, wenn ich in den Ferien bin?“',
-    detail: 'Alle im Team sehen denselben Stand und dieselben Alarme. Übernehmen geht ohne Übergabe-Mail.',
+    question: '„Wer kümmert sich, wenn ich in den Ferien bin?“',
+    answer: 'Alle im Team sehen denselben Stand und dieselben Alarme. Übernehmen geht ohne Übergabe-Mail.',
+    image: '/cloud/q-team.webp', alt: 'WPorbit-App: Team mit drei Mitgliedern und freigegebenen Macs',
+    width: 1440, height: 900,
   },
 ]
 
@@ -58,25 +79,6 @@ const benefits = [
   {
     title: 'Professionelle Dienstleistung für deine Kunden',
     detail: 'Du meldest dich, bevor der Kunde etwas merkt, und kannst zeigen, was du in der Wartung tust. Bis zum Release kommen Berichte im Auftritt deiner Agentur dazu.',
-  },
-]
-
-/** In drei Schritten: was die App einrichtet und was auf dem Kundenserver bleibt. */
-const steps = [
-  {
-    title: 'In der App einschalten',
-    detail:
-      'Ein Rechtsklick auf das Projekt genügt. WPorbit richtet die Überwachung vom Mac aus ein, mit den Zugängen, die dort ohnehin verschlüsselt liegen.',
-  },
-  {
-    title: 'Ein beschränkter Lese-Schlüssel statt Plugin',
-    detail:
-      'Auf dem Server liegt ein kleines Skript und ein SSH-Schlüssel, der nur feste Befehle ausführen darf: keine Shell, keine Dateien, kein root. Dein Kunde sieht die Zeile und kann sie jederzeit löschen.',
-  },
-  {
-    title: 'Oder ganz ohne Eingriff',
-    detail:
-      'Wo kein Zugang möglich ist, überwacht WPorbit nur von aussen: Erreichbarkeit, SSL und Antwortzeit. Auf der Kundenseite liegt dann nichts.',
   },
 ]
 
@@ -199,6 +201,20 @@ function SectionHead({ kicker, title, lead }: { kicker: string; title: string; l
   )
 }
 
+/** Ruhige Liste statt Kartenraster: Titel und Satz, getrennt durch eine Linie. */
+function FeatureList({ items }: { items: { title: string; detail: string }[] }) {
+  return (
+    <dl className="grid grid-cols-1 gap-x-10 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
+      {items.map((item) => (
+        <div key={item.title} className="border-t border-line pt-4">
+          <dt className="font-heading text-[1rem] font-semibold text-primary">{item.title}</dt>
+          <dd className="mt-1.5 text-[0.86rem] leading-[1.65] text-secondary">{item.detail}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
 function CardGrid({ items, tone = 'plain' }: { items: { title: string; detail: string }[]; tone?: 'plain' | 'accent' | 'dashed' }) {
   const card =
     tone === 'accent'
@@ -241,7 +257,7 @@ export default function CloudPage() {
         }
       >
         <div className="mt-5 flex items-end gap-2 leading-none">
-          <span className="font-heading text-[2.8rem] font-semibold leading-none tracking-[-0.03em] text-primary">
+          <span className="whitespace-nowrap font-heading text-[2.8rem] font-semibold leading-none tracking-[-0.03em] text-primary">
             {cloud.priceMain}
           </span>
           <span className="mb-1.5 text-[0.88rem] leading-tight text-secondary">
@@ -252,13 +268,31 @@ export default function CloudPage() {
         </div>
       </PageHero>
 
+      <section className="border-b border-line px-6 pb-16">
+        <div className="hero-image relative">
+          <BrowserFrame>
+            <img
+              src="/cloud/hero.webp"
+              alt="Team-Dashboard: alle Kundenseiten mit Zustand, offenen Updates, SSL, Antwortzeit, Verfügbarkeit und Performance"
+              width={2400}
+              height={933}
+              fetchPriority="high"
+              className="block h-auto w-full"
+            />
+          </BrowserFrame>
+          <div className="mt-6 flex justify-end lg:absolute lg:-bottom-8 lg:right-6 lg:mt-0">
+            <AlertStream />
+          </div>
+        </div>
+      </section>
+
       <section className="border-b border-line px-6 py-16">
         <SectionHead
           kicker="Aus der Praxis"
           title="Gebaut für die Fragen, die im Agenturalltag wirklich kommen"
           lead="Jede Agentur mit Wartungskunden kennt sie. Cloud beantwortet sie für alle Kundenseiten auf einmal."
         />
-        <CardGrid items={questions} />
+        <QuestionExplorer items={questions} />
       </section>
 
       <section className="border-b border-line bg-raised px-6 py-16">
@@ -275,17 +309,7 @@ export default function CloudPage() {
           title="Überwachen, ohne die Kundenseite zu öffnen"
           lead="Jedes Plugin, das eine Website nach aussen öffnet, ist zusätzliche Angriffsfläche, auch ein Überwachungs-Plugin. WPorbit braucht keines und speichert keine Passwörter."
         />
-        <div className="stagger-group grid grid-cols-1 gap-4 md:grid-cols-3">
-          {steps.map((step, i) => (
-            <article key={step.title} className="rounded-xl border border-line bg-surface p-5">
-              <p className="mb-2 text-[0.62rem] font-bold uppercase tracking-[0.13em] text-tertiary">
-                {String(i + 1).padStart(2, '0')}
-              </p>
-              <h3 className="mb-2 font-heading text-[1rem] font-semibold text-primary">{step.title}</h3>
-              <p className="text-[0.86rem] leading-[1.65] text-secondary">{step.detail}</p>
-            </article>
-          ))}
-        </div>
+        <KeyFlow />
       </section>
 
       <section className="border-b border-line bg-raised px-6 py-16">
@@ -294,7 +318,7 @@ export default function CloudPage() {
           title="Was das Dashboard schon kann"
           lead="Alles hier läuft bereits im Team-Dashboard."
         />
-        <CardGrid items={today} />
+        <FeatureList items={today} />
       </section>
 
       <section className="border-b border-line px-6 py-16">

@@ -398,7 +398,48 @@
   animation: flow-step-pulse 9s ease-in-out infinite;
 }
 
+/* Cloud: ein Alarm läuft im Team-Kanal ein. Unschärfe wird scharf, statt zu hüpfen. */
+@keyframes alert-in {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@utility animate-alert-in {
+  animation: alert-in 620ms var(--ease-out-expo) both;
+}
+
+/* Cloud: das Bild zur gewählten Frage blendet über eine Maske ein. */
+@keyframes answer-in {
+  from { opacity: 0; clip-path: inset(0 0 12% 0 round var(--radius-panel)); transform: translateY(6px); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0 round var(--radius-panel)); transform: none; }
+}
+
+@utility animate-answer-in {
+  animation: answer-in 480ms var(--ease-out-expo) both;
+}
+
+/* Cloud: der Lese-Schlüssel wandert vom Mac zum Server. Bewegt wird der
+   Träger über die volle Linienbreite, damit es bei jeder Breite stimmt. */
+@keyframes key-travel {
+  0%   { transform: translateX(0); opacity: 0; }
+  8%   { opacity: 1; }
+  70%  { transform: translateX(100%); opacity: 1; }
+  82%, 100% { transform: translateX(100%); opacity: 0; }
+}
+
+@utility animate-key-travel {
+  animation: key-travel 4.4s var(--ease-out-expo) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .animate-alert-in,
+  .animate-answer-in {
+    animation: none;
+  }
+  .animate-key-travel {
+    animation: none;
+    opacity: 0;
+  }
   .animate-halo,
   .animate-logo-orbit,
   .animate-flow-dot,
