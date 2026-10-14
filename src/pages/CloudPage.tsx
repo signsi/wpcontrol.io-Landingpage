@@ -9,9 +9,10 @@ import type { AnsweredQuestion } from '../components/cloud/QuestionExplorer'
 import KeyFlow from '../components/cloud/KeyFlow'
 import SafeUpdateDemo from '../components/cloud/SafeUpdateDemo'
 import ReportMock from '../components/cloud/ReportMock'
+import CompareCards from '../components/cloud/CompareCards'
 import {
-  BriefcaseIcon, CalmIcon, CoinsIcon, LayersIcon, LinkIcon, NoIcon, PatchIcon, PinIcon, PipelineIcon,
-  ShieldIcon, UserKeyIcon, YesIcon,
+  BriefcaseIcon, CalmIcon, CoinsIcon, LayersIcon, LinkIcon, PatchIcon, PinIcon, PipelineIcon,
+  ShieldIcon, UserKeyIcon,
 } from '../components/cloud/icons'
 import type { ReactNode } from 'react'
 import { CLOUD_INCLUDED_SEATS, plans } from '../data/plans'
@@ -193,34 +194,6 @@ const possible = [
     detail: 'Bekannte Lücken abfangen, bis das Update eingespielt ist, über einen spezialisierten Partner statt eines eigenen Plugins.',
   },
 ]
-
-/** Kurzvergleich. Namen der Anbieter und Details stehen auf /vergleich. */
-const comparisonRows: { label: string; orbit: string; others: string }[] = [
-  { label: 'Ohne Plugin auf der Kundenseite', orbit: 'Ja', others: 'Nein' },
-  { label: 'Ohne gespeicherte Zugangsdaten beim Dienst', orbit: 'Ja', others: 'Je nach Dienst' },
-  { label: 'Mailtest über den echten Mailweg', orbit: 'Ja', others: 'Nein' },
-  { label: 'Änderungsverlauf und Alarm bei neuem Admin', orbit: 'Ja', others: 'Teilweise, als Zusatz' },
-  { label: 'Lokale Entwicklung im selben Werkzeug', orbit: 'Ja', others: 'Nein' },
-  { label: 'Updates und Backups aus der Ferne', orbit: 'Bis Ende 2026', others: 'Ja' },
-  { label: 'Entwickelt und gehostet in der Schweiz', orbit: 'Ja', others: 'Selten' },
-]
-
-/** Ja und Nein als Zeichen, alles andere als Text. */
-function Verdict({ value, strong = false }: { value: string; strong?: boolean }) {
-  if (value === 'Ja')
-    return (
-      <span className={`inline-flex items-center gap-1.5 ${strong ? 'text-accent' : 'text-secondary'}`}>
-        <YesIcon /> <span className="sr-only">Ja</span>
-      </span>
-    )
-  if (value === 'Nein')
-    return (
-      <span className="inline-flex items-center gap-1.5 text-tertiary">
-        <NoIcon /> <span className="sr-only">Nein</span>
-      </span>
-    )
-  return <span className={strong ? 'font-medium text-primary' : 'text-secondary'}>{value}</span>
-}
 
 function SectionHead({ kicker, title, lead }: { kicker: string; title: string; lead?: string }) {
   return (
@@ -458,28 +431,9 @@ export default function CloudPage() {
         <SectionHead
           kicker="Im Vergleich"
           title="Was anders ist als bei üblichen Wartungsdiensten"
-          lead="Übliche Wartungsdienste verbinden sich über ein Plugin auf jeder Kundenseite. Preislich lässt sich das schlecht vergleichen: Cloud kommt zusammen mit der App für die lokale Arbeit."
+          lead="Der Unterschied beginnt beim Aufbau: Übliche Dienste brauchen ein Plugin auf jeder Kundenseite, WPorbit nicht. Preislich lässt sich das schlecht vergleichen, weil Cloud die App für die lokale Arbeit einschliesst."
         />
-        <div className="relative overflow-x-auto rounded-xl border border-line">
-          <table className="w-full min-w-[34rem] text-left text-[0.86rem]">
-            <thead className="bg-raised text-[0.72rem] uppercase tracking-[0.08em] text-tertiary">
-              <tr>
-                <th className="px-4 py-3 font-semibold"></th>
-                <th className="px-4 py-3 font-semibold text-accent">WPorbit Cloud</th>
-                <th className="px-4 py-3 font-semibold">Übliche Wartungsdienste</th>
-              </tr>
-            </thead>
-            <tbody>
-              {comparisonRows.map((row) => (
-                <tr key={row.label} className="border-t border-line">
-                  <td className="px-4 py-3 text-primary">{row.label}</td>
-                  <td className="px-4 py-3"><Verdict value={row.orbit} strong /></td>
-                  <td className="px-4 py-3"><Verdict value={row.others} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <CompareCards />
         <p className="mt-4 text-[0.82rem] text-tertiary">
           Stand Oktober 2026, nach Angaben der Anbieter.{' '}
           <Link to="/vergleich#wartung" className="font-semibold text-primary hover:text-accent">
