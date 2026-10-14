@@ -72,7 +72,7 @@ const today = [
 const comingSoon = [
   {
     title: 'Updates mit einem Klick aus der Ferne',
-    detail: 'Core, Plugins und Themes einzeln oder gebündelt aktualisieren, direkt aus dem Dashboard.',
+    detail: 'Core, Plugins und Themes einzeln oder gebündelt aktualisieren, direkt aus dem Dashboard. Eine gemeldete Lücke ist so mit einem Klick geschlossen, statt nur abgefangen.',
   },
   {
     title: 'Sichere Updates mit Rollback',
@@ -115,8 +115,12 @@ const possible = [
     detail: 'Defekte Links auf den Kundenseiten finden, bevor es Besucher oder Suchmaschinen tun.',
   },
   {
-    title: 'Firewall und Virtual Patching',
-    detail: 'Bekannte Lücken nicht nur melden, sondern abfangen, bis das Update eingespielt ist.',
+    title: 'Firewall über Cloudflare oder den Hoster',
+    detail: 'Eine Firewall gehört vor die Website, nicht als Plugin in sie hinein. WPorbit bindet sie dort an, wo sie hingehört: bei Cloudflare oder beim Hoster.',
+  },
+  {
+    title: 'Virtual Patching über einen Partner',
+    detail: 'Bekannte Lücken abfangen, bis das Update eingespielt ist, über einen spezialisierten Partner statt eines eigenen Plugins.',
   },
 ]
 
