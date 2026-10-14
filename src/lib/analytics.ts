@@ -52,6 +52,16 @@ export function setConsent(value: Consent): void {
   gtag('consent', 'update', { analytics_storage: value })
   track('consent_update', { analytics_storage: value })
   if (value === 'denied') removeAnalyticsCookies()
+  // Der Seitenaufruf beim Laden lief noch ohne Zustimmung und zählt in GA4
+  // nicht als Besuch. Nach „Akzeptieren“ die aktuelle Seite nochmals melden,
+  // sonst taucht auf, wer auf einer einzigen Seite zustimmt, nie auf.
+  if (value === 'granted') {
+    track('page_view', {
+      page_path: window.location.pathname + window.location.search,
+      page_location: window.location.href,
+      page_title: document.title,
+    })
+  }
 }
 
 /** Beim Widerruf: die Cookies von Google Analytics (`_ga`, `_ga_<ID>`) löschen. */
