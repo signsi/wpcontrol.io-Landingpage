@@ -71,7 +71,7 @@ Unter „GitLab → Einstellungen → CI/CD → Variablen“ listet WPorbit sieb
 | `SSH_PORT` | Variable | SSH-Port des Servers |
 | `WEB_ROOT` | Variable | WordPress-Verzeichnis auf dem Server |
 | `THEME_FOLDER` | Variable | Theme-Ordner, den die Pipeline überträgt |
-| `SSH_KEY` | File, Masked | privater Deploy-Key |
+| `SSH_KEY` | File, Protected | privater Deploy-Key |
 | `SSH_KNOWN_HOSTS` | File | Host-Fingerabdrücke des Servers |
 
 Öffne in GitLab dein Projekt und dort **Settings → CI/CD → Variables** (in der deutschen Oberfläche **Einstellungen → CI/CD → Variablen**). Lege jede Variable mit Namen und Wert an.
@@ -82,6 +82,12 @@ Unter „GitLab → Einstellungen → CI/CD → Variablen“ listet WPorbit sieb
 
 <Callout variant="wichtig" title="Typ ›File‹ bei SSH_KEY und SSH_KNOWN_HOSTS">
 Lege `SSH_KEY` und `SSH_KNOWN_HOSTS` in GitLab mit dem Typ **File** an. Als gewöhnliche Variable gehen die Zeilenumbrüche verloren, und die Anmeldung schlägt fehl. Bei diesem Typ enthält die Variable in der Pipeline den Pfad zu einer Datei mit dem Wert, nicht den Wert selbst.
+</Callout>
+
+<Callout variant="wichtig" title="SSH_KEY: Protected, nicht Masked">
+Setze bei `SSH_KEY` das Häkchen **Protected**, nicht **Masked**. GitLab maskiert nur Werte, die auf einer Zeile stehen und keine Leerzeichen enthalten. Ein privater Schlüssel erfüllt das nie, GitLab lehnt das Speichern ab. Schreibst du den Schlüssel dafür in Base64 um, scheitert die Pipeline später mit `Load key: invalid format`.
+
+**Protected** gibt den Schlüssel nur an Pipelines auf geschützten Branches weiter. Damit das klappt, muss `main` in GitLab ein geschützter Branch sein (**Settings → Repository → Protected branches**). Sonst ist `SSH_KEY` in der Pipeline leer, und die Anmeldung schlägt fehl. Als Datei erscheint der Schlüssel nicht im Job-Log, solange kein Job die Datei ausgibt.
 </Callout>
 
 </Step>
