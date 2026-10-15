@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { Link } from 'react-router-dom'
 import { getConsent, OPEN_CONSENT_EVENT, setConsent, type Consent } from '../lib/analytics'
 
@@ -7,15 +7,21 @@ import { getConsent, OPEN_CONSENT_EVENT, setConsent, type Consent } from '../lib
  * ist, und erneut über „Cookie-Einstellungen“ im Footer. Zwei gleichwertige
  * Knöpfe, nichts vorausgewählt; die Seite bleibt bedienbar.
  */
+/** Die Wahl ändert sich nur über diesen Banner; er rendert danach selbst neu. */
+const noSubscription = () => () => {}
+
 export default function ConsentBanner() {
-  // Beim Vorrendern unbekannt; erst im Browser entscheiden, sonst wiche die
-  // Hydration ab.
-  const [open, setOpen] = useState(false)
+  // Beim Vorrendern unbekannt (Server-Wert `false`), erst im Browser
+  // entscheiden, sonst wiche die Hydration ab. `useSyncExternalStore` liest den
+  // Browser-Wert nach der Hydration, ohne setState im Effekt.
+  const undecided = useSyncExternalStore(noSubscription, () => getConsent() === null, () => false)
+  const [decided, setDecided] = useState(false)
+  const [reopened, setReopened] = useState(false)
+  const open = reopened || (undecided && !decided)
   const first = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (getConsent() === null) setOpen(true)
-    const reopen = () => setOpen(true)
+    const reopen = () => setReopened(true)
     window.addEventListener(OPEN_CONSENT_EVENT, reopen)
     return () => window.removeEventListener(OPEN_CONSENT_EVENT, reopen)
   }, [])
@@ -28,7 +34,8 @@ export default function ConsentBanner() {
 
   const choose = (value: Consent) => {
     setConsent(value)
-    setOpen(false)
+    setDecided(true)
+    setReopened(false)
   }
 
   return (
