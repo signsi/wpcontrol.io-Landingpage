@@ -14,8 +14,8 @@ export default function FeaturesPage() {
   return (
     <>
       <Seo
-        title="Alle Funktionen"
-        description="Von der lokalen Entwicklung bis zur automatisierten Wartung: alle Funktionen von WPorbit im Detail."
+        title="Alle Funktionen für WordPress-Agenturen"
+        description="Von der lokalen Entwicklung über Zugänge und Deployment bis zur Wartung ohne Plugin: alle Funktionen von WPorbit für WordPress-Agenturen im Detail."
         path="/produkt/funktionen"
         jsonLd={breadcrumbLd(crumbs)}
       />
@@ -80,7 +80,7 @@ export default function FeaturesPage() {
 
       <CTABand
         title="Bereit, den WordPress-Alltag zu vereinfachen?"
-        text="Teste WPorbit zehn Tage lang mit einem Projekt und vollem Funktionsumfang. Keine Kreditkarte nötig."
+        text="Teste WPorbit zehn Tage lang mit vollem Funktionsumfang. Keine Kreditkarte nötig."
         secondary={{ label: 'Preise ansehen', to: '/preise' }}
       />
     </>

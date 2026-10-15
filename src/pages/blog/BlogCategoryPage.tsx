@@ -38,6 +38,9 @@ export default function BlogCategoryPage({ category }: BlogCategoryPageProps) {
       />
 
       <section className="px-6 pb-20">
+        {meta?.intro && (
+          <p className="mb-8 max-w-[62ch] text-[0.9375rem] leading-[1.7] text-secondary">{meta.intro}</p>
+        )}
         <div className="mb-8">
           <CategoryFilter />
         </div>

@@ -1,20 +1,20 @@
 ---
 title: "Das Team-Dashboard nutzen"
-description: "Alle überwachten WordPress-Seiten deines Teams im Browser: anmelden per Link, nach Zustand filtern, suchen, sortieren und einzelne Projekte im Detail ansehen."
+description: "Alle überwachten WordPress-Seiten deines Teams im Browser: per Link anmelden, nach Zustand filtern, suchen, sortieren und Projekte im Detail ansehen."
 order: 20
-updated: 2026-09-24
+updated: 2026-10-13
 type: anleitung
 audience: einsteiger
 duration: "5 Minuten"
-appliesTo: [Standalone, Cloud]
+appliesTo: [Cloud]
 related:
   - wartung/ueberwachung-einschalten
   - wartung/sicherheits-tab-verstehen
   - zugaenge/projekte-im-team-teilen
-draft: true
+draft: false
 ---
 
-Das Team-Dashboard unter [dashboard.wporbit.ch](https://dashboard.wporbit.ch) zeigt dir alle überwachten Projekte deiner Teams im Browser. Du siehst auf einen Blick, welche Seite down ist, wo ein Zertifikat abläuft und wo Updates offen sind. Das Dashboard zeigt nur an. Ändern kannst du dort nichts.
+Das Team-Dashboard unter [dashboard.wporbit.ch](https://dashboard.wporbit.ch) zeigt dir alle überwachten Projekte deiner Teams im Browser. Du siehst auf einen Blick, welche Seite down ist, wo ein Zertifikat abläuft und wo Updates offen sind. An den Websites selbst änderst du dort nichts. Du kannst aber eine Messung anstossen, Wartungsfenster setzen, Einstellungen für Erreichbarkeit, Performance und Mail anpassen und festlegen, wohin Alarme gehen.
 
 <Callout variant="hinweis" title="Voraussetzung">
 Du bist in WPorbit Mitglied eines Teams, und für mindestens ein Projekt ist die Überwachung eingeschaltet. Wie das geht, steht unter [Überwachung einschalten](/anleitungen/wartung/ueberwachung-einschalten).
@@ -50,7 +50,14 @@ Die Anmeldung gilt für diesen Browser-Tab. Schliesst du ihn, meldest du dich be
 
 Bist du in einem einzigen Team, öffnet das Dashboard direkt dessen Übersicht. Bist du in mehreren, wählst du unter „Deine Teams“ eines aus. Jede Karte zeigt, wie viele Projekte überwacht und wie viele geteilt sind. Mit **Team wechseln** oben in der Leiste kommst du jederzeit zu dieser Auswahl zurück.
 
-Links in der Leiste stehen die überwachten Projekte des Teams, wie in der Seitenleiste der App: zuoberst **Alle Projekte**, darunter jedes Projekt mit seiner Zustandsform, die dringendsten zuerst. Ein Klick öffnet das Projekt, das geöffnete ist hervorgehoben.
+Links in der Leiste stehen zuoberst **Alle Projekte** und die Seiten, die für das ganze Team gelten:
+
+- **Alarme:** offene und erledigte Alarme, die Zahl daneben nennt die offenen.
+- **Änderungen:** was sich auf allen Seiten des Teams geändert hat.
+- **Plugins & Themes:** alle Plugins und Themes über alle Projekte, auch als CSV.
+- **Benachrichtigungen:** der Team-Kanal (Slack oder eine Team-Adresse) und deine eigenen Alarme.
+
+Darunter stehen die überwachten Projekte, wie in der Seitenleiste der App: jedes mit seiner Zustandsform, die dringendsten zuerst. Ein Klick öffnet das Projekt, das geöffnete ist hervorgehoben.
 
 ## Die Übersicht eines Teams
 
@@ -63,12 +70,12 @@ Der farbige Balken oben zeigt, wie sich die Projekte auf die Zustände verteilen
 | Zustand | Bedeutung |
 |---|---|
 | **Down** | Die Seite war bei der letzten Messung nicht erreichbar. |
-| **SSL kritisch** | Das Zertifikat läuft in weniger als 7 Tagen ab oder ist abgelaufen. |
-| **Pflege nötig** | Updates sind offen, das Zertifikat läuft in weniger als 21 Tagen ab, oder das letzte Inventar ist fehlgeschlagen. |
+| **SSL kritisch** | Das Zertifikat läuft in weniger als 7 Tagen ab oder ist abgelaufen, oder eine installierte Version hat eine Sicherheitslücke mit hoher oder kritischer Schwere. |
+| **Pflege nötig** | Updates sind offen, es gibt eine weniger schwere Sicherheitslücke, das Zertifikat läuft in weniger als 21 Tagen ab, oder das letzte Inventar ist fehlgeschlagen. |
 | **Unbekannt** | Für die Seite gibt es noch keine Messung. |
 | **OK** | Nichts zu tun. |
 
-Ein Klick auf ein Segment oder einen Eintrag der Legende filtert die Tabelle auf diesen Zustand. Ein zweiter Klick hebt den Filter wieder auf.
+Die Legende zeigt nur Zustände, die gerade vorkommen. Ein Klick auf ein Segment oder einen Eintrag der Legende filtert die Tabelle auf diesen Zustand. Ein zweiter Klick hebt den Filter wieder auf.
 
 ### Suchen
 
@@ -83,11 +90,14 @@ Ein Klick auf eine Spaltenüberschrift sortiert danach, ein zweiter Klick dreht 
 | Spalte | Inhalt |
 |---|---|
 | **Status** | Der Zustand wie im Balken, genauer beschriftet, z. B. „Updates offen“ oder „SSL bald fällig“. |
-| **Projekt** | Name, darunter Kunde und Adresse. |
+| **Projekt** | Name, darunter Kunde, Adresse und Hoster. Markierungen weisen auf Besonderes hin, z. B. „2 Lücken“, „Wartung“, „Passwortschutz“ oder „noindex“. |
 | **Updates** | Anzahl offener Updates, aufgeteilt in Plugins, Themes und Core. |
 | **WordPress**, **PHP** | Die installierten Versionen. |
 | **SSL** | Tage bis zum Ablauf des Zertifikats. |
 | **Antwort** | Antwortzeit der letzten Messung in Millisekunden. |
+| **Verfügbar** | Verfügbarkeit der letzten 30 Tage, ohne Wartungsfenster. |
+| **Performance** | Performance-Wert von Google PageSpeed (Mobil). Ein Pfeil zeigt, wenn er sich um 5 Punkte oder mehr verändert hat. |
+| **Zugänglich** | Barrierefreiheits-Wert aus derselben Messung. |
 | **Inventar** | Wann das Inventar zuletzt gelesen wurde, „ausstehend“, „Fehler“ oder „nur extern“. |
 
 Projekte, die nur von aussen überwacht werden, haben kein Inventar. Bei ihnen bleiben Updates leer, und die Spalte Inventar zeigt „nur extern“.
@@ -96,24 +106,28 @@ Unter der Tabelle steht, wie viele geteilte Projekte des Teams nicht überwacht 
 
 ## Ein Projekt im Detail
 
-Ein Klick auf den Projektnamen öffnet die Detailseite. Oben stehen vier Kennzahlen: **SSL**, **Antwort**, **Verfügbarkeit** über 7 Tage und wann das **Inventar** zuletzt gelesen wurde. Ist die Seite down, steht darunter seit wann.
+Ein Klick auf den Projektnamen öffnet die Detailseite. Neben dem Namen stehen der Zustand und **Jetzt aktualisieren**, das eine neue Messung und ein neues Inventar anstösst. Darunter stehen vier Kennzahlen: **SSL**, **Antwort**, **Verfügbarkeit** über 30 Tage und wann das **Inventar** zuletzt gelesen wurde. Ist die Seite down, steht darunter seit wann.
 
-![Team-Dashboard, Projektseite mit Tab „Übersicht“: Kennzahlen SSL, Antwort, Verfügbarkeit, Inventar und die Liste „Anstehende Updates“](/anleitungen/wartung/team-dashboard-nutzen/03-projekt-uebersicht.webp)
+![Team-Dashboard, Projektseite mit Tab „Übersicht“: Kennzahlen SSL, Antwort, Verfügbarkeit, Inventar, die zehn Tabs, „Anstehende Updates“, „Website“ und „Details“](/anleitungen/wartung/team-dashboard-nutzen/03-projekt-uebersicht.webp)
 
 Die Tabs:
 
-- **Übersicht:** anstehende Updates von Core, Plugins und Themes, dazu die Details wie Kunde, Adresse, Art der Überwachung, letzte Messung, letztes Inventar und seit wann überwacht wird.
-- **Plugins** und **Themes:** Name, Version, Status, verfügbares Update und ob Auto-Update an ist. Filtern lässt sich nach **Alle**, **Mit Update** und **Inaktiv**. Die Zahl am Tab zeigt, wie viele ein Update haben.
-- **Umgebung:** WordPress, Core-Update, PHP, Datenbank, Multisite, WP_DEBUG, Server, Web-Root und wann das Inventar gelesen wurde.
-- **Erreichbarkeit:** die Antwortzeit der letzten 7 Tage als Verlauf. Ausfälle sind als rote Bänder markiert, mit der Maus siehst du jede einzelne Messung. Darunter die Ausfälle der letzten 30 Tage mit Beginn, Ende und Dauer.
-- **Sicherheit:** Hinweise zu WP_DEBUG, Cron, Auto-Updates, inaktiven Plugins, Datenbankgrösse und Administratoren. Was die einzelnen Punkte bedeuten, erklärt [Den Sicherheits-Tab verstehen](/anleitungen/wartung/sicherheits-tab-verstehen).
+- **Übersicht:** anstehende Updates von Core, Plugins und Themes. Behebt ein Update eine bekannte Lücke, steht „schliesst Lücke“ dabei. Darunter **Website** mit Hoster, Grösse, Indexierung, Passwortschutz, Google Analytics und Search Console, und **Details** mit Kunde, Adresse, Versionen, Art der Überwachung, letzter Messung, letzter Änderung, letztem Inventar und seit wann überwacht wird.
+- **Änderungen:** was sich laut Inventar auf der Seite geändert hat, nach Tagen gruppiert, über 30 Tage, 90 Tage oder 13 Monate. Sicherheitsrelevantes wie ein neuer Administrator steht einzeln und hervorgehoben.
+- **Plugins** und **Themes:** Name, Version, Status, verfügbares Update und ob Auto-Update an ist. Filtern lässt sich nach **Alle**, **Mit Lücke**, **Mit Update**, **Inaktiv** und **Verwaist**. Es erscheinen nur Filter mit Treffern. Die Zahl am Tab zeigt, wie viele ein Update haben.
+- **Umgebung:** WordPress, Core-Update, PHP, Datenbank, Multisite, WP_DEBUG, Server, Web-Root, die Grösse von Installation, Uploads und Datenbank und wann das Inventar gelesen wurde. Darunter die Domain mit Ablauf, Nameservern, Mailservern und IP-Adressen und der Hoster von Website und Server.
+- **Erreichbarkeit:** oben kannst du eine Wartung starten (1, 2 oder 4 Stunden, mit Grund) oder eine laufende beenden. Darunter die Verfügbarkeit über 30 und 90 Tage, das Ziel mit „erreicht“ oder „verfehlt“ und ein Streifen mit einem Feld pro Tag. Dann die Antwortzeit der letzten 7 Tage als Verlauf. Ausfälle sind als rote Bänder markiert, mit der Maus siehst du jede einzelne Messung. Es folgen die Ausfälle der letzten 90 Tage mit Beginn, Ende, Dauer und Grund und die Wartungsfenster. In den Einstellungen legst du eine Inhaltsprüfung („Muss enthalten“, „Darf nicht enthalten“), das Verfügbarkeitsziel und wiederkehrende Wartung fest.
+- **Mail:** SPF, DMARC und DKIM der Domain aus dem öffentlichen DNS, bewertet mit Gut, Mittel oder Schlecht. Eingeschaltet schickt die Seite einmal am Tag über ihren eigenen Mailweg eine Testmail an WPorbit. Du siehst, ob und nach wie vielen Sekunden sie ankam, und die letzten 10 Tests. **Jetzt testen** startet einen Test sofort. Der Mailtest braucht den Lesezugang per SSH.
+- **Performance:** Werte von Google PageSpeed Insights für Mobil oder Desktop: Performance, Barrierefreiheit, Best Practices und SEO, dazu die Core Web Vitals. Darunter der Verlauf über 90 Tage und Empfehlungen. **Jetzt messen** fordert eine neue Messung an. In den Einstellungen wählst du wöchentlich oder täglich und bis zu 5 weitere Seiten.
+- **Barrierefreiheit:** der Barrierefreiheits-Wert aus derselben Messung, die Befunde der automatischen Prüfung mit der Zahl betroffener Elemente und der Verlauf. Der Check ersetzt keine Prüfung nach WCAG.
+- **Sicherheit:** zuerst bekannte Sicherheitslücken in WordPress, Plugins und Themes, dann Hinweise zu WP_DEBUG, Cron, Auto-Updates, inaktiven Plugins, Datenbankgrösse und Administratoren. Die rote Zahl am Tab nennt die Anzahl Lücken. Was die einzelnen Punkte bedeuten, erklärt [Den Sicherheits-Tab verstehen](/anleitungen/wartung/sicherheits-tab-verstehen).
 
-{/* SCREENSHOT 04-erreichbarkeit: Web-Dashboard, Tab „Erreichbarkeit“ mit Antwortzeit-Verlauf über 7 Tage, idealerweise mit einem markierten Ausfall, und der Tabelle „Ausfälle“ */}
+![Web-Dashboard, Tab „Erreichbarkeit“: Verfügbarkeit, Antwortzeit der letzten 7 Tage mit markiertem Ausfall und Tabelle „Ausfälle“](/anleitungen/wartung/team-dashboard-nutzen/04-erreichbarkeit.webp)
 
 <Callout variant="tipp" title="Warum Plugins, Themes und Umgebung leer sind">
-Ohne Lesezugang sieht der Server nur, was öffentlich erreichbar ist. Diese Tabs zeigen dann einen Hinweis statt Daten. Das Inventar holst du in der App nach: Rechtsklick auf das Projekt in der Seitenleiste, dann **Inventar einrichten…**.
+Ohne Lesezugang sieht der Server nur, was öffentlich erreichbar ist. Plugins, Themes, Sicherheit und Änderungen zeigen dann einen Hinweis statt Daten, Umgebung zeigt nur Domain und Hoster, und der Mailtest läuft nicht. Das Inventar holst du in der App nach: Rechtsklick auf das Projekt in der Seitenleiste, dann **Inventar einrichten…**.
 </Callout>
 
 ## Wie aktuell die Daten sind
 
-Erreichbarkeit, Antwortzeit und SSL misst der Server mehrmals pro Stunde. Das Inventar liest er alle 6 Stunden. Ist der letzte Inventar-Lauf fehlgeschlagen, zeigt das Dashboard den letzten guten Stand und sagt, von wann er ist.
+Erreichbarkeit, Antwortzeit und SSL misst der Server alle 5 Minuten. Das Inventar liest er alle 6 Stunden. Ist der letzte Inventar-Lauf fehlgeschlagen, zeigt das Dashboard den letzten guten Stand und sagt, von wann er ist.

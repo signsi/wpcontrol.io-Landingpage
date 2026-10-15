@@ -65,7 +65,7 @@ export const faqItems = [
   },
   {
     q: 'Was passiert nach der Demo-Anmeldung?',
-    a: 'Du erhältst den Download für die Standalone-Demo und kannst ein Projekt zehn Tage lang mit dem verfügbaren Funktionsumfang testen.',
+    a: 'Du erhältst den Download für die Standalone-Demo und kannst WPorbit zehn Tage lang mit vollem Funktionsumfang testen.',
   },
 ]
 

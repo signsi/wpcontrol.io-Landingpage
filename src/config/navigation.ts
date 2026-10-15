@@ -47,7 +47,7 @@ export const primaryNav: NavGroup[] = [
         heading: 'Pläne',
         items: [
           { label: 'Standalone', to: '/standalone', description: 'Für Einzelne, die unabhängig arbeiten' },
-          { label: 'Cloud', to: '/cloud', description: 'Gemeinsamer Arbeitsbereich fürs Team', badge: 'In Entwicklung' },
+          { label: 'Cloud', to: '/cloud', description: 'Team-Dashboard für alle Kundenseiten', badge: 'In Entwicklung' },
           { label: 'Massgeschneidert', to: '/massgeschneidert', description: 'CRM, ERP und eigene Abläufe' },
         ],
       },

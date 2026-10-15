@@ -3,6 +3,7 @@ import Seo from '../../components/Seo'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import TableOfContents from '../../components/article/TableOfContents'
 import HelpSidebar from '../../components/hilfe/HelpSidebar'
+import ProductBox from '../../components/article/ProductBox'
 import { mdxComponents } from '../../components/mdx'
 import { getGuide, getGuideNeighbours, getRelatedGuides } from '../../lib/content'
 import { guideCategory } from '../../content/taxonomy'
@@ -40,11 +41,12 @@ export default function HelpArticlePage({ category, slug, Body }: HelpArticlePag
   return (
     <>
       <Seo
-        title={guide.title}
+        title={guide.seoTitle ?? guide.title}
         description={guide.description}
         path={guide.path}
         type="article"
         image={SITE.guideOgImage}
+        publishedTime={guide.date ?? guide.updated}
         modifiedTime={guide.updated}
         noindex={guide.draft}
         jsonLd={[guideLd(guide), breadcrumbLd(crumbs)]}
@@ -85,6 +87,10 @@ export default function HelpArticlePage({ category, slug, Body }: HelpArticlePag
 
             <div className="prose-article">
               <Body components={mdxComponents} />
+            </div>
+
+            <div className="mt-14">
+              <ProductBox topic={category === 'wartung' ? 'cloud' : 'testen'} location="guide_box" />
             </div>
 
             {related.length > 0 && (

@@ -1,6 +1,6 @@
 ---
 title: "Eine bestehende Website übernehmen"
-description: "Eine Live-Seite per SSH mit WPorbit verbinden, Datenbank und Inhalte vom Server holen und lokal daran weiterarbeiten."
+description: "Eine Live-Seite per SSH mit WPorbit verbinden, Datenbank und Inhalte vom Server holen und lokal daran weiterarbeiten, ohne die Live-Seite zu verändern."
 order: 10
 updated: 2026-09-24
 type: anleitung
@@ -12,7 +12,7 @@ related:
   - veroeffentlichen/verbindung-pruefen-und-ssh-einrichten
   - projekte/projekt-aus-backup-importieren
   - zugaenge/zugangsdaten-im-vault
-draft: true
+draft: false
 ---
 
 Die meisten Kundenprojekte gibt es schon: Die Website läuft bei einem Hoster, und du willst lokal daran arbeiten. Dafür verbindest du WPorbit per SSH mit dem Server. WPorbit holt Datenbank und Inhalte, baut daraus eine lokale Umgebung und ersetzt die Live-Adresse durch die lokale.
@@ -88,7 +88,7 @@ Hast du nicht direkt eingerichtet, zeigt die Übersicht des Projekts den Hinweis
 2. **Optionen**: „Template & Docker“ ist ein Pflichtschritt. **Theme einrichten** (Theme klonen, npm installieren, Build ausführen) kannst du abwählen.
 3. **Einrichten**: Klicke auf **Starten**. WPorbit misst zuerst die Grösse auf dem Server und startet dann den Ablauf. Das Protokoll kannst du über **Protokoll kopieren** in die Zwischenablage legen.
 
-{/* SCREENSHOT 04-einrichten-assistent: Assistent „Lokale Umgebung einrichten“, Schritt „Was holen?“ mit den vier Optionen */}
+![Assistent „Lokale Umgebung einrichten“, Schritt „Was holen?“ mit Datenbank, Plugins, Uploads und Themes](/anleitungen/projekte/bestehende-website-uebernehmen/04-einrichten-assistent.webp)
 
 ## Grosse Websites: Upload-Ordner auswählen
 
@@ -96,7 +96,7 @@ Ist die Website grösser als 200 MB oder liegen die Uploads in mehreren Jahresor
 
 Unter „Verzeichnisse“ wählst du mit **Alle**, **2 Jahre** oder **1 Jahr**, welche Upload-Jahre mitkommen, und schaltest einzelne grosse Ordner ab. Danach geht es mit **Holen** oder **Trotzdem holen** weiter. WPorbit merkt sich die Auswahl für das Projekt.
 
-{/* SCREENSHOT 05-grosse-datenmenge: Fenster „Grosse Datenmenge erkannt“ mit Zusammenfassung und Jahres-Voreinstellungen; Projekt mit mehreren Upload-Jahren und über 200 MB */}
+![Fenster „Grosse Datenmenge erkannt“ mit Zusammenfassung, Upload-Jahren und Voreinstellungen](/anleitungen/projekte/bestehende-website-uebernehmen/05-grosse-datenmenge.webp)
 
 <Callout variant="tipp" title="Nur holen, was du brauchst">
 Für die meisten Arbeiten am Theme reichen Datenbank und die Uploads der letzten ein bis zwei Jahre. Das spart Zeit und Platz auf dem Mac.

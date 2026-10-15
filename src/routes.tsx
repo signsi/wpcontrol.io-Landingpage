@@ -15,6 +15,7 @@ import {
   getGuideTree,
   getLegalDocs,
 } from './lib/content'
+import { ALTERNATIVE_SLUGS } from './data/alternativeSlugs'
 
 /**
  * Bewusst werden pro Inhalt konkrete Routen erzeugt statt `:slug` +
@@ -58,6 +59,18 @@ const guideCategoryRoutes: RouteRecord[] = getGuideTree().map((category) => ({
   element: <HelpCategoryPage category={category.slug} />,
 }))
 
+const alternativeRoutes: RouteRecord[] = ALTERNATIVE_SLUGS.map((slug) => ({
+  path: `vergleich/${slug}-alternative`,
+  lazy: async () => {
+    const { default: AlternativePage } = await import('./pages/AlternativePage')
+    return {
+      Component: function AlternativeRoute() {
+        return <AlternativePage slug={slug} />
+      },
+    }
+  },
+}))
+
 const legalRoutes: RouteRecord[] = getLegalDocs().map((doc) => ({
   path: doc.slug,
   lazy: async () => {
@@ -85,6 +98,7 @@ export const routes: RouteRecord[] = [
       { path: 'cloud', lazy: () => import('./pages/CloudPage').then((m) => ({ Component: m.default })) },
       { path: 'massgeschneidert', lazy: () => import('./pages/CustomPage').then((m) => ({ Component: m.default })) },
       { path: 'vergleich', lazy: () => import('./pages/VergleichPage').then((m) => ({ Component: m.default })) },
+      ...alternativeRoutes,
       { path: 'preise', lazy: () => import('./pages/PreisePage').then((m) => ({ Component: m.default })) },
       { path: 'testen', lazy: () => import('./pages/TestenPage').then((m) => ({ Component: m.default })) },
       { path: 'faq', lazy: () => import('./pages/FaqPage').then((m) => ({ Component: m.default })) },

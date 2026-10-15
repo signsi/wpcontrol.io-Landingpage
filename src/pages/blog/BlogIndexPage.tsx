@@ -16,8 +16,8 @@ export default function BlogIndexPage() {
   return (
     <>
       <Seo
-        title="Blog"
-        description="Tipps, Tricks und Praxiswissen für WordPress-Agenturen: Wartung, Sicherheit, Deployment, Hosting und Agenturbetrieb."
+        title="Blog für WordPress-Agenturen"
+        description="Praxiswissen für WordPress-Agenturen aus der Schweiz: Wartung und Updates, Sicherheit und Zugänge, Deployment, Hosting und Agenturbetrieb."
         path="/blog"
         jsonLd={breadcrumbLd(crumbs)}
       />

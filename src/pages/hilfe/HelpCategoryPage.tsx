@@ -44,6 +44,9 @@ export default function HelpCategoryPage({ category }: HelpCategoryPageProps) {
                 {meta?.label ?? category}
               </h1>
               {meta?.description && <p className="prose-lede mt-3">{meta.description}</p>}
+              {meta?.intro && (
+                <p className="mt-4 max-w-[62ch] text-[0.9375rem] leading-[1.7] text-secondary">{meta.intro}</p>
+              )}
             </header>
 
             <ul className="flex list-none flex-col gap-3 p-0">

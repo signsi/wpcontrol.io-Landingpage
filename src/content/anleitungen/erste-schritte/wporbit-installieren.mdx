@@ -1,6 +1,6 @@
 ---
 title: "WPorbit installieren und einrichten"
-description: "WPorbit herunterladen, in den Programme-Ordner legen und beim ersten Start die lokale Umgebung mit Colima, Docker, Vault und lokalen Domains einrichten lassen."
+description: "WPorbit herunterladen, in den Programme-Ordner legen und beim ersten Start die lokale Umgebung mit Colima, Docker, Vault und Domains einrichten lassen."
 order: 10
 updated: 2026-09-24
 type: anleitung
@@ -12,7 +12,7 @@ related:
   - erste-schritte/demo-projekt-ausprobieren
   - fehlerbehebung/einrichtung-schlaegt-fehl
   - wartung/wporbit-aktualisieren
-draft: true
+draft: false
 ---
 
 Diese Anleitung führt dich vom Download bis zu einer lokalen Umgebung, in der WordPress-Projekte laufen können. Die Anmeldung mit deiner E-Mail-Adresse ist ein eigener Schritt und steht in [Anmelden und Lizenz aktivieren](/anleitungen/erste-schritte/anmelden-und-lizenz-aktivieren).
@@ -50,7 +50,7 @@ Gib auf der Seite [Gratis testen](/testen) deine E-Mail-Adresse ein. Danach kann
 
 Öffne die heruntergeladene `.dmg`-Datei. Im Fenster, das sich öffnet, liegt **WPorbit**. Zieh die App im Finder in den Ordner **Programme** und wirf das Laufwerk danach aus.
 
-{/* SCREENSHOT 01-dmg-fenster: Geöffnetes DMG-Fenster „WPorbit“ mit der App, daneben ein Finder-Fenster mit dem Ordner Programme. macOS, kein App-Zustand nötig. */}
+![Geöffnetes DMG-Fenster „WPorbit“ mit der App WPorbit.app](/anleitungen/erste-schritte/wporbit-installieren/01-dmg-fenster.webp)
 
 </Step>
 
@@ -68,7 +68,7 @@ WPorbit zeigt dir zuerst die Anmeldung. Wie du dich registrierst und den Anmelde
 
 Nach der Anmeldung erscheint der Bildschirm „Willkommen bei WPorbit“. Er zählt auf, was jetzt eingerichtet wird: **Colima & Docker**, **Vault** und **Lokale Domains**.
 
-{/* SCREENSHOT 02-willkommen: Einrichtungsassistent, Bildschirm „Willkommen bei WPorbit“ mit den drei Zeilen Colima & Docker, Vault, Lokale Domains und dem Button Einrichten. Frischer Mac oder Einrichtung über „Einrichtungsassistent neu starten“ ausgelöst. */}
+![Einrichtungsassistent „Willkommen bei WPorbit“ mit Colima & Docker, Vault, Lokale Domains und dem Button „Einrichten“](/anleitungen/erste-schritte/wporbit-installieren/02-willkommen.webp)
 
 <Steps>
 
@@ -78,7 +78,7 @@ Klicke auf **Einrichten**. WPorbit prüft zuerst, ob Homebrew vorhanden ist.
 
 Fehlt Homebrew, erscheint „Homebrew wird benötigt“ mit dem Installationsbefehl. Kopiere ihn über das Kopier-Symbol, führe ihn im Terminal aus und klicke danach auf **Erneut suchen**.
 
-{/* SCREENSHOT 03-homebrew-fehlt: Bildschirm „Homebrew wird benötigt“ mit dem Installationsbefehl und dem Button Erneut suchen. Mac ohne Homebrew. */}
+![Bildschirm „Homebrew wird benötigt“ mit Installationsbefehl und dem Button „Erneut suchen“](/anleitungen/erste-schritte/wporbit-installieren/03-homebrew-fehlt.webp)
 
 </Step>
 
@@ -113,9 +113,9 @@ Am Ende steht der tatsächliche Zustand jeder Komponente:
 
 Ein orangefarbenes Warnzeichen bei „Lokale Domains“ blockiert nichts. Alles andere funktioniert trotzdem.
 
-{/* SCREENSHOT 04-alles-bereit: Abschluss-Bildschirm „Alles bereit!“ mit drei grünen Zeilen (Container-Laufzeit (Colima), Vault, Lokale Domains) und darunter „Wie möchtest du starten?“. Einrichtung erfolgreich abgeschlossen. */}
+![Abschluss-Bildschirm „Alles bereit!“ mit drei grünen Zeilen und der Frage „Wie möchtest du starten?“](/anleitungen/erste-schritte/wporbit-installieren/04-alles-bereit.webp)
 
-{/* SCREENSHOT 05-fast-fertig: Abschluss-Bildschirm „Fast fertig“ mit roter Zeile bei der Container-Laufzeit, dem Button „Colima jetzt starten“ und dem Link „Voraussetzungen erneut prüfen“. Colima installiert, aber gestoppt. */}
+![Abschluss-Bildschirm „Fast fertig“: Colima läuft nicht, Button „Colima jetzt starten“](/anleitungen/erste-schritte/wporbit-installieren/05-fast-fertig.webp)
 
 </Step>
 

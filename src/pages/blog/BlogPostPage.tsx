@@ -4,11 +4,11 @@ import ArticleLayout from '../../components/article/ArticleLayout'
 import AuthorByline from '../../components/blog/AuthorByline'
 import RelatedPosts from '../../components/blog/RelatedPosts'
 import NewsletterSignup from '../../components/blog/NewsletterSignup'
+import ProductBox from '../../components/article/ProductBox'
 import { mdxComponents } from '../../components/mdx'
 import { getPostBySlug, getRelatedPosts } from '../../lib/content'
 import { blogCategory } from '../../content/taxonomy'
-import { blogPostingLd, breadcrumbLd } from '../../lib/jsonld'
-import { SITE } from '../../config/site'
+import { blogImage, blogPostingLd, breadcrumbLd } from '../../lib/jsonld'
 import type { MdxBody } from '../../lib/content/types'
 
 interface BlogPostPageProps {
@@ -30,11 +30,11 @@ export default function BlogPostPage({ slug, Body }: BlogPostPageProps) {
   return (
     <>
       <Seo
-        title={post.title}
+        title={post.seoTitle ?? post.title}
         description={post.description}
         path={post.path}
         type="article"
-        image={post.cover ?? SITE.blogOgImage}
+        image={blogImage(post)}
         publishedTime={post.date}
         modifiedTime={post.updated ?? post.date}
         authorName={post.author.name}
@@ -67,6 +67,10 @@ export default function BlogPostPage({ slug, Body }: BlogPostPageProps) {
         toc={post.toc}
         footer={
           <div className="flex flex-col gap-12">
+            <ProductBox
+              topic={post.category === 'wartung' || post.category === 'sicherheit' ? 'cloud' : 'testen'}
+              location="blog_box"
+            />
             <NewsletterSignup />
             <RelatedPosts posts={getRelatedPosts(post.slug)} />
           </div>

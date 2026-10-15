@@ -5,6 +5,7 @@ import PageHero from '../components/PageHero'
 import { isValidEmail, submitForm, type FormStatus } from '../lib/forms'
 import { SITE } from '../config/site'
 import { breadcrumbLd } from '../lib/jsonld'
+import { track } from '../lib/analytics'
 
 const crumbs = [{ label: 'Kontakt', path: '/kontakt' }]
 
@@ -14,6 +15,23 @@ const topics = [
   'Offerte für Cloud',
   'Massgeschneiderte Lösung',
   'Support für bestehende Kunden',
+]
+
+const afterSteps = [
+  {
+    title: 'Deine Nachricht kommt direkt an',
+    text: 'Das Formular schickt deine Angaben per E-Mail an unser Team. Wir verwenden sie nur, um dein Anliegen zu beantworten.',
+    link: { label: 'Datenschutz', to: '/datenschutz' },
+  },
+  {
+    title: 'Antwort innerhalb von zwei Arbeitstagen',
+    text: 'Du bekommst eine persönliche Antwort per E-Mail, meist deutlich schneller. Bei einem Demo-Termin oder einer Offerte klären wir darin die nächsten Schritte.',
+  },
+  {
+    title: 'Nicht warten? Selbst testen',
+    text: 'WPorbit lässt sich zehn Tage gratis testen, mit vollem Funktionsumfang und ohne Kreditkarte. Fragen kannst du parallel stellen.',
+    link: { label: 'Gratis testen', to: '/testen' },
+  },
 ]
 
 const inputClass =
@@ -42,14 +60,15 @@ export default function KontaktPage() {
     setStatus('submitting')
     const result = await submitForm('kontakt', data)
     setStatus(result.ok ? 'success' : 'error')
+    if (result.ok && !data.website) track('generate_lead', { form: 'kontakt', topic: data.thema || undefined })
     setMessage(result.message)
   }
 
   return (
     <>
       <Seo
-        title="Kontakt"
-        description="Fragen zu WPorbit, ein Demo-Termin oder eine Offerte für eine massgeschneiderte Lösung? Schreib uns."
+        title="Kontakt und Demo-Termin"
+        description="Fragen zu WPorbit, Demo-Termin oder Offerte für Cloud und Lösungen nach Mass: Schreib uns, wir antworten innerhalb von zwei Arbeitstagen."
         path="/kontakt"
         jsonLd={breadcrumbLd(crumbs)}
       />
@@ -115,6 +134,12 @@ export default function KontaktPage() {
                   {errors.nachricht && <p className="text-[0.75rem] text-danger" role="alert">{errors.nachricht}</p>}
                 </div>
 
+                {status === 'error' && message && Object.keys(errors).length === 0 && (
+                  <p className="rounded-control border border-danger/30 bg-danger/5 px-3.5 py-2.5 text-[0.875rem] text-danger" role="alert">
+                    {message}
+                  </p>
+                )}
+
                 <button type="submit" disabled={status === 'submitting'} className="btn btn-primary btn-md self-start disabled:opacity-60">
                   {status === 'submitting' ? 'Wird gesendet …' : 'Nachricht senden'}
                 </button>
@@ -147,6 +172,26 @@ export default function KontaktPage() {
               </p>
             </div>
           </aside>
+        </div>
+      </section>
+
+      <section className="border-t border-line px-6 py-16">
+        <h2 className="mb-6 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+          Nach dem Absenden
+        </h2>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {afterSteps.map((step) => (
+            <article key={step.title} className="rounded-panel border border-line bg-surface p-6">
+              <h3 className="font-heading text-[1.0625rem] font-semibold text-primary">{step.title}</h3>
+              <p className="mt-2 text-[0.875rem] leading-[1.65] text-secondary">{step.text}</p>
+              {step.link && (
+                <Link to={step.link.to} className="mt-4 inline-block text-[0.8125rem] font-medium text-accent-strong">
+                  {step.link.label} →
+                </Link>
+              )}
+            </article>
+          ))}
         </div>
       </section>
     </>

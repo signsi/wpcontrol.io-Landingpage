@@ -11,7 +11,7 @@ import CloudTeaser from '../components/CloudTeaser'
 import Pricing from '../components/Pricing'
 import FAQ from '../components/FAQ'
 import BlogTeaser from '../components/blog/BlogTeaser'
-import { organizationLd, softwareApplicationLd, webSiteLd } from '../lib/jsonld'
+import { softwareApplicationLd } from '../lib/jsonld'
 
 export default function HomePage() {
   return (
@@ -19,7 +19,7 @@ export default function HomePage() {
       <Seo
         title="Startseite"
         path="/"
-        jsonLd={[organizationLd(), webSiteLd(), softwareApplicationLd()]}
+        jsonLd={softwareApplicationLd()}
       />
 
       <Hero />

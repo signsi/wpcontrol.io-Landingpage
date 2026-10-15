@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { isValidEmail, submitForm, type FormStatus } from '../../lib/forms'
+import { track } from '../../lib/analytics'
 
 interface NewsletterSignupProps {
   variant?: 'footer' | 'article'
@@ -22,6 +23,7 @@ export default function NewsletterSignup({ variant = 'article' }: NewsletterSign
     setStatus('submitting')
     const result = await submitForm('newsletter', { email, website: honeypot })
     setStatus(result.ok ? 'success' : 'error')
+    if (result.ok && !honeypot) track('newsletter_signup', { location: variant })
     setMessage(result.message)
     if (result.ok) setEmail('')
   }

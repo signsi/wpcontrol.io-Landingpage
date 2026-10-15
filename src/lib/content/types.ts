@@ -23,6 +23,8 @@ export interface BlogPost extends DerivedMeta {
   slug: string
   path: string
   title: string
+  /** Optionaler kürzerer Titel für <title>, wenn der sichtbare Titel zu lang ist. */
+  seoTitle?: string
   description: string
   date: string
   updated?: string
@@ -44,8 +46,12 @@ export interface Guide extends DerivedMeta {
   category: string
   path: string
   title: string
+  /** Optionaler kürzerer Titel für <title>, wenn der sichtbare Titel zu lang ist. */
+  seoTitle?: string
   description: string
   order: number
+  /** Erstveröffentlichung, falls im Frontmatter angegeben; sonst gilt `updated`. */
+  date?: string
   updated: string
   type: GuideType
   audience: GuideAudience

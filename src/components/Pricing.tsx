@@ -41,11 +41,11 @@ export default function Pricing({ variant = 'section' }: PricingProps) {
 
             {/* Header */}
             <div className="flex items-start justify-between gap-3">
-              <p className={`font-bold text-[0.75rem] uppercase tracking-[0.13em] ${
+              <h3 className={`font-bold text-[0.75rem] uppercase tracking-[0.13em] ${
                 plan.highlighted ? 'text-accent' : 'text-tertiary'
               }`}>
                 {plan.name}
-              </p>
+              </h3>
               {plan.badge && (
                 <span className="text-[0.6875rem] font-semibold tracking-wide text-tertiary border border-line rounded-full px-2.5 py-0.5 whitespace-nowrap">
                   {plan.badge}
@@ -116,9 +116,9 @@ export default function Pricing({ variant = 'section' }: PricingProps) {
           {/* Left */}
           <div className="flex-1 min-w-0">
             <p className="text-[0.7rem] font-bold uppercase tracking-[0.15em] text-tertiary mb-2">{customPlan.name}</p>
-            <p className="font-heading font-semibold text-[1.25rem] leading-tight text-primary mb-1">
+            <h3 className="font-heading font-semibold text-[1.25rem] leading-tight text-primary mb-1">
               {customPlan.headline}
-            </p>
+            </h3>
             <p className="text-[0.875rem] text-secondary leading-relaxed max-w-[52ch]">
               {customPlan.note}
             </p>

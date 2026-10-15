@@ -9,9 +9,9 @@ export interface Author {
 export const authors: Record<string, Author> = {
   patrick: {
     key: 'patrick',
-    name: 'Patrick Siegfried',
-    role: 'Gründer, WPorbit',
-    bio: 'Baut seit über zehn Jahren WordPress-Projekte in Agenturen und entwickelt WPorbit aus genau diesem Alltag heraus.',
+    name: 'Patrick Williner',
+    role: 'Geschäftsführer, WPorbit',
+    bio: 'Gründer und Geschäftsführer der viwiv GmbH in Rotkreuz, die WPorbit entwickelt.',
   },
   team: {
     key: 'team',

@@ -1,5 +1,6 @@
 ---
 title: "WordPress-Updates ohne Angst: der Staging-First-Workflow"
+seoTitle: "WordPress-Updates über Staging statt Live"
 description: "Warum Agenturen Updates nie direkt auf Live einspielen sollten und wie ein Ablauf aussieht, der auch am Freitagnachmittag funktioniert."
 date: 2026-08-12
 category: wartung
@@ -47,6 +48,8 @@ Staging muss den echten Produktivstand abbilden, inklusive Datenbank und `wp-con
 
 Wichtig ist auch, was **nicht** mitkopiert wird: produktive Zugangsdaten für Zahlungsdienste, Mail-Versand und externe Schnittstellen. Sonst schickt die Testumgebung echte Bestellbestätigungen an echte Kundinnen.
 
+Wie du Datenbank und Inhalte einer Live-Seite in eine lokale Kopie holst, zeigt die Anleitung [Eine bestehende Website übernehmen](/anleitungen/projekte/bestehende-website-uebernehmen).
+
 </Step>
 
 <Step title="Updates einspielen und beobachten">
@@ -85,7 +88,7 @@ Kaum jemand widerspricht diesem Vorgehen. Trotzdem arbeiten viele Teams weiterhi
 
 Genau hier entscheidet sich, ob ein Prozess gelebt wird. Wenn der sichere Weg drei Klicks braucht und der unsichere einen, gewinnt der unsichere an jedem stressigen Tag.
 
-Deshalb lohnt es sich, diesen Ablauf zu automatisieren statt ihn zu dokumentieren. In WPorbit sind Kopieren, Aktualisieren und Zurückrollen Teil derselben Oberfläche. Wie der Rückweg konkret eingerichtet wird, steht unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten); alle weiteren Abläufe findest du im [Hilfe-Center](/anleitungen).
+Deshalb lohnt es sich, diesen Ablauf zu automatisieren statt ihn zu dokumentieren. In [WPorbit Standalone](/standalone) sind Kopieren, Aktualisieren und Zurückrollen Teil derselben Oberfläche. Wie der Rückweg konkret eingerichtet wird, steht unter [Deployment über GitLab einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten); alle weiteren Abläufe findest du im [Hilfe-Center](/anleitungen).
 
 ## Der Anfang für nächste Woche
 

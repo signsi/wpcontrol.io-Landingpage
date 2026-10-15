@@ -1,18 +1,18 @@
 ---
 title: "Projekte im Team teilen"
-description: "Ein Projekt samt Server-Zugang ins Team stellen, ein Team-Projekt auf deinem Mac einrichten und Abweichungen zwischen deinem Stand und dem des Teams abgleichen."
+description: "Ein Projekt samt Server-Zugang ins Team stellen, ein Team-Projekt auf deinem Mac einrichten und Abweichungen zum Stand des Teams abgleichen."
 order: 20
 updated: 2026-09-24
 type: anleitung
 audience: fortgeschritten
 duration: "10 Minuten"
-appliesTo: [Standalone, Cloud]
+appliesTo: [Cloud]
 related:
   - zugaenge/neuen-mac-im-team-anmelden
   - zugaenge/zugangsdaten-im-vault
   - zugaenge/teammitglied-verlaesst-das-team
   - wartung/ueberwachung-einschalten
-draft: true
+draft: false
 ---
 
 Ohne Team liegt ein Projekt nur auf dem Mac, auf dem es angelegt wurde. Wer es übernehmen soll, bekommt Host, Web-Root und Passwort sonst per Chat. Mit einem Team stellst du das Projekt einmal ins Team, und alle Mitglieder können es auf ihrem Mac mit einem Klick einrichten.
@@ -100,7 +100,7 @@ Prüfe die Angaben und schliesse den Dialog mit **Projekt anlegen** ab. WPorbit 
 
 </Steps>
 
-{/* SCREENSHOT 02-seitenleiste-im-team: Seitenleiste mit eigenen Projekten oben und dem Abschnitt „IM TEAM“ darunter, ein bis zwei Team-Projekte mit Link „Einrichten“. Team mit mindestens einem geteilten Projekt, das auf diesem Mac fehlt. */}
+![Seitenleiste mit eigenen Projekten und dem Abschnitt „IM TEAM“ mit „Einrichten“-Links](/anleitungen/zugaenge/projekte-im-team-teilen/02-seitenleiste-im-team.webp)
 
 <Callout variant="tipp" title="Leerer Abschnitt ist der Normalfall">
 Hast du alle Team-Projekte eingerichtet, erscheint „IM TEAM“ gar nicht. Das ist so gewollt: Jedes Projekt steht nur einmal in der Liste.
@@ -134,7 +134,7 @@ Klicke auf **Übernehmen**. Die Team-Werte, die du gewählt hast, landen in dein
 
 </Steps>
 
-{/* SCREENSHOT 03-abweichungen: Fenster „Abweichungen“ mit zwei Werten, je eine Auswahl „Meiner: …“ / „Team: …“, eines davon ein verdecktes Passwort; darunter der Hinweis „Die .env im Projektordner weicht ab“. Knöpfe „Später“ und „Übernehmen“. Verknüpftes Projekt, bei dem lokal und im Team verschiedene Werte stehen. */}
+![Fenster „Abweichungen“ mit Auswahl „Meiner“ oder „Team“ pro Wert und Hinweis zur .env](/anleitungen/zugaenge/projekte-im-team-teilen/03-abweichungen.webp)
 
 Weicht die `.env` im Projektordner ab, weil jemand sie von Hand bearbeitet hat, zeigt das Fenster das separat an. Beim nächsten Start gilt, was in den Zugangsdaten steht, und die Datei wird dabei neu geschrieben.
 

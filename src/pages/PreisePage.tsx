@@ -5,7 +5,7 @@ import Comparison from '../components/Comparison'
 import FAQ from '../components/FAQ'
 import CTABand from '../components/CTABand'
 import { pricingFaq } from '../data/plans'
-import { breadcrumbLd, faqPageLd, softwareApplicationLd } from '../lib/jsonld'
+import { breadcrumbLd, softwareApplicationLd } from '../lib/jsonld'
 
 const crumbs = [{ label: 'Preise', path: '/preise' }]
 
@@ -13,10 +13,10 @@ export default function PreisePage() {
   return (
     <>
       <Seo
-        title="Preise"
-        description="WPorbit Preise im Überblick: Demo kostenlos, Standalone ab 290 CHF pro Person und Monat, Cloud ab 1200 CHF pro Monat. Monatlich kündbar, ohne Hoster-Bindung."
+        title="Preise für Standalone und Cloud"
+        description="WPorbit Preise: Demo kostenlos, Standalone ab 290 CHF pro Person und Monat, Cloud ab 1200 CHF pro Monat. Monatlich kündbar, ohne Hoster-Bindung."
         path="/preise"
-        jsonLd={[breadcrumbLd(crumbs), softwareApplicationLd(), faqPageLd(pricingFaq)]}
+        jsonLd={[breadcrumbLd(crumbs), softwareApplicationLd()]}
       />
 
       <PageHero
@@ -42,7 +42,7 @@ export default function PreisePage() {
 
       <CTABand
         title="Erst testen, dann entscheiden."
-        text="Zehn Tage, ein Projekt, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
+        text="Zehn Tage, voller Funktionsumfang. Nur eine E-Mail-Adresse, keine Kreditkarte."
         secondary={{ label: 'Kontakt aufnehmen', to: '/kontakt' }}
       />
     </>

@@ -2,11 +2,10 @@
  * Gemeinsame Absende-Schnittstelle für Kontakt und Newsletter. Die Anmeldung
  * zum Testen läuft über den Lizenz-Server (`lib/trial.ts`).
  *
- * ┌──────────────────────────────────────────────────────────────────────┐
- * │ ANSCHLUSSPUNKT: Aktuell wird kein Backend angesprochen. Sobald ein   │
- * │ Endpunkt existiert, genügt es, `submitForm` zu ersetzen — beide       │
- * │ Formulare hängen daran und brauchen keine Änderung.                  │
- * └──────────────────────────────────────────────────────────────────────┘
+ * Beide Formulare gehen an `public/api/form.php`, das nach dem Build unter
+ * `/api/form.php` auf dem PHP-Webhosting liegt und die Anfrage per Mail
+ * weiterleitet. Lokal (`npm run dev`) gibt es kein PHP; dort lässt sich der
+ * Endpunkt mit `VITE_FORM_URL` auf einen Testserver umstellen.
  */
 
 export type FormKind = 'kontakt' | 'newsletter'
@@ -18,11 +17,14 @@ export interface FormResult {
   message: string
 }
 
-const SIMULATED_LATENCY_MS = 700
+const formUrl: string = import.meta.env.VITE_FORM_URL || '/api/form.php'
 
 export function isValidEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim())
 }
+
+const failureMessage =
+  'Das hat leider nicht geklappt. Bitte versuche es erneut oder schreib direkt an hallo@wporbit.ch.'
 
 const successMessages: Record<FormKind, string> = {
   kontakt: 'Danke für deine Nachricht. Wir melden uns innerhalb von zwei Arbeitstagen.',
@@ -39,11 +41,21 @@ export async function submitForm(
     return { ok: true, message: successMessages[kind] }
   }
 
-  await new Promise((resolve) => setTimeout(resolve, SIMULATED_LATENCY_MS))
-
-  // TODO: Hier den echten Endpunkt aufrufen, z. B.
-  // const res = await fetch('/api/forms', { method: 'POST', body: JSON.stringify({ kind, ...payload }) })
-  // if (!res.ok) return { ok: false, message: 'Das hat leider nicht geklappt. Bitte versuche es erneut.' }
+  try {
+    const res = await fetch(formUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind, ...payload }),
+    })
+    if (res.status === 429) {
+      return { ok: false, message: 'Zu viele Anfragen in kurzer Zeit. Bitte versuche es in ein paar Minuten nochmals.' }
+    }
+    if (!res.ok) {
+      return { ok: false, message: failureMessage }
+    }
+  } catch {
+    return { ok: false, message: failureMessage }
+  }
 
   return { ok: true, message: successMessages[kind] }
 }

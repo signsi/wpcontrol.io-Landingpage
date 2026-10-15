@@ -3,6 +3,7 @@ import { OrbitDivider } from './OrbitMotif'
 import { TRIAL_DAYS } from '../data/plans'
 import { isValidEmail } from '../lib/forms'
 import { downloadUrl, requestTrialLink, trialErrorText } from '../lib/trial'
+import { track } from '../lib/analytics'
 
 type Phase = 'ask' | 'sending' | 'done'
 
@@ -43,6 +44,7 @@ export default function EarlyAccess() {
     setSentTo(address)
     setAgainNote('')
     setPhase('done')
+    if (!honeypot) track('trial_signup')
   }
 
   async function sendAgain() {
@@ -117,7 +119,7 @@ export default function EarlyAccess() {
                     <p className="mt-1 text-[0.8125rem] leading-[1.6] text-secondary">
                       Datei öffnen und WPorbit in den Ordner „Programme“ ziehen.
                     </p>
-                    <a href={downloadUrl} className="btn btn-primary btn-md mt-3">WPorbit laden</a>
+                    <a href={downloadUrl} onClick={() => track('download_click', { location: 'testen' })} className="btn btn-primary btn-md mt-3">WPorbit laden</a>
                   </div>
                 </li>
                 <li className="flex gap-3 rounded-lg border border-line p-4">

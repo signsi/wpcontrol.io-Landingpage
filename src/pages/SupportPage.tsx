@@ -28,6 +28,21 @@ const channels = [
   },
 ]
 
+const ticketSteps = [
+  {
+    title: 'Diagnose & Support öffnen',
+    text: 'In WPorbit unter Einstellungen den Tab Diagnose & Support wählen. Dort prüfst du zuerst die benötigten Programme und löst typische Reparaturen selbst aus.',
+  },
+  {
+    title: 'Debug-Bericht kopieren',
+    text: 'Debug-Bericht kopieren fasst Infrastruktur, Container, Projekte und App-Protokoll in einem Textblock zusammen. Passwörter stehen nicht drin.',
+  },
+  {
+    title: 'Ticket senden',
+    text: 'Unter Neues Ticket erstellen beschreibst du das Problem, fügst den Bericht ein und hängst bis zu fünf Bilder an. Antworten siehst du unter Meine Tickets.',
+  },
+]
+
 const slaRows = [
   { plan: 'Demo', response: 'Innerhalb von zwei Arbeitstagen', channel: 'E-Mail' },
   { plan: 'Standalone', response: 'Innerhalb von einem Arbeitstag', channel: 'E-Mail' },
@@ -39,8 +54,8 @@ export default function SupportPage() {
   return (
     <>
       <Seo
-        title="Support"
-        description="Hilfe für WPorbit-Kunden: Anleitungen, Fehlerbehebung, häufige Fragen und der direkte Draht zum Team."
+        title="Support für WPorbit-Kunden"
+        description="Hilfe für WPorbit-Kunden: Anleitungen, Fehlerbehebung, FAQ und Support-Tickets direkt aus der App. Antwort je nach Plan in ein bis zwei Arbeitstagen."
         path="/support"
         jsonLd={breadcrumbLd(crumbs)}
       />
@@ -69,6 +84,35 @@ export default function SupportPage() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="border-t border-line px-6 py-16">
+        <h2 className="mb-3 font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+          Ticket direkt aus der App
+        </h2>
+        <p className="mb-6 max-w-[60ch] text-[0.9375rem] leading-[1.7] text-secondary">
+          Als Kundin oder Kunde schreibst du uns am schnellsten aus WPorbit heraus. Dafür musst du in
+          der App angemeldet sein. Das Ticket kommt mit allen Angaben bei uns an, die wir für die
+          Fehlersuche brauchen.
+        </p>
+
+        <ol className="grid list-none gap-4 p-0 md:grid-cols-3">
+          {ticketSteps.map((step, i) => (
+            <li key={step.title} className="rounded-panel border border-line bg-surface p-6">
+              <p className="text-[0.6875rem] font-bold uppercase tracking-[0.13em] text-tertiary">Schritt {i + 1}</p>
+              <h3 className="mt-2 font-heading text-[1.0625rem] font-semibold text-primary">{step.title}</h3>
+              <p className="mt-2 text-[0.875rem] leading-[1.65] text-secondary">{step.text}</p>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-6 text-[0.875rem] leading-[1.7] text-secondary">
+          Alle Schritte mit Bildern stehen in der Anleitung{' '}
+          <Link to="/anleitungen/fehlerbehebung/diagnose-und-support" className="text-accent-strong underline">
+            Diagnose und Support
+          </Link>
+          . Kommst du nicht bis in die App, erreichst du uns über das Kontaktformular oder per E-Mail.
+        </p>
       </section>
 
       <section className="border-t border-line px-6 py-16">
