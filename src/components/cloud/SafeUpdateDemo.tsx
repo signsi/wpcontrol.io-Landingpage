@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 const steps = [
   { label: 'Backup erstellt', detail: 'Dateien und Datenbank, vor jeder Änderung' },
@@ -38,21 +38,28 @@ function PageSketch({ label, scanning }: { label: string; scanning: boolean }) {
   )
 }
 
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
+const prefersReducedMotion = () => window.matchMedia(REDUCED_MOTION).matches
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION)
+  query.addEventListener('change', onChange)
+  return () => query.removeEventListener('change', onChange)
+}
+
 /**
  * Vorschau auf „sicheres Update“: Backup, Update, Vergleich, fertig. Läuft als
  * Schleife, solange es zu sehen ist; mit reduzierter Bewegung steht es im
  * Endzustand. Klar als Vorschau beschriftet, weil die Funktion erst kommt.
  */
 export default function SafeUpdateDemo() {
-  const [step, setStep] = useState(0)
+  const [running, setStep] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
+  // Ohne Bewegung gleich der fertige Stand, ohne setState im Effekt.
+  const reduced = useSyncExternalStore(subscribeReducedMotion, prefersReducedMotion, () => false)
+  const step = reduced ? steps.length : running
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setStep(steps.length)
-      return
-    }
+    if (typeof window === 'undefined' || reduced) return
     let timer: number | undefined
     let visible = false
     const tick = (s: number) => {
@@ -72,7 +79,7 @@ export default function SafeUpdateDemo() {
       if (timer !== undefined) window.clearTimeout(timer)
       io.disconnect()
     }
-  }, [])
+  }, [reduced])
 
   const done = step >= steps.length
 
