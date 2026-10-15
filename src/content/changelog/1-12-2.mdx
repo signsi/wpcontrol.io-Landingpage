@@ -1,0 +1,23 @@
+---
+version: "1.12.2"
+date: 2026-10-08
+title: "Platte der Colima-VM aus der App vergrössern"
+type: release
+highlights:
+  - "Die Festplatte der Colima-VM lässt sich in der App vergrössern"
+draft: false
+---
+
+Enthält 1.12.0 bis 1.12.2.
+
+## 1.12.0: Platte vergrössern
+
+Unter Einstellungen → Infrastruktur → Colima steht bei den Ressourcen neben Arbeitsspeicher und CPU jetzt die Festplatte mit „Vergrössern…“. Ab 85 % Belegung erscheint der Knopf auch in der Auslastung. Die neue Grösse ist in Schritten von 25 GB wählbar und nur so gross, wie der Mac Platz hat. Colima startet dafür kurz neu, die Daten bleiben erhalten. Verkleinern lässt sich die Platte danach nicht mehr.
+
+## 1.12.1
+
+„Tabellen-Präfix ändern…“ funktioniert auch bei Projekten ohne WordPress-Installation. Ist die Datenbank leer oder noch nicht angelegt, setzt WPorbit nur das Präfix in der Konfiguration, startet das Projekt neu und prüft das Ergebnis. Ist der Datenbank-Server nicht erreichbar, ändert WPorbit bewusst nichts.
+
+## 1.12.2
+
+Wechseln zwei Geräte gleichzeitig den Team-Schlüssel, behält WPorbit den neuen erst, wenn der Server zugestimmt hat. Hat ein anderes Gerät gewonnen, übernimmt WPorbit dessen Schlüssel. So bleiben alle Geräte im Team lesbar.

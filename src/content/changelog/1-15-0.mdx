@@ -1,0 +1,47 @@
+---
+version: "1.15.0"
+date: 2026-10-14
+title: "Claude Code im Projekt, schnelleres Senden und mehr Sicherheit"
+type: release
+highlights:
+  - "Claude Code arbeitet im Projekt-Container: Anmeldung einmal, Chatverlauf pro Projekt"
+  - "Senden überträgt per rsync nur Neues und Geändertes"
+  - "Server-Schlüssel werden geprüft, der Verbindungstest ändert nichts mehr auf dem Server"
+draft: false
+---
+
+## Claude Code im Projekt-Container
+
+Claude Code arbeitet jetzt direkt im Container eines Projekts:
+
+- Die lokale Site ist aus dem Container erreichbar, mit geprüftem Zertifikat.
+- Du meldest dich einmal an, die Anmeldung gilt für alle Projekte und übersteht das Neuerstellen eines Containers.
+- Der Chatverlauf bleibt pro Projekt getrennt. Ein Chat aus einem Kundenprojekt taucht in keinem anderen auf.
+- WPorbit bringt WordPress-Skills mit, in festgelegten und geprüften Ständen.
+- Verbindungen zu Live-Servern per `ssh`, `scp` oder `rsync` lehnt Claude im Container ab.
+
+Abschalten lässt sich das unter Einstellungen → Lokale Umgebung.
+
+## Senden per rsync
+
+Senden überträgt Plugins, Themes und Uploads jetzt per rsync: nur Dateien, die neu sind oder sich geändert haben. Ein Push ohne Änderungen dauert Sekunden statt Minuten. Bei jedem Senden wählst du:
+
+- **Nur Neues und Geändertes** (Standard): Auf dem Server wird nichts gelöscht.
+- **Server genau wie lokal:** WPorbit zeigt vorher, welche Dateien auf dem Server gelöscht würden. Gelöscht wird nur, was in dieser Vorschau stand, und vorher wird gesichert, ausserhalb des Web-Verzeichnisses.
+
+Ist auf dem Server kein rsync vorhanden, sendet WPorbit wie bisher als Archiv.
+
+## Sicherheit
+
+- **Server-Schlüssel werden geprüft.** WPorbit merkt sich den Schlüssel eines Servers bei der ersten Verbindung und bricht ab, wenn er sich ändert. Im Verbindungstest kannst du einen neuen Schlüssel bewusst übernehmen.
+- **Der Verbindungstest ändert nichts mehr auf dem Server.** Er meldet eine fehlende Datenbank nur noch. Anlegen geht über „Beheben“.
+- **Zwischendateien liegen beim Senden und Holen nicht mehr im Web-Verzeichnis**, auch nicht der Datenbank-Dump.
+- **Die wp-config.php wird vor dem Reparieren gesichert**, ausserhalb des Web-Verzeichnisses.
+
+## Weitere Verbesserungen
+
+- Beim Synchronisieren bleibt der Fortschritt sichtbar.
+- Das Protokoll des Verbindungstests steht jetzt in der Statuszeile unten.
+- Lokale Domains: Ein Projekt mit gleichem Namensanfang überschreibt keinen fremden Eintrag mehr.
+- Der Schalter für WP_DEBUG zeigt den richtigen Stand.
+- Ein Absturz beim Aufklappen der Statuszeile ist behoben.

@@ -1,0 +1,18 @@
+---
+version: "1.11.0"
+date: 2026-10-07
+title: "Tabellen-Präfix ändern und volle Docker-Platte erkennen"
+type: release
+highlights:
+  - "Tabellen-Präfix eines laufenden Projekts ändern, mit Sicherung und Rückweg"
+  - "Eine volle Docker-Platte bleibt nicht mehr unbemerkt"
+draft: false
+---
+
+## Tabellen-Präfix ändern
+
+In der Wartungs-Karte und im Kontextmenü eines laufenden Projekts benennt „Tabellen-Präfix ändern…“ alle Tabellen der lokalen Datenbank um und zieht Benutzerrollen, wp-config.php und Konfiguration nach. Vorher wird gesichert, nachher geprüft, und bei einem Fehler geht WPorbit automatisch zurück. Der Server bleibt unverändert.
+
+## Volle Docker-Platte
+
+Die Auslastung zeigt Docker- und System-Platte der Colima-VM samt Aufschlüsselung. Die Seitenleiste warnt ab 85 % und wird ab 95 % rot. „Platz schaffen…“ löscht Build-Cache und namenlose Images, nie Projektdaten.

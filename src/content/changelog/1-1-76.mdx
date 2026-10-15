@@ -1,0 +1,24 @@
+---
+version: "1.1.76"
+date: 2026-08-21
+title: "WPorbit richtet sich selbst ein"
+type: release
+highlights:
+  - "Einrichtungsassistent beim ersten Start"
+  - "Colima und Vault werden bei Bedarf installiert"
+  - "Lokale Domains wie meinprojekt.wporbit per HTTPS"
+draft: false
+---
+
+Enthält 1.1.4 bis 1.1.76, die ersten veröffentlichten Versionen.
+
+Beim ersten Start erkennt WPorbit, was fehlt, und installiert es selbst:
+
+- **Einrichtungsassistent:** geführte Ersteinrichtung beim ersten Start.
+- **Automatische Installation:** Colima und Vault werden über Homebrew installiert, falls sie fehlen.
+- **Lokale Domains:** Projekte sind direkt unter `meinprojekt.wporbit` per HTTPS erreichbar.
+- **Sicheres Vault-Token:** wird zufällig erzeugt, es gibt kein Standard-Passwort.
+- **Autostart:** Colima und Vault starten mit WPorbit.
+- Bestehende Installationen werden erkannt und übersprungen.
+
+Dazu kamen in diesen Versionen der volle Zugangsdaten-Speicher im Vault und das Design-System der App.
