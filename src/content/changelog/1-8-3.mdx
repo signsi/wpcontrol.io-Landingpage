@@ -1,0 +1,16 @@
+---
+version: "1.8.3"
+date: 2026-10-06
+title: "Zugangsdaten vollständig, Inventar wieder einrichtbar"
+type: patch
+highlights:
+  - "Bekannte Felder in den Zugangsdaten stehen immer da"
+  - "Überwachung mit Inventar lässt sich wieder einrichten"
+draft: false
+---
+
+Enthält 1.8.1 bis 1.8.3.
+
+- **1.8.1:** Mehrere Server pro Projekt, zum Beispiel Live und Staging. Der Assistent arbeitet mit dem Server, der im Remote-Tab gewählt ist.
+- **1.8.2:** Felder wie Theme-Repository oder Theme-Ordner stehen in den Zugangsdaten immer da, auch wenn sie noch leer sind. „Ergänzen“ füllt sie direkt aus, gespeichert wird nur, was einen Wert hat.
+- **1.8.3:** Die Überwachung mit Inventar lässt sich wieder einrichten. Seit 1.8.1 scheiterte das mit „WP-CLI antwortet nicht“. Liegen mehrere Websites auf demselben SSH-Konto, wird eine bereits überwachte nicht mehr überschrieben. Neu ist „Lesezugang neu einrichten…“ im Menü eines überwachten Projekts.

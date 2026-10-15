@@ -1,0 +1,28 @@
+---
+version: "1.14.3"
+date: 2026-10-09
+title: "Tabellen-Präfix: drei Wege, wenn lokal und Server nicht passen"
+type: release
+highlights:
+  - "Passt der Tabellen-Präfix nicht zum Server, bietet WPorbit drei Lösungen an"
+  - "„Lokalen Stand live bringen“ hält an, wenn die Live-Site nicht wie erwartet antwortet"
+draft: false
+---
+
+Enthält 1.14.0 bis 1.14.3.
+
+## 1.14.0: Drei Wege bei abweichendem Präfix
+
+Passt der Tabellen-Präfix im Verbindungstest oder beim Senden nicht zum Server, bietet WPorbit drei Wege an: lokal umstellen, die Datenbank vom Server holen oder den lokalen Stand live bringen. Jeder Weg sichert vorher.
+
+## 1.14.1: Anhalten statt raten
+
+Antwortet die Live-Site nach dem Umschalten nicht wie erwartet, hält WPorbit an und lässt dich prüfen: behalten oder zurückstellen. Ohne Entscheid wird nach 10 Minuten zurückgestellt.
+
+## 1.14.2: Abgesichert
+
+Vor jedem Eingriff prüft WPorbit, ob die lokale Datenbank wirklich den erwarteten Präfix nutzt. Umgeschaltet wird nur, wenn die neuen Tabellen auf dem Server angekommen sind. Wird die App bei offener Rückfrage beendet, stellt sie vorher zurück. Der hinterlegte Präfix wird aus der lokalen Datenbank nachgeführt, so meldet der Verbindungstest keinen Unterschied mehr, den es nicht gibt.
+
+## 1.14.3
+
+Senden, Holen, Backup und Server-Einrichtung zeigen während der Arbeit einen Spinner, statt fertig auszusehen.

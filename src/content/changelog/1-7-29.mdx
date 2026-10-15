@@ -1,0 +1,38 @@
+---
+version: "1.7.29"
+date: 2026-09-16
+title: "Neue Oberfläche, Statuszeile, Diagnose und Versionswechsel"
+type: release
+highlights:
+  - "Die grösste Überarbeitung seit 1.0: aufgeräumte Oberfläche und sichtbarer Status"
+  - "Eine Statuszeile für alles, was gerade läuft"
+  - "Scheitert ein Push, sucht WPorbit die Ursache"
+  - "PHP- und WordPress-Version pro Projekt wechseln"
+draft: false
+---
+
+Enthält 1.7.2 bis 1.7.29.
+
+## Diagnose bei Fehlern (1.7.2)
+
+Ein Push, der nicht durchläuft, sagt jetzt warum. Scheitert Senden, Holen oder Deployen, sucht WPorbit die Ursache und stellt sie unter die Fehlermeldung: falscher Web-Root, fehlendes Schreibrecht, ein Theme-Ordner, der auf dem Server anders heisst, eine abweichende Live-Adresse oder knapper Speicherplatz. Wo der richtige Wert eindeutig ist, übernimmt ein Knopf ihn. Im Sync-Tab startet „Gründlich prüfen“ dieselbe Prüfung jederzeit.
+
+## Neue Oberfläche (1.7.3)
+
+- Die Projektliste zeigt, welche Projekte laufen und wie es um ihre Live-Seite steht. Starten und Stoppen direkt in der Zeile, neue Kürzel ⌘N, ⌘1 bis ⌘5, ⌘R und ⌘F.
+- Vor dem Senden auf eine Live-Seite tippst du die Zieladresse zur Bestätigung ab.
+- Die Einstellungen haben vier statt acht Tabs.
+- Neue Karte „Wartung“: Berechtigungen korrigieren, Docker-Image holen, URL ersetzen, wp-config.php reparieren.
+- Logs zeigen die Container des Projekts und das WordPress-debug.log.
+- „In VS Code öffnen“ öffnet mit einem Klick, und über „Anderen Ordner in VS Code öffnen…“ geht es bis zum einzelnen Theme.
+- Zugangsdaten mit deutschen Feldnamen, Passwörter verdeckt.
+- WPorbit warnt, wenn der virtuellen Maschine Platz, Speicher oder Rechenzeit ausgeht.
+- Die URL-Ersetzung trifft alle Schreibweisen, auch protokollrelative Links, Block-Editor-JSON und alte Ports.
+
+## Weitere Neuerungen
+
+- **Docker-Kontext (1.7.5):** Zeigt der aktive Docker-Kontext ins Leere, etwa auf ein entferntes Docker Desktop, sagt WPorbit genau das und bietet „Auf Colima umstellen“ an. Eigene Colima-Profile brauchen keine Einstellung mehr.
+- **Datenbank ansehen (1.7.8):** „Öffnen in… → Datenbank öffnen“ startet phpMyAdmin, bereits angemeldet. Beim ersten Mal lädt WPorbit dafür ein Image von rund 800 MB.
+- **Statuszeile (1.7.12):** Alles, was WPorbit gerade tut, steht in einer Statuszeile unten im Fenster, mit Phase, Fortschritt, Protokoll und Abbrechen. Ein geschlossener Assistent läuft weiter. Endet ein langer Vorgang im Hintergrund, kommt eine Mitteilung. Die Lizenz hängt jetzt am Mac statt an der Installation.
+- **Versionen wechseln (1.7.28):** PHP- und WordPress-Version lassen sich pro Projekt wechseln, vorher wird automatisch gesichert. Findet WordPress seine Datenbank wegen eines abweichenden Tabellen-Präfixes nicht, korrigiert der nächste Start das selbst.
+- **1.7.29:** Ein Absturz beim Kopieren des Debug-Berichts ist behoben.

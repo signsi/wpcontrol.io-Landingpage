@@ -1,0 +1,21 @@
+---
+version: "1.4.9"
+date: 2026-09-07
+title: "Server zuerst prüfen, Einrichtung, die weiterhilft"
+type: release
+highlights:
+  - "Vor Einrichtung, Holen und Senden prüft WPorbit zuerst den Server"
+  - "Die Ersteinrichtung behebt Fehlendes selbst"
+  - "Die lokale Theme-Einrichtung baut das Theme"
+draft: false
+---
+
+Enthält 1.4.0 bis 1.4.9.
+
+- **1.4.0:** Vor einer Einrichtung, einem Holen oder einem Senden prüft WPorbit zuerst, ob der Server kann, was dafür nötig ist, und bricht vorher ab statt mittendrin.
+- **1.4.2:** Die Ersteinrichtung meldet, was wirklich läuft. Fehlen Container-Laufzeit oder Vault, steht das mit Begründung und Behebung da.
+- **1.4.3:** Bleibt bei der Einrichtung etwas offen, hilft WPorbit weiter: Colima installieren oder starten, Vault starten, mit Fortschritt und passender Reparatur.
+- **1.4.6:** Der erste Colima-Start lädt ein VM-Abbild von rund 500 MB. WPorbit zeigt das mit Fortschritt an, statt abzubrechen. Fehlt Rosetta oder Apples Virtualisierung, stellt WPorbit auf Knopfdruck um. Der Sync-Tab sagt vor jedem Holen oder Senden, ob der Server geprüft ist.
+- **1.4.7:** Die lokale Theme-Einrichtung installiert die Abhängigkeiten des Themes und baut es (`npm install`, `npm run build`, `composer install`).
+- **1.4.8:** WPorbit findet die Docker-CLI auch dort, wo Docker Desktop sie ablegt.
+- **1.4.9:** Nach dem vollständigen Zurücksetzen startet WPorbit sich selbst neu, statt auf gelöschten Daten weiterzulaufen.

@@ -1,0 +1,22 @@
+---
+version: "1.5.2"
+date: 2026-09-08
+title: "Deployment aus einer GitLab-Pipeline einrichten"
+type: release
+highlights:
+  - "WPorbit richtet ein Projekt für das Deployment aus einer GitLab-Pipeline ein"
+  - "Container und Vault werden beim Beenden sauber gestoppt"
+draft: false
+---
+
+Enthält 1.5.0 und 1.5.2.
+
+## 1.5.0: GitLab-Pipeline
+
+WPorbit richtet ein Projekt für das Deployment aus einer GitLab-Pipeline ein: Deploy-Key erzeugen, auf dem Server hinterlegen, Host-Fingerabdrücke lesen, `.ssh` in die `.gitignore` eintragen und die CI/CD-Variablen zum Kopieren bereitstellen (Remote → Sync). Siehe [GitLab-Deployment einrichten](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
+
+Ausserdem werden beim Beenden Container und Vault sauber gestoppt, der Backup-Import richtet kein Standard-Theme mehr ein, und Fortschritt und Restzeit beim Holen folgen der tatsächlichen Wartezeit.
+
+## 1.5.2
+
+Der Zugangsdaten-Editor sagt, was mit einem von Hand eingetragenen Wert passiert: Werte, die WPorbit bei jedem Start selbst setzt, werden benannt statt stillschweigend verworfen. Nach dem Speichern wird zurückgelesen. Git im Projekt-Container weiss wieder, wer committet, und das Beenden stoppt die Container, statt sie zu entfernen.

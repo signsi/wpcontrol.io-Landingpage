@@ -223,7 +223,19 @@ const changelog: ChangelogEntry[] = byCollection('changelog')
     }
   })
   .filter((entry) => INCLUDE_DRAFTS || !entry.draft)
-  .sort((a, b) => b.date.localeCompare(a.date))
+  // Am selben Tag kamen oft mehrere Versionen: dann entscheidet die Nummer,
+  // numerisch (1.10 nach 1.9), sonst stand eine ältere als „aktuell“ oben.
+  .sort((a, b) => b.date.localeCompare(a.date) || compareVersions(b.version, a.version))
+
+function compareVersions(a: string, b: string): number {
+  const pa = a.split('.').map(Number)
+  const pb = b.split('.').map(Number)
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const diff = (pa[i] ?? 0) - (pb[i] ?? 0)
+    if (diff) return diff
+  }
+  return 0
+}
 
 export function getChangelog(): ChangelogEntry[] {
   return changelog

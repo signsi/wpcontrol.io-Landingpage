@@ -1,0 +1,20 @@
+---
+version: "1.6.1"
+date: 2026-09-08
+title: "Einmal Passwort, danach nur noch Schlüssel"
+type: release
+highlights:
+  - "Ein hinterlegtes SSH-Passwort richtet einmal den Schlüssel ein"
+  - "Ein erster Push auf einen neuen Server bricht nicht mehr ab"
+draft: false
+---
+
+Enthält 1.6.0 und 1.6.1.
+
+## 1.6.0
+
+Ist für ein Projekt ein SSH-Passwort hinterlegt, benutzt WPorbit es einmal, um den eigenen öffentlichen Schlüssel auf dem Server zu hinterlegen. Danach läuft jede Verbindung ohne Passwort. Ausserdem lesen Zugangsdaten-Editor und alle Vorgänge dieselbe Konfiguration, die Vorschau im Deploy-Assistenten folgt den Eingaben sofort, und beim Beenden werden nur laufende Projekte gestoppt.
+
+## 1.6.1
+
+Ein Push auf einen Server, auf dem noch nie geholt wurde, brach beim Hochladen ab. Das Arbeitsverzeichnis auf dem Server wird jetzt vorher angelegt und auf Schreibbarkeit geprüft. Schlägt das fehl, bricht der Push ab, bevor etwas verändert wurde. Nach dem Lauf wird aufgeräumt, auch nach einem Fehler.
