@@ -5,7 +5,7 @@ import TableOfContents from '../../components/article/TableOfContents'
 import HelpSidebar from '../../components/hilfe/HelpSidebar'
 import ProductBox from '../../components/article/ProductBox'
 import { mdxComponents } from '../../components/mdx'
-import { getGuide, getGuideNeighbours, getRelatedGuides } from '../../lib/content'
+import { getGuide, getGuideNeighbours, getPostsForGuide, getRelatedGuides } from '../../lib/content'
 import { guideCategory } from '../../content/taxonomy'
 import { formatDate } from '../../lib/format'
 import { breadcrumbLd, guideLd } from '../../lib/jsonld'
@@ -31,6 +31,7 @@ export default function HelpArticlePage({ category, slug, Body }: HelpArticlePag
   const categoryMeta = guideCategory(category)
   const { prev, next } = getGuideNeighbours(category, slug)
   const related = getRelatedGuides(guide)
+  const posts = getPostsForGuide(category)
 
   const crumbs = [
     { label: 'Anleitungen', path: '/anleitungen' },
@@ -108,6 +109,29 @@ export default function HelpArticlePage({ category, slug, Body }: HelpArticlePag
                         <span className="text-[0.9375rem] font-medium text-primary">{item.title}</span>
                         <span className="mt-0.5 block text-[0.8125rem] leading-[1.55] text-tertiary">
                           {item.description}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {posts.length > 0 && (
+              <section className="mt-14 border-t border-line pt-8">
+                <h2 className="mb-4 font-heading text-[1.0625rem] font-semibold text-primary">
+                  Weiterlesen im Blog
+                </h2>
+                <ul className="flex list-none flex-col gap-2 p-0">
+                  {posts.map((post) => (
+                    <li key={post.path}>
+                      <Link
+                        to={post.path}
+                        className="block rounded-control border border-line bg-surface px-4 py-3 transition-colors hover:border-tertiary/40"
+                      >
+                        <span className="text-[0.9375rem] font-medium text-primary">{post.title}</span>
+                        <span className="mt-0.5 block text-[0.8125rem] leading-[1.55] text-tertiary">
+                          {post.description}
                         </span>
                       </Link>
                     </li>

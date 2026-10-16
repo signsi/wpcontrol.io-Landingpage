@@ -4,7 +4,8 @@
  * Vergleichende Werbung (UWG Art. 3 Abs. 1 lit. e): nur nachprüfbare,
  * datierte Angaben von den Seiten der Anbieter, sachlich und nicht
  * herabsetzend. Recherche und Quellen: content-plan/cloud-seite.md
- * (abgerufen am 14.10.2026). Was dort nicht belegt ist, steht hier als
+ * (abgerufen am 14.10.2026; Local WP und Studio am 16.10.2026 direkt auf
+ * den Seiten der Anbieter, Quellen je Eintrag). Was dort nicht belegt ist, steht hier als
  * „k. A.“ statt geraten. Keine CVEs, kein „unsicher“, keine Preisvergleiche.
  *
  * Vor jeder Änderung die Quellen neu prüfen und `checkedAt` nachführen.
@@ -31,13 +32,18 @@ export interface CompareRow {
 
 export interface Alternative {
   slug: AlternativeSlug
+  /**
+   * Womit WPorbit verglichen wird: Cloud (Wartung, Standard) oder
+   * Standalone (lokale Entwicklung, heute verfügbar).
+   */
+  product?: 'cloud' | 'standalone'
   name: string
   /** Wer dahintersteht und wie es betrieben wird, neutral. */
   what: string
-  /** Wie sich der Dienst mit der Kundenseite verbindet. */
-  connection: string
-  /** Name des Plugins für die Bildlegende. */
-  pluginLabel: string
+  /** Nur Cloud: wie sich der Dienst mit der Kundenseite verbindet. */
+  connection?: string
+  /** Nur Cloud: Name des Plugins für die Bildlegende. */
+  pluginLabel?: string
   strengths: { title: string; detail: string }[]
   differences: { title: string; detail: string }[]
   rows: CompareRow[]
@@ -48,6 +54,8 @@ export interface Alternative {
   seoDescription: string
   lead: string
   sources: string[]
+  /** Abrufdatum der Quellen, falls abweichend von SOURCES_CHECKED_AT. */
+  checkedAt?: string
 }
 
 export const SOURCES_CHECKED_AT = '14.10.2026'
@@ -66,6 +74,41 @@ const orbit = {
   security: { mark: 'soon', text: 'Malware-Scanner geplant' },
   local: { mark: 'yes', text: 'Ja, mit der App' },
 } satisfies Record<string, Cell>
+
+/* Gemeinsame Zellen für WPorbit Standalone (lokale Entwicklung). */
+const local = {
+  platform: { mark: 'plain', text: 'macOS 15 oder neuer, Apple Silicon und Intel' },
+  engine: { mark: 'plain', text: 'Eigene Container pro Projekt (Colima), Datenbank MariaDB' },
+  php: { mark: 'yes', text: 'Pro Projekt, passend zur WordPress-Version' },
+  https: { mark: 'yes', text: 'Lokale .wporbit-Domains mit vertrautem Zertifikat' },
+  mail: { mark: 'yes', text: 'Ja, MailHog' },
+  wpcli: { mark: 'yes', text: 'Ja, dazu Terminal und phpMyAdmin' },
+  sync: { mark: 'yes', text: 'Per SSH bei jedem Hoster, mit Vorschau und Sicherung' },
+  vault: { mark: 'yes', text: 'Verschlüsselt pro Projekt' },
+  preview: { mark: 'no', text: 'Nein' },
+  ai: { mark: 'yes', text: 'Claude Code im Projekt-Container, ohne SSH auf Live' },
+} satisfies Record<string, Cell>
+
+const faqLocalPrice = (name: string) => ({
+  q: `${name} ist kostenlos. Warum kostet WPorbit etwas?`,
+  a: 'WPorbit ist auf Agenturen mit laufenden Kundenprojekten ausgerichtet: Übernahme bestehender Websites per SSH bei jedem Hoster, Senden mit Vorschau und Sicherung, Zugangsdaten verschlüsselt pro Projekt und Support aus der Schweiz. Ob sich das lohnt, zeigt der Test mit einem echten Kundenprojekt. Die aktuellen Pläne stehen auf der Preisseite.',
+})
+const faqLocalMac = {
+  q: 'Läuft WPorbit auch unter Windows oder Linux?',
+  a: 'Nein. WPorbit ist eine Mac-App und braucht macOS 15 oder neuer. Die WordPress-Projekte laufen darin in Containern, Colima und die Docker-Werkzeuge richtet WPorbit beim ersten Start selbst ein.',
+}
+const faqLocalMove = (name: string) => ({
+  q: `Kann ich meine Sites aus ${name} übernehmen?`,
+  a: 'Am einfachsten über die Live-Site: WPorbit holt sie per SSH mit Dateien und Datenbank in ein neues Projekt. Ohne Live-Site importierst du ein Backup als .tar.gz. Beide Werkzeuge können eine Zeit lang nebeneinander laufen.',
+})
+const diffAnyHost = {
+  title: 'Jeder Hoster mit SSH',
+  detail: 'WPorbit holt und sendet per SSH, unabhängig vom Anbieter: cyon, Hostpoint, Infomaniak, Metanet, Kinsta und andere. Vor dem Senden siehst du, was übertragen und was gelöscht würde, und WPorbit sichert vorher.',
+}
+const diffVault = {
+  title: 'Zugangsdaten beim Projekt',
+  detail: 'SSH, Datenbank und WordPress-Login liegen verschlüsselt im Vault des Projekts statt in einer Tabelle oder im Chat.',
+}
 
 /* Gemeinsame Unterschiede. Die anbieterspezifischen stehen pro Eintrag. */
 const diffNoPlugin = (plugin: string) => ({
@@ -418,6 +461,111 @@ export const alternatives: Alternative[] = [
       'https://wpremote.com/privacy/',
       'https://blogvault.net/blogvault-dpa/',
     ],
+  },
+  {
+    slug: 'local-wp',
+    product: 'standalone',
+    name: 'Local WP',
+    what: 'Local ist die verbreitete lokale WordPress-Umgebung von WP Engine. Die App ist kostenlos, seit 2021 auch mit den früheren Pro-Funktionen, und läuft auf macOS, Windows und Linux.',
+    lead: 'Local startet WordPress schnell und kostenlos auf jedem Rechner und ist eng mit WP Engine und Flywheel verbunden. WPorbit Standalone ist für Agenturen gebaut, die Kundenprojekte bei verschiedenen Hostern übernehmen, ändern und wieder veröffentlichen.',
+    strengths: [
+      { title: 'Kostenlos und auf allen Plattformen', detail: 'Local gibt es kostenlos für macOS, Windows und Linux. Die früheren Pro-Funktionen sind seit 2021 für alle frei.' },
+      { title: 'Live Links', detail: 'Eine lokale Site lässt sich über einen Link zeigen, etwa für ein Review im Team oder mit der Kundin.' },
+      { title: 'Blueprints und Cloud-Backups', detail: 'Eine Site lässt sich als Vorlage speichern und wiederverwenden. Backups gehen auf Wunsch zu Google Drive oder Dropbox.' },
+      { title: 'Nah an WP Engine und Flywheel', detail: 'Mit Connect holst und sendest du Sites direkt zu WP Engine und Flywheel, auch auf deren Staging-Umgebungen.' },
+    ],
+    differences: [
+      diffAnyHost,
+      { title: 'Ein Container pro Projekt', detail: 'Jedes Projekt läuft in eigenen Containern mit eigener PHP- und WordPress-Version. Ein altes Kundenprojekt und ein neues stören sich nicht.' },
+      diffVault,
+      { title: 'Bestehende Websites übernehmen', detail: 'Eine Live-Site holst du mit ihren Zugangsdaten in eine lokale Kopie, oder du importierst ein Backup als .tar.gz. Einen abweichenden Tabellen-Präfix gleicht WPorbit an.' },
+      { title: 'Claude Code im Projekt', detail: 'Claude Code arbeitet im Container des Projekts, mit getrenntem Chatverlauf pro Kunde und ohne Verbindung zu Live-Servern per ssh.' },
+    ],
+    rows: [
+      { label: 'Plattform', orbit: local.platform, them: { mark: 'plain', text: 'macOS, Windows, Linux' } },
+      { label: 'Wie die Sites laufen', orbit: local.engine, them: { mark: 'plain', text: 'Native Dienste: PHP, MySQL, NGINX oder Apache' } },
+      { label: 'PHP-Version wechseln', orbit: local.php, them: { mark: 'yes', text: 'Ja, 7.3, 7.4 und 8.0+' } },
+      { label: 'Lokale Domains mit HTTPS', orbit: local.https, them: { mark: 'yes', text: 'Selbst signierte Zertifikate, auf Wunsch vertraut' } },
+      { label: 'Mails abfangen', orbit: local.mail, them: { mark: 'yes', text: 'Ja, Mailpit' } },
+      { label: 'WP-CLI', orbit: local.wpcli, them: { mark: 'yes', text: 'Ja, über die Site-Shell' } },
+      { label: 'Live-Site holen und senden', orbit: local.sync, them: { mark: 'partly', text: 'Connect zu WP Engine und Flywheel' } },
+      { label: 'Zugangsdaten verschlüsselt pro Projekt', orbit: local.vault, them: { mark: 'no', text: 'Nicht gefunden' } },
+      { label: 'Link zum Zeigen der lokalen Site', orbit: local.preview, them: { mark: 'yes', text: 'Ja, Live Links' } },
+    ],
+    fitOrbit: [
+      'Deine Kundenprojekte liegen bei verschiedenen Hostern, nicht nur bei WP Engine.',
+      'Du übernimmst oft bestehende Websites und bringst Änderungen wieder live.',
+      'Zugangsdaten sollen verschlüsselt beim Projekt liegen.',
+      'Du arbeitest auf dem Mac.',
+    ],
+    fitThem: [
+      'Du hostest bei WP Engine oder Flywheel und willst direkt dorthin senden.',
+      'Du arbeitest unter Windows oder Linux.',
+      'Du brauchst eine kostenlose lokale Umgebung oder willst lokale Sites per Link zeigen.',
+    ],
+    faq: [faqLocalMove('Local'), faqLocalMac, faqLocalPrice('Local')],
+    seoTitle: 'Local WP Alternative für Agenturen auf dem Mac',
+    seoDescription: 'Local WP Alternative für Agenturen: WordPress lokal in Containern, Live-Sites per SSH bei jedem Hoster holen und senden, Zugänge verschlüsselt pro Projekt.',
+    sources: [
+      'https://localwp.com/',
+      'https://localwp.com/features',
+      'https://localwp.com/connect/',
+      'https://localwp.com/pro-for-everyone/',
+    ],
+    checkedAt: '16.10.2026',
+  },
+  {
+    slug: 'wordpress-studio',
+    product: 'standalone',
+    name: 'WordPress Studio',
+    what: 'Studio ist die kostenlose, quelloffene App von Automattic für lokale WordPress-Sites. Es gibt sie als Desktop-App und als Kommandozeile für macOS, Windows und Linux.',
+    lead: 'Studio ist kostenlos, quelloffen und eng mit WordPress.com und Pressable verbunden. WPorbit Standalone ist für Agenturen gebaut, deren Kundenprojekte bei verschiedenen Hostern liegen und die Änderungen per SSH wieder live bringen.',
+    strengths: [
+      { title: 'Kostenlos und quelloffen', detail: 'Studio kostet nichts, der Code liegt öffentlich auf GitHub. Es läuft auf macOS, Windows und Linux, als App und als Kommandozeile.' },
+      { title: 'Preview-Sites', detail: 'Eine lokale Site lässt sich als Kopie in der Cloud zeigen, auch wenn der eigene Rechner schläft. Eine Vorschau bleibt sieben Tage nach der letzten Änderung aktiv.' },
+      { title: 'Sync mit WordPress.com und Pressable', detail: 'Themes, Plugins, Datenbank oder ganz wp-content lassen sich in beide Richtungen abgleichen. Dafür braucht es einen bezahlten WordPress.com-Plan oder eine Pressable-Site.' },
+      { title: 'KI und Blueprints', detail: 'Studio Code (Beta) baut Blöcke, Themes und Plugins aus Beschreibungen. Dazu kommen Blueprints als Vorlagen und eine Anbindung an KI-Agenten über MCP.' },
+    ],
+    differences: [
+      diffAnyHost,
+      { title: 'Datenbank wie auf dem Server', detail: 'In WPorbit läuft WordPress mit MariaDB, wie bei den meisten Hostern. Studio nutzt standardmässig SQLite, MySQL lässt sich von Hand anbinden.' },
+      { title: 'Auch ältere Kundenprojekte', detail: 'Die PHP-Version wählst du pro Projekt passend zur WordPress-Version. So läuft auch ein älteres Kundenprojekt lokal wie live.' },
+      diffVault,
+      { title: 'Claude Code im Projekt', detail: 'Claude Code arbeitet im Container des Projekts, mit getrenntem Chatverlauf pro Kunde und ohne Verbindung zu Live-Servern per ssh.' },
+    ],
+    rows: [
+      { label: 'Plattform', orbit: local.platform, them: { mark: 'plain', text: 'macOS, Windows, Linux' } },
+      { label: 'Wie die Sites laufen', orbit: local.engine, them: { mark: 'plain', text: 'Natives PHP, Datenbank SQLite (MySQL möglich)' } },
+      { label: 'PHP-Version wechseln', orbit: local.php, them: { mark: 'yes', text: 'Ja, 8.2 bis 8.5' } },
+      { label: 'Lokale Domains mit HTTPS', orbit: local.https, them: { mark: 'yes', text: 'Ja, eigene lokale Domains mit SSL' } },
+      { label: 'Mails abfangen', orbit: local.mail, them: { mark: 'unknown', text: 'k. A.' } },
+      { label: 'WP-CLI', orbit: local.wpcli, them: { mark: 'yes', text: 'Ja, über die Studio-Kommandozeile' } },
+      { label: 'Live-Site holen und senden', orbit: local.sync, them: { mark: 'partly', text: 'Sync mit WordPress.com und Pressable' } },
+      { label: 'Zugangsdaten verschlüsselt pro Projekt', orbit: local.vault, them: { mark: 'no', text: 'Nicht gefunden' } },
+      { label: 'Link zum Zeigen der lokalen Site', orbit: local.preview, them: { mark: 'yes', text: 'Ja, Preview-Sites' } },
+      { label: 'KI-Agent im Projekt', orbit: local.ai, them: { mark: 'yes', text: 'Studio Code (Beta), MCP und Agent-Skills' } },
+    ],
+    fitOrbit: [
+      'Deine Kundenprojekte liegen bei verschiedenen Hostern, nicht auf WordPress.com.',
+      'Lokal soll dieselbe Datenbank laufen wie auf dem Server.',
+      'Du pflegst auch ältere Projekte mit älteren PHP-Versionen.',
+      'Zugangsdaten sollen verschlüsselt beim Projekt liegen.',
+    ],
+    fitThem: [
+      'Deine Sites liegen auf WordPress.com oder Pressable.',
+      'Du arbeitest unter Windows oder Linux oder willst eine kostenlose, quelloffene Lösung.',
+      'Du willst lokale Sites als Vorschau in der Cloud zeigen.',
+    ],
+    faq: [faqLocalMove('Studio'), faqLocalMac, faqLocalPrice('Studio')],
+    seoTitle: 'WordPress Studio Alternative für Agenturen',
+    seoDescription: 'WordPress Studio Alternative für Agenturen: WordPress lokal mit MariaDB in Containern, Live-Sites per SSH bei jedem Hoster holen und senden.',
+    sources: [
+      'https://developer.wordpress.com/studio/',
+      'https://developer.wordpress.com/docs/developer-tools/studio/',
+      'https://developer.wordpress.com/docs/developer-tools/studio/php-runtimes/',
+      'https://developer.wordpress.com/docs/developer-tools/studio/frequently-asked-questions/',
+    ],
+    checkedAt: '16.10.2026',
   },
 ]
 
