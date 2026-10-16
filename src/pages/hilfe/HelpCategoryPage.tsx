@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import PlanBadges from '../../components/hilfe/PlanBadges'
 import Seo from '../../components/Seo'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import HelpSidebar from '../../components/hilfe/HelpSidebar'
@@ -62,9 +63,12 @@ export default function HelpCategoryPage({ category }: HelpCategoryPageProps) {
                     <span className="mt-1.5 block text-[0.875rem] leading-[1.65] text-secondary">
                       {guide.description}
                     </span>
-                    <span className="mt-3 block text-[0.75rem] text-tertiary">
-                      {guide.duration ? `${guide.duration} · ` : ''}
-                      Aktualisiert am {formatDate(guide.updated)}
+                    <span className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[0.75rem] text-tertiary">
+                      <PlanBadges plans={guide.appliesTo} />
+                      <span>
+                        {guide.duration ? `${guide.duration} · ` : ''}
+                        Aktualisiert am {formatDate(guide.updated)}
+                      </span>
                     </span>
                   </Link>
                 </li>

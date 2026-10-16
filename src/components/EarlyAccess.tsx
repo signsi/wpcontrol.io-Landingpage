@@ -1,4 +1,5 @@
 import { useRef, useState, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { OrbitDivider } from './OrbitMotif'
 import { TRIAL_DAYS } from '../data/plans'
 import { isValidEmail } from '../lib/forms'
@@ -12,7 +13,7 @@ type Phase = 'ask' | 'sending' | 'done'
  * Bestätigung zeigt gleich den Download, denn der Link öffnet nur die
  * installierte App.
  */
-export default function EarlyAccess() {
+export default function EarlyAccess({ heading = `${TRIAL_DAYS} Tage gratis. Ohne Risiko.` }: { heading?: string }) {
   const [email, setEmail] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [phase, setPhase] = useState<Phase>('ask')
@@ -75,7 +76,7 @@ export default function EarlyAccess() {
       <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="reveal-up">
           <h2 className="font-heading font-semibold text-[clamp(1.75rem,3.4vw,2.125rem)] leading-[1.15] tracking-[-0.02em] mb-4">
-            10 Tage gratis. Ohne Risiko.
+            {heading}
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[44ch] mb-6">
             E-Mail-Adresse eingeben, WPorbit herunterladen und direkt loslegen. Voller Funktionsumfang, ohne Kreditkarte.
@@ -192,11 +193,15 @@ export default function EarlyAccess() {
                 disabled={phase === 'sending'}
                 className="btn btn-primary btn-md mt-1 disabled:opacity-60"
               >
-                {phase === 'sending' ? 'Wird gesendet …' : 'Kostenlos testen →'}
+                {phase === 'sending' ? 'Wird gesendet …' : `${TRIAL_DAYS} Tage gratis testen`}
               </button>
 
               <p className="text-[0.75rem] text-tertiary text-center">
                 WPorbit ist eine App für macOS. Keine Kreditkarte, {TRIAL_DAYS} Tage gratis.
+              </p>
+              <p className="text-[0.75rem] leading-[1.6] text-tertiary text-center">
+                Wir nutzen deine Adresse für die Anmeldung in WPorbit.{' '}
+                <Link to="/datenschutz" className="underline underline-offset-[3px] hover:text-primary">Datenschutz</Link>
               </p>
             </form>
           )}

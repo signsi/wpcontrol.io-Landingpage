@@ -156,7 +156,8 @@ export default function Topbar() {
               {secondaryCta.label}
             </Link>
             <Link to={primaryCta.to} onClick={() => track('cta_click', { location: 'nav', target: primaryCta.to })} className="btn btn-primary btn-sm">
-              {primaryCta.label}
+              <span className="xl:hidden">{primaryCta.short}</span>
+              <span className="hidden xl:inline">{primaryCta.label}</span>
             </Link>
           </div>
         </div>

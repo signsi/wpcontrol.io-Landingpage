@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { track } from '../lib/analytics'
 
 /**
- * Störer in der Navigation: weist auf WPorbit Cloud hin. Auf /cloud selbst
+ * Störer in der Navigation: weist auf WPorbit Cloud hin (in Entwicklung). Auf /cloud selbst
  * nicht nötig. `compact` für die schmale Kopfzeile auf dem Handy.
  */
 export default function CloudBadge({ compact = false }: { compact?: boolean }) {
@@ -19,9 +19,9 @@ export default function CloudBadge({ compact = false }: { compact?: boolean }) {
         <span className="absolute inline-flex size-full rounded-full bg-accent opacity-60 motion-safe:animate-ping" />
         <span className="relative inline-flex size-2 rounded-full bg-accent" />
       </span>
-      {compact ? 'Neu: Cloud' : (
+      {compact ? 'Cloud kommt' : (
         <>
-          Neu: WPorbit Cloud
+          WPorbit Cloud in Entwicklung
           <span className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true">→</span>
         </>
       )}
