@@ -1,6 +1,9 @@
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import CTABand from '../components/CTABand'
+import AuthorAvatar from '../components/AuthorAvatar'
+import { authors } from '../content/authors'
 import { breadcrumbLd } from '../lib/jsonld'
 
 const crumbs = [{ label: 'Über uns', path: '/ueber-uns' }]
@@ -61,6 +64,35 @@ export default function UeberUnsPage() {
             sondern indem es den ganzen Verlauf eines Projekts in eine Oberfläche holt: aufsetzen,
             entwickeln, abstimmen, veröffentlichen, betreiben.
           </p>
+        </div>
+      </section>
+
+      <section className="border-b border-line bg-raised px-6 py-16">
+        <div className="reveal-up grid max-w-[52rem] gap-8 md:grid-cols-[auto_1fr] md:items-start">
+          {/* TODO Patrick: Porträt als public/team/patrick.webp ablegen (quadratisch, mind. 400 px) und in src/content/authors.ts bei patrick `avatar: '/team/patrick.webp'` eintragen. Bis dahin stehen die Initialen da. */}
+          <AuthorAvatar author={authors.patrick} size={112} />
+          <div>
+            <p className="mb-3 text-[0.67rem] font-bold uppercase tracking-[0.13em] text-accent">
+              Wer hinter WPorbit steht
+            </p>
+            <h2 className="font-heading text-[clamp(1.5rem,3vw,1.875rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              Patrick Williner
+            </h2>
+            <p className="mt-1 text-[0.875rem] text-tertiary">Gründer und Geschäftsführer, viwiv GmbH, Rotkreuz</p>
+            <div className="prose-article mt-5">
+              <p>
+                WPorbit wird von der viwiv GmbH in Rotkreuz entwickelt. Patrick baut die App und den Server
+                und nutzt WPorbit jeden Tag für die eigenen Kundenprojekte. Neue Funktionen laufen dort
+                zuerst, im echten Alltag, bevor sie ausgeliefert werden.
+              </p>
+              {/* TODO Patrick: 2–3 Sätze zu deinem Hintergrund ergänzen (z. B. seit wann du WordPress-Projekte betreust, für welche Art Kundschaft). Nur, was du so auch sagen würdest. */}
+              <p>
+                Wie wir dabei vorgehen, steht im{' '}
+                <Link to="/blog/werkstattbericht-spec-tests-ki">Werkstattbericht</Link>. Fragen, Kritik und Ideen
+                gehen direkt an <a href="mailto:hallo@wporbit.ch">hallo@wporbit.ch</a>.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

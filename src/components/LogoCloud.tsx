@@ -8,20 +8,13 @@ export default function LogoCloud() {
       </p>
       <div className="stagger-x grid grid-cols-4 lg:grid-cols-7 gap-px bg-line border border-line rounded-xl overflow-hidden max-w-3xl mx-auto">
         {hosters.map((h) => (
-          <a
-            key={h.name}
-            href={h.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-surface flex items-center justify-center px-5 py-5 hover:bg-raised transition-colors group"
-            aria-label={h.name}
-          >
+          <div key={h.name} className="bg-surface flex items-center justify-center px-5 py-5">
             <img
               src={`/logos/${h.file}`}
               alt={h.name}
-              className="h-5 max-w-[6rem] brightness-0 opacity-40 group-hover:opacity-80 transition-opacity duration-200"
+              className="h-5 max-w-[6rem] brightness-0 opacity-55"
             />
-          </a>
+          </div>
         ))}
       </div>
     </section>

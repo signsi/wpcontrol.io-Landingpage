@@ -121,6 +121,7 @@ export const footerNav: FooterColumn[] = [
     items: [
       { label: 'Impressum', to: '/impressum' },
       { label: 'Datenschutz', to: '/datenschutz' },
+      { label: 'Sicherheit', to: '/sicherheit' },
       { label: 'AGB', to: '/agb' },
     ],
   },

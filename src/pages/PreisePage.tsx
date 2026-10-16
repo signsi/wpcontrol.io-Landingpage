@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import PageHero from '../components/PageHero'
 import Pricing from '../components/Pricing'
@@ -39,6 +40,11 @@ export default function PreisePage() {
         heading="Fragen zu Preisen und Abrechnung"
         intro="Alles Weitere klären wir gerne direkt im Gespräch."
       />
+
+      <p className="px-6 pb-12 text-center text-[0.82rem] text-tertiary">
+        Wo deine Daten liegen und wer sie lesen kann:{' '}
+        <Link to="/sicherheit" className="underline hover:text-accent">Sicherheit &amp; Datenschutz</Link>
+      </p>
 
       <CTABand
         title="Erst testen, dann entscheiden."

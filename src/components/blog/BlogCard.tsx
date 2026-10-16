@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { blogCategory } from '../../content/taxonomy'
 import { formatDate, readingTimeLabel } from '../../lib/format'
 import type { BlogPost } from '../../lib/content/types'
+import AuthorAvatar from '../AuthorAvatar'
 
 interface BlogCardProps {
   post: BlogPost
@@ -42,9 +43,15 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
         {post.description}
       </p>
 
-      <span className="mt-5 text-[0.8125rem] font-medium text-tertiary transition-colors group-hover:text-accent">
-        Weiterlesen →
-      </span>
+      <div className="mt-5 flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2 text-[0.8125rem] text-secondary">
+          <AuthorAvatar author={post.author} size={24} />
+          {post.author.name}
+        </span>
+        <span className="text-[0.8125rem] font-medium text-tertiary transition-colors group-hover:text-accent">
+          Weiterlesen →
+        </span>
+      </div>
     </article>
   )
 }

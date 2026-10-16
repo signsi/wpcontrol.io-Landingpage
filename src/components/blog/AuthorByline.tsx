@@ -1,5 +1,6 @@
 import { formatDate, readingTimeLabel } from '../../lib/format'
 import type { Author } from '../../content/authors'
+import AuthorAvatar from '../AuthorAvatar'
 
 interface AuthorBylineProps {
   author: Author
@@ -12,12 +13,7 @@ export default function AuthorByline({ author, date, updated, readingMinutes }: 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <div className="flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className="grid h-9 w-9 place-items-center rounded-full border border-line bg-raised font-heading text-[0.8125rem] font-semibold text-secondary"
-        >
-          {author.name.charAt(0)}
-        </span>
+        <AuthorAvatar author={author} />
         <div className="leading-tight">
           <p className="text-[0.875rem] font-medium text-primary">{author.name}</p>
           <p className="text-[0.75rem] text-tertiary">{author.role}</p>

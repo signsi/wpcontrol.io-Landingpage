@@ -3,17 +3,18 @@ import { footerNav } from '../config/navigation'
 import { openConsentSettings } from '../lib/analytics'
 import NewsletterSignup from './blog/NewsletterSignup'
 
-function GdprBadge() {
+/** Verweist auf die Sicherheitsseite. Kein Siegel: Es gibt keine Zertifizierung. */
+function PrivacyBadge() {
   return (
-    <div className="flex items-center gap-2.5 border border-line rounded-md px-3 py-2">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-secondary flex-shrink-0">
+    <Link to="/sicherheit" className="flex items-center gap-2.5 border border-line rounded-md px-3 py-2 transition-colors hover:border-tertiary/40">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-secondary flex-shrink-0" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         <path d="M9 12l2 2 4-4" />
       </svg>
       <span className="text-[0.75rem] font-semibold text-secondary leading-tight">
-        GDPR<br />Compliant
+        revDSG &amp;<br />DSGVO
       </span>
-    </div>
+    </Link>
   )
 }
 
@@ -49,7 +50,7 @@ export default function Footer() {
           </p>
 
           <div className="flex flex-wrap gap-2.5">
-            <GdprBadge />
+            <PrivacyBadge />
             <SwissBadge />
           </div>
 
