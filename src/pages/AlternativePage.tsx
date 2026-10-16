@@ -191,8 +191,8 @@ export default function AlternativePage({ slug }: { slug: string }) {
         <div className="mt-4 max-w-[68ch] text-[0.8rem] leading-[1.65] text-tertiary">
           <p>
             {SOURCES_STAND}, laut Angaben der Anbieter auf ihren Websites. „Zusatz“ heisst: als kostenpflichtige
-            Erweiterung. „Nicht gefunden“: auf den Seiten des Anbieters nicht gefunden. „k. A.“: keine Angabe gefunden. „Bis Ende 2026“: kommt vor dem
-            Release von Cloud. Genannte Marken gehören ihren Inhabern; WPorbit steht in keiner Verbindung zu ihnen.
+            Erweiterung. „Nicht gefunden“: auf den Seiten des Anbieters nicht gefunden. „k. A.“: keine Angabe gefunden. „Geplant“: für Cloud vorgesehen,
+            noch nicht verfügbar. Genannte Marken gehören ihren Inhabern; WPorbit steht in keiner Verbindung zu ihnen.
           </p>
           <details className="mt-2">
             <summary className="cursor-pointer font-semibold text-secondary hover:text-primary">

@@ -24,8 +24,8 @@ const orbit: Point[] = [
   { mark: 'yes', text: 'Keine Zugangsdaten beim Dienst' },
   { mark: 'yes', text: 'Mailtest über den echten Mailweg' },
   { mark: 'yes', text: 'Änderungsverlauf, Alarm bei neuem Admin' },
-  { mark: 'soon', text: 'Updates aus der Ferne, bis Ende 2026' },
-  { mark: 'soon', text: 'Backups, bis Ende 2026' },
+  { mark: 'soon', text: 'Updates aus der Ferne, geplant' },
+  { mark: 'soon', text: 'Backups, geplant' },
   { mark: 'yes', text: 'Entwickelt und gehostet in der Schweiz' },
   { mark: 'yes', text: 'Mit der App für die lokale Entwicklung' },
 ]
@@ -45,7 +45,7 @@ export function MarkIcon({ mark }: { mark: Mark }) {
           <circle cx="8" cy="8" r="5.5" />
           <path d="M8 5v3l2 1.5" />
         </svg>
-        <span className="sr-only">Kommt:</span>
+        <span className="sr-only">Geplant:</span>
       </span>
     )
   if (mark === 'partly')

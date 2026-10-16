@@ -91,7 +91,7 @@ export default function SafeUpdateDemo() {
           <p className="font-heading text-[1.02rem] font-semibold text-primary">Contact Form 7 aktualisieren</p>
         </div>
         <span className="rounded-full border border-accent/30 bg-accent-tint px-2.5 py-1 text-[0.68rem] font-semibold text-accent">
-          Vorschau · kommt bis Ende 2026
+          Vorschau · geplant
         </span>
       </div>
 
