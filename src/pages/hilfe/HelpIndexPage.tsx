@@ -3,13 +3,32 @@ import Seo from '../../components/Seo'
 import PageHero from '../../components/PageHero'
 import SearchBox from '../../components/SearchBox'
 import CTABand from '../../components/CTABand'
-import { getGuideTree } from '../../lib/content'
+import { getGuide, getGuideTree } from '../../lib/content'
+import type { Guide } from '../../lib/content/types'
 import { breadcrumbLd } from '../../lib/jsonld'
 
 const crumbs = [{ label: 'Anleitungen', path: '/anleitungen' }]
 
+/** Die Anleitungen, die im Alltag am häufigsten gebraucht werden. */
+const popular = [
+  'erste-schritte/wporbit-installieren',
+  'erste-schritte/erstes-projekt-anlegen',
+  'projekte/bestehende-website-uebernehmen',
+  'veroeffentlichen/holen-senden-deployen',
+  'veroeffentlichen/live-seite-sicher-aktualisieren',
+  'zugaenge/zugangsdaten-im-vault',
+  'wartung/ueberwachung-einschalten',
+  'fehlerbehebung/deploy-schlaegt-fehl',
+]
+
 export default function HelpIndexPage() {
   const tree = getGuideTree()
+  const popularGuides = popular
+    .map((ref) => {
+      const [category, slug] = ref.split('/')
+      return getGuide(category, slug)
+    })
+    .filter((guide): guide is Guide => Boolean(guide))
 
   return (
     <>
@@ -54,6 +73,27 @@ export default function HelpIndexPage() {
                 </p>
               </article>
             ))}
+          </div>
+        )}
+
+        {popularGuides.length > 0 && (
+          <div className="mt-14">
+            <h2 className="mb-4 font-heading text-[1.25rem] font-semibold text-primary">Häufig gebraucht</h2>
+            <ul className="grid list-none gap-2 p-0 md:grid-cols-2">
+              {popularGuides.map((guide) => (
+                <li key={guide.path}>
+                  <Link
+                    to={guide.path}
+                    className="block h-full rounded-control border border-line bg-surface px-4 py-3 transition-colors hover:border-tertiary/40"
+                  >
+                    <span className="text-[0.9375rem] font-medium text-primary">{guide.title}</span>
+                    <span className="mt-0.5 block text-[0.8125rem] leading-[1.55] text-tertiary">
+                      {guide.description}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </section>

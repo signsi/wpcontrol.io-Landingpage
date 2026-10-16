@@ -22,9 +22,9 @@ const maintenanceRows: { label: string; values: string[] }[] = [
   { label: 'Performance (PageSpeed)', values: ['Ja', 'Ja', 'Zusatz', 'Zusatz', 'k. A.', 'k. A.'] },
   { label: 'Barrierefreiheits-Wert', values: ['Ja, Teil-Check', '–', '–', 'Zusatz', 'k. A.', '–'] },
   { label: 'Mailtest und SPF/DKIM/DMARC', values: ['Ja', '–', '–', '–', '–', '–'] },
-  { label: 'Updates aus der Ferne', values: ['Bis zum Release', 'Ja', 'Ja', 'Ja', 'Ja', 'Ja'] },
-  { label: 'Backups', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Über Plugins', 'Ja', 'Ja'] },
-  { label: 'Kundenberichte mit eigenem Logo', values: ['Bis zum Release', 'Ja', 'Zusatz', 'Pro', 'Zusatz', 'Ja'] },
+  { label: 'Updates aus der Ferne', values: ['Geplant', 'Ja', 'Ja', 'Ja', 'Ja', 'Ja'] },
+  { label: 'Backups', values: ['Geplant', 'Ja', 'Zusatz', 'Über Plugins', 'Ja', 'Ja'] },
+  { label: 'Kundenberichte mit eigenem Logo', values: ['Geplant', 'Ja', 'Zusatz', 'Pro', 'Zusatz', 'Ja'] },
   { label: 'Lokale Entwicklung im selben Werkzeug', values: ['Ja, mit der App', '–', '–', '–', '–', '–'] },
 ]
 
@@ -166,7 +166,9 @@ export default function VergleichPage() {
               >
                 <span>
                   <span className="block font-heading text-[1rem] font-semibold text-primary">{alt.name} Alternative</span>
-                  <span className="mt-0.5 block text-[0.8rem] text-tertiary">WPorbit Cloud und {alt.name} im Vergleich</span>
+                  <span className="mt-0.5 block text-[0.8rem] text-tertiary">
+                    WPorbit {alt.product === 'standalone' ? 'Standalone' : 'Cloud'} und {alt.name} im Vergleich
+                  </span>
                 </span>
                 <span aria-hidden="true" className="text-tertiary transition-colors group-hover:text-accent">→</span>
               </Link>
