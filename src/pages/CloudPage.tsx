@@ -423,7 +423,8 @@ export default function CloudPage() {
         </ul>
         <p className="max-w-[60ch] text-[0.82rem] leading-[1.65] text-tertiary">
           Für Performance-Messungen fragt das Dashboard Google PageSpeed an, dabei geht die Adresse der Website an
-          Google. Alarme in Slack sind optional. Details in der{' '}
+          Google. Alarme in Slack sind optional. Details unter{' '}
+          <Link to="/sicherheit" className="underline hover:text-accent">Sicherheit &amp; Datenschutz</Link> und in der{' '}
           <Link to="/datenschutz" className="underline hover:text-accent">Datenschutzerklärung</Link>.
         </p>
       </section>

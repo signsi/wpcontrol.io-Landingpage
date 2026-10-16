@@ -134,6 +134,7 @@ export const routes: RouteRecord[] = [
 
       // Unternehmen
       { path: 'ueber-uns', lazy: () => import('./pages/UeberUnsPage').then((m) => ({ Component: m.default })) },
+      { path: 'sicherheit', lazy: () => import('./pages/SicherheitPage').then((m) => ({ Component: m.default })) },
       { path: 'kontakt', lazy: () => import('./pages/KontaktPage').then((m) => ({ Component: m.default })) },
       { path: 'support', lazy: () => import('./pages/SupportPage').then((m) => ({ Component: m.default })) },
 
