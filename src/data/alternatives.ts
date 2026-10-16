@@ -15,7 +15,7 @@ import type { AlternativeSlug } from './alternativeSlugs'
 
 export { alternativePath } from './alternativeSlugs'
 
-/** yes = vorhanden, no = nicht gefunden, partly = teilweise/Zusatz, soon = bis Ende 2026, unknown = keine Angabe gefunden, plain = sachliche Angabe ohne Wertung. */
+/** yes = vorhanden, no = nicht gefunden, partly = teilweise/Zusatz, soon = geplant, unknown = keine Angabe gefunden, plain = sachliche Angabe ohne Wertung. */
 export type CellMark = 'yes' | 'no' | 'partly' | 'soon' | 'unknown' | 'plain'
 
 export interface Cell {
@@ -60,10 +60,10 @@ const orbit = {
   uptime: { mark: 'yes', text: 'Alle 5 Min., Nachprüfung vor dem Alarm' },
   vulns: { mark: 'yes', text: 'Ja, aus Wordfence Intelligence' },
   mail: { mark: 'yes', text: 'Ja, täglich über den echten Mailweg' },
-  updates: { mark: 'soon', text: 'Bis Ende 2026' },
-  backups: { mark: 'soon', text: 'Bis Ende 2026' },
-  reports: { mark: 'soon', text: 'Bis Ende 2026' },
-  security: { mark: 'soon', text: 'Malware-Scanner bis Ende 2026' },
+  updates: { mark: 'soon', text: 'Geplant' },
+  backups: { mark: 'soon', text: 'Geplant' },
+  reports: { mark: 'soon', text: 'Geplant' },
+  security: { mark: 'soon', text: 'Malware-Scanner geplant' },
   local: { mark: 'yes', text: 'Ja, mit der App' },
 } satisfies Record<string, Cell>
 
@@ -406,7 +406,7 @@ export const alternatives: Alternative[] = [
       faqData('WP Remote', 'Die DSGVO-Seite des Anbieters nennt Rechenzentren in der EU, die ältere Datenschutzerklärung auch die USA (Stand Oktober 2026).'),
       {
         q: 'Schützt WPorbit die Kundenseiten mit einer Firewall?',
-        a: 'Nein. WPorbit installiert nichts in WordPress und damit auch keine Firewall. Das Dashboard erkennt bekannte Lücken und zeigt das Update, das sie schliesst. Ein Malware-Scanner kommt bis Ende 2026. Eine Firewall gehört aus unserer Sicht vor die Website, zum Beispiel zum Hoster oder zu Cloudflare.',
+        a: 'Nein. WPorbit installiert nichts in WordPress und damit auch keine Firewall. Das Dashboard erkennt bekannte Lücken und zeigt das Update, das sie schliesst. Ein Malware-Scanner ist geplant. Eine Firewall gehört aus unserer Sicht vor die Website, zum Beispiel zum Hoster oder zu Cloudflare.',
       },
     ],
     seoTitle: 'WP Remote Alternative ohne Plugin, aus der Schweiz',

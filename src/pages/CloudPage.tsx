@@ -333,8 +333,8 @@ export default function CloudPage() {
 
       <section className="border-b border-line px-6 py-16">
         <SectionHead
-          kicker="Bis zum Release"
-          title="Kommt vor Ende 2026"
+          kicker="Als Nächstes"
+          title="Geplant für Cloud"
           lead="Damit wird aus dem Überblick eine vollständige Wartung: aktualisieren, absichern, berichten."
         />
         <div className="mb-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">

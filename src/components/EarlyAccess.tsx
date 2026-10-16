@@ -78,11 +78,11 @@ export default function EarlyAccess() {
             10 Tage gratis. Ohne Risiko.
           </h2>
           <p className="text-secondary text-[0.9375rem] leading-[1.78] max-w-[44ch] mb-6">
-            E-Mail-Adresse eingeben, WPorbit herunterladen und direkt loslegen. Ein Projekt mit allen verfügbaren Funktionen, ohne Kreditkarte.
+            E-Mail-Adresse eingeben, WPorbit herunterladen und direkt loslegen. Voller Funktionsumfang, ohne Kreditkarte.
           </p>
           <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {[
-              'Ein Projekt mit allen verfügbaren Funktionen',
+              'Voller Funktionsumfang, keine gesperrten Funktionen',
               'In wenigen Minuten startklar',
               'Keine Kreditkarte, keine Verpflichtung',
             ].map((item) => (

@@ -71,7 +71,7 @@ export const plans: Plan[] = [
       'Team-Dashboard für alle Kundenseiten',
       'Ohne Plugin auf der Kundenseite',
       'Projekte und Zugänge im Team teilen',
-      'Updates aus der Ferne, Backups, Berichte',
+      'Geplant: Updates aus der Ferne, Backups, Berichte',
       'Entwickelt und gehostet in der Schweiz',
     ],
     highlighted: true,
