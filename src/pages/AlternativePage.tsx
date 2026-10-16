@@ -99,7 +99,7 @@ export default function AlternativePage({ slug }: { slug: string }) {
           ) : (
             <>
               <Link to="/cloud" className="btn btn-primary btn-md">WPorbit Cloud ansehen</Link>
-              <Link to="/testen" className="btn btn-secondary btn-md">App 10 Tage testen</Link>
+              <Link to="/testen" className="btn btn-secondary btn-md">10 Tage gratis testen</Link>
             </>
           )
         }
@@ -346,7 +346,7 @@ export default function AlternativePage({ slug }: { slug: string }) {
           title="Kundenseiten überwachen, ohne Plugin."
           text="Cloud mit Team-Dashboard erscheint bis Ende 2026. Die App läuft schon heute, deine Projekte nimmst du mit."
           primary={{ label: 'WPorbit Cloud ansehen', to: '/cloud' }}
-          secondary={{ label: 'App 10 Tage testen', to: '/testen' }}
+          secondary={{ label: '10 Tage gratis testen', to: '/testen' }}
         />
       )}
     </>
