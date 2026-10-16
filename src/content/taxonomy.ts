@@ -34,6 +34,8 @@ export const blogCategories: TaxonomyEntry[] = [
     slug: 'workflow',
     label: 'Workflow & Automatisierung',
     description: 'Workflow und Automatisierung für WordPress-Agenturen: von der lokalen Umgebung über Git bis zur Veröffentlichung auf dem Server, ohne Umwege.',
+    intro:
+      'Gute Abläufe sind die, die auch unter Zeitdruck halten. Die Beiträge zeigen, wie wir selbst arbeiten, von der Spec über Tests bis zum Deployment, und wo KI dabei hilft und wo nicht.',
   },
   {
     slug: 'sicherheit',
@@ -46,11 +48,15 @@ export const blogCategories: TaxonomyEntry[] = [
     slug: 'hosting',
     label: 'Hosting & Infrastruktur',
     description: 'Hosting und Infrastruktur für WordPress: Anbieter, PHP-Versionen, SSH-Zugang und Umgebungen im Vergleich, aus Sicht von Agenturen mit mehreren Kunden.',
+    intro:
+      'Domains, DNS, Zertifikate und Mail-Versand gehören selten jemandem, bis etwas ausfällt. Die Beiträge zeigen, welche Fristen und Einstellungen eine Agentur über alle Kundenprojekte im Blick haben sollte.',
   },
   {
     slug: 'produkt',
     label: 'Produkt',
     description: 'Was sich in WPorbit verändert und warum: Hintergründe zu neuen Funktionen, Entscheidungen beim Bau der App und was das für deinen Alltag heisst.',
+    intro:
+      'Hier erklären wir Entscheidungen hinter WPorbit: warum eine Funktion so gebaut ist, was wir bewusst weglassen und wo die Grenzen liegen.',
   },
 ]
 
