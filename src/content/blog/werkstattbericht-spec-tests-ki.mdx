@@ -1,0 +1,149 @@
+---
+title: "Werkstattbericht: Wie wir WPorbit mit KI bauen, ohne die Kontrolle abzugeben"
+seoTitle: "Spec-driven und test-first mit KI-Agents"
+description: "Spec, rote Tests, Code: wie WPorbit mit Claude Code entsteht, warum wir trotzdem von Hand testen und was Agenturen davon übernehmen können."
+date: 2026-10-15
+category: workflow
+tags: [ki, prozesse, tests]
+author: patrick
+draft: false
+---
+
+<KeyTakeaways>
+
+- KI macht einen Ablauf nicht besser, sie verstärkt ihn. Ohne Tests und klare Vorgaben wird ein Team mit KI schneller unordentlich, nicht schneller fertig.
+- Bei WPorbit beginnt jede Funktion mit einer Spec. Sie wird freigegeben, bevor Code entsteht, und jedes Abnahmekriterium wird zuerst zu einem roten Test.
+- Der erste Commit enthält nur Tests. So kann ein Agent einen Test nicht still ändern, bis er grün wird.
+- Automatische Tests reichen nicht. Vor jedem Release testen wir die App von Hand mit Testprojekten durch, und wir nutzen WPorbit selbst jeden Tag.
+- KI ersetzt keine Entwickler. Architektur, Vorgehen, der Plan fürs grosse Ganze und gute Konzepte bleiben Menschenarbeit.
+- Für Kundenprojekte lässt sich eine kleine Version davon übernehmen: eine Seite pro Änderung, mit „drin“, „nicht drin“ und Abnahmekriterien.
+
+</KeyTakeaways>
+
+Exit-Code 0, keine Fehlermeldung, und auf dem Server war keine einzige Datei gelöscht.
+
+So endete im Oktober ein Versuch, bevor die erste Zeile der neuen Sende-Funktion geschrieben war. Die Spec verlangte: Wenn mehr gelöscht würde als in der Vorschau steht, bricht WPorbit vor dem Löschen ab. Der naheliegende Weg dafür war eine Kombination von rsync-Optionen. Die Messung gegen einen echten rsync zeigte, dass genau diese Kombination still gar nichts löscht und trotzdem Erfolg meldet. Die andere naheliegende Option bricht erst ab, nachdem schon gelöscht wurde.
+
+Hätte ein Agent das Kriterium direkt umgesetzt, wäre ein grüner Test entstanden, der die falsche Sache prüft. So wurde die Spec angepasst: Löschen ist jetzt ein eigener Schritt, und gelöscht wird genau die Liste aus der Vorschau, nachdem sie gesichert wurde.
+
+Dieser Beitrag ist kein Überblick über Werkzeuge, sondern ein Bericht direkt aus unserer Praxis. Er beschreibt, wie wir WPorbit bauen, testen und ausliefern, was dabei gut funktioniert und wo der Ablauf an Grenzen stösst. Spec-driven Development ist für uns ein Versuch, kein Dogma. Bisher sind wir damit sehr zufrieden.
+
+## Das Gefühl ist kein Messwert
+
+Wer mit KI programmiert, fühlt sich schneller. Ob man es ist, steht auf einem anderen Blatt. In einer randomisierten Studie von [METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) waren erfahrene Open-Source-Entwickler mit KI-Werkzeugen 19 % langsamer. Sie schätzten sich danach aber als rund 20 % schneller ein. Die Werkzeuge sind seither besser geworden, und METR sagt selbst, dass die Zahlen von Anfang 2025 nicht mehr aktuell sind. Die Lücke zwischen Gefühl und Messung ist aber der eigentliche Befund.
+
+Der [DORA-Report 2025](https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report) von Google kommt mit rund 5000 Befragten zu einem Befund, der für Agenturen wichtiger ist: KI verstärkt, was schon da ist. Teams mit automatisierten Tests, sauberer Versionskontrolle und schnellem Feedback profitieren. Bei den anderen steigt vor allem die Instabilität.
+
+Für uns war daraus klar: Bevor wir mehr Code von einem Agenten schreiben lassen, muss der Ablauf stehen, in dem dieser Code geprüft wird.
+
+## Der Ablauf in fünf Schritten
+
+WPorbit besteht aus einer macOS-App und einem Server für Überwachung und Team-Funktionen. Beide entstehen mit [Claude Code](https://claude.com/claude-code). Die Regel steht ganz oben in der Spec-Übersicht: „Kein Code, bevor ihre Spec freigegeben ist.“
+
+<Steps>
+
+<Step title="Spec als eigener Pull Request">
+
+Jede Funktion bekommt eine Markdown-Datei mit fester Vorlage: Problem und Nutzen, Umfang mit **Drin** und **Nicht drin (und warum)**, Sicherheit, Datenmodell, Abnahmekriterien, Testplan. Der Agent schreibt den Entwurf, ein Mensch entscheidet die offenen Fragen. Erst dann wird gemergt.
+
+Der Abschnitt Sicherheit ist Pflicht und fragt immer dasselbe: Kommen Zugangsdaten vor? Was verlässt den Server, an wen? Wie liesse sich das missbrauchen?
+
+</Step>
+
+<Step title="Zuerst die roten Tests">
+
+Jedes Abnahmekriterium wird zu einem Test, im Stil „Gegeben … wenn … dann“. Der erste Commit des Umsetzungs-Branches enthält nur diese Tests, und sie müssen rot sein.
+
+</Step>
+
+<Step title="Umsetzung, bis alles grün ist">
+
+Erst jetzt schreibt der Agent Code, in kleinen Commits mit Bezug auf das Issue. Grössere Funktionen werden in Teile zerlegt, jeder Teil ist ein eigener Pull Request.
+
+</Step>
+
+<Step title="Doku im selben Pull Request">
+
+Changelog, technische Doku und Hilfetexte werden mit dem Code angepasst, nicht „später“. Weicht die Umsetzung von der Spec ab, steht das in der Spec.
+
+</Step>
+
+<Step title="Verifikation, die man nachlesen kann">
+
+Jeder Pull Request nennt, welche Tests lokal gelaufen sind und mit welchem Ergebnis. Bei Funktionen, die Server berühren, kommt ein Lauf gegen einen nachgebauten Server dazu.
+
+</Step>
+
+</Steps>
+
+Seit Juli sind so über 20 Specs für App und Server entstanden. Die App hat heute über 2300 Tests.
+
+## Von Hand getestet, bevor etwas ausgeliefert wird
+
+Grüne Tests sind die Voraussetzung für ein Release, nicht die Freigabe. Bevor eine neue Version ausgeliefert wird, testen wir die App komplett von Hand durch, mit eigenen Testprojekten auf echten Hostern: Projekt übernehmen, lokal ändern, senden, holen, Überwachung einschalten, Rückweg prüfen. Erst wenn dieser Durchgang sauber ist, wird released.
+
+Diese manuellen Tests sind kein Misstrauen gegenüber den automatischen. Sie prüfen etwas anderes: ob sich ein Ablauf richtig anfühlt, ob eine Meldung verständlich ist und ob ein Hoster sich so verhält, wie wir angenommen haben. Genau dort finden wir die Fehler, die kein Test kennt, weil niemand an sie gedacht hat. Das gibt uns die Sicherheit, eine Version mit gutem Gewissen auszuliefern.
+
+Dazu kommt der wichtigste Test von allen: Wir arbeiten jeden Tag mit WPorbit, an unseren eigenen Kundenprojekten. Neue Funktionen laufen bei uns zuerst, im echten Alltag. Was dort hakt, fällt sofort auf. Und was dort fehlt, wird oft zur nächsten Idee. Viele Optimierungen und einige neue Funktionen sind genau so entstanden.
+
+## Warum der erste Commit nur Tests enthält
+
+Kent Beck, der die testgetriebene Entwicklung bekannt gemacht hat, beschreibt KI-Agenten als [„unberechenbaren Geist“](https://newsletter.pragmaticengineer.com/p/tdd-ai-agents-and-coding-with-kent): Sie erfüllen den Wunsch wörtlich. Ein roter Test lässt sich auf zwei Arten grün machen, und eine davon ist, den Test zu ändern.
+
+Ein Commit, der nur Tests enthält, macht das sichtbar. Ändert sich später eine Testdatei, fällt es im Review auf, weil die Tests bereits als eigener, freigegebener Stand existieren. Das ist kein Misstrauen gegenüber dem Werkzeug, sondern dieselbe Trennung, die man auch zwischen zwei Menschen einführen würde.
+
+<Callout variant="tipp" title="Ein Satz, der viel spart">
+Schreib in die Anweisung an den Agenten ausdrücklich: „Tests aus dem ersten Commit nicht ändern. Wenn ein Test falsch ist, halt an und frag.“ Das klingt banal und verhindert genau den bequemsten Ausweg.
+</Callout>
+
+## Was die Spec schon verhindert hat und was nicht
+
+Ehrlich gesagt fängt der Ablauf nicht alles. Drei Beispiele aus den letzten Wochen:
+
+| Situation | Was passiert ist | Was wir daraus gelernt haben |
+| --- | --- | --- |
+| Löschen beim Senden per rsync | Die Messung vor der Umsetzung zeigte, dass das Abnahmekriterium so nicht haltbar war. | Ein Kriterium, das von einem fremden Werkzeug abhängt, wird zuerst ausprobiert, dann festgeschrieben. |
+| Chatverlauf von Claude im Projekt-Container | Alle Projekte nutzten denselben Arbeitsordner, `claude --continue` holte deshalb den Chat eines anderen Kunden. Das fiel nach der Umsetzung auf. | Ein Nachtrag zur Spec, ein eigener Test dafür, Verlauf jetzt pro Projekt getrennt. |
+| Umschalten des Tabellen-Präfixes auf einem Live-Server | Die Tests gegen den nachgebauten Server waren grün. Bei einem manuellen Test auf einem echten Hoster stimmte ein hinterlegter Wert nicht mit der Datenbank überein, die Testseite war kurz nicht erreichbar. | Vor jedem Eingriff auf Live prüft die App den tatsächlichen Zustand statt sich auf gespeicherte Werte zu verlassen. Und es bestätigt, warum wir vor jedem Release von Hand auf echten Hostern testen. |
+
+Das dritte Beispiel ist das unangenehmste und das lehrreichste. Tests prüfen das Modell, das man sich von der Welt gemacht hat. Wenn das Modell falsch ist, sind auch tausend grüne Tests falsch. Gefunden hat den Fehler kein automatischer Test, sondern ein Mensch, der die Funktion auf einem echten Server ausprobiert hat.
+
+## Die berechtigte Kritik an Spec-driven Development
+
+Birgitta Böckeler hat auf martinfowler.com [mehrere Werkzeuge für Spec-driven Development ausprobiert](https://www.martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html) und ist skeptisch. Die erzeugten Markdown-Dateien seien repetitiv und mühsam zu prüfen. Für kleine Fehler sei der Ablauf ein Vorschlaghammer, und die Agenten hielten sich trotzdem nicht an alle Vorgaben.
+
+Wir haben dieselben Erfahrungen gemacht. Drei Dinge helfen uns:
+
+- **Kurze Specs.** Eine Spec beschreibt eine Funktion, nicht ein Produkt. Wird sie länger als ein paar Seiten, wird sie geteilt.
+- **Ein Mensch entscheidet.** Der Agent darf Vorschläge machen und Fragen sammeln. Die Entscheide, etwa ob Uploads beim Angleichen gelöscht werden dürfen, trifft ein Mensch, und sie stehen in der Spec.
+- **Kleine Fehler brauchen keine Spec.** Ein Fehler bekommt ein Issue, einen roten Test und einen Fix. Die Spec ist für neue Funktionen da.
+
+Und ein Fehler, den wir selbst gemacht haben: Zwei Spec-Pull-Requests wurden gemergt, bevor alle Fragen geklärt waren. Die Nachträge kosteten mehr Zeit als das Warten. Seither öffnen wir eine Spec erst dann zur Freigabe, wenn sie fertig ist.
+
+## KI ersetzt keine Entwickler
+
+Nach einigen Monaten mit diesem Ablauf ist unsere wichtigste Erkenntnis eine unspektakuläre: Der Agent schreibt viel Code, aber er entscheidet nicht, was gebaut wird und wie es zusammenpasst.
+
+Eine saubere Architektur, ein korrektes Vorgehen und der Plan fürs grosse Ganze kommen nicht aus dem Werkzeug. Ebenso wenig die guten Ideen und die Fähigkeit, ein Problem so abstrakt zu fassen, dass daraus ein tragfähiges Konzept wird. Warum WPorbit kein Plugin auf Kundenseiten installiert, warum Zugangsdaten nie beim Server liegen, wie App und Server die Arbeit aufteilen: Das sind Entscheide, die wir vorher treffen und in den Specs festhalten. Der Agent setzt sie um, schnell und gründlich. Aber er setzt um, was wir vorgeben.
+
+Wer erwartet, dass KI diese Arbeit übernimmt, bekommt schneller Code und langsamer ein gutes Produkt.
+
+## Was eine Agentur davon übernehmen kann
+
+Nicht jedes Kundenprojekt braucht eine Spec mit Datenmodell. Aber die Grundidee passt fast überall, auch ohne KI, und sie hilft gegen etwas, das jede Agentur kennt: Zusatzwünsche, von denen niemand mehr weiss, ob sie im Angebot waren.
+
+Eine Seite pro Änderung genügt:
+
+- **Problem:** Was soll sich für wen ändern?
+- **Drin:** Was gehört dazu?
+- **Nicht drin:** Was ausdrücklich nicht, und warum?
+- **Risiken:** Zugänge, Daten, Live-Eingriffe.
+- **Abnahme:** Drei bis fünf Sätze im Stil „Wenn ich das Formular absende, kommt die Mail innert einer Minute an.“
+
+Diese Abnahmekriterien sind gleichzeitig die Testliste auf Staging, die Vorgabe für einen KI-Agenten und die Grundlage für die Abnahme mit der Kundin. Wer sie einmal geschrieben hat, merkt schnell, wie oft „das ist doch klar“ eben nicht klar war.
+
+## Der Anfang für nächste Woche
+
+Nimm die nächste Änderung, die du einem KI-Agenten geben würdest. Schreib vorher die fünf Abnahmekriterien auf, lass den Agenten zuerst nur die Tests dafür schreiben und schau sie dir an, bevor er weitermacht. Du wirst mindestens ein Kriterium finden, das du anders gemeint hattest.
+
+Wenn du mit Claude Code an WordPress-Themes arbeitest: Seit Version 1.15 läuft es in [WPorbit](/standalone) direkt im Container des Projekts, mit getrenntem Chatverlauf pro Kunde und ohne Zugriff auf Live-Server per `ssh`. Was dahintersteckt, steht im [Changelog](/changelog).

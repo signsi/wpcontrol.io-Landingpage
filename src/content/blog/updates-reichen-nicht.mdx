@@ -1,0 +1,122 @@
+---
+title: "5 Stunden: Warum „regelmässig updaten“ nicht mehr reicht"
+seoTitle: "WordPress-Lücken: Updates allein reichen nicht"
+description: "Fast jede zweite WordPress-Lücke hat bei der Veröffentlichung keinen Fix, angegriffen wird nach Stunden. Wie Agenturen schnell und gezielt reagieren."
+date: 2026-10-08
+category: wartung
+tags: [updates, sicherheit, plugins]
+author: patrick
+draft: false
+---
+
+<KeyTakeaways>
+
+- 2025 wurden laut Patchstack 11 334 neue Lücken im WordPress-Umfeld gemeldet, 42 % mehr als im Vorjahr. 91 % davon in Plugins.
+- 46 % hatten bei der Veröffentlichung keinen Fix. Ein Update-Tag hilft dort nicht, weil es nichts zu updaten gibt.
+- Bei den meistangegriffenen Lücken vergehen im Median 5 Stunden bis zum ersten Angriff. Ein monatlicher Zyklus kommt fast immer zu spät.
+- Der Schutz des Hosters fängt in einem Test nur rund ein Viertel der Angriffe ab.
+- Was hilft, ist ein Raster: Welche Lücke braucht sofort eine Reaktion, welche hat Zeit bis zum nächsten Zyklus, und was tust du, wenn es keinen Fix gibt.
+- Lieber auf eine Funktion verzichten als eine gehackte Website. Wir prüfen deshalb, ob WPorbit betroffene Plugins automatisch abschalten soll, wenn niemand reagiert.
+
+</KeyTakeaways>
+
+Freitag, 17 Uhr: Eine Lücke in einem verbreiteten Formular-Plugin wird veröffentlicht. Schwere hoch, ausnutzbar ohne Login. Dein Update-Tag ist der erste Montag im Monat, also in zehn Tagen. Am Samstagmorgen laufen die ersten automatisierten Angriffe.
+
+Das ist kein konstruiertes Szenario. Es ist das, was die aktuellen Zahlen beschreiben. Der monatliche Update-Tag war lange ein vernünftiger Kompromiss. Für einen Teil der Lücken ist er es nicht mehr.
+
+## Die Zahlen hinter dem Problem
+
+Patchstack, ein Anbieter von Sicherheitslösungen für WordPress, wertet jedes Jahr die gemeldeten Lücken aus. Der [Bericht für 2025](https://patchstack.com/whitepaper/state-of-wordpress-security-in-2026/) zeigt vor allem, wie sich das Tempo verschoben hat.
+
+| Kennzahl 2025 | Wert |
+| --- | --- |
+| Neue Lücken im WordPress-Umfeld | 11 334 (+42 % gegenüber 2024) |
+| Davon in Plugins / Themes / Core | 91 % / 9 % / 6 Meldungen |
+| Ohne Fix bei Veröffentlichung | 46 % |
+| Zeit bis zum ersten Angriff (gewichteter Median, meistangegriffene Lücken) | 5 Stunden |
+| Schwere Lücken, die innert 24 Stunden angegriffen werden | etwa die Hälfte |
+| Bekannte ausgenutzte Lücken: Premium- vs. kostenlose Komponenten | dreimal so viele |
+
+Zwei Zahlen davon verdienen einen zweiten Blick.
+
+**46 % ohne Fix.** Fast jede zweite Lücke wird öffentlich, bevor der Hersteller eine korrigierte Version anbietet. Wer Sicherheit mit „wir halten alles aktuell“ gleichsetzt, ist bei diesen Lücken machtlos. Es gibt nichts, was man aktualisieren könnte.
+
+**Premium-Plugins.** Kostenpflichtige Plugins gelten oft als sicherer, weil jemand dafür bezahlt wird. Die Daten zeigen das Gegenteil. Dazu kommt ein praktisches Problem: Premium-Plugins aktualisieren sich nur mit gültiger Lizenz, und die läuft in Kundenprojekten gern still ab.
+
+## Der Hoster ist kein Sicherheitsnetz
+
+Viele Agenturen verlassen sich darauf, dass der Hoster das Gröbste abfängt. Patchstack hat das [im Januar 2026 getestet](https://patchstack.com/articles/myth-of-secure-hosting-only-26-percent-of-vulnerability-exploits-blocked-by-hosts/): 30 bekannte, ausgenutzte Lücken auf einer frischen WordPress-Installation, bei 18 Hostern, mit einfachen, öffentlich verfügbaren Angriffen. Im Schnitt wurden 26 % der Angriffe blockiert. Bei Angriffen, mit denen sich jemand zum Administrator macht, waren es 12 %.
+
+Man kann über die Methode streiten, und Patchstack verkauft selbst Schutz auf Anwendungsebene. Die Richtung ist trotzdem klar: Eine Firewall beim Hoster ist eine zusätzliche Schicht, aber kein Grund, auf das eigene Vorgehen zu verzichten.
+
+## Ein Raster statt eines Kalenders
+
+Die Lösung ist nicht, jeden Tag alles zu aktualisieren. Das wäre teuer und widerspricht allem, was ein sorgfältiger Ablauf mit [Staging](/blog/staging-statt-live) leisten soll. Die Lösung ist, Lücken unterschiedlich zu behandeln.
+
+| Lage | Reaktion | Frist |
+| --- | --- | --- |
+| Schwere hoch oder kritisch, ohne Login ausnutzbar, Fix vorhanden | Update direkt einspielen, mit Sicherung vorher und Prüfung der wichtigsten Wege danach | am selben Tag |
+| Schwere hoch oder kritisch, **kein Fix** | Plugin deaktivieren und löschen oder ersetzen. Wenn das nicht geht: betroffene Funktion abschalten, Zugriff einschränken, Kundin informieren | am selben Tag |
+| Schwere mittel, Fix vorhanden | Ins nächste Update über Staging aufnehmen | nächster Zyklus, höchstens eine Woche |
+| Schwere niedrig oder nur mit Admin-Login ausnutzbar | Normaler Zyklus | nächster Zyklus |
+| Plugin ist inaktiv | Löschen. Inaktive Plugins liegen trotzdem auf dem Server und lassen sich je nach Lücke direkt aufrufen. | beim nächsten Kontakt mit dem Projekt |
+
+Die erste Zeile widerspricht scheinbar dem Grundsatz „nie direkt auf Live“. Es ist eine Abwägung zwischen zwei Risiken: ein Update, das vielleicht etwas kaputt macht, oder eine Lücke, die mit grosser Wahrscheinlichkeit in den nächsten Stunden angegriffen wird. Bei einer kritischen Lücke ist das zweite Risiko grösser. Die Sicherung vorher und die kurze Prüfliste danach bleiben trotzdem Pflicht.
+
+<Callout variant="achtung" title="Wer reagiert am Wochenende?">
+Ein Raster nützt nichts, wenn die Meldung am Freitagabend in einem Postfach landet, das erst am Montag jemand öffnet. Lege fest, wer bei einer kritischen Lücke ausserhalb der Bürozeiten entscheidet, und schreib es in den Wartungsvertrag. Wenn deine Agentur das nicht leisten kann, ist das in Ordnung, aber dann muss die Kundin es wissen.
+</Callout>
+
+## Wenn es keinen Fix gibt
+
+Für fast die Hälfte der Fälle bleibt nur der zweite Weg. In der Praxis heisst das, in dieser Reihenfolge:
+
+<Steps>
+
+<Step title="Brauchen wir das Plugin wirklich?">
+
+Erstaunlich oft lautet die Antwort nein. Das Plugin war für eine Aktion von vor drei Jahren, oder seine Funktion steckt inzwischen im Theme oder im Core. Dann ist Löschen die schnellste und sicherste Lösung.
+
+</Step>
+
+<Step title="Lässt sich die betroffene Funktion abschalten?">
+
+Viele Lücken betreffen einen bestimmten Teil eines Plugins, etwa einen Import, eine Schnittstelle oder einen Shortcode. Die Meldung beschreibt meist, welcher Teil es ist. Ist er abschaltbar, gewinnst du Zeit, bis der Fix kommt.
+
+</Step>
+
+<Step title="Ersatz planen">
+
+Ist ein Plugin zum zweiten Mal ohne Fix aufgefallen, oder hat es seit Jahren kein Update bekommen, gehört es auf die Liste für einen Ersatz. Das ist eine Entscheidung, die man in Ruhe treffen sollte, nicht am Samstagmorgen.
+
+</Step>
+
+</Steps>
+
+## Ohne Übersicht kein Tempo
+
+Das Raster setzt etwas voraus, das in vielen Agenturen fehlt: die Antwort auf die Frage „Auf welchen unserer Sites läuft dieses Plugin, in welcher Version?“ Wer dafür dreissig Dashboards öffnen muss, braucht eine halbe Stunde und übersieht eine Site. Damit sind die fünf Stunden schnell aufgebraucht.
+
+Die Übersicht ist deshalb nicht nur bequem, sie ist die Voraussetzung, um überhaupt in Stunden statt in Tagen zu reagieren.
+
+## Was wir gerade prüfen: abschalten, wenn niemand reagiert
+
+Selbst mit Raster und Übersicht bleibt eine unbequeme Lücke: die Stunden, in denen eine kritische Meldung da ist, aber noch niemand reagiert hat. Nachts, am Wochenende, in den Ferien.
+
+Wir prüfen deshalb gerade, ob WPorbit in diesem Fall selbst eingreifen soll. Konkret: Wenn eine kritische, ausnutzbare Lücke ohne Fix bekannt ist und innert einer festgelegten Frist niemand im Team reagiert, wird das betroffene Plugin automatisch deaktiviert, oder, wo das sauber möglich ist, nur der betroffene Teil davon.
+
+Die Haltung dahinter ist einfach: Lieber vorübergehend auf eine Funktion verzichten als eine gehackte Website. Ein abgeschaltetes Formular kostet einen Tag Anfragen. Eine übernommene Site kostet Bereinigung, Meldepflichten, Vertrauen und oft mehr als das.
+
+Ganz so einfach ist es trotzdem nicht, und deshalb ist es noch eine Prüfung und keine Funktion:
+
+- **Schreibender Zugriff.** Heute liest WPorbit auf Kundenservern nur. Wer automatisch abschalten will, braucht einen Weg, etwas zu verändern. Dieser Weg muss so eng sein, dass er nichts anderes kann als genau das.
+- **Nebenwirkungen.** Manche Plugins tragen eine ganze Site. Ist ein Shop-Plugin aus, ist der Shop zu. Die Frage, was abgeschaltet werden darf, gehört deshalb vorher geklärt, pro Projekt und mit der Kundin.
+- **Der Weg zurück.** Jede automatische Abschaltung muss nachvollziehbar sein und sich mit einem Klick rückgängig machen lassen, sobald der Fix da ist.
+
+Wie bei jeder Funktion schreiben wir zuerst eine Spec und entscheiden erst danach, ob und wie wir sie bauen. Bis dahin gilt: Aktualisiert und abgeschaltet wird von dir.
+
+## Der Anfang für nächste Woche
+
+Mach eine Liste aller Plugins über alle Kundenprojekte, mit Version und Status. Lösch als Erstes die inaktiven: Das ist die günstigste Sicherheitsmassnahme, die es gibt. Dann leg fest, wer im Team eine kritische Meldung bekommt und innert welcher Frist entschieden wird, auch am Wochenende.
+
+[WPorbit Cloud](/cloud) zeigt in der Flotten-Ansicht alle Plugins und Themes über alle überwachten Sites, mit Version, Status und Hinweis, wenn ein Plugin verwaist ist. Im bezahlten Plan gleicht der Server das Inventar mit der Wordfence-Datenbank bekannter Lücken ab, sobald dort ein neuer Eintrag eingeht, und meldet Lücken ab Schwere hoch sofort an Slack oder die Team-Adresse. Wie die Lücken im Dashboard dargestellt werden, steht unter [Sicherheits-Tab verstehen](/anleitungen/wartung/sicherheits-tab-verstehen).
