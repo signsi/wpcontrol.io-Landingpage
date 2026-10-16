@@ -36,9 +36,9 @@ export const allFeatures: ShowcaseFeature[] = [
     ),
   },
   {
-    title: 'Staging und Preview-Links',
-    text: 'Teste Änderungen vor dem Live-Gang in einer isolierten Staging-Umgebung.',
-    detail: 'Teste Änderungen vor dem Live-Gang in einer isolierten Staging-Umgebung. Teile Vorschau-Links direkt mit Kunden, ohne etwas zu veröffentlichen. Jede Staging-Umgebung ist unabhängig von der Produktion und kann jederzeit zurückgesetzt werden.',
+    title: 'Staging vor dem Live-Gang',
+    text: 'Teste Änderungen lokal oder auf einem eigenen Staging-Server, bevor sie live gehen.',
+    detail: 'Jedes Projekt läuft lokal in eigenen Containern, getrennt von der Produktion. Zusätzlich hinterlegst du pro Projekt mehrere Server, etwa Staging und Live, und sendest Änderungen zuerst auf Staging. Erst wenn dort alles stimmt, geht es live.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface">
         <div className="flex items-center gap-1.5 px-4 py-3 border-b border-line">
@@ -46,7 +46,7 @@ export const allFeatures: ShowcaseFeature[] = [
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <span className="w-2.5 h-2.5 rounded-full bg-raised" />
           <div className="ml-3 flex-1 bg-raised rounded-full px-3 py-1 text-[0.68rem] text-tertiary font-mono">
-            preview.wporbit.ch/redesign-2024
+            staging.kunde-beispiel.ch
           </div>
         </div>
         <div className="flex-1 p-4 flex flex-col gap-3 relative">
@@ -57,7 +57,7 @@ export const allFeatures: ShowcaseFeature[] = [
             <div className="h-2.5 bg-raised rounded w-2/3" />
           </div>
           <div className="absolute bottom-5 right-5 rounded-full bg-accent px-3 py-1.5 text-[0.72rem] font-bold text-on-accent shadow-action">
-            🔗 Link kopiert
+            ✓ Auf Staging gesendet
           </div>
         </div>
       </div>
@@ -127,8 +127,8 @@ export const allFeatures: ShowcaseFeature[] = [
   },
   {
     title: 'Monitoring und automatische Alerts',
-    text: 'Uptime, Security-Scans und Performance-Checks laufen automatisiert für alle Sites.',
-    detail: 'Uptime, Security-Scans und Performance-Checks laufen automatisiert für alle deine Sites. Probleme werden gemeldet, bevor Kunden sie bemerken. Alerts erreichen dich per Mail, Slack oder Webhook.',
+    text: 'Erreichbarkeit, bekannte Sicherheitslücken und Performance werden für alle überwachten Sites geprüft.',
+    detail: 'Mit Cloud prüft WPorbit Erreichbarkeit, SSL, bekannte Sicherheitslücken und Performance für alle überwachten Sites, ohne Plugin auf der Kundenseite. Probleme werden gemeldet, bevor Kunden sie bemerken. Alarme erreichen dein Team per Mail oder Slack.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-4">
         <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary">Site-Status</p>
@@ -157,9 +157,9 @@ export const allFeatures: ShowcaseFeature[] = [
     ),
   },
   {
-    title: 'Updates mit Staging und Rollback',
-    text: 'Core-, Plugin- und Theme-Updates werden zuerst gegen Staging getestet.',
-    detail: 'Core-, Plugin- und Theme-Updates werden zuerst gegen Staging getestet. Bei Freigabe rollst du sie auf alle Sites aus. Rollback jederzeit möglich. Updates können gebündelt oder einzeln ausgerollt werden.',
+    title: 'Updates über Staging',
+    text: 'Core-, Plugin- und Theme-Updates zuerst testen, dann mit Sicherung live bringen.',
+    detail: 'Du siehst, welche Core-, Plugin- und Theme-Updates auf welchen Sites anstehen. Getestet wird lokal oder auf Staging, live geht es mit einer Sicherung vorher. Updates aus der Ferne über alle Sites sind für Cloud geplant.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-3">
         <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary">Ausstehende Updates</p>
@@ -219,8 +219,8 @@ export const allFeatures: ShowcaseFeature[] = [
   },
   {
     title: 'KI-Unterstützung im Workflow',
-    text: 'Claude, ChatGPT und Copilot lassen sich schon heute direkt über VS Code im Workflow nutzen.',
-    detail: 'Nutze deine bestehenden KI-Tools direkt im Workflow: Claude, ChatGPT und Copilot lassen sich schon heute über die VS-Code-Integration einsetzen. So kannst du veraltete Plugins finden, Sicherheitsscans starten oder Deployments vorbereiten, ohne den Kontext zu wechseln. Eine native UI-Integration ist in Entwicklung.',
+    text: 'Claude Code arbeitet direkt im Container des Projekts, dazu deine KI-Tools in VS Code.',
+    detail: 'Claude Code läuft direkt im Container jedes Projekts: mit Zugriff auf die lokale Site, WP-CLI und geprüften WordPress-Skills, mit getrenntem Chatverlauf pro Kunde und ohne Verbindung zu Live-Servern per ssh. Andere Werkzeuge wie Copilot nutzt du wie gewohnt über VS Code im Dev Container.',
     visual: (
       <div className="flex flex-col flex-1 bg-surface p-5 gap-3">
         <p className="text-[0.68rem] font-semibold uppercase tracking-widest text-tertiary">WPorbit Assistent</p>
@@ -244,7 +244,7 @@ export const allFeatures: ShowcaseFeature[] = [
             </div>
           ))}
           <div className="mt-1 bg-accent/15 text-accent text-[0.73rem] font-bold px-3 py-2 rounded-lg cursor-default">
-            Alle jetzt updaten →
+            Lokal testen →
           </div>
         </div>
       </div>
@@ -258,16 +258,15 @@ export const showcaseFeatures = [allFeatures[0], allFeatures[3], allFeatures[6]]
 
 export const tickerItems = [
   'Lokale Entwicklung',
-  'Staging und Preview',
+  'Staging vor Live',
   'Selektive Synchronisierung',
   'Deploy via GitLab',
   'Monitoring und Alerts',
-  'Updates mit Rollback',
+  'Updates über Staging',
   'Team-Vault und Zugänge',
   'Kunden- und Projektverwaltung',
   'Hoster-unabhängig',
   'Rollback auf Knopfdruck',
   'SSH, WP Admin, DB verschlüsselt',
-  'Preview-Links für Kunden',
   'KI-Unterstützung im Workflow',
 ]
