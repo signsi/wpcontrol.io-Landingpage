@@ -29,7 +29,7 @@ const demoFaq = [
   },
   {
     q: `Was passiert nach den ${TRIAL_DAYS} Tagen?`,
-    a: 'Der Test endet automatisch. Es entstehen keine Kosten und du musst nichts kündigen.',
+    a: 'Der Test endet automatisch. Es entstehen keine Kosten und du musst nichts kündigen. WPorbit bleibt dann gesperrt, bis eine Lizenz aktiv ist, deine Projekte auf dem Mac bleiben erhalten. Für eine Lizenz schreibst du uns über Kontakt oder an hallo@wporbit.ch.',
   },
   {
     q: 'Kann ich ein echtes Kundenprojekt testen?',
@@ -59,7 +59,7 @@ export default function TestenPage() {
         bordered={false}
       />
 
-      <EarlyAccess />
+      <EarlyAccess heading="Deine E-Mail-Adresse genügt" />
 
       <section className="border-t border-line px-6 py-20">
         <div className="reveal-up mb-10 max-w-[46rem]">
