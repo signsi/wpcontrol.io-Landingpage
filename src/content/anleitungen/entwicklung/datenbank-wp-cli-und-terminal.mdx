@@ -2,7 +2,7 @@
 title: "Datenbank, WP-CLI und Terminal"
 description: "Die lokale Datenbank in phpMyAdmin öffnen, WP-CLI-Befehle im Projekt ausführen und ein Terminal im Container oder per SSH auf dem Server öffnen."
 order: 20
-updated: 2026-09-24
+updated: 2026-10-20
 type: anleitung
 audience: fortgeschritten
 duration: "5 Minuten"
@@ -22,17 +22,28 @@ Für die Arbeit direkt an Datenbank und Dateien bringt WPorbit vier Werkzeuge mi
 |---|---|---|
 | **Terminal** | Shell im WordPress-Container als `www-data` | Projekt läuft |
 | **Terminal (root)** | Shell im WordPress-Container als `root` | Projekt läuft |
-| **Datenbank öffnen** | phpMyAdmin im Browser, bereits angemeldet | Projekt läuft |
+| **Datenbank öffnen** | phpMyAdmin im Browser, Passwort in der Zwischenablage | Projekt läuft |
 | **WP-CLI…** | Fenster für einzelne WP-CLI-Befehle | Projekt läuft |
 | **SSH-Terminal** | SSH-Sitzung auf dem Server | Server hinterlegt |
 
 ## Datenbank öffnen
 
-Klicke auf **Öffnen in…** → **Datenbank öffnen**. WPorbit startet phpMyAdmin im Netzwerk des Projekts und öffnet es im Browser. Du bist direkt angemeldet, ein Login-Formular gibt es nicht.
+Klicke auf **Öffnen in…** → **Datenbank öffnen**. WPorbit startet phpMyAdmin im Netzwerk des Projekts und öffnet es im Browser. phpMyAdmin zeigt ein Anmeldeformular:
+
+1. Den Benutzer nennt WPorbit in der Statuszeile. Trage ihn unter „Benutzername“ ein.
+2. Das Passwort liegt bereits in der Zwischenablage. Füge es mit ⌘V unter „Passwort“ ein und klicke auf **Anmelden**.
+
+Die Zwischenablage wird nach 90 Sekunden wieder geleert, ausser du hast inzwischen etwas anderes kopiert. Brauchst du länger, klicke einfach noch einmal auf **Datenbank öffnen**. Benutzer und Passwort stehen auch in den Projekteinstellungen unter „Zugangsdaten“.
+
+<Callout variant="hinweis" title="Warum ein Formular?">
+Bis Version 1.15 war phpMyAdmin ohne Anmeldung offen. Damit konnte auch ein fremdes Plugin aus einem anderen Projekt die Datenbank lesen. Mit dem Formular kommt nur hinein, wer das Passwort des Projekts kennt.
+</Callout>
 
 Beim ersten Mal lädt WPorbit den Datenbank-Betrachter herunter, rund 800 MB. Das passiert nur einmal pro Mac, und WPorbit sagt es vorher in der Statuszeile. Danach öffnet er sich in wenigen Sekunden.
 
-Der Betrachter läuft nur, wenn du ihn öffnest. Beim Löschen des Projekts wird er mit entfernt.
+Der Betrachter läuft nur, wenn du ihn öffnest, und hält mit dem Projekt an. Beim Löschen des Projekts wird er mit entfernt.
+
+Bei Projekten, die mit einer älteren Version von WPorbit angelegt wurden, fragt WPorbit stattdessen nach **Umgebung aktualisieren…**. Das stellt das Projekt auf die von WPorbit verwaltete Umgebung um. Datenbank und Dateien bleiben erhalten.
 
 ![phpMyAdmin nach „Datenbank öffnen“: links die Projektdatenbank „wordpress“ mit ihren Tabellen](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal/02-phpmyadmin.webp)
 
@@ -84,7 +95,7 @@ Im SSH-Terminal bist du auf dem Server der Live-Seite. Befehle wirken sofort und
 <KeyTakeaways>
 
 - Alle Werkzeuge liegen im Menü **Öffnen in…** in der Tab-Leiste.
-- **Datenbank öffnen** startet phpMyAdmin, bereits angemeldet. Der erste Start lädt rund 800 MB.
+- **Datenbank öffnen** startet phpMyAdmin. Du meldest dich mit dem Benutzer aus der Statuszeile und dem Passwort aus der Zwischenablage an. Der erste Start lädt rund 800 MB.
 - **WP-CLI…** führt einzelne Befehle im lokalen Container aus.
 - **Terminal** arbeitet als `www-data`, **Terminal (root)** als `root`, **SSH-Terminal** auf dem Server.
 

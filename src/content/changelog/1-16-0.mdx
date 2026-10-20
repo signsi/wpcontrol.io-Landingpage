@@ -1,0 +1,53 @@
+---
+version: "1.16.0"
+date: 2026-10-20
+title: "Sicherheits-Release: Zugangsdaten, Container und lokale Umgebung"
+type: release
+highlights:
+  - "Keine Zugangsdaten mehr im Klartext: Vault und Schlüsselbund statt Dateien"
+  - "Container bekommen den SSH-Agent statt deiner Schlüsseldateien"
+  - "phpMyAdmin, Caddy und dnsmasq abgesichert, WP-CLI läuft als www-data"
+draft: true
+---
+
+Dieses Release setzt die Ergebnisse eines umfassenden Sicherheits-Audits um. Für dich ändert sich wenig, aber ein paar Schritte nach dem Update sind nötig. Sie stehen ganz unten.
+
+## Zugangsdaten
+
+- **Keine Zugangsdaten mehr im Klartext.** Datenbank-Zugänge und `.env`-Dateien in den Projekten wandern beim ersten Start in Vault und den Schlüsselbund, die Dateien werden danach gelöscht. Weicht ein Wert ab, zeigt WPorbit einen Hinweis beim Projekt, statt etwas zu löschen.
+- **Das Vault-Token liegt nur noch im Schlüsselbund.** Eine Kopie in den Einstellungen und Token-Zeilen im Vault-Protokoll werden aufgeräumt.
+- **„Importieren“ prüft die Werte**, bevor sie übernommen werden. Eine `.env` im Projektordner liefert nur noch Datenbank-Werte.
+- **Komplett löschen leert auch Vault.** Ein neues Projekt mit gleichem Namen erbt nichts vom alten.
+
+## Container und SSH
+
+- **SSH-Agent statt Schlüsseldateien.** Container sehen deinen Ordner `~/.ssh` nicht mehr, sondern nutzen den SSH-Agent des Macs. Beim ersten Start sagt WPorbit das einmal. Pro Projekt lässt es sich abschalten.
+- **WP-CLI läuft als `www-data`** statt als `root`, mit denselben Rechten wie WordPress.
+- **Claude Code hat pro Projekt ein eigenes Arbeitsverzeichnis.** Gemeinsam bleibt nur die Anmeldung.
+- **Deploy-Schlüssel liegen nie mehr im Theme oder im Web-Verzeichnis.** Findet WPorbit einen alten Schlüssel dort, meldet es das beim nächsten Senden.
+
+## Datenbank-Ansicht
+
+**Datenbank öffnen** zeigt jetzt ein Anmeldeformular. Den Benutzer nennt WPorbit in der Statuszeile, das Passwort liegt 90 Sekunden in der Zwischenablage. Vorher war phpMyAdmin ohne Anmeldung offen, auch für andere Projekte auf dem Mac. Die Ansicht hält jetzt mit dem Projekt an. Mehr dazu in [Datenbank, WP-CLI und Terminal](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal).
+
+## Lokale Umgebung
+
+- **Caddy und dnsmasq abgesichert.** Programme und Konfiguration kann nur noch root ändern. Lokale Domains antworten jetzt auch über IPv6 (`::1`).
+- **Ältere Projekte:** Projekte aus früheren Versionen starten nur noch aus der von WPorbit verwalteten Umgebung. **Umgebung aktualisieren…** stellt sie um, Datenbank und Dateien bleiben erhalten.
+- **Die Vorschau überlässt die Zertifikatsprüfung dem System.**
+
+## Senden, Holen und Team
+
+- **Schutz vor dem falschen Server:** Die getippte Adresse vor einem Push auf Live gilt nur noch für genau die geprüfte Verbindung (Adresse, Server, Port, Benutzer, Web-Root).
+- **Ein Anmelde-Link öffnet sich ohne Rückfrage nur noch, wenn WPorbit ihn selbst angefordert hat.**
+- **Team-Schlüssel sind signiert** und werden nur übernommen, wenn sie nachweislich vom Team stammen, auf allen Geräten.
+- **Pipeline einrichten** legt `SSH_KEY` als „File, Protected“ an statt „Masked“, passend zur [Anleitung](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
+- Senden, Holen und Löschen prüfen Ordnernamen und Pfade strenger, folgen keinen ausgetauschten Links und nehmen nur noch Container und Volumes des eigenen Projekts.
+
+## Nach dem Update
+
+1. **Colima einmal neu starten**, damit die Container den SSH-Agent bekommen. Schlüssel mit Passphrase einmal im Terminal mit `ssh-add` laden.
+2. **Einstellungen → Infrastruktur:** Erscheint „Lokale Umgebung unsicher eingerichtet“, klicke auf **Jetzt korrigieren**. Das richtet Caddy und dnsmasq neu ein, Projekte und Zertifikat bleiben.
+3. **Deploy-Schlüssel ersetzen**, wenn du GitLab-Pipelines nutzt: Meldet das nächste Senden einen alten Schlüssel im Theme, führe **Pipeline einrichten…** erneut aus und ersetze `SSH_KEY` in GitLab.
+4. **Claude Code:** Beim ersten Öffnen in jedem Projekt richtet WPorbit das Arbeitsverzeichnis neu ein. Die Anmeldung bleibt.
+5. **Erster Push auf Live:** WPorbit fragt einmal die getippte Adresse, bis die stündliche Prüfung neu gelaufen ist.
