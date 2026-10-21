@@ -39,7 +39,7 @@ export const plans: Plan[] = [
     features: ['Voller Funktionsumfang', 'Direkter Download', 'Keine Kreditkarte'],
     highlighted: false,
     href: '/testen',
-    cta: 'Kostenlos testen',
+    cta: '10 Tage gratis testen',
   },
   {
     id: 'standalone',
@@ -103,6 +103,15 @@ export const pricingFaq = [
     a: `Nein. Die Demo läuft ${TRIAL_DAYS} Tage mit vollem Funktionsumfang. Es braucht nur eine E-Mail-Adresse, keine Kreditkarte, und sie endet automatisch.`,
   },
   {
+    q: `Was passiert nach den ${TRIAL_DAYS} Tagen?`,
+    a: 'Der Test endet automatisch, es entstehen keine Kosten. WPorbit zeigt dann „Testzeitraum abgelaufen“ und bleibt gesperrt, bis eine Lizenz aktiv ist. Deine Projekte und Dateien auf dem Mac löscht WPorbit nicht.',
+  },
+  {
+    q: 'Wie kaufe ich eine Lizenz?',
+    // TODO Patrick: Zahlungsweg festhalten (Rechnung, Karte, jährlich?) und hier nennen.
+    a: 'Schreib uns über das Kontaktformular oder an hallo@wporbit.ch. Wir schalten deine Lizenz frei, und du arbeitest mit demselben Konto und denselben Projekten weiter.',
+  },
+  {
     q: 'Wird pro Person oder pro Projekt abgerechnet?',
     a: `Standalone wird pro Person abgerechnet und deckt bis zu ${STANDALONE_PROJECT_LIMIT} Projekte ab. Cloud wird pro Team abgerechnet und enthält ${CLOUD_INCLUDED_SEATS} Personen; weitere Personen lassen sich dazubuchen.`,
   },
@@ -119,3 +128,74 @@ export const pricingFaq = [
     a: 'Das hängt vom System und vom Umfang ab. Massgeschneiderte Erweiterungen offerieren wir nach einem gemeinsamen Gespräch.',
   },
 ]
+
+/** Planvergleich auf /preise. `planned` heisst: geplant, noch nicht verfügbar. */
+export type PlanCell = 'yes' | 'no' | 'planned' | { text: string }
+
+export interface PlanMatrixRow {
+  label: string
+  standalone: PlanCell
+  cloud: PlanCell
+  custom: PlanCell
+}
+
+export interface PlanMatrixGroup {
+  heading: string
+  rows: PlanMatrixRow[]
+}
+
+const appRows: PlanMatrixRow[] = [
+  'Lokale WordPress-Umgebung in Containern',
+  'Bestehende Websites per SSH übernehmen',
+  'Holen, Senden und Deployen',
+  'Zugänge verschlüsselt im Tresor',
+  'Claude Code im Projekt-Container',
+].map((label) => ({ label, standalone: 'yes', cloud: 'yes', custom: 'yes' }))
+
+export function planMatrix(
+  cloudToday: { title: string }[],
+  cloudPlanned: { title: string }[],
+): PlanMatrixGroup[] {
+  return [
+    {
+      heading: 'Abrechnung',
+      rows: [
+        {
+          label: 'Preis',
+          standalone: { text: `ab ${STANDALONE_PRICE_CHF} CHF pro Person und Monat` },
+          cloud: { text: `ab ${CLOUD_PRICE_CHF} CHF pro Monat, ${CLOUD_INCLUDED_SEATS} Personen inklusive` },
+          custom: { text: 'Nach Offerte' },
+        },
+        // TODO Patrick: Was gilt ab dem 11. Projekt in Standalone, und wie viele Projekte umfasst Cloud?
+        {
+          label: 'Projekte',
+          standalone: { text: `Bis ${STANDALONE_PROJECT_LIMIT}` },
+          cloud: { text: 'Für das ganze Team' },
+          custom: { text: 'Nach Absprache' },
+        },
+      ],
+    },
+    { heading: 'App auf deinem Mac', rows: appRows },
+    {
+      heading: 'Im Team',
+      rows: [
+        { label: 'Projekte und Zugänge im Team teilen', standalone: 'no', cloud: 'yes', custom: 'yes' },
+        { label: 'Team-Dashboard für alle Kundenseiten', standalone: 'no', cloud: 'yes', custom: 'yes' },
+      ],
+    },
+    {
+      heading: 'Überwachung ohne Plugin',
+      rows: cloudToday.map((f) => ({ label: f.title, standalone: 'no', cloud: 'yes', custom: 'yes' })),
+    },
+    {
+      heading: 'Geplant für Cloud',
+      rows: cloudPlanned.map((f) => ({ label: f.title, standalone: 'no', cloud: 'planned', custom: 'planned' })),
+    },
+    {
+      heading: 'Massgeschneidert',
+      rows: customPlan.features
+        .filter((f) => f !== 'Alles aus Cloud' && f !== 'Persönlicher Support')
+        .map((label) => ({ label, standalone: 'no', cloud: 'no', custom: 'yes' })),
+    },
+  ]
+}

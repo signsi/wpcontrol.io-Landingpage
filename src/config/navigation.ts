@@ -33,7 +33,7 @@ export interface NavGroup {
 export const primaryNav: NavGroup[] = [
   {
     label: 'Produkt',
-    matches: ['/produkt', '/standalone', '/cloud', '/massgeschneidert', '/vergleich'],
+    matches: ['/produkt', '/standalone', '/cloud', '/massgeschneidert', '/vergleich', '/fuer-freelancer', '/fuer-agenturen'],
     columns: [
       {
         heading: 'Plattform',
@@ -41,6 +41,8 @@ export const primaryNav: NavGroup[] = [
           { label: 'Überblick', to: '/produkt', description: 'Was WPorbit über den ganzen Projektverlauf abdeckt' },
           { label: 'Funktionen', to: '/produkt/funktionen', description: 'Alle Funktionen im Detail' },
           { label: 'Vergleich', to: '/vergleich', description: 'WPorbit, Local WP und WordPress Studio' },
+          { label: 'Für Freelancer', to: '/fuer-freelancer', description: 'Allein für viele Kundenseiten zuständig' },
+          { label: 'Für Agenturen', to: '/fuer-agenturen', description: 'Mehrere Leute, ein Stand' },
         ],
       },
       {
@@ -77,7 +79,8 @@ export const primaryNav: NavGroup[] = [
 
 /** Sekundäres Ziel für Bestandskunden, primäres für Interessenten. */
 export const secondaryCta = { label: 'Anleitungen', to: '/anleitungen' }
-export const primaryCta = { label: 'Gratis testen', to: '/testen' }
+/** `short` für die schmale Topbar zwischen md und xl. */
+export const primaryCta = { label: '10 Tage gratis testen', short: 'Gratis testen', to: '/testen' }
 
 export interface FooterColumn {
   heading: string
@@ -93,6 +96,8 @@ export const footerNav: FooterColumn[] = [
       { label: 'Standalone', to: '/standalone' },
       { label: 'Cloud', to: '/cloud' },
       { label: 'Massgeschneidert', to: '/massgeschneidert' },
+      { label: 'Für Freelancer', to: '/fuer-freelancer' },
+      { label: 'Für Agenturen', to: '/fuer-agenturen' },
       { label: 'Vergleich', to: '/vergleich' },
       { label: 'Preise', to: '/preise' },
     ],
@@ -113,7 +118,7 @@ export const footerNav: FooterColumn[] = [
       { label: 'Über uns', to: '/ueber-uns' },
       { label: 'Kontakt', to: '/kontakt' },
       { label: 'Support', to: '/support' },
-      { label: 'Gratis testen', to: '/testen' },
+      { label: '10 Tage gratis testen', to: '/testen' },
     ],
   },
   {

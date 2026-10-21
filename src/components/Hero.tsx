@@ -13,7 +13,7 @@ export default function Hero() {
           onClick={() => track('cta_click', { location: 'home_hero_cloud', target: '/cloud' })}
           className="hero-kicker group mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 text-left text-[0.84rem] text-secondary shadow-card transition-colors duration-200 hover:border-accent/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
-          <span className="shrink-0 rounded-full bg-accent px-2.5 py-0.5 text-[0.72rem] font-semibold text-on-accent">Neu</span>
+          <span className="shrink-0 rounded-full bg-accent px-2.5 py-0.5 text-[0.72rem] font-semibold text-on-accent">In Entwicklung</span>
           <span className="truncate">
             <strong className="font-semibold text-primary">WPorbit Cloud:</strong> alle Kundenseiten im Blick, ohne Plugin
           </span>
@@ -24,7 +24,7 @@ export default function Hero() {
           <span className="block font-bold text-primary">weniger Chaos, mehr Projekte.</span>
         </h1>
         <p className="hero-body mt-7 max-w-[38rem] text-[1.08rem] leading-[1.65] text-secondary sm:text-[1.2rem]">
-          Lokal entwickeln, sicher veröffentlichen, Zugänge im Team teilen und jede Kundenseite im Blick behalten. In einer Mac-App, unabhängig vom Hosting, entwickelt in der Schweiz.
+          Für Freelancer und Agenturen: lokal entwickeln, sicher veröffentlichen, Zugänge verschlüsselt verwahren. In einer Mac-App, unabhängig vom Hosting, entwickelt in der Schweiz. Mit Cloud teilt das Team Projekte und behält jede Kundenseite im Blick.
         </p>
         <div className="hero-ctas mt-8 flex flex-wrap items-center justify-center gap-3">
           <a href="#demo" onClick={() => track('cta_click', { location: 'home_hero', target: '#demo' })} className="btn btn-primary btn-lg">

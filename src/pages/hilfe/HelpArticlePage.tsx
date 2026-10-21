@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import PlanBadges from '../../components/hilfe/PlanBadges'
 import Seo from '../../components/Seo'
 import Breadcrumbs from '../../components/Breadcrumbs'
 import TableOfContents from '../../components/article/TableOfContents'
@@ -69,11 +70,7 @@ export default function HelpArticlePage({ category, slug, Body }: HelpArticlePag
                 {guide.duration && (
                   <span className="text-[0.75rem] text-tertiary">{guide.duration}</span>
                 )}
-                {guide.appliesTo.length > 0 && (
-                  <span className="text-[0.75rem] text-tertiary">
-                    Gilt für {guide.appliesTo.join(', ')}
-                  </span>
-                )}
+                <PlanBadges plans={guide.appliesTo} />
               </div>
 
               <h1 className="font-heading text-[clamp(1.8rem,3.6vw,2.4rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-primary">

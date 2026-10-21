@@ -30,7 +30,7 @@ const afterSteps = [
   {
     title: 'Nicht warten? Selbst testen',
     text: 'WPorbit lässt sich zehn Tage gratis testen, mit vollem Funktionsumfang und ohne Kreditkarte. Fragen kannst du parallel stellen.',
-    link: { label: 'Gratis testen', to: '/testen' },
+    link: { label: '10 Tage gratis testen', to: '/testen' },
   },
 ]
 

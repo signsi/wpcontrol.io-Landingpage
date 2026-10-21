@@ -96,6 +96,8 @@ export const routes: RouteRecord[] = [
       { path: 'produkt/funktionen', lazy: () => import('./pages/FeaturesPage').then((m) => ({ Component: m.default })) },
       { path: 'standalone', lazy: () => import('./pages/StandalonePage').then((m) => ({ Component: m.default })) },
       { path: 'cloud', lazy: () => import('./pages/CloudPage').then((m) => ({ Component: m.default })) },
+      { path: 'fuer-freelancer', lazy: () => import('./pages/FuerFreelancerPage').then((m) => ({ Component: m.default })) },
+      { path: 'fuer-agenturen', lazy: () => import('./pages/FuerAgenturenPage').then((m) => ({ Component: m.default })) },
       { path: 'massgeschneidert', lazy: () => import('./pages/CustomPage').then((m) => ({ Component: m.default })) },
       { path: 'vergleich', lazy: () => import('./pages/VergleichPage').then((m) => ({ Component: m.default })) },
       ...alternativeRoutes,
