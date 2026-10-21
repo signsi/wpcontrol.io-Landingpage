@@ -20,7 +20,7 @@ Für die Arbeit direkt an Datenbank und Dateien bringt WPorbit vier Werkzeuge mi
 
 | Eintrag | Was es tut | Voraussetzung |
 |---|---|---|
-| **Terminal** | Shell im WordPress-Container als `www-data` | Projekt läuft |
+| **Terminal** | Shell im WordPress-Container als `dev` | Projekt läuft |
 | **Terminal (root)** | Shell im WordPress-Container als `root` | Projekt läuft |
 | **Datenbank öffnen** | phpMyAdmin im Browser, Passwort in der Zwischenablage | Projekt läuft |
 | **WP-CLI…** | Fenster für einzelne WP-CLI-Befehle | Projekt läuft |
@@ -70,13 +70,15 @@ Unter „Schnellzugriff“ liegen häufige Befehle. Ein Klick trägt den Befehl 
 
 ![Fenster „WP-CLI“ mit der Ausgabe von „Plugins auflisten“](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal/03-wp-cli.webp)
 
-Die Befehle laufen im lokalen WordPress-Container, nie auf dem Server.
+Die Befehle laufen im lokalen WordPress-Container, nie auf dem Server, und immer als `www-data`.
 
 ## Terminal im Container
 
-**Terminal** öffnet ein neues Fenster in der macOS-App Terminal. Du landest im WordPress-Verzeichnis des Containers, als Benutzer `www-data`, also mit denselben Rechten wie WordPress selbst. Das ist der richtige Weg für Git, Composer oder WP-CLI-Befehle, die mehrere Schritte brauchen.
+**Terminal** öffnet ein neues Fenster in der macOS-App Terminal. Du landest im WordPress-Verzeichnis des Containers, als Benutzer `dev`. Das ist der richtige Weg für Git, Composer, Claude Code oder WP-CLI-Befehle, die mehrere Schritte brauchen. Git über SSH nutzt den SSH-Agent deines Macs, solange er für das Projekt eingeschaltet ist. `wp` läuft dabei immer als `www-data`, also mit denselben Rechten wie WordPress selbst. So erreicht der Code eines Plugins weder deinen SSH-Agent noch die Anmeldung von Claude.
 
-**Terminal (root)** öffnet dieselbe Shell als `root`. Nutze sie nur, wenn du etwas brauchst, das `www-data` nicht darf, etwa Pakete im Container installieren.
+**Terminal (root)** öffnet dieselbe Shell als `root`. Nutze sie nur, wenn du etwas brauchst, das `dev` nicht darf, etwa Pakete im Container installieren. Claude Code startet dort nicht.
+
+Mit einem älteren Image läuft **Terminal** noch als `root`, und das Startprotokoll weist darauf hin. Ein neues Image holst du über **Neues Docker-Image holen…**.
 
 <Callout variant="tipp" title="Permission denied nach root-Arbeit">
 Dateien, die du als `root` anlegst, gehören danach `root`. Scheitern später Uploads oder Plugin-Updates mit „Permission denied“, hilft **Berechtigungen korrigieren** in der Karte „Wartung“.
@@ -97,6 +99,6 @@ Im SSH-Terminal bist du auf dem Server der Live-Seite. Befehle wirken sofort und
 - Alle Werkzeuge liegen im Menü **Öffnen in…** in der Tab-Leiste.
 - **Datenbank öffnen** startet phpMyAdmin. Du meldest dich mit dem Benutzer aus der Statuszeile und dem Passwort aus der Zwischenablage an. Der erste Start lädt rund 800 MB.
 - **WP-CLI…** führt einzelne Befehle im lokalen Container aus.
-- **Terminal** arbeitet als `www-data`, **Terminal (root)** als `root`, **SSH-Terminal** auf dem Server.
+- **Terminal** arbeitet als `dev`, **Terminal (root)** als `root`, **SSH-Terminal** auf dem Server. WP-CLI läuft immer als `www-data`.
 
 </KeyTakeaways>
