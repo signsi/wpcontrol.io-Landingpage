@@ -1,0 +1,58 @@
+---
+version: "1.16.0"
+date: 2026-10-20
+title: "Sicherheits-Release: Zugangsdaten, Container und lokale Umgebung"
+type: release
+highlights:
+  - "Keine Zugangsdaten mehr im Klartext: Vault und Schlüsselbund statt Dateien"
+  - "Container bekommen den SSH-Agent statt deiner Schlüsseldateien"
+  - "Terminal, Claude und VS Code arbeiten als dev, Plugins und Pakete als www-data – nichts mehr als root"
+  - "Senden fasst die wp-config.php nicht mehr ungefragt an"
+draft: true
+---
+
+Dieses Release setzt die Ergebnisse eines umfassenden Sicherheits-Audits um. Für dich ändert sich wenig, aber ein paar Schritte nach dem Update sind nötig. Sie stehen ganz unten.
+
+## Zugangsdaten
+
+- **Keine Zugangsdaten mehr im Klartext.** Datenbank-Zugänge und `.env`-Dateien in den Projekten wandern beim ersten Start in Vault und den Schlüsselbund, die Dateien werden danach gelöscht. Weicht ein Wert ab, zeigt WPorbit einen Hinweis beim Projekt, statt etwas zu löschen.
+- **Das Vault-Token liegt nur noch im Schlüsselbund.** Eine Kopie in den Einstellungen und Token-Zeilen im Vault-Protokoll werden aufgeräumt.
+- **„Importieren“ prüft die Werte**, bevor sie übernommen werden. Eine `.env` im Projektordner liefert nur noch Datenbank-Werte.
+- **Komplett löschen leert auch Vault.** Ein neues Projekt mit gleichem Namen erbt nichts vom alten.
+
+## Container und SSH
+
+- **SSH-Agent statt Schlüsseldateien.** Container sehen deinen Ordner `~/.ssh` nicht mehr, sondern nutzen den SSH-Agent des Macs. Beim ersten Start sagt WPorbit das einmal. Pro Projekt lässt es sich abschalten.
+- **Nichts mehr als root, was fremden Code ausführt.** WP-CLI läuft immer als `www-data`, mit denselben Rechten wie WordPress, auch wenn du `wp` im Terminal oder Claude es aufruft. `npm install` und `composer install` beim Einrichten eines Themes laufen ebenfalls als `www-data`. So erreichen Plugins und Paket-Skripte weder deinen SSH-Agent noch die Anmeldung von Claude.
+- **Terminal, Claude Code und VS Code arbeiten als Benutzer `dev`**, mit SSH-Agent für Git. Für Paket-Installationen im Container gibt es weiter **Terminal (root)**. Dort startet Claude nicht und verweist auf das normale Terminal. Das braucht das aktuelle Image `viwiv/wp-dev`. Mit einem älteren Image läuft alles wie bisher, und das Startprotokoll sagt es.
+- **Claude Code hat pro Projekt ein eigenes Arbeitsverzeichnis.** Gemeinsam bleibt nur die Anmeldung. Einstellungen von Claude im Projektordner (`.claude`) kann WordPress nicht mehr verändern.
+- **Deploy-Schlüssel liegen nie mehr im Theme oder im Web-Verzeichnis.** Findet WPorbit einen alten Schlüssel dort, meldet es das beim nächsten Senden.
+
+## Datenbank-Ansicht
+
+**Datenbank öffnen** zeigt jetzt ein Anmeldeformular. Den Benutzer nennt WPorbit in der Statuszeile, das Passwort liegt 90 Sekunden in der Zwischenablage. Vorher war phpMyAdmin ohne Anmeldung offen, auch für andere Projekte auf dem Mac. Die Ansicht hält jetzt mit dem Projekt an. Mehr dazu in [Datenbank, WP-CLI und Terminal](/anleitungen/entwicklung/datenbank-wp-cli-und-terminal).
+
+## Lokale Umgebung
+
+- **Caddy und dnsmasq abgesichert.** Programme und Konfiguration kann nur noch root ändern. Lokale Domains antworten jetzt auch über IPv6 (`::1`).
+- **Ältere Projekte:** Projekte aus früheren Versionen starten nur noch aus der von WPorbit verwalteten Umgebung. **Umgebung aktualisieren…** stellt sie um, Datenbank und Dateien bleiben erhalten.
+- **Die Vorschau überlässt die Zertifikatsprüfung dem System.**
+
+## Senden, Holen und Team
+
+- **Die `wp-config.php` auf dem Server bleibt, wie sie ist.** Bisher hat WPorbit beim Senden der Datenbank den Datenbank-Host darin jedes Mal umgeschrieben. Bei Hostern wie Hostpoint, deren Datenbank nicht auf `localhost` liegt, war das falsch. Jetzt prüft WPorbit vorher, ob WP-CLI die Datenbank erreicht. Nur wenn nicht, fragt es nach, und die Website behält ihren Datenbank-Host.
+- **Schutz vor dem falschen Server:** Die getippte Adresse vor einem Push auf Live gilt nur noch für genau die geprüfte Verbindung (Adresse, Server, Port, Benutzer, Web-Root).
+- **Ein Anmelde-Link öffnet sich ohne Rückfrage nur noch, wenn WPorbit ihn selbst angefordert hat.**
+- **Team-Schlüssel sind signiert** und werden nur übernommen, wenn sie nachweislich vom Team stammen, auf allen Geräten.
+- **Neue Projekte** starten mit WordPress 7.1.3 und PHP 8.5. Zur Auswahl stehen nur noch Kombinationen, für die es ein Image gibt.
+- **Pipeline einrichten** legt `SSH_KEY` als „File, Protected“ an statt „Masked“, passend zur [Anleitung](/anleitungen/veroeffentlichen/gitlab-deployment-einrichten).
+- Senden, Holen und Löschen prüfen Ordnernamen und Pfade strenger, folgen keinen ausgetauschten Links und nehmen nur noch Container und Volumes des eigenen Projekts.
+
+## Nach dem Update
+
+1. **Colima einmal neu starten**, damit die Container den SSH-Agent bekommen. Schlüssel mit Passphrase einmal im Terminal mit `ssh-add` laden.
+2. **Einstellungen → Infrastruktur:** Erscheint „Lokale Umgebung unsicher eingerichtet“, klicke auf **Jetzt korrigieren**. Das richtet Caddy und dnsmasq neu ein, Projekte und Zertifikat bleiben.
+3. **Deploy-Schlüssel ersetzen**, wenn du GitLab-Pipelines nutzt: Meldet das nächste Senden einen alten Schlüssel im Theme, führe **Pipeline einrichten…** erneut aus und ersetze `SSH_KEY` in GitLab.
+4. **Claude Code:** Beim ersten Öffnen in jedem Projekt richtet WPorbit das Arbeitsverzeichnis neu ein. Die Anmeldung bleibt.
+5. **Terminal als `dev`:** Projekte bekommen das neue Image, wenn du **Neues Docker-Image holen…** wählst. Danach öffnet **Terminal** eine Shell als `dev`. Für Pakete im Container nimmst du **Terminal (root)**.
+6. **Erster Push auf Live:** WPorbit fragt einmal die getippte Adresse, bis die stündliche Prüfung neu gelaufen ist.
