@@ -68,7 +68,12 @@ export default function AlternativePage({ slug }: { slug: string }) {
     { label: 'Vergleich', path: '/vergleich' },
     { label: `${alt.name} Alternative`, path },
   ]
-  const others = alternatives.filter((a) => a.slug !== alt.slug)
+  const standalone = alt.product === 'standalone'
+  const productName = standalone ? 'WPorbit Standalone' : 'WPorbit Cloud'
+  // Erst die Vergleiche mit demselben Produkt, dann die anderen.
+  const others = alternatives
+    .filter((a) => a.slug !== alt.slug)
+    .sort((a, b) => Number(b.product === alt.product) - Number(a.product === alt.product))
 
   return (
     <>
@@ -76,36 +81,61 @@ export default function AlternativePage({ slug }: { slug: string }) {
         title={alt.seoTitle}
         description={alt.seoDescription}
         path={path}
-        image="/og/cloud.jpg"
+        image={standalone ? undefined : '/og/cloud.jpg'}
         jsonLd={[breadcrumbLd(crumbs), faqPageLd(alt.faq)]}
       />
 
       <PageHero
         kicker={`Vergleich · ${alt.name}`}
-        title={`${alt.name} Alternative für Agenturen in der Schweiz`}
+        title={standalone ? `${alt.name} Alternative für Agenturen auf dem Mac` : `${alt.name} Alternative für Agenturen in der Schweiz`}
         lead={alt.lead}
         crumbs={crumbs}
         actions={
-          <>
-            <Link to="/cloud" className="btn btn-primary btn-md">WPorbit Cloud ansehen</Link>
-            <Link to="/testen" className="btn btn-secondary btn-md">App 10 Tage testen</Link>
-          </>
+          standalone ? (
+            <>
+              <Link to="/testen" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
+              <Link to="/standalone" className="btn btn-secondary btn-md">WPorbit Standalone ansehen</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/cloud" className="btn btn-primary btn-md">WPorbit Cloud ansehen</Link>
+              <Link to="/testen" className="btn btn-secondary btn-md">10 Tage gratis testen</Link>
+            </>
+          )
         }
       />
 
       <section className="border-b border-line px-6 py-16">
         <div className="hero-image">
-          <BrowserFrame>
-            <img
-              src="/cloud/hero.webp"
-              alt="WPorbit Team-Dashboard: alle Kundenseiten mit Zustand, offenen Updates, SSL, Antwortzeit, Verfügbarkeit und Performance"
-              width={2400}
-              height={933}
-              fetchPriority="high"
-              className="block h-auto w-full"
-            />
-          </BrowserFrame>
-          <p className="mt-3 text-[0.78rem] text-tertiary">Team-Dashboard von WPorbit Cloud, mit Demo-Daten.</p>
+          {standalone ? (
+            <>
+              <img
+                src="/home/app.webp"
+                srcSet="/home/app-800.webp 800w, /home/app-1280.webp 1280w, /home/app-1920.webp 1920w, /home/app.webp 2560w"
+                sizes="(min-width: 1088px) 64rem, calc(100vw - 3rem)"
+                alt="WPorbit-App: links die Projekte, rechts die Übersicht eines laufenden Projekts mit Verbindungen, Projektdetails, Zugangsdaten und Wartung"
+                width={2560}
+                height={1560}
+                fetchPriority="high"
+                className="block h-auto w-full rounded-[14px] shadow-overlay ring-1 ring-line"
+              />
+              <p className="mt-3 text-[0.78rem] text-tertiary">Die Mac-App WPorbit mit einem laufenden Projekt.</p>
+            </>
+          ) : (
+            <>
+              <BrowserFrame>
+                <img
+                  src="/cloud/hero.webp"
+                  alt="WPorbit Team-Dashboard: alle Kundenseiten mit Zustand, offenen Updates, SSL, Antwortzeit, Verfügbarkeit und Performance"
+                  width={2400}
+                  height={933}
+                  fetchPriority="high"
+                  className="block h-auto w-full"
+                />
+              </BrowserFrame>
+              <p className="mt-3 text-[0.78rem] text-tertiary">Team-Dashboard von WPorbit Cloud, mit Demo-Daten.</p>
+            </>
+          )}
         </div>
       </section>
 
@@ -125,17 +155,23 @@ export default function AlternativePage({ slug }: { slug: string }) {
         <SectionHead
           kicker="Der Unterschied"
           title="Was bei WPorbit anders ist"
-          lead={`${alt.connection} Jedes Plugin, das eine Website nach aussen öffnet, ist zusätzliche Angriffsfläche, auch ein Überwachungs-Plugin. WPorbit braucht keines.`}
+          lead={
+            standalone
+              ? 'Lokal WordPress starten können beide. WPorbit ist auf das gebaut, was danach kommt: bestehende Kundenprojekte übernehmen, ändern und sicher wieder veröffentlichen, bei jedem Hoster.'
+              : `${alt.connection} Jedes Plugin, das eine Website nach aussen öffnet, ist zusätzliche Angriffsfläche, auch ein Überwachungs-Plugin. WPorbit braucht keines.`
+          }
         />
-        <div className="mb-12 grid grid-cols-1 gap-5 md:grid-cols-2">
-          <SetupPanel title={alt.name} caption={`Auf jeder Kundenseite das ${alt.pluginLabel}.`} badge={<PluginBadge />} />
-          <SetupPanel
-            title="WPorbit Cloud"
-            caption="Ein Lese-Schlüssel mit festen Befehlen, kein Plugin in WordPress. Oder nur Messung von aussen."
-            badge={<KeyBadge />}
-            accent
-          />
-        </div>
+        {!standalone && (
+          <div className="mb-12 grid grid-cols-1 gap-5 md:grid-cols-2">
+            <SetupPanel title={alt.name} caption={`Auf jeder Kundenseite das ${alt.pluginLabel}.`} badge={<PluginBadge />} />
+            <SetupPanel
+              title="WPorbit Cloud"
+              caption="Ein Lese-Schlüssel mit festen Befehlen, kein Plugin in WordPress. Oder nur Messung von aussen."
+              badge={<KeyBadge />}
+              accent
+            />
+          </div>
+        )}
         <ol className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
           {alt.differences.map((item, i) => (
             <li key={item.title} className="flex gap-4">
@@ -154,18 +190,22 @@ export default function AlternativePage({ slug }: { slug: string }) {
       <section id="tabelle" className="border-b border-line bg-raised px-6 py-16">
         <SectionHead
           kicker="Im Überblick"
-          title={`WPorbit Cloud und ${alt.name} im Vergleich`}
-          lead="Was die beiden Dienste für die Wartung von Kundenseiten mitbringen. Preise vergleichen wir bewusst nicht, weil Cloud die App für die lokale Entwicklung einschliesst."
+          title={`${productName} und ${alt.name} im Vergleich`}
+          lead={
+            standalone
+              ? 'Was die beiden Werkzeuge für die lokale Arbeit an Kundenprojekten mitbringen. Preise vergleichen wir bewusst nicht.'
+              : 'Was die beiden Dienste für die Wartung von Kundenseiten mitbringen. Preise vergleichen wir bewusst nicht, weil Cloud die App für die lokale Entwicklung einschliesst.'
+          }
         />
         <div className="overflow-hidden rounded-xl border border-line bg-surface">
           <table className="w-full table-fixed text-left text-[0.84rem] leading-[1.45]">
             <caption className="sr-only">
-              {`WPorbit Cloud und ${alt.name} im Vergleich, ${SOURCES_STAND}, laut Angaben der Anbieter`}
+              {`${productName} und ${alt.name} im Vergleich, ${SOURCES_STAND}, laut Angaben der Anbieter`}
             </caption>
             <thead className="bg-raised text-[0.7rem] uppercase tracking-[0.08em] text-tertiary">
               <tr>
                 <th scope="col" className="hidden w-[30%] px-5 py-3 font-semibold sm:table-cell">Kriterium</th>
-                <th scope="col" className="px-4 py-3 font-semibold text-accent sm:px-5">WPorbit Cloud</th>
+                <th scope="col" className="px-4 py-3 font-semibold text-accent sm:px-5">{productName}</th>
                 <th scope="col" className="px-4 py-3 font-semibold sm:px-5">{alt.name}</th>
               </tr>
             </thead>
@@ -196,7 +236,7 @@ export default function AlternativePage({ slug }: { slug: string }) {
           </p>
           <details className="mt-2">
             <summary className="cursor-pointer font-semibold text-secondary hover:text-primary">
-              Quellen (abgerufen am {SOURCES_CHECKED_AT})
+              Quellen (abgerufen am {alt.checkedAt ?? SOURCES_CHECKED_AT})
             </summary>
             <ul className="mt-2 flex flex-col gap-1">
               {alt.sources.map((url) => (
@@ -215,7 +255,11 @@ export default function AlternativePage({ slug }: { slug: string }) {
         <SectionHead
           kicker="Ehrlich gesagt"
           title="Für wen passt was"
-          lead="Beide Werkzeuge sind für Agenturen gebaut. Welches besser passt, hängt davon ab, was du heute brauchst."
+          lead={
+            standalone
+              ? 'Beide Werkzeuge sind gut. Welches besser passt, hängt von deinem Hosting und deinem Alltag ab.'
+              : 'Beide Werkzeuge sind für Agenturen gebaut. Welches besser passt, hängt davon ab, was du heute brauchst.'
+          }
         />
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <article className="rounded-panel border border-accent/30 bg-accent/[0.06] p-6">
@@ -285,17 +329,26 @@ export default function AlternativePage({ slug }: { slug: string }) {
             </li>
           ))}
           <li>
-            <Link to="/vergleich#wartung" className="btn btn-secondary btn-md">Alle im Überblick</Link>
+            <Link to={standalone ? '/vergleich' : '/vergleich#wartung'} className="btn btn-secondary btn-md">Alle im Überblick</Link>
           </li>
         </ul>
       </section>
 
-      <CTABand
-        title="Kundenseiten überwachen, ohne Plugin."
-        text="Cloud mit Team-Dashboard erscheint bis Ende 2026. Die App läuft schon heute, deine Projekte nimmst du mit."
-        primary={{ label: 'WPorbit Cloud ansehen', to: '/cloud' }}
-        secondary={{ label: 'App 10 Tage testen', to: '/testen' }}
-      />
+      {standalone ? (
+        <CTABand
+          title="Mit einem echten Kundenprojekt testen."
+          text="Übernimm eine bestehende Website, ändere etwas und bring es wieder live. Zehn Tage, voller Funktionsumfang, ohne Kreditkarte."
+          primary={{ label: '10 Tage gratis testen', to: '/testen' }}
+          secondary={{ label: 'Preise ansehen', to: '/preise' }}
+        />
+      ) : (
+        <CTABand
+          title="Kundenseiten überwachen, ohne Plugin."
+          text="Cloud mit Team-Dashboard erscheint bis Ende 2026. Die App läuft schon heute, deine Projekte nimmst du mit."
+          primary={{ label: 'WPorbit Cloud ansehen', to: '/cloud' }}
+          secondary={{ label: '10 Tage gratis testen', to: '/testen' }}
+        />
+      )}
     </>
   )
 }

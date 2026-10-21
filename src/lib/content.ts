@@ -92,6 +92,32 @@ export function getBlogCategories(): CategorySummary[] {
     .filter((category) => category.count > 0)
 }
 
+/**
+ * Welche Blog-Kategorien zu einer Kategorie der Anleitungen passen. Die erste
+ * zählt am meisten. Kategorien ohne Eintrag zeigen keine Blogbeiträge.
+ */
+const blogTopicsForGuides: Record<string, string[]> = {
+  'erste-schritte': ['agenturbetrieb', 'workflow'],
+  projekte: ['wartung', 'agenturbetrieb'],
+  entwicklung: ['workflow', 'wartung'],
+  veroeffentlichen: ['wartung', 'workflow'],
+  zugaenge: ['sicherheit'],
+  wartung: ['wartung', 'sicherheit'],
+  fehlerbehebung: ['wartung', 'sicherheit'],
+}
+
+/** Passende Blogbeiträge unter einer Anleitung: nach Kategorie, dann die neuesten. */
+export function getPostsForGuide(guideCategory: string, limit = 2): BlogPost[] {
+  const topics = blogTopicsForGuides[guideCategory] ?? []
+  if (topics.length === 0) return []
+  return posts
+    .filter((post) => topics.includes(post.category))
+    .map((post) => ({ post, rank: topics.indexOf(post.category) }))
+    .sort((a, b) => a.rank - b.rank || b.post.date.localeCompare(a.post.date))
+    .slice(0, limit)
+    .map((hit) => hit.post)
+}
+
 /** Gleiche Kategorie zuerst, dann Tag-Überschneidung, dann die neuesten Beiträge. */
 export function getRelatedPosts(slug: string, limit = 3): BlogPost[] {
   const current = getPostBySlug(slug)

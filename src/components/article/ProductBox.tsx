@@ -11,7 +11,7 @@ interface ProductBoxProps {
 const content = {
   cloud: {
     to: '/cloud',
-    text: 'Updates, Backups und Überwachung für alle Kundenseiten an einem Ort.',
+    text: 'Erreichbarkeit, bekannte Lücken und Alarme für alle Kundenseiten an einem Ort.',
     link: 'Alle Kundenseiten im Blick, ohne Plugin – WPorbit Cloud',
   },
   testen: {

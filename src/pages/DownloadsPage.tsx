@@ -14,6 +14,7 @@ const requirements = [
   { label: 'Arbeitsspeicher', value: 'Mindestens 8 GB, empfohlen 16 GB' },
   { label: 'Speicherplatz', value: 'Rund 2 GB, zusätzlich Platz pro Projekt' },
   { label: 'Zusätzlich nötig', value: 'Homebrew (auf Entwicklungs-Macs meist schon vorhanden). Colima, die Docker-Werkzeuge und Vault richtet WPorbit selbst ein, Docker Desktop ist nicht nötig' },
+  { label: 'Signatur', value: 'Mit einer Developer ID von Apple signiert und von Apple notarisiert. Updates kommen über die App und sind zusätzlich signiert, die App prüft die Signatur vor der Installation' },
 ]
 
 const installSteps = [
@@ -50,7 +51,7 @@ export default function DownloadsPage() {
         crumbs={crumbs}
         actions={
           <>
-            <Link to="/testen" className="btn btn-primary btn-md">Download anfordern</Link>
+            <Link to="/testen" className="btn btn-primary btn-md">10 Tage gratis testen</Link>
             <Link to="/changelog" className="btn btn-secondary btn-md">Changelog ansehen</Link>
           </>
         }

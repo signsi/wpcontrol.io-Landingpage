@@ -39,6 +39,8 @@ export default function Hero() {
       <figure className="hero-image relative mx-auto mt-14 max-w-[64rem]">
         <img
           src="/home/app.webp"
+          srcSet="/home/app-800.webp 800w, /home/app-1280.webp 1280w, /home/app-1920.webp 1920w, /home/app.webp 2560w"
+          sizes="(min-width: 1088px) 64rem, calc(100vw - 3rem)"
           alt="WPorbit-App: links die Projekte, rechts die Übersicht eines laufenden Projekts mit Verbindungen, Projektdetails, Zugangsdaten und Wartung"
           width={2560}
           height={1560}
