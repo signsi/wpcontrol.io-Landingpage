@@ -1,0 +1,17 @@
+---
+version: "1.18.1"
+date: 2026-10-22
+title: "Vorschläge per Klick: Theme-Ordner und Tabellen-Präfix"
+type: release
+highlights:
+  - "Kein Theme-Ordner hinterlegt: jeder Ordner auf dem Server ist ein Klick"
+  - "Fehlendes Tabellen-Präfix: das des Servers per Klick übernehmen"
+draft: false
+---
+
+Was die Prüfungen vorschlagen, lässt sich jetzt direkt übernehmen.
+
+- **Theme-Ordner:** Ist keiner hinterlegt, zeigt die Prüfung im Sync-Tab jeden Ordner auf dem Server als Knopf. Ein Klick setzt den Theme-Ordner. Eigene Themes stehen zuerst.
+- **Tabellen-Präfix im Verbindungstest:** Fehlt es in den Zugangsdaten, nennt der Test das Präfix des Servers und übernimmt es per Klick. Lokal muss es dasselbe sein. Hat die lokale Datenbank schon dieses Präfix oder noch keine Tabellen, wird es nur gespeichert. Steht lokal ein anderes, stellt WPorbit die Tabellen um, mit Sicherung vorher.
+- **Zugangsdaten:** Das Feld **Tabellen-Präfix** steht jetzt immer da, leer als Vorgabe.
+- **Neues Projekt mit Server:** Nach **Verbindung prüfen** schlägt der Assistent das Tabellen-Präfix des Servers zum Übernehmen vor.
