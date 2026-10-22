@@ -1,0 +1,21 @@
+---
+version: "1.19.0"
+date: 2026-10-22
+title: "Systemhinweise an einem Ort, PHP der Website auf dem Server"
+type: release
+highlights:
+  - "Systemhinweise in der Glocke oben rechts, mit Beheben per Klick"
+  - "„php auf dem Server“ gilt für alle Befehle und die Überwachung"
+  - "WordPress im Unterordner: Warnung beim Senden"
+draft: false
+---
+
+- **Systemhinweise an einem Ort:** Warnungen, etwa ein fehlender Eintrag in der SSH-Konfiguration, sammelt jetzt die Glocke oben rechts. Was sich beheben lässt, hat dort einen Knopf.
+- **Projektmenü:** Die Einträge sind neu gruppiert. Graue, nicht verfügbare Einträge gibt es nicht mehr.
+- **PHP der Website:** Auf Hostings wie Plesk nimmt die Kommandozeile oft ein älteres PHP als die Website. Ist bei **php auf dem Server** ein Pfad hinterlegt, nutzt WPorbit ihn für alle Befehle auf dem Server und für die Überwachung. Die Diagnose bietet die vorhandenen PHP-Versionen per Klick an, die neuste zuerst.
+- **Überwachung:** Plugins und Themes erscheinen auch dann, wenn WP-CLI mit dem Code eines Plugins abstürzt. Damit fehlen auch die Sicherheitslücken nicht mehr. Damit das wirkt, einmal **Lesezugang neu einrichten…** ausführen.
+- **Sicherheitslücken:** Eine Lücke zählt nur noch, wenn es die installierte Version eines Plugins oder Themes auf wordpress.org gibt. Eigenentwicklungen mit gleichem Ordnernamen lösen keinen Alarm mehr aus. Hinweise zum WordPress-Kern stehen als graue Info-Zeile da.
+- **WordPress im Unterordner:** Liegt WordPress live in einem Unterordner, vergleicht WPorbit die Adresse der Seite statt die von WordPress. Beim Senden erscheint eine Warnung, und die Adresse von WordPress bleibt, wie sie ist.
+- **Neue Projekte** starten mit der Vorgabe des Profils. Das aktive Theme ist die Vorgabe für den Theme-Ordner.
+- **Tabellen-Präfix:** Die Übernahme klappt auch, wenn die wp-config.php über dem Web-Root liegt.
+- **Colima:** Ist die Datenplatte nach einem Absturz gesperrt, gibt WPorbit sie per Klick frei.
