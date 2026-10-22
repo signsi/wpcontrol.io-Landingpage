@@ -1,0 +1,40 @@
+---
+version: "1.17.0"
+date: 2026-10-22
+title: "Schutz zwischen Projekten, Macs im Team bestätigen, Server-Änderungen mit Rückfrage"
+type: release
+highlights:
+  - "wp-config.php bei Hostern wie Metanet: Rückfrage schon vor dem Holen und Senden"
+  - "Projekte erreichen Dienste auf deinem Mac nur noch über ihre eigene Site"
+  - "Macs im Team bestätigen sich gegenseitig mit einem Code"
+  - "Ändert jemand im Team einen Server, zeigt WPorbit alt und neu und fragt zuerst"
+draft: false
+---
+
+Dieses Release setzt weitere Ergebnisse des Sicherheits-Audits um und behebt einen Fehler beim Holen und Senden auf Hostern wie Metanet. Zwei Schritte nach dem Update stehen ganz unten.
+
+## Holen und Senden
+
+- **wp-config.php bei Hostern wie Metanet.** Steht in der `wp-config.php` `DB_HOST` auf `localhost`, erreicht WP-CLI auf dem Server die Datenbank oft nicht. Bisher brach WPorbit dann schon bei der Prüfung vor dem Holen oder Senden ab, ohne die Anpassung anzubieten. Jetzt fragt es genau dort, ob es die Datei anpassen darf: Sie wird gesichert, nur WP-CLI bekommt `127.0.0.1:3306`, die Website behält ihren Datenbank-Host. Bei Hostern wie Hostpoint kommt keine Rückfrage. Den Hintergrund erklärt der Beitrag [localhost oder 127.0.0.1](/blog/wp-cli-localhost-datenbank).
+
+## Schutz zwischen Projekten
+
+- **Projekte erreichen Dienste auf deinem Mac nur noch über ihre eigene Site.** Bisher konnte jeder Projekt-Container über die Colima-VM Vault, die Verwaltung von Caddy und die Ports anderer Projekte erreichen. Jetzt lässt eine Regel in der VM nur noch den Weg über Caddy (HTTPS) und DNS durch.
+- **Einstellungen → Colima** zeigt unter „Schutz zwischen Projekten“, ob die Regel aktiv ist, wann sie zuletzt geprüft wurde, und prüft auf Knopfdruck erneut. Braucht ein Projekt einen weiteren Dienst auf dem Mac, lässt sich dort ein Port freigeben.
+
+## Team
+
+- **Macs bestätigen sich gegenseitig.** Wer ein Gerät freigibt, bürgt nach dem Code-Vergleich mit einer signierten Aussage dafür. Ein neuer Mac übernimmt Team-Schlüssel erst, wenn der Code seines Freigebers eingetippt ist. Der Server kann diese Aussagen speichern, aber nicht fälschen.
+- **Gesperrte Geräte bleiben draussen.** Taucht ein entferntes Gerät über eine alte Bürgschaft wieder auf, erkennt WPorbit das.
+- **Server-Änderungen aus dem Team mit Rückfrage.** Ändert jemand im Team den Server eines Projekts, zeigt das Abweichungs-Sheet eine Karte mit allen Verbindungswerten, alt und neu, ohne Vorauswahl. Übernehmen gilt für den ganzen Server. Ablehnen gilt nur auf diesem Mac, bis sich im Team wieder etwas ändert. Der erste Push oder Deploy nach dem Übernehmen verlangt die getippte Adresse, auch für Live.
+- **„Meiner“ heisst jetzt „Meinen Stand ins Team“.** Unter einer Server-Karte schreibt der Knopf nur diesen Server zurück ins Team.
+- **Werte, die WPorbit nicht übernimmt, siehst du jetzt mit Grund**, im Abweichungs-Sheet, beim Teilen, in der Übersicht des Projekts und beim lokalen Einrichten. Bisher fielen sie still weg.
+
+## Veröffentlichen
+
+- **„Pipeline einrichten“ schränkt den Deploy-Schlüssel auf dem Server ein:** keine Tunnel, keine Weitergabe des SSH-Agents, kein Terminal. Die Pipelines selbst brauchen keine Änderung.
+
+## Nach dem Update
+
+1. **Macs bestätigen:** Unter **Einstellungen → Allgemein → Team** zeigt WPorbit, welche Geräte noch nicht bestätigt sind. Vergleiche den Code mit dem anderen Mac und bestätige ihn.
+2. **GitLab-Pipelines:** Führe **Pipeline einrichten…** einmal erneut aus. Damit wird der bestehende Deploy-Schlüssel auf dem Server eingeschränkt.
