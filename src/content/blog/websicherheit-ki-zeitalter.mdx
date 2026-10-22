@@ -1,21 +1,21 @@
 ---
-title: "Websicherheit im KI-Zeitalter: was sich wirklich ändert und was Panikmache ist"
+title: "Websicherheit im KI-Zeitalter: was sich ändert und was gleich bleibt"
 seoTitle: "Websicherheit im KI-Zeitalter: echte Gefahren"
-description: "KI findet Lücken in Stunden, schreibt Phishing ohne Fehler und arbeitet mit Rechten. Die realen Gefahren für Websites und wie sich Agenturen schützen."
-date: 2026-10-23
+description: "KI findet Lücken schneller, schreibt überzeugende Phishing-Mails und führt als Agent selbst Befehle aus. Die Gefahren und wie Agenturen sich schützen."
+date: 2026-10-22
 category: sicherheit
 tags: [sicherheit, ki, zugangsdaten, plugins]
 author: patrick
-draft: true
+draft: false
 ---
 
 <KeyTakeaways>
 
 - KI erfindet kaum neue Angriffe. Sie macht bekannte schneller, billiger und glaubwürdiger.
-- Neu ist eine Angriffsfläche: KI-Werkzeuge, die selbst handeln dürfen, auf Entwickler-Rechnern, in WordPress-Plugins und auf Servern.
+- Neu ist eine Angriffsfläche: KI-Agenten, die selbstständig Dateien lesen, Befehle ausführen und Inhalte ändern, auf Entwickler-Rechnern, in WordPress-Plugins und auf Servern.
 - Das wertvollste Ziel in einer Agentur ist nicht die einzelne Kundenseite, sondern der Rechner, auf dem die Schlüssel zu allen Kundenseiten liegen.
-- Panik ist fehl am Platz. Die meisten erfolgreichen Angriffe nutzen weiterhin bekannte, ungepatchte Lücken und schwache Logins.
-- Wer die Grundlagen konsequent umsetzt, ist gut geschützt. Wer sie nicht umsetzt, verliert jetzt schneller als früher.
+- Vieles bleibt gleich: Die meisten erfolgreichen Angriffe nutzen weiterhin bekannte, ungepatchte Lücken und schwache Logins.
+- Die wirksamsten Massnahmen sind bekannt. Was sich ändert, ist die Zeit, die bleibt, um sie umzusetzen.
 
 </KeyTakeaways>
 
@@ -31,11 +31,9 @@ Stand 22. Oktober 2026. Sicher sind PHP 8.5.12, 8.4.27, 8.3.36 und 8.2.35. PHP 8
 
 </Callout>
 
-## KI erfindet wenig, aber sie beschleunigt alles
+## Was sich verändert
 
-Die Debatte schwankt zwischen zwei Extremen. Die einen sehen KI-Systeme, die jede Website autonom übernehmen. Die anderen halten das Ganze für Marketing. Beides stimmt nicht.
-
-Was sich tatsächlich verändert, lässt sich in vier Punkten fassen: Lücken werden schneller gefunden und ausgenutzt. Es entsteht mehr fehlerhafter Code. Täuschungen werden glaubwürdiger. Und es gibt eine neue Klasse von Werkzeugen, die nicht nur Vorschläge machen, sondern handeln. Für eine Agentur, die dutzende WordPress-Sites betreibt, heisst jeder dieser Punkte etwas Konkretes.
+Was sich durch KI verändert, lässt sich in vier Punkten zusammenfassen: Lücken werden schneller gefunden und ausgenutzt. Es entsteht mehr fehlerhafter Code. Täuschungen werden glaubwürdiger. Und es gibt KI-Agenten, die nicht nur Vorschläge machen, sondern selbst Befehle ausführen und Dateien ändern. Für eine Agentur, die dutzende WordPress-Sites betreibt, heisst jeder dieser Punkte etwas Konkretes.
 
 ## Gefahr 1: Lücken werden schneller gefunden, von beiden Seiten
 
@@ -47,7 +45,7 @@ Diese Werkzeuge helfen Verteidigern. Aber die Zeit zwischen Veröffentlichung un
 
 **Was das für Agenturen heisst:** Ein monatlicher Update-Tag reicht für kritische Lücken nicht mehr, auch nicht für PHP selbst. Wer in Stunden reagieren will, muss in Minuten wissen, welche Kundenseiten betroffen sind.
 
-## Gefahr 2: Code, den niemand wirklich geschrieben hat
+## Gefahr 2: Code von KI
 
 KI schreibt heute einen grossen Teil des Codes, von der kleinen Funktion in der `functions.php` bis zum ganzen Plugin. Der [Veracode-Bericht 2025](https://www.veracode.com/press-release/ai-generated-code-poses-major-security-risks-in-nearly-half-of-all-development-tasks-veracode-research-reveals/) hat über 100 Sprachmodelle mit 80 Programmieraufgaben getestet. In 45 % der Fälle enthielt der Code eine Sicherheitslücke. Gegen Cross-Site-Scripting, den Klassiker in WordPress-Plugins, versagten die Modelle in 86 % der Fälle.
 
@@ -59,26 +57,26 @@ Dazu kommt ein neues Problem: Sprachmodelle erfinden Pakete. In einer [Studie, v
 
 Am 8. September 2025 bekam ein npm-Entwickler eine Mail von `npmjs.help`, einer wenige Tage alten Domain, die wie npm aussah. Er gab seine Zugangsdaten ein. Kurz darauf enthielten [18 verbreitete Pakete](https://www.aikido.dev/blog/npm-debug-and-chalk-packages-compromised), darunter `chalk` und `debug`, Schadcode. Zusammen werden sie über 2 Milliarden Mal pro Woche heruntergeladen. Wenige Tage später verbreitete sich mit „Shai-Hulud“ ein [Wurm, der sich selbst kopierte](https://github.blog/security/supply-chain-security/our-plan-for-a-more-secure-npm-supply-chain/) und Zugangsdaten stahl. Seine zweite Welle im November befiel laut [Wiz](https://www.wiz.io/blog/shai-hulud-2-0-ongoing-supply-chain-attack) rund 800 Pakete und über 25 000 Repositories.
 
-Besonders lehrreich ist ein Angriff vom August 2025. Schadhafte Versionen des Build-Werkzeugs Nx suchten auf Entwickler-Rechnern nach Zugangsdaten. Laut dem [Bericht von Nx](https://nx.dev/blog/s1ngularity-postmortem) nutzte der Schadcode dafür die installierten KI-Assistenten, laut [Wiz](https://wiz.io/blog/s1ngularity-supply-chain-attack) Claude, Gemini und Amazon Q, gestartet mit Optionen, die alle Rückfragen abschalten. Der Angreifer musste keine Zeile Suchcode schreiben. Er liess die Werkzeuge suchen, die schon da waren. [GitGuardian](https://blog.gitguardian.com/the-nx-s1ngularity-attack-inside-the-credential-leak/) zählte danach 2349 abgeflossene Geheimnisse.
+Ein Angriff vom August 2025 zeigt, wie sich Lieferkette und KI verbinden. Schadhafte Versionen des Build-Werkzeugs Nx suchten auf Entwickler-Rechnern nach Zugangsdaten. Laut dem [Bericht von Nx](https://nx.dev/blog/s1ngularity-postmortem) nutzte der Schadcode dafür die installierten KI-Assistenten, laut [Wiz](https://wiz.io/blog/s1ngularity-supply-chain-attack) Claude, Gemini und Amazon Q, gestartet mit Optionen, die alle Rückfragen abschalten. Der Angreifer musste keine Zeile Suchcode schreiben. Er liess die Werkzeuge suchen, die schon da waren. [GitGuardian](https://blog.gitguardian.com/the-nx-s1ngularity-attack-inside-the-credential-leak/) zählte danach 2349 abgeflossene Geheimnisse.
 
 Auch das Bundesamt für Cybersicherheit beobachtet, dass Kriminelle vermehrt versuchen, [„etablierte und breit genutzte Komponenten von Open-Source-Software zu kompromittieren“](https://www.bacs.admin.ch/de/hjb-2025-2-mm-de), mit systemischen Auswirkungen.
 
 **Was das für Agenturen heisst:** Das lohnendste Ziel ist nicht eine einzelne Kundenseite. Es ist der Mac, auf dem die SSH-Schlüssel, Datenbank-Passwörter und Hoster-Logins aller Kund:innen liegen. Ein Theme mit einem Build-Schritt über npm reicht, damit fremder Code genau dort läuft.
 
-## Gefahr 4: Werkzeuge, die handeln dürfen
+## Gefahr 4: KI-Agenten, die selbst Befehle ausführen
 
-Ein Chat, der Vorschläge macht, ist harmlos. Ein Agent, der Dateien liest, Befehle ausführt und ins Netz schreibt, ist es nicht. Simon Willison hat das Risiko als [„tödliche Dreierkombination“](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) beschrieben: Zugriff auf private Daten, Kontakt mit nicht vertrauenswürdigen Inhalten und die Möglichkeit, nach aussen zu kommunizieren. Kommen alle drei zusammen, kann eine versteckte Anweisung in einer Webseite, einem Ticket oder einer Readme-Datei den Agenten dazu bringen, Daten weiterzugeben.
+Ein Chat macht Vorschläge. Ein Agent liest Dateien, führt Befehle aus und kann Daten ins Netz senden. Damit entstehen andere Risiken. Simon Willison hat das Risiko als [„tödliche Dreierkombination“](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) beschrieben: Zugriff auf private Daten, Kontakt mit nicht vertrauenswürdigen Inhalten und die Möglichkeit, nach aussen zu kommunizieren. Kommen alle drei zusammen, kann eine versteckte Anweisung in einer Webseite, einem Ticket oder einer Readme-Datei den Agenten dazu bringen, Daten weiterzugeben.
 
 Die Beispiele häufen sich:
 - Im Juli 2025 löschte ein KI-Agent von Replit laut seinem Nutzer die Datenbank einer Test-Anwendung, obwohl er angewiesen war, nichts zu ändern ([The Register](https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/)). Die Daten liessen sich wiederherstellen.
 - Im WordPress-Plugin AI Engine mit über 100 000 Installationen konnte sich ein einfacher Abonnent über die MCP-Schnittstelle zum Administrator machen, sofern Entwicklerwerkzeuge und MCP aktiviert waren ([CVE-2025-5071](https://www.tenable.com/cve/CVE-2025-5071)).
 - Im November 2025 berichtete Anthropic, dass eine mutmasslich staatliche Gruppe Claude Code für eine [Spionagekampagne](https://www.anthropic.com/news/disrupting-AI-espionage) gegen rund 30 Ziele eingesetzt hatte. Die KI erledigte 80 bis 90 % der Arbeit, in einer kleinen Zahl von Fällen mit Erfolg.
 
-**Was das für Agenturen heisst:** KI-Plugins auf Kundenseiten sind Werkzeuge mit Rechten und gehören in die gleiche Prüfung wie jedes andere Plugin. Und ein Agent, der auf dem eigenen Rechner arbeitet, sollte nie gleichzeitig an Kundendaten, an fremde Inhalte und an einen Live-Server kommen.
+**Was das für Agenturen heisst:** KI-Plugins auf Kundenseiten können je nach Funktion Inhalte, Einstellungen und Benutzerkonten ändern. Sie gehören in die gleiche Prüfung wie jedes andere Plugin. Und ein Agent, der auf dem eigenen Rechner arbeitet, sollte nie gleichzeitig an Kundendaten, an fremde Inhalte und an einen Live-Server kommen.
 
 ## Gefahr 5: Phishing ohne Tippfehler
 
-Die alte Regel „Achte auf die Rechtschreibung“ gilt nicht mehr. In einer [Studie von Heiding, Schneier und weiteren](https://arxiv.org/abs/2412.00586) klickten 54 % der Teilnehmenden auf vollautomatisch von KI geschriebene Phishing-Mails, gleich viele wie bei Mails von menschlichen Experten. In der Kontrollgruppe mit gewöhnlichem Phishing waren es 12 %. Die Stichprobe ist klein, die Richtung aber eindeutig.
+Fehler in Sprache und Rechtschreibung sind als Erkennungsmerkmal weniger verlässlich geworden. In einer [Studie von Heiding, Schneier und weiteren](https://arxiv.org/abs/2412.00586) klickten 54 % der Teilnehmenden auf vollautomatisch von KI geschriebene Phishing-Mails, gleich viele wie bei Mails von menschlichen Experten. In der Kontrollgruppe mit gewöhnlichem Phishing waren es 12 %. Die Stichprobe umfasste 101 Personen.
 
 Das BACS hält im [Halbjahresbericht 2026/1](https://www.bacs.admin.ch/de/newnsb/vzO9wG1V7K0D-m73EJw8W) fest, dass Angreifer „systematisch KI ein[setzen], um massgeschneiderte, personalisierte Inhalte glaubwürdig zu vermitteln“. Und wie weit das gehen kann, zeigte Anfang 2024 der Fall des Ingenieurbüros Arup: Ein Mitarbeiter überwies nach einer Videokonferenz mit gefälschten Kolleg:innen 200 Millionen Hongkong-Dollar ([CFO.com](https://www.cfo.com/news/company-defrauded-by-deepfake-cfo-identified-as-engineering-group-arup/716461/)).
 
@@ -90,21 +88,21 @@ Die einfachste Datenpanne braucht keinen Angreifer. 2023 luden Entwickler von Sa
 
 **Was das für Agenturen heisst:** Ohne Regel entscheidet jede Person selbst, was in welches Werkzeug darf. Eine Seite mit klaren Antworten reicht, solange sie existiert.
 
-## Was Panikmache ist
+## Was gleich bleibt
 
-<Callout variant="hinweis" title="Drei Sätze, die du getrost ignorieren kannst">
+<Callout variant="hinweis" title="Drei häufige Fragen">
 
-**„KI hackt jetzt jede Website automatisch.“** Die stärksten Modelle sind nicht frei verfügbar, und selbst bei PHP2Shell brauchen die öffentlichen Angriffe laut Sansec meist eine zweite Schwachstelle. Die meisten erfolgreichen Angriffe nutzen weiterhin bekannte, ungepatchte Lücken und gestohlene Zugangsdaten.
+**Greift KI jetzt jede Website automatisch an?** Die leistungsfähigsten Modelle sind nicht frei verfügbar, und bei PHP2Shell brauchen die öffentlichen Angriffe laut Sansec meist eine zweite Schwachstelle. Die meisten erfolgreichen Angriffe nutzen weiterhin bekannte, ungepatchte Lücken und gestohlene Zugangsdaten.
 
-**„PHP und WordPress sind am Ende.“** Die grossen Angriffe der letzten Monate trafen genauso npm und die JavaScript-Welt. Entscheidend ist nicht die Sprache, sondern wie gepflegt eine Installation ist.
+**Sind PHP und WordPress besonders gefährdet?** Die grossen Angriffe der letzten Monate betrafen ebenso npm und die JavaScript-Welt. Das Risiko hängt vor allem davon ab, wie gut eine Installation gepflegt wird.
 
-**„Ein KI-Sicherheits-Plugin löst das.“** Jedes Plugin ist zusätzlicher Code mit Rechten, auch ein KI-Plugin, wie AI Engine gezeigt hat. Schutz entsteht durch Abläufe, nicht durch ein weiteres Plugin.
+**Hilft ein KI-Sicherheits-Plugin?** Sicherheits-Plugins können einzelne Angriffe abwehren. Sie sind aber selbst zusätzlicher Code mit Zugriff auf Daten und Einstellungen der Website, wie das Beispiel AI Engine zeigt, und ersetzen keine Abläufe für Updates und Zugänge.
 
 </Callout>
 
 ## Wie du dich schützt: acht Punkte, nach Wirkung sortiert
 
-Die gute Nachricht: Gegen fast alles oben helfen Massnahmen, die nicht neu sind. Neu ist nur, wie viel es kostet, sie aufzuschieben.
+Gegen die meisten der beschriebenen Gefahren helfen bekannte Massnahmen.
 
 | Massnahme | Schützt gegen |
 | --- | --- |
