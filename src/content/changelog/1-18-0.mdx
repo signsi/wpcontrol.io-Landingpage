@@ -1,0 +1,31 @@
+---
+version: "1.18.0"
+date: 2026-10-22
+title: "Server-Änderungen sicher übernehmen, Zugangsdaten schon beim Anlegen prüfen"
+type: release
+highlights:
+  - "Ändert jemand im Team einen Server, sind Senden und Deploy dorthin gesperrt, bis du entscheidest"
+  - "Ein .env-Import, der einen Server ändert, fragt zuerst"
+  - "Neues Projekt: Zugangsdaten werden im Assistenten geprüft, der Web-Root lässt sich auf dem Server suchen"
+  - "Den SSH-Schlüssel hinterlegt WPorbit nur noch nach Rückfrage"
+draft: false
+---
+
+Dieses Release schliesst die Arbeit an Server-Änderungen im Team ab und macht das Anlegen eines Projekts mit Server robuster.
+
+## Server-Änderungen aus dem Team
+
+- **Senden und Deploy warten auf deinen Entscheid.** Ändert jemand im Team den Server eines Projekts, sind Senden und Deploy auf diesen Server gesperrt, bis du die Änderung im Abweichungs-Sheet übernimmst oder ablehnst. Der Assistent sagt „Server im Team geändert“, und **Prüfen…** öffnet die Karte mit alt und neu. Andere Server desselben Projekts bleiben frei.
+- **Alles andere läuft mit dem bisherigen Server und sagt es:** Holen, SSH-Terminal, Verbindungstest, Diagnose, Pipeline einrichten und Lesezugang.
+- **Zeichen in der Projektliste:** „Serveränderung offen“, solange nicht entschieden ist.
+- **Aktueller Stand vor jeder Aktion:** Vor Senden, Deploy, Holen und Terminal lädt WPorbit den Team-Stand nach und wartet höchstens drei Sekunden darauf.
+
+## .env-Import
+
+- **„Server ändern?“** Ändert eine `.env` beim erneuten Import oder über **Importieren** im Klartext-Hinweis die Angaben eines Servers, zeigt WPorbit alt und neu und fragt zuerst. **Nicht übernehmen** lässt die Server-Angaben weg und speichert den Rest. **Abbrechen** speichert nichts.
+
+## Neues Projekt mit Server
+
+- **Zugangsdaten werden im Assistenten geprüft.** **Verbindung prüfen** unter den Server-Feldern testet SSH, Web-Root, WordPress und Datenbank. **Projekt erstellen** prüft selbst, und angelegt wird erst, wenn alles passt. Bisher scheiterte ein falscher Zugang erst beim Start, mit einem halb angelegten Projekt.
+- **Web-Root suchen:** Steht die SSH-Verbindung, findet **WordPress auf dem Server suchen** die WordPress-Ordner auf dem Server. Ein Klick übernimmt den Web-Root.
+- **Schlüssel nur nach Rückfrage.** Ist für einen Server nur ein Passwort hinterlegt, hat WPorbit deinen SSH-Schlüssel bisher ungefragt dort eingetragen. Jetzt fragt es zuerst, im Assistenten ebenso wie beim Holen, Senden und Einrichten. **Nicht hinterlegen** bricht ab, ohne etwas zu ändern.
