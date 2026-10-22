@@ -2,7 +2,7 @@
 title: "URL ersetzen und wp-config.php reparieren"
 description: "Zwei Reparaturen aus der Wartungskarte: Adressen in der lokalen Datenbank umschreiben und DB_HOST in der wp-config.php korrigieren, wenn WP-CLI scheitert."
 order: 40
-updated: 2026-10-21
+updated: 2026-10-22
 type: fehlerbehebung
 audience: fortgeschritten
 duration: "10 Minuten"
@@ -91,7 +91,7 @@ Ursache ist häufig der Eintrag `DB_HOST` in der `wp-config.php`. Der Webserver 
 Die Zeile ist nur aktiv, wenn für das Projekt ein Server hinterlegt ist.
 
 <Callout variant="hinweis" title="Beim Senden fragt WPorbit nach">
-Ab Version 1.16 ändert **Zum Server senden…** die `wp-config.php` nicht mehr von sich aus. Vor dem Senden der Datenbank prüft WPorbit, ob WP-CLI die Datenbank erreicht. Nur wenn nicht, fragt es, ob es die Datei anpassen soll. Sagst du nein, bricht das Senden ab, bevor die Datenbank angefasst wird. Bei Hostern wie Hostpoint ist die Anpassung meist nicht nötig.
+Ab Version 1.16 ändert **Zum Server senden…** die `wp-config.php` nicht mehr von sich aus. Vor dem Holen und dem Senden der Datenbank prüft WPorbit, ob WP-CLI die Datenbank erreicht. Nur wenn nicht, fragt es, ob es die Datei anpassen soll. Sagst du nein, bricht der Vorgang ab, bevor etwas angefasst wird. Bei Hostern wie Hostpoint ist die Anpassung meist nicht nötig, bei Hostern mit `DB_HOST` auf `localhost` wie Metanet oft schon. Die Rückfrage beim Holen gibt es ab Version 1.17. Den Hintergrund erklärt der Beitrag [localhost oder 127.0.0.1](/blog/wp-cli-localhost-datenbank).
 </Callout>
 
 ### Was dabei passiert

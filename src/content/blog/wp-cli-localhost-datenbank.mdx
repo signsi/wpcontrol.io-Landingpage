@@ -1,0 +1,94 @@
+---
+title: "localhost oder 127.0.0.1: Warum WP-CLI auf manchen Hostern die Datenbank nicht findet"
+seoTitle: "WP-CLI findet die Datenbank nicht"
+description: "Die Website läuft, aber WP-CLI findet die Datenbank nicht. Oft liegt es an localhost in DB_HOST. Was dahinter steckt und wie man es sicher löst."
+date: 2026-10-22
+category: wartung
+tags: [wp-cli, hosting, datenbank]
+author: patrick
+draft: false
+---
+
+<KeyTakeaways>
+
+- Für PHP und MySQL ist `localhost` kein Name wie jeder andere: Damit wird nicht über das Netzwerk verbunden, sondern über eine Socket-Datei auf dem Server.
+- Die Website und WP-CLI laufen auf vielen Hostern mit unterschiedlichen PHP-Einstellungen. Die Website findet die Socket-Datei, WP-CLI auf der Kommandozeile nicht.
+- `127.0.0.1` erzwingt eine TCP-Verbindung. Damit erreicht auch WP-CLI die Datenbank, sofern sie auf demselben Server läuft.
+- Ein Block in der `wp-config.php`, der nur für WP-CLI einen anderen `DB_HOST` setzt, löst das, ohne die Website anzufassen.
+- Diesen Block blind in jede `wp-config.php` zu schreiben, ist falsch: Bei Hostern wie Hostpoint liegt die Datenbank gar nicht auf dem Webserver.
+
+</KeyTakeaways>
+
+Die Website läuft. Im Browser lädt jede Seite, das Backend funktioniert. Aber auf der Kommandozeile meldet WP-CLI:
+
+```
+Error: Error establishing a database connection.
+```
+
+`wp db export` scheitert, `wp search-replace` auch. Wer per SSH eine Datenbank sichern oder nach einem Umzug Adressen ersetzen will, steht damit still. Und weil die Website funktioniert, sucht man den Fehler zuerst an der falschen Stelle: beim Passwort, beim Benutzer, beim Datenbank-Namen.
+
+Wir sind diese Woche bei einer Website bei Metanet genau darauf gestossen. Dieser Beitrag erklärt, was dahinter steckt, wie man es von Hand löst und was WPorbit seit Version 1.17 dabei tut.
+
+## localhost ist kein gewöhnlicher Hostname
+
+In der `wp-config.php` steht bei vielen Hostern:
+
+```php
+/** Ersetze localhost mit der MySQL-Serveradresse */
+define('DB_HOST', 'localhost');
+```
+
+Für einen Menschen heisst `localhost` „dieser Rechner“, genau wie `127.0.0.1`. Für MySQL und für PHP nicht. Das [MySQL-Handbuch](https://dev.mysql.com/doc/refman/8.4/en/connecting.html) sagt es deutlich: Auf Unix-Systemen behandeln MySQL-Programme den Namen `localhost` besonders und verbinden über eine **Socket-Datei**, nicht über TCP. Das [PHP-Handbuch zu mysqli](https://www.php.net/manual/de/mysqli.quickstart.connections.php) beschreibt dasselbe: Mit `localhost` nimmt PHP den Socket, mit `127.0.0.1` eine TCP-Verbindung.
+
+Die Socket-Datei ist ein Pfad im Dateisystem, zum Beispiel `/var/run/mysqld/mysqld.sock`. Wo sie liegt, entscheidet der Hoster. PHP muss den Pfad kennen, und er steht in den PHP-Einstellungen (`mysqli.default_socket`, `pdo_mysql.default_socket`).
+
+## Zwei PHP auf demselben Server
+
+Die Website läuft mit dem PHP des Webservers, meist PHP-FPM, mit den Einstellungen, die der Hoster dafür hinterlegt hat. Dort stimmt der Socket-Pfad, sonst würde die Website nicht laufen.
+
+WP-CLI läuft mit dem PHP der Kommandozeile. Das ist auf vielen Servern ein anderes Programm mit einer anderen `php.ini`. Steht dort kein oder ein anderer Socket-Pfad, sucht WP-CLI die Datei an der falschen Stelle. Ergebnis: Die Website erreicht die Datenbank, WP-CLI nicht, obwohl beide dieselbe `wp-config.php` lesen.
+
+Dasselbe gilt für `mysqldump`, das `wp db export` im Hintergrund aufruft. Auch es nimmt bei `localhost` den Socket.
+
+## Die Lösung: ein eigener Host nur für WP-CLI
+
+Läuft die Datenbank auf demselben Server, erreicht man sie über TCP unter `127.0.0.1` und dem Standard-Port 3306. Die Website soll dabei bleiben, wie sie ist. Dafür gibt es einen bekannten Block in der `wp-config.php`:
+
+```php
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+    /** MySQL hostname for WP-CLI */
+    define('DB_HOST', '127.0.0.1:3306');
+} else {
+    /** MySQL hostname */
+    define('DB_HOST', 'localhost');
+}
+```
+
+Die Konstante `WP_CLI` gibt es nur, wenn WP-CLI läuft. Die Website sieht weiter `localhost`, WP-CLI bekommt `127.0.0.1:3306`. Das bisherige `define('DB_HOST', …)` muss dabei verschwinden, denn eine Konstante lässt sich in PHP nur einmal definieren.
+
+Zwei Dinge sollte man vorher prüfen:
+
+1. **Läuft MySQL wirklich auf diesem Server?** `mysql -h 127.0.0.1 -u BENUTZER -p` auf der Kommandozeile zeigt es. Kommt „Connection refused“, horcht MySQL nicht auf TCP, und der Block hilft nicht.
+2. **Gibt es eine Sicherung?** Wer die `wp-config.php` ändert, sichert sie zuerst, und zwar nicht als `wp-config.php.bak` neben dem Original. Eine solche Datei liefert der Webserver als Text aus, samt Datenbank-Passwort.
+
+## Warum man das nicht überall machen darf
+
+Bis Version 1.15 hat WPorbit diesen Block bei jedem Senden der Datenbank in die `wp-config.php` geschrieben, mit `localhost:3306` für die Website. Bei den meisten Hostern ging das gut. Bei Hostpoint nicht: Dort liegt die Datenbank auf einem eigenen Server, und `DB_HOST` enthält dessen Namen. Der feste Wert hätte die Website von ihrer Datenbank abgeschnitten.
+
+Seit 1.16 fasst WPorbit die `wp-config.php` deshalb nicht mehr ungefragt an. Nur hat diese Vorsicht einen neuen Fehler gebracht: Die Rückfrage kam erst kurz vor dem Import. Vorher prüft WPorbit, ob die Datenbank antwortet, und genau diese Prüfung scheiterte bei Metanet. WPorbit brach also ab, bevor es überhaupt fragen konnte. Beim Holen gab es die Rückfrage gar nicht.
+
+## Was WPorbit seit 1.17 tut
+
+Vor jedem Holen und Senden der Datenbank prüft WPorbit auf dem Server, ob WordPress und WP-CLI da sind und ob WP-CLI die Datenbank erreicht.
+
+- **WP-CLI erreicht die Datenbank:** Die `wp-config.php` bleibt unberührt. Das ist der Fall bei Hostpoint und bei den meisten anderen Hostern.
+- **Nur die Datenbank fehlt:** WPorbit fragt, ob es die Datei anpassen darf. Mit Ja sichert es sie in `~/.wporbit/backups/` im Home-Verzeichnis des SSH-Benutzers, ausserhalb des Web-Verzeichnisses. Dann ergänzt es den Block von oben. Die Website behält ihren bisherigen `DB_HOST` Zeichen für Zeichen, nur WP-CLI bekommt `127.0.0.1:3306`. Danach prüft WPorbit noch einmal.
+- **Nein:** Holen oder Senden bricht ab, bevor etwas angefasst wurde.
+- **Es fehlt mehr als die Datenbank,** etwa WP-CLI selbst: keine Rückfrage, denn der Block würde nicht helfen.
+- **Ein WP-CLI-Block steht schon in der Datei:** Er bleibt, wie er ist.
+
+Dieselbe Anpassung gibt es auch ohne Holen oder Senden: In der Übersicht eines Projekts steht in der Karte „Wartung“ **wp-config.php reparieren…**. Wie das abläuft, steht in der Anleitung [URL ersetzen und wp-config.php reparieren](/anleitungen/fehlerbehebung/url-ersetzen-und-wp-config-reparieren).
+
+## Kurz zusammengefasst
+
+Meldet WP-CLI „Error establishing a database connection“, während die Website läuft, ist `DB_HOST` auf `localhost` der erste Verdacht. Die Website und WP-CLI suchen den Socket an verschiedenen Orten. Ein Block, der nur für WP-CLI `127.0.0.1:3306` setzt, löst das, sofern die Datenbank auf demselben Server läuft. Liegt sie woanders, ist der Block falsch, und dann ist auch der Fehler ein anderer.
