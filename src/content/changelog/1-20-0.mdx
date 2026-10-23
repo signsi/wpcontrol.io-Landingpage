@@ -1,0 +1,19 @@
+---
+version: "1.20.0"
+date: 2026-10-23
+title: "Eine Ladeanzeige pro Ort, eigene Ordner im Container"
+type: release
+highlights:
+  - "Nur noch eine Ladeanzeige: die Statuszeile unten, mit Restzeit beim Holen und Senden"
+  - "Eigene Ordner und Dateien im Container, auch für alle Projekte"
+  - "Der Senden-Knopf sagt, worauf er wartet"
+draft: false
+---
+
+- **Eine Ladeanzeige pro Ort:** Die Statuszeile unten ist die einzige Anzeige für laufende Arbeit. Es gibt keinen zweiten Spinner mehr in der Start/Stopp-Pille, in der Seitenleiste, im Verbindungstest und in den Assistenten, und kein Band mehr unter dem Projekttitel. Beim Holen und Senden steht die Restzeit dabei: „noch ca. 3 Min.“, in der Statuszeile und im Assistenten gleich formuliert.
+- **Senden:** Ist **Jetzt senden** gesperrt, nennt der Knopf den Grund, etwa „Dateien werden verglichen…“, statt nur blass zu bleiben. Das Adressfeld bestätigt sofort, ob die Adresse stimmt.
+- **Eigene Ordner im Container:** Hänge einen Ordner oder eine Datei von deinem Mac in den Projekt-Container, zum Beispiel ein Plugin, an dem du arbeitest. Für alle Projekte gelten die Ordner unter **Einstellungen → Infrastruktur → Lokale Umgebung**, etwa eigene Claude-Skills (**Skill-Ordner…**). Standard ist nur lesen. Schlüssel, Konfiguration, die Mediathek und WPorbits eigene Daten bleiben draussen. Die Ordner gelten nur auf diesem Mac, nicht im Team, und ab dem nächsten Start des Projekts.
+- **Lokale Seite lädt nicht:** WPorbit prüft die Seite, nennt die Ursache und behebt, was sich beheben lässt.
+- **Projekt vom Mac entfernen**, im Team behalten: Das Projekt verschwindet lokal, bleibt aber im Team.
+- **Neue lokale Projekte** bekommen einen zufälligen Admin-Namen statt `wphub_admin`. Bestehende Projekte behalten ihren.
+- **Überwachung:** Das Dashboard zeigt die PHP-Version der **Website**, nicht die der Kommandozeile. Dafür liest der neue Agent 7 aus WordPress, was es im Admin für sein PHP ablegt. Damit das wirkt, einmal **Lesezugang neu einrichten…** ausführen.
