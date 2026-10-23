@@ -1,0 +1,13 @@
+---
+version: "1.20.1"
+date: 2026-10-23
+title: "PHP der Website in der Überwachung"
+type: release
+highlights:
+  - "Agent 8 liest die PHP-Version der Website aus WordPress"
+  - "Pro Site einmal Lesezugang neu einrichten"
+draft: false
+---
+
+- **Überwachung:** Behebt Agent 7. Er konnte die PHP-Version der Website nie lesen, weil WP-CLI die Transients von WordPress ausblendet. Agent 8 liest sie direkt aus der Datenbank, nur lesend und mit festem Befehl.
+- **So wirkt es:** Pro Site einmal **Lesezugang neu einrichten…** ausführen und das WordPress-Dashboard der Site öffnen. Das WPorbit-Dashboard zeigt dann die PHP-Version der Website mit dem Zeitpunkt, an dem WordPress sie zuletzt gesehen hat. Die Version der Kommandozeile zeigt es bewusst nicht.
