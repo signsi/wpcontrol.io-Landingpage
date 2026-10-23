@@ -1,0 +1,20 @@
+---
+version: "1.21.0"
+date: 2026-10-23
+title: "Fehler zeigen, wo es hakt – und Hilfe mit einem Klick"
+type: release
+highlights:
+  - "Fehlerkarte: wo es hakt, wessen Sache es ist, was schon geändert ist"
+  - "Support-Anfrage mit einem Klick, mit vollständigem Bericht"
+  - "WPorbit prüft bei Docker-, Colima- und Datenbankfehlern selbst nach"
+draft: true
+---
+
+- **Fehlerkarte:** Scheitert ein Vorgang, sagt WPorbit jetzt, **wo** es hakt (der Schritt), **wessen Sache** es ist (Deine Umgebung, WPorbit, Die Seite oder Der Server), **was schon geändert ist** und **was als Nächstes dran ist**. Das gilt für Holen, Senden, Backup, Import, Dateitransfer, URL ersetzen, Tabellen-Präfix, wp-config.php reparieren, WP-CLI und die Einrichtung. Beim Senden steht ausdrücklich, ob die Live-Seite schon angefasst wurde.
+- **Support-Anfrage mit einem Klick:** Unter der Fehlerkarte und in der Wartung gibt es **Support-Anfrage…**. Der Bericht enthält, was wir sonst erfragen müssten: den Fehler mit seiner Ausgabe, eine frische Prüfung, `wp-content` mit Drop-ins und Plugins, die Container mit Status und Logs, Platten und Versionen. Du siehst ihn vor dem Senden, Passwörter, Schlüssel und Token sind geschwärzt, und er geht nur auf Klick raus. Ohne Verbindung kannst du ihn speichern oder kopieren.
+- **WPorbit prüft selbst nach:** Bei Fehlern, die zu Docker, Colima, Platte, Container oder dem lokalen Proxy passen könnten, prüft WPorbit von unten nach oben und nennt die erste Schicht, die nicht antwortet. Etwa: die Platte der Colima-VM ist voll, der Datenbank-Container wurde wegen Speichermangels beendet oder Colima läuft nicht.
+- **Fehler in der Seite:** Ist die Datenbank in Ordnung, bricht aber ein Drop-in wie `db.php` oder ein Plugin oder Theme mit einem PHP-Fehler ab, steht das als Sache der Seite da, mit dem Namen des Verdächtigen.
+- **Ehrlichere Hinweise:** Der Hinweis zu „Error establishing a database connection“ nannte immer den Datenbank-Container. Er nennt jetzt auch Zugangsdaten, fehlende Tabellen und die Seite selbst. Ähnlich die Hinweise zu „Verbindung abgelehnt“, „Befehl nicht gefunden“ und Exit 137.
+- **Import:** Der Fehler nennt, was jetzt mit der Datenbank ist: unverändert, vorherige wiederhergestellt oder leer, mit dem Ort der Sicherheitskopie. Nur teilweise ersetzte URLs gelten nicht mehr als Erfolg.
+- **Einrichtung:** Scheitert sie, steht im Fenster die Fehlerkarte statt eines kurzen roten Satzes.
+- **Warnung statt Schweigen:** Konnten nach dem Holen, dem Import oder dem Deploy der Cache, die Permalinks oder die Dateirechte nicht gesetzt werden, steht das mit der Folge im Protokoll.
