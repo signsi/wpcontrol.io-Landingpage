@@ -1,0 +1,18 @@
+---
+version: "1.22.0"
+date: 2026-10-27
+title: "Ein Support-Formular, sicherere Deploy-Schlüssel"
+type: release
+highlights:
+  - "Support-Tab und Support-Anfrage sind ein Formular, mit Systembericht zum Anhängen"
+  - "Der Deploy-Schlüssel liegt nur fünf Minuten in der Zwischenablage"
+  - "Der Anmelde-Link ist an deine eigene Anforderung gebunden"
+draft: false
+---
+
+- **Support:** Der Support-Tab und die Support-Anfrage sind ein gemeinsames Formular. Den Systembericht hängst du auf Wunsch an. Im Support-Tab führt ein Knopf zur Anfrage für das aktuelle Projekt.
+- **Deploy-Schlüssel:** Beim Einrichten von CI/CD wird der Schlüssel als Geheimnis kopiert und nur verdeckt angezeigt. Er bleibt fünf Minuten in der Zwischenablage, die Restzeit ist sichtbar, und beim Beenden von WPorbit wird sie geleert. Der Temp-Ordner ist nur für dich lesbar.
+- **Versteckte Dateien:** Holen, Senden und Deploy überspringen versteckte Dateien und Ordner.
+- **SSH:** `~/.ssh/config` trägst du direkt in den Einstellungen unter SSH-Agent ein.
+- **Anmeldung:** Der Anmelde-Link funktioniert nur auf dem Gerät, das ihn angefordert hat.
+- **Seitenleiste:** Platzhalter und Cursor im Filterfeld sind in der dunklen Seitenleiste wieder lesbar.
