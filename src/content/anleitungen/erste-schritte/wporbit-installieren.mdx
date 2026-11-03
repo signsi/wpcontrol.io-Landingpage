@@ -1,8 +1,8 @@
 ---
 title: "WPorbit installieren und einrichten"
-description: "WPorbit herunterladen, in den Programme-Ordner legen und beim ersten Start die lokale Umgebung mit Colima, Docker, Vault und Domains einrichten lassen."
+description: "WPorbit herunterladen, in den Programme-Ordner legen und beim ersten Start die lokale Umgebung mit Colima, Docker und lokalen Domains einrichten lassen."
 order: 10
-updated: 2026-09-24
+updated: 2026-11-03
 type: anleitung
 audience: einsteiger
 duration: "15 Minuten"
@@ -19,21 +19,19 @@ Diese Anleitung führt dich vom Download bis zu einer lokalen Umgebung, in der W
 
 ## Was WPorbit auf deinem Mac braucht
 
-WPorbit ist eine macOS-App. Die WordPress-Projekte selbst laufen in Containern. Dafür braucht es eine Container-Laufzeit und ein paar Werkzeuge im Hintergrund. Die musst du nicht selbst zusammensuchen: Der Einrichtungsassistent installiert sie beim ersten Start über Homebrew.
+WPorbit ist eine macOS-App. Die WordPress-Projekte selbst laufen in Containern. Dafür braucht es eine Container-Laufzeit und ein paar Werkzeuge im Hintergrund. Die musst du nicht installieren und nicht zusammensuchen: Sie stecken in der App. Homebrew und Docker Desktop brauchst du nicht.
 
-| Komponente | Wofür | Wer installiert sie |
+| Komponente | Wofür | Woher |
 | --- | --- | --- |
-| macOS 15 oder neuer | Voraussetzung für die App | du |
-| Homebrew | installiert alle weiteren Abhängigkeiten | du, einmalig (WPorbit zeigt dir den Befehl) |
-| Container-Laufzeit (Colima) | führt die Container jedes Projekts aus | WPorbit |
-| Docker CLI und Docker Compose | starten und steuern die Container | WPorbit |
-| HashiCorp Vault | verwahrt die Zugangsdaten der Projekte | WPorbit |
-| certutil (nss), optional | macht das lokale HTTPS-Zertifikat auch für Firefox und Chrome gültig | WPorbit |
+| macOS 15 oder neuer, Apple Silicon | Voraussetzung für die App | du |
+| Container-Laufzeit (Colima) | führt die Container jedes Projekts aus | in der App |
+| Docker CLI und Docker Compose | starten und steuern die Container | in der App |
+| Caddy | macht deine Projekte unter `meinprojekt.wporbit` per HTTPS erreichbar | in der App |
 
-Docker Desktop brauchst du nicht. Colima übernimmt diese Aufgabe.
+Deine Zugangsdaten legt WPorbit im Schlüsselbund deines Macs ab. Ein eigenes Programm dafür gibt es nicht mehr.
 
-<Callout variant="hinweis" title="Internet und Mac-Passwort bereithalten">
-Beim ersten Start lädt WPorbit mehrere Programme und ein VM-Abbild von rund 500 MB herunter. Für die lokalen Domains fragt macOS einmal nach deinem Mac-Passwort.
+<Callout variant="hinweis" title="Internet und eine Freigabe bereithalten">
+Beim ersten Start lädt WPorbit ein VM-Abbild von rund 320 MB herunter. Für die lokalen Domains musst du WPorbit einmal in den Systemeinstellungen erlauben und ein Zertifikat bestätigen (Passwort oder Touch ID).
 </Callout>
 
 ## WPorbit herunterladen und installieren
@@ -66,41 +64,35 @@ WPorbit zeigt dir zuerst die Anmeldung. Wie du dich registrierst und den Anmelde
 
 ## Die lokale Umgebung einrichten
 
-Nach der Anmeldung erscheint der Bildschirm „Willkommen bei WPorbit“. Er zählt auf, was jetzt eingerichtet wird: **Colima & Docker**, **Vault** und **Lokale Domains**.
-
-![Einrichtungsassistent „Willkommen bei WPorbit“ mit Colima & Docker, Vault, Lokale Domains und dem Button „Einrichten“](/anleitungen/erste-schritte/wporbit-installieren/02-willkommen.webp)
+Nach der Anmeldung erscheint der Bildschirm „Willkommen bei WPorbit“. Er zählt auf, was jetzt eingerichtet wird: **Colima & Docker** und **Lokale Domains**.
 
 <Steps>
 
 <Step title="Einrichtung starten">
 
-Klicke auf **Einrichten**. WPorbit prüft zuerst, ob Homebrew vorhanden ist.
-
-Fehlt Homebrew, erscheint „Homebrew wird benötigt“ mit dem Installationsbefehl. Kopiere ihn über das Kopier-Symbol, führe ihn im Terminal aus und klicke danach auf **Erneut suchen**.
-
-![Bildschirm „Homebrew wird benötigt“ mit Installationsbefehl und dem Button „Erneut suchen“](/anleitungen/erste-schritte/wporbit-installieren/03-homebrew-fehlt.webp)
+Klicke auf **Einrichten**. WPorbit prüft zuerst, ob alles Nötige in der App steckt. Ist das der Fall, geht es sofort weiter. Fehlt etwas, weil die Kopie beschädigt ist, steht im Fenster, was zu tun ist: Lade WPorbit neu und ersetze die alte Kopie.
 
 </Step>
 
-<Step title="Programme installieren lassen">
+<Step title="Hintergrunddienst erlauben">
 
-WPorbit installiert jetzt nacheinander, was noch fehlt, zum Beispiel „Container-Laufzeit (Colima) wird installiert…“. Was schon da ist, wird übersprungen. Je nach Verbindung dauert das einige Minuten.
+Für die lokalen Domains braucht WPorbit einen kleinen Dienst im Hintergrund. macOS verlangt dafür deine Freigabe. Es erscheint „Eine Freigabe fehlt noch“, und WPorbit öffnet die Systemeinstellungen.
 
-Danach konfiguriert WPorbit Vault. Das Vault-Token legt es selbst an, du musst dir nichts notieren.
+Gehe dort zu **Allgemein → Anmeldeobjekte & Erweiterungen**, suche **WPorbit** im Abschnitt „Im Hintergrund erlauben“ und lege den Schalter um. Danach geht es im WPorbit-Fenster von allein weiter. Du musst nichts weiter anklicken.
 
 </Step>
 
-<Step title="Lokale Domains einrichten">
+<Step title="Zertifikat bestätigen">
 
-Bei „Lokale Domains werden eingerichtet…“ fragt macOS nach deinem Mac-Passwort. Gib es ein. Danach sind deine Projekte unter Adressen wie `https://meinprojekt.wporbit` erreichbar.
+Bei „Lokale Domains werden eingerichtet…“ fragt macOS ein zweites Mal: Du sollst das lokale Zertifikat von WPorbit als vertrauenswürdig bestätigen. Gib dein Mac-Passwort ein oder nutze Touch ID. Danach sind deine Projekte unter Adressen wie `https://meinprojekt.wporbit` erreichbar, in Safari ohne Warnung. Firefox richtet WPorbit selbst so ein, dass es das Zertifikat ebenfalls kennt. Starte Firefox danach einmal neu.
 
-Brichst du die Passwortabfrage ab, schliesst WPorbit die Einrichtung trotzdem ab. Die lokalen Domains fehlen dann, und die Projekte sind vorerst nur über ihren localhost-Port erreichbar. Nachholen kannst du das später über **Einstellungen → Diagnose & Support → Einrichtungsassistent neu starten**.
+Brichst du die Abfrage ab, schliesst WPorbit die Einrichtung trotzdem ab. Die lokalen Domains fehlen dann, und die Projekte sind vorerst nur über ihren localhost-Port erreichbar. Nachholen kannst du das später über **Einstellungen → Diagnose & Support → Einrichtungsassistent neu starten**.
 
 </Step>
 
 <Step title="Dienste starten lassen">
 
-Zum Schluss startet WPorbit Colima und Vault: „Dienste werden gestartet…“. Beim allerersten Start lädt Colima ein VM-Abbild von rund 500 MB und fährt danach die virtuelle Maschine hoch. Das passiert nur dieses eine Mal. Lass das Fenster offen.
+Zum Schluss startet WPorbit Colima: „Dienste werden gestartet…“. Beim allerersten Start lädt Colima ein VM-Abbild von rund 320 MB und fährt danach die virtuelle Maschine hoch. Das passiert nur dieses eine Mal und dauert je nach Verbindung einige Minuten. Lass das Fenster offen.
 
 </Step>
 
@@ -108,14 +100,10 @@ Zum Schluss startet WPorbit Colima und Vault: „Dienste werden gestartet…“.
 
 Am Ende steht der tatsächliche Zustand jeder Komponente:
 
-- **Alles bereit!** Die Container-Laufzeit, Vault und die lokalen Domains laufen.
-- **Fast fertig** Etwas Wichtiges läuft noch nicht, meistens die Container-Laufzeit. Unter der Liste steht dann genau ein Knopf, der das behebt, zum Beispiel **Colima installieren**, **Colima jetzt starten** oder **Vault starten**. Mit **Voraussetzungen erneut prüfen** fragt WPorbit den Zustand noch einmal ab.
+- **Alles bereit!** Die Container-Laufzeit und die lokalen Domains laufen.
+- **Fast fertig** Etwas Wichtiges läuft noch nicht, meistens die Container-Laufzeit. Unter der Liste steht dann genau ein Knopf, der das behebt, zum Beispiel **Colima jetzt starten**. Mit **Voraussetzungen erneut prüfen** fragt WPorbit den Zustand noch einmal ab.
 
 Ein orangefarbenes Warnzeichen bei „Lokale Domains“ blockiert nichts. Alles andere funktioniert trotzdem.
-
-![Abschluss-Bildschirm „Alles bereit!“ mit drei grünen Zeilen und der Frage „Wie möchtest du starten?“](/anleitungen/erste-schritte/wporbit-installieren/04-alles-bereit.webp)
-
-![Abschluss-Bildschirm „Fast fertig“: Colima läuft nicht, Button „Colima jetzt starten“](/anleitungen/erste-schritte/wporbit-installieren/05-fast-fertig.webp)
 
 </Step>
 
@@ -143,15 +131,15 @@ Die häufigsten Ursachen und ihre Lösungen stehen unter [Einrichtung schlägt f
 
 ## Bei jedem weiteren Start
 
-Die Einrichtung läuft nur einmal. Bei jedem weiteren Start zeigt WPorbit kurz „Umgebung wird gestartet“ und prüft Colima, Docker und Vault. Läuft alles, schliesst sich das Fenster von selbst. Fehlt etwas, bleibt es offen und bietet die passende Reparatur an.
+Die Einrichtung läuft nur einmal. Bei jedem weiteren Start zeigt WPorbit kurz „Umgebung wird gestartet“ und prüft Colima und Docker. Läuft alles, schliesst sich das Fenster von selbst. Fehlt etwas, bleibt es offen und bietet die passende Reparatur an.
 
 Updates bekommst du direkt in der App über **Nach Updates suchen…**. Mehr dazu in [WPorbit aktualisieren](/anleitungen/wartung/wporbit-aktualisieren).
 
 <KeyTakeaways>
 
-- WPorbit braucht macOS 15 oder neuer und Homebrew. Alles andere installiert der Einrichtungsassistent.
-- Die Projekte laufen in Containern über Colima. Docker Desktop brauchst du nicht.
-- Der erste Start lädt rund 500 MB und fragt einmal nach deinem Mac-Passwort für die lokalen Domains.
+- WPorbit braucht macOS 15 oder neuer auf einem Mac mit Apple Silicon. Alles andere steckt in der App: kein Homebrew, kein Docker Desktop, kein Vault.
+- Die Projekte laufen in Containern über Colima.
+- Der erste Start lädt rund 320 MB. macOS fragt zweimal: Du erlaubst den Hintergrunddienst in den Systemeinstellungen und bestätigst das Zertifikat.
 - „Fast fertig“ heisst: Ein Knopf unter der Liste behebt, was noch fehlt.
 
 </KeyTakeaways>
