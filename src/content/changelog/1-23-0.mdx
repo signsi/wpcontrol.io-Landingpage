@@ -1,0 +1,23 @@
+---
+version: "1.23.0"
+date: 2026-11-03
+title: "Start ohne Homebrew, Zugangsdaten im Schlüsselbund"
+type: release
+highlights:
+  - "Colima, Docker und Caddy liegen in der App: ein frischer Mac braucht nichts vorab zu installieren"
+  - "Projekt-Zugangsdaten liegen im Schlüsselbund, der Vault ist weg"
+  - "Vor dem Holen vom Server sichert WPorbit den lokalen Stand"
+draft: false
+---
+
+- **Ohne Homebrew:** Colima, Lima, Docker, Docker Compose und Caddy bringt die App selbst mit (für Apple Silicon). Ein Assistent führt durch die Freigaben, die macOS verlangt. Wer schon eine alte Einrichtung hat, wird beim Update umgestellt.
+- **Zugangsdaten im Schlüsselbund:** Die Zugangsdaten deiner Projekte liegen im macOS-Schlüsselbund. Den Vault gibt es nicht mehr; der Reiter heisst jetzt **Zugangsdaten**. Mit **Alle exportieren…** sicherst du sie als einzelne Dateien, mit **Alle verschlüsselt sichern…** und **Backup wiederherstellen…** als eine verschlüsselte Datei.
+- **Demo-Projekt:** Das Demo-Projekt richtet sich nach dem Einrichten selbst ein.
+- **Lokale Domains:** Die Namen `*.wporbit` löst WPorbit selbst auf, ein zusätzlicher Dienst (dnsmasq) ist nicht mehr nötig. Firefox vertraut dem Zertifikat ohne Warnung.
+- **Datenbank ohne Rosetta:** Die Datenbank läuft nativ auf Apple Silicon, Rosetta ist nicht mehr nötig.
+- **Holen vom Server:** Vor dem Holen sichert WPorbit den lokalen Stand (vorgegeben an) und prüft, ob genug Platz da ist, bevor es das Grosse lädt.
+- **Neustart:** Nach einem Neustart von Colima kommen die Projekte wieder hoch. Der Datenbank-Check füllt das Protokoll nicht mehr mit „Access denied“-Zeilen.
+- **SSH:** Ist die Verbindung zum SSH-Agenten abgebrochen, sagt WPorbit das und empfiehlt, Colima neu zu starten. In `~/.ssh/config` ergänzt es nur die Zeilen, die fehlen, und erkennt einen abweichenden Wert.
+- **Fehlerkarte:** Scheitert ein Wechsel der PHP- oder WordPress-Version oder das Angleichen des Tabellenpräfixes, zeigt WPorbit die Fehlerkarte mit **Support-Anfrage…**.
+- **Versionshinweis:** Weicht das WordPress im Container von der eingestellten Version ab, nennt der Hinweis beide Versionen und sagt, dass **Ändern…** sie angleicht.
+- **Aussehen:** Feinarbeit an Schrift und Bewegungen der Oberfläche.
