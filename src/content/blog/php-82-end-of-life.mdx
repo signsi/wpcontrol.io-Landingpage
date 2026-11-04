@@ -1,0 +1,132 @@
+---
+title: "PHP 8.2 läuft am 31. Dezember aus: der Upgrade-Plan für alle Kundenprojekte"
+seoTitle: "PHP 8.2 Ende: Upgrade-Plan"
+description: "Am 31.12.2026 enden die Sicherheitsupdates für PHP 8.2. So findest du, welche Sites betroffen sind, und stellst sie in acht Wochen sauber um."
+date: 2026-11-04
+category: hosting
+tags: [php, updates, hosting]
+author: patrick
+draft: false
+---
+
+<KeyTakeaways>
+
+- Am 31. Dezember 2026 endet die Unterstützung für PHP 8.2 mit Sicherheitsupdates. Danach bleiben Lücken in PHP selbst offen, egal wie gut Plugins und WordPress gepflegt sind.
+- Nach den Zahlen von wordpress.org laufen rund 23 % der Sites auf PHP 8.2, und knapp ein Drittel läuft schon auf PHP 8.1 oder älter, also ohne Updates.
+- Der Plan hat vier Schritte: Inventar, lokal testen, Staging, Live beim Hoster umstellen. Der aufwendigste ist der erste, weil niemand weiss, welche Site worauf läuft.
+- Zielversion ist PHP 8.3 (von WordPress empfohlen, Updates bis Ende 2027) oder PHP 8.4 (bis Ende 2028).
+- Stand: 4. November 2026, getestet mit WordPress 7.x und WPorbit 1.x.
+
+</KeyTakeaways>
+
+Es ist Montagmorgen im Dezember. Ein Kunde schreibt: „Mein Hoster schickt mir eine Mail, dass meine PHP-Version nicht mehr unterstützt wird. Ist das schlimm?“ Du öffnest das Projekt, sagst „kurz nachschauen“ und merkst, dass du die Antwort nicht kennst. Welche PHP-Version läuft dort? Wer stellt sie um? Und gilt dasselbe für die anderen dreissig Sites?
+
+Dieser Beitrag ist der Plan, den du vorher haben willst. Knapp acht Wochen reichen dafür, wenn du jetzt anfängst.
+
+## Was „Ende der Sicherheitsupdates“ praktisch heisst
+
+PHP-Versionen haben zwei Lebensphasen. In der ersten werden Fehler behoben und Sicherheitslücken geschlossen, in der zweiten nur noch Sicherheitslücken. Danach gibt es gar nichts mehr. Für PHP 8.2 ist es nach [php.net](https://www.php.net/supported-versions.php) so weit:
+
+| Version | Sicherheitsupdates bis |
+|---|---|
+| PHP 8.1 | 31.12.2025 (bereits vorbei) |
+| PHP 8.2 | **31.12.2026** |
+| PHP 8.3 | 31.12.2027 |
+| PHP 8.4 | 31.12.2028 |
+| PHP 8.5 | 31.12.2029 |
+
+Heisst das, dass die Websites am 1. Januar kaputt sind? Nein. Sie laufen weiter. Was sich ändert: Wird in PHP 8.2 danach eine Lücke gefunden, gibt es keinen Fix mehr. Ein Plugin kann noch so aktuell sein, die Lücke liegt darunter. Und je länger eine Version ausgelaufen ist, desto eher ziehen auch Plugins nach und verlangen eine neuere PHP-Version.
+
+Das Problem ist nicht neu, es ist nur gerade wieder dran. Nach den [Zahlen von wordpress.org](https://wordpress.org/about/stats/) läuft PHP auf den gemeldeten Sites etwa so: 8.3 mit 27,7 %, 8.2 mit 22,8 %, 8.4 mit 10,5 %, 8.1 mit 9,3 %, 7.4 mit 14,7 %. Zusammengezählt sind es rund 33 % auf PHP 8.1 oder älter. Die Statistik erfasst nur Sites, die sich bei wordpress.org melden, und sagt nichts über deine Kundschaft. Aber sie zeigt: Du bist mit alten Versionen nicht allein, und die Hoster auch nicht.
+
+WordPress selbst [empfiehlt](https://wordpress.org/about/requirements/) PHP 8.3 oder neuer. Es läuft noch mit PHP 7.4, weist aber ausdrücklich darauf hin, dass diese Versionen das Ende ihrer Unterstützung erreicht haben.
+
+## Schritt 1: Inventar, welche Site läuft worauf?
+
+Ohne Liste kein Plan. Du brauchst pro Site vier Angaben: Domain, PHP-Version, Hoster, wer beim Hoster umstellen darf.
+
+Die PHP-Version findest du auf mehreren Wegen:
+
+- Im Hosting-Panel des Kunden, meist unter „PHP-Version“ oder „PHP-Einstellungen“.
+- In WordPress unter „Werkzeuge → Website-Zustand → Info → Server“.
+- Von aussen: Viele Server nennen die Version im Antwortkopf (`X-Powered-By: PHP/8.2.x`). Manche verstecken sie bewusst.
+
+Achte bei SSH auf eine Falle: `php -v` auf der Kommandozeile zeigt oft nicht das PHP, mit dem die Website läuft. Das sind zwei Programme mit eigenen Einstellungen. Für das Inventar zählt die Version der Website.
+
+In WPorbit steht die PHP-Version jeder Site mit Lesezugang in der Projektliste im Dashboard und lässt sich sortieren. Das Dashboard liest sie nur dort, wo die Website sie selbst meldet, nicht von der Kommandozeile. Meldet eine Site sie nicht, steht dort „unbekannt“ mit dem Hinweis, was fehlt. Wie das Dashboard funktioniert, steht in der [Anleitung zum Team-Dashboard](/anleitungen/wartung/team-dashboard-nutzen).
+
+Sortiere die Liste am Ende nach Version. Alles auf 8.2 oder älter kommt in den Plan, und alles mit 8.1 oder älter kommt zuerst.
+
+## Schritt 2: Lokal testen
+
+Nimm eine Site, kopiere sie auf deinen Rechner und stelle dort die PHP-Version um. Bei WPorbit geht das pro Projekt im Dialog „PHP- und WordPress-Version“, das Projekt wird dabei vorher gesichert ([Anleitung](/anleitungen/entwicklung/php-und-wordpress-version-wechseln)). Mit jedem anderen lokalen Werkzeug geht es auch, entscheidend ist der Ablauf:
+
+1. `WP_DEBUG` und `WP_DEBUG_LOG` einschalten, damit Hinweise in der Logdatei landen.
+2. Die Site auf der neuen PHP-Version durchklicken: Startseite, ein Beitrag, Formular, Suche, Backend, Plugin-Seiten.
+3. Das Log lesen, nicht nur die Seite ansehen.
+
+Was du im Log suchst, sind **Deprecations**: Meldungen, dass etwas in einer künftigen Version nicht mehr geht. Sie sind noch keine Fehler, aber sie sagen dir, was als Nächstes bricht. Zwei bekannte Beispiele: Seit PHP 8.2 sind dynamische Eigenschaften veraltet, und seit PHP 8.4 Parameter mit Standardwert `null` ohne ausdrücklich nullbaren Typ. Beides stammt oft aus älterem Code. Die vollständigen Listen stehen in den Migrationsanleitungen für [8.3](https://www.php.net/manual/de/migration83.php) und [8.4](https://www.php.net/manual/de/migration84.php).
+
+<Callout variant="tipp" title="Springe nicht auf die neueste Version">
+Für den Sprung von 8.2 ist PHP 8.3 der ruhige Weg: von WordPress empfohlen, ein Jahr länger gepflegt, und weniger Bruchstellen als beim Sprung auf 8.4. Hast du eine Site, bei der 8.3 ohne Warnung läuft, probiere dort 8.4. Wer zwei Schritte auf einmal macht, findet einen Fehler schwerer.
+</Callout>
+
+## Schritt 3: Die üblichen Bruchstellen
+
+Die meisten Probleme gehen bei Kundenprojekten auf drei Dinge zurück:
+
+| Bruchstelle | Woran du sie erkennst | Was du tust |
+|---|---|---|
+| Plugin ohne Updates seit Jahren | Deprecations oder Fehler im Log, Autor reagiert nicht | Ersatz planen, Plugin zuerst auf die Ersatzliste setzen |
+| Page-Builder oder Theme in alter Version | Backend lädt nicht oder zeigt leere Bereiche | Zuerst Builder und Theme aktualisieren, dann PHP |
+| Eigene Snippets in `functions.php` oder Child-Theme | Fehler mit Dateiname und Zeile im Log | Code anpassen oder das Snippet entfernen, wenn es keiner mehr braucht |
+
+Ein Plugin, das sich nicht auf eine unterstützte PHP-Version bringen lässt, ist ein Befund, kein Hindernis. Das Plugin ist das eigentliche Risiko, nicht die PHP-Version.
+
+## Schritt 4: Staging, dann Live
+
+Im Hosting-Panel ist die Umstellung meist ein Klick. Der Klick ist nicht das Risiko, das Risiko ist, ihn ohne Probe zu machen.
+
+<Steps>
+
+<Step title="Sicherung">
+
+Datenbank und Dateien sichern, bevor du etwas umstellst. Prüfe, dass sich die Sicherung wirklich einspielen lässt.
+
+</Step>
+
+<Step title="Staging">
+
+Die Staging-Kopie des Hosters auf die neue Version stellen und durchklicken. Wenn der Hoster kein Staging anbietet, ist das ein Punkt für das Gespräch mit dem Kunden.
+
+</Step>
+
+<Step title="Live, ausserhalb der Stosszeit">
+
+Zu einer Zeit umstellen, in der wenig los ist, und danach die Seiten prüfen, die Geld oder Anfragen bringen: Kasse, Formulare, Login.
+
+</Step>
+
+<Step title="Zurückstellen können">
+
+Fast jedes Panel erlaubt es, die PHP-Version wieder zu ändern. Merke dir, wo, bevor du es brauchst.
+
+</Step>
+
+</Steps>
+
+## Wenn der Hoster nicht mitzieht
+
+Manche Hoster bieten PHP 8.3 nicht an, oder nur in einem Tarif, den der Kunde nicht gebucht hat. Dann hast du drei Möglichkeiten:
+
+1. **Den Tarif wechseln**, wenn der Hoster die neue Version im nächsten Paket anbietet.
+2. **Den Hoster wechseln.** Das ist oft aufwendiger, als es klingt, aber ein Hoster, der im November 2026 kein PHP 8.3 anbietet, hat vermutlich das eigentliche Problem.
+3. **Das Risiko aufschreiben** und mit dem Kunden schriftlich festhalten, bis wann was passiert. Auf einer ausgelaufenen Version zu bleiben ist eine Entscheidung, die der Kunde kennen muss.
+
+Welche der drei gilt, gehört in die Liste aus Schritt 1. So siehst du Anfang Dezember, wo noch Arbeit offen ist.
+
+## Der Anfang für nächste Woche
+
+Mach die Liste. Eine Zeile pro Site, mit PHP-Version, Hoster und der Person, die umstellen darf. Dann nimm die Site mit dem geringsten Risiko, stelle sie lokal auf PHP 8.3 und lies das Log. Das dauert eine Stunde und sagt dir, ob dein Plan bis Silvester aufgeht.
+
+Wenn du viele Projekte betreust: WPorbit zeigt die PHP-Version jeder Site mit Lesezugang im Dashboard und lässt dich ein lokales Projekt mit einem Dialog auf eine andere PHP-Version stellen. Das ersetzt die Planung nicht, aber es spart den Teil, der am meisten Zeit frisst: herauszufinden, wo du anfangen musst.
