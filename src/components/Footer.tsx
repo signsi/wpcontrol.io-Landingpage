@@ -20,7 +20,7 @@ function PrivacyBadge() {
 
 function SwissBadge() {
   return (
-    <div className="flex items-center gap-2.5 border border-line rounded-md px-3 py-2">
+    <Link to="/entwickelt-und-gehostet-in-der-schweiz" className="flex items-center gap-2.5 border border-line rounded-md px-3 py-2 transition-colors hover:border-tertiary/40">
       {/* Swiss cross as SVG — no emoji */}
       <svg width="15" height="15" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0" aria-hidden="true">
         <rect width="20" height="20" rx="2" fill="#D52B1E"/>
@@ -30,7 +30,7 @@ function SwissBadge() {
       <span className="text-[0.75rem] font-semibold text-secondary leading-tight">
         Entwickelt &amp;<br />gehostet in der Schweiz
       </span>
-    </div>
+    </Link>
   )
 }
 
