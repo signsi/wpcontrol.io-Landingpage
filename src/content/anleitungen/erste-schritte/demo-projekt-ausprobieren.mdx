@@ -2,7 +2,7 @@
 title: "Das Demo-Projekt ausprobieren"
 description: "Was das vorbereitete Projekt „Mein erstes WordPress“ ist, wie du es einrichtest und startest und wie du es wieder loswirst."
 order: 30
-updated: 2026-09-24
+updated: 2026-11-11
 type: anleitung
 audience: einsteiger
 duration: "5 Minuten"
@@ -27,15 +27,17 @@ Damit du WPorbit nicht vor einer leeren Liste kennenlernst, legt die App beim er
 | WordPress-Version | die neueste |
 | Server | keiner, das Projekt ist rein lokal |
 
-WPorbit legt es nur an, wenn die Projektliste leer ist, also beim ersten Start. Zu Beginn ist es noch nicht eingerichtet: Es gibt noch keine Container und keine WordPress-Installation. Das übernimmt der erste Schritt unten.
+WPorbit legt es nur an, wenn die Projektliste leer ist, also beim ersten Start. Sobald Colima nach der Einrichtung läuft, richtet WPorbit das Projekt einmalig selbst ein: Container aufsetzen und WordPress installieren. Du musst dafür nichts anklicken. Brichst du die Einrichtung ab oder schlägt sie fehl, bleibt das Projekt unvollständig, und du richtest es von Hand ein, wie unten beschrieben.
 
 ## Demo-Projekt öffnen
 
-Am Ende der Einrichtung fragt WPorbit „Wie möchtest du starten?“. Klicke auf **Demo-Projekt ausprobieren**. Das Hauptfenster öffnet sich, und das Demo-Projekt ist bereits ausgewählt.
+Am Ende der Einrichtung fragt WPorbit „Wie möchtest du starten?“. Klicke auf **Demo-Projekt ausprobieren**. Das Hauptfenster öffnet sich, und das Demo-Projekt ist bereits ausgewählt. Währenddessen richtet WPorbit es im Hintergrund ein. Den Fortschritt zeigt die Statuszeile am unteren Rand.
 
 Hast du stattdessen **Projekt hinzufügen** gewählt oder die App neu gestartet, findest du **Mein erstes WordPress** jederzeit in der Seitenleiste.
 
-## Demo-Projekt einrichten und starten
+## Demo-Projekt von Hand einrichten
+
+Normalerweise ist das Projekt nach wenigen Minuten bereit und läuft. Steht in der **Übersicht** stattdessen der Kasten „Willkommen bei WPorbit!“ mit dem Knopf **Lokale Umgebung einrichten…**, ist die automatische Einrichtung nicht gelaufen oder nicht zu Ende gekommen. Dann geht es so:
 
 <Steps>
 
@@ -76,7 +78,7 @@ Das Projekt läuft jetzt. In der Kopfzeile erscheinen **Lokale Website ↗** und
 </Steps>
 
 <Callout variant="hinweis" title="Knöpfe ausgegraut?">
-Solange Colima oder Vault nicht laufen, lässt sich nichts einrichten oder starten. Unten in der Seitenleiste steht dann zum Beispiel „Colima ist nicht gestartet“. Ein Klick darauf behebt es. Mehr dazu in [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
+Solange Colima nicht läuft, lässt sich nichts einrichten oder starten. Unten in der Seitenleiste steht dann zum Beispiel „Colima ist nicht gestartet“. Ein Klick darauf behebt es. Mehr dazu in [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
 </Callout>
 
 ## Was du am Demo-Projekt ausprobieren kannst
@@ -103,7 +105,7 @@ Details stehen in [Projekte organisieren und löschen](/anleitungen/projekte/pro
 <KeyTakeaways>
 
 - Das Demo-Projekt heisst „Mein erstes WordPress“ und ist eine leere, rein lokale WordPress-Installation.
-- **Lokale Umgebung einrichten…** → **Weiter** → **Starten** richtet es ein und startet es.
+- WPorbit richtet es nach der Einrichtung selbst ein. Hat das nicht geklappt, hilft **Lokale Umgebung einrichten…** → **Weiter** → **Starten**.
 - Danach öffnen **Lokale Website ↗** und **WP-Admin ↗** die Seite und das Backend.
 - WPorbit legt es nur bei leerer Projektliste an. Entfernen kannst du es jederzeit.
 

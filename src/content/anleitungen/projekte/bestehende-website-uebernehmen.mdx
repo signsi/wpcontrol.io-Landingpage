@@ -2,7 +2,7 @@
 title: "Eine bestehende Website übernehmen"
 description: "Eine Live-Seite per SSH mit WPorbit verbinden, Datenbank und Inhalte vom Server holen und lokal daran weiterarbeiten, ohne die Live-Seite zu verändern."
 order: 10
-updated: 2026-09-24
+updated: 2026-11-11
 type: anleitung
 audience: einsteiger
 duration: "10–20 Minuten"
@@ -18,7 +18,7 @@ draft: false
 Die meisten Kundenprojekte gibt es schon: Die Website läuft bei einem Hoster, und du willst lokal daran arbeiten. Dafür verbindest du WPorbit per SSH mit dem Server. WPorbit holt Datenbank und Inhalte, baut daraus eine lokale Umgebung und ersetzt die Live-Adresse durch die lokale.
 
 <Callout variant="hinweis" title="Was du brauchst">
-Einen SSH-Zugang zum Server (Hostname, Benutzer, eventuell Port und Passwort) und den Pfad, unter dem WordPress auf dem Server liegt. Docker (Colima) und Vault müssen laufen, damit WPorbit die lokale Umgebung einrichten kann.
+Einen SSH-Zugang zum Server (Hostname, Benutzer, eventuell Port und Passwort) und den Pfad, unter dem WordPress auf dem Server liegt. Die Container-Laufzeit (Colima/Docker) muss laufen, damit WPorbit die lokale Umgebung einrichten kann.
 </Callout>
 
 ## Projekt mit dem Server verbinden
@@ -57,16 +57,14 @@ Ganz unten trägst du die **Live-Adresse** ein, zum Beispiel `kunde.ch`. `https:
 
 </Step>
 
-<Step title="Optional: Werte aus Vault oder einer .env übernehmen">
+<Step title="Optional: Werte aus dem Schlüsselbund oder einer .env übernehmen">
 
 Statt alles einzutippen, kannst du die Werte übernehmen:
 
-- **Aus Vault laden**: Über **Durchsuchen** suchst du nach einer Domain und klickst bei einem Eintrag auf **Übernehmen**.
+- **Aus Schlüsselbund laden**: Über **Durchsuchen** suchst du nach einer Domain und klickst bei einem Eintrag auf **Übernehmen**.
 - **.env-Datei importieren** oder **Aus Zwischenablage einfügen**: WPorbit liest die Datei und zeigt eine „Import-Analyse“ mit jedem Schlüssel und seinem Status.
 
 Pflicht sind vier Werte: Live-Adresse, Server, Benutzer und Web-Root. Fehlt einer, steht das in der Analyse, und **Projekt anlegen** bleibt gesperrt, bis du ihn ergänzt hast. Was du ins Formular tippst, hat Vorrang vor der Datei.
-
-![Import-Analyse nach dem Einfügen einer .env mit Fantasiewerten: Status „Bereit zum Speichern“, Werte übernommen ins Formular](/anleitungen/projekte/bestehende-website-uebernehmen/03-import-analyse.webp)
 
 </Step>
 
@@ -74,7 +72,7 @@ Pflicht sind vier Werte: Live-Adresse, Server, Benutzer und Web-Root. Fehlt eine
 
 Nach einer erfolgreichen Analyse erscheint der Schalter **Lokale Installation direkt einrichten**. Ist er an, holt WPorbit nach dem Anlegen sofort die Daten vom Server, ohne leere WordPress-Zwischeninstallation. Geholt werden dann Datenbank, Plugins und Uploads.
 
-Klicke auf **Projekt anlegen**. Hast du Werte aus einer `.env` oder aus Vault übernommen, speichert WPorbit sie in Vault, legt eine `.env` im Projektordner ab und prüft danach die Verbindung zum Server.
+Klicke auf **Projekt anlegen**. Hast du Werte aus einer `.env` oder aus dem Schlüsselbund übernommen, speichert WPorbit die Zugangsdaten verschlüsselt im macOS-Schlüsselbund (ein Eintrag pro Projekt) und prüft danach die Verbindung zum Server. Eine `.env` im Projektordner legt WPorbit dafür nicht an.
 
 </Step>
 
@@ -117,7 +115,7 @@ Mehr zu Holen, Senden und Deployen steht unter [Holen, Senden und Deployen](/anl
 <KeyTakeaways>
 
 - **Projekt hinzufügen** → **Mit einem Server verbinden**: Pflicht sind Live-Adresse, Server, Benutzer und Web-Root.
-- Eine `.env` oder ein Vault-Eintrag füllt das Formular vor. Was du tippst, hat Vorrang.
+- Eine `.env` oder ein Schlüsselbund-Eintrag füllt das Formular vor. Was du tippst, hat Vorrang.
 - **Lokale Umgebung einrichten…** baut Docker und WordPress auf und holt die gewählten Daten.
 - Bei grossen Websites wählst du vor dem Übertragen die Upload-Ordner aus.
 

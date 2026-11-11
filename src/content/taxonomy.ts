@@ -66,7 +66,7 @@ export const guideCategories: TaxonomyEntry[] = [
     label: 'Erste Schritte',
     description: 'Erste Schritte mit WPorbit: App installieren, anmelden und Lizenz aktivieren, das Demo-Projekt ausprobieren und das erste WordPress-Projekt anlegen.',
     intro:
-      'Starte mit der Installation: Sie richtet Colima, Docker, Vault und lokale Domains auf deinem Mac ein. Danach führen dich die Anleitungen über die Anmeldung und das Demo-Projekt zu deinem ersten eigenen Projekt. Begriffe, die unterwegs auftauchen, erklärt das Glossar.',
+      'Starte mit der Installation: Sie richtet auf deinem Mac die Container-Umgebung und die lokalen Domains ein. Danach führen dich die Anleitungen über die Anmeldung und das Demo-Projekt zu deinem ersten eigenen Projekt. Begriffe, die unterwegs auftauchen, erklärt das Glossar.',
   },
   {
     slug: 'projekte',
@@ -91,10 +91,10 @@ export const guideCategories: TaxonomyEntry[] = [
   },
   {
     slug: 'zugaenge',
-    label: 'Zugänge & Vault',
-    description: 'Zugangsdaten in WPorbit sicher verwalten: im Vault hinterlegen, Projekte im Team teilen, neue Macs anmelden und Zugriffe entziehen, wenn jemand geht.',
+    label: 'Zugänge',
+    description: 'Zugangsdaten in WPorbit sicher verwalten: im Schlüsselbund ablegen, Projekte im Team teilen, neue Macs anmelden und Zugriffe entziehen, wenn jemand geht.',
     intro:
-      'Zugangsdaten liegen in WPorbit verschlüsselt im Vault, beim jeweiligen Projekt. Mit Cloud teilst du Projekte samt Server-Zugang im Team. Die Anleitungen decken den ganzen Ablauf ab, vom ersten Eintrag bis zum Austritt eines Teammitglieds.',
+      'Zugangsdaten liegen in WPorbit verschlüsselt im macOS-Schlüsselbund, beim jeweiligen Projekt. Mit Cloud teilst du Projekte samt Server-Zugang im Team. Die Anleitungen decken den ganzen Ablauf ab, vom ersten Eintrag bis zum Austritt eines Teammitglieds.',
   },
   {
     slug: 'wartung',

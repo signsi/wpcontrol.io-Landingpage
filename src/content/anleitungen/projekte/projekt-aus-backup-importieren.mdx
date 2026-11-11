@@ -2,7 +2,7 @@
 title: "Ein Projekt aus einem Backup importieren"
 description: "Ein WordPress-Backup als .tar.gz in WPorbit einspielen, als neues oder in ein bestehendes Projekt. Mit Archivformat, .env-Import und Grenzen des Imports."
 order: 20
-updated: 2026-09-24
+updated: 2026-11-11
 type: anleitung
 audience: fortgeschritten
 duration: "10–15 Minuten"
@@ -61,13 +61,11 @@ Klicke in der Seitenleiste auf **Projekt hinzufügen** und wähle die Karte **Au
 
 Unter „Backup-Archiv“ trägst du den Pfad ein oder wählst die Datei über **Wählen…**.
 
-![„Projekt hinzufügen“, Modus „Aus einem Backup importieren“: Name des Imports, gewähltes .tar.gz im Feld „Backup-Archiv“ und der Bereich „Konfiguration & Zugangsdaten“](/anleitungen/projekte/projekt-aus-backup-importieren/01-backup-modus.webp)
-
 </Step>
 
 <Step title="Zugangsdaten mitgeben">
 
-Unter „Konfiguration & Zugangsdaten“ lädst du die passenden Werte über „Aus Vault laden“ → **Durchsuchen** oder über **.env importieren**. Das Tabellen-Präfix und die Datenbank-Zugangsdaten müssen zum Backup passen. **Analysieren** zeigt die Import-Analyse. Sie prüft dieselben Pflichtfelder wie beim Verbinden mit einem Server: Live-Adresse, Server, Benutzer und Web-Root. Fehlt einer davon in der `.env`, bleibt **Projekt anlegen** gesperrt.
+Unter „Konfiguration & Zugangsdaten“ lädst du die passenden Werte über „Aus Schlüsselbund laden“ → **Durchsuchen** oder über **.env importieren**. Das Tabellen-Präfix und die Datenbank-Zugangsdaten müssen zum Backup passen. **Analysieren** zeigt die Import-Analyse. Sie prüft dieselben Pflichtfelder wie beim Verbinden mit einem Server: Live-Adresse, Server, Benutzer und Web-Root. Fehlt einer davon in der `.env`, bleibt **Projekt anlegen** gesperrt.
 
 Trag vor allem die **Live-Adresse** (`REMOTE_URL`) der Quellseite ein. Nur mit ihr weiss WPorbit, welche Adresse in der Datenbank es durch die lokale ersetzen soll.
 
@@ -81,7 +79,7 @@ Unter **Erweiterte Einstellungen** steht der „Zielpfad“. Nimm ein neues, lee
 
 </Steps>
 
-<Callout variant="hinweis" title="Wenn Docker oder Vault nicht bereit sind">
+<Callout variant="hinweis" title="Wenn die Container-Laufzeit nicht bereit ist">
 Dann legt WPorbit das Projekt trotzdem an und meldet, dass WordPress nicht eingerichtet wurde. Starte die Einrichtung später über **Lokale Umgebung einrichten…** und importiere das Backup danach wie unten beschrieben.
 </Callout>
 
@@ -116,7 +114,7 @@ Der Import führt also nichts zusammen. Wenn du einen ganz sauberen Stand willst
 
 ## .env später neu importieren
 
-Die Konfiguration eines Projekts liegt in Vault. Eine `.env` ist nur das Transportformat. Wenn du nach dem Anlegen eine neue `.env` bekommst, spielst du sie so ein:
+Die Zugangsdaten eines Projekts liegen im macOS-Schlüsselbund. Eine `.env` ist nur das Transportformat. Wenn du nach dem Anlegen eine neue `.env` bekommst, spielst du sie so ein:
 
 <Steps>
 
@@ -134,9 +132,7 @@ In der Übersicht des Projekts steht in der Karte „Zugangsdaten“ jetzt der B
 
 <Step title="Analysieren und übernehmen">
 
-Füge den Inhalt ein oder klicke auf **.env-Datei wählen**, dann auf **Analysieren**. Die Tabelle zeigt jeden Schlüssel mit seinem Status. Unbekannte Schlüssel kannst du **übernehmen** oder **ignorieren**. Mit **In Vault übernehmen** speicherst du die Werte. WPorbit schreibt sie zusätzlich als `.env` in den Projektordner.
-
-![Karte „Zugangsdaten“ mit geöffnetem Bereich „.env neu importieren“: eingefügte .env mit Fantasiewerten und Import-Analyse „bereit zum Speichern“](/anleitungen/projekte/projekt-aus-backup-importieren/04-env-neu-importieren.webp)
+Füge den Inhalt ein oder klicke auf **.env-Datei wählen**, dann auf **Analysieren**. Die Tabelle zeigt jeden Schlüssel mit seinem Status. Unbekannte Schlüssel kannst du **übernehmen** oder **ignorieren**. Mit **Übernehmen** speicherst du die Werte im Schlüsselbund. Eine `.env` im Projektordner schreibt WPorbit dafür nicht.
 
 </Step>
 
@@ -152,8 +148,8 @@ Fremde `.env`-Dateien benennen manches anders. WPorbit ordnet verbreitete Schrei
 | `SELECTED_WP_VERSION` | `WP_VERSION`, `WORDPRESS_VERSION` |
 | `SSH_PW` | `SSH_ROOT_PW` |
 
-<Callout variant="wichtig" title="Klartext im Projektordner">
-`.env` und `.env.import.backup` im Projektordner enthalten Zugangsdaten im Klartext. Sie gehören nicht in ein Git-Repository.
+<Callout variant="wichtig" title="Klartext-Dateien">
+Eine `.env`, die du von aussen bekommen hast, enthält Zugangsdaten im Klartext. Lösche sie nach dem Import und leg sie nicht in ein Git-Repository.
 </Callout>
 
 <KeyTakeaways>

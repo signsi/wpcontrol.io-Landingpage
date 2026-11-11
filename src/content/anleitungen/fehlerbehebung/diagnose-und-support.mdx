@@ -2,7 +2,7 @@
 title: "Diagnose und Support"
 description: "Einen Debug-Bericht erstellen, typische Reparaturen selbst auslösen, das App-Protokoll lesen und ein Support-Ticket mit Bildern senden."
 order: 50
-updated: 2026-09-24
+updated: 2026-11-11
 type: fehlerbehebung
 audience: einsteiger
 duration: "10 Minuten"
@@ -19,9 +19,9 @@ Wenn etwas nicht läuft und keine andere Anleitung weiterhilft, findest du alles
 
 ## Zuerst: Benötigte Programme prüfen
 
-Ganz oben unter **Benötigte Programme** steht jedes Werkzeug, das WPorbit braucht, etwa Colima, Docker und Vault, mit seinem Zustand. Fehlt eines, steht der Befehl dabei, mit dem du es installierst. Programme, die nur für einzelne Funktionen nötig sind, tragen den Zusatz „optional“.
+Ganz oben unter **Benötigte Programme** steht jedes Werkzeug, das WPorbit braucht, mit seinem Zustand: Colima, Docker CLI und Docker Compose, die in der App stecken, dazu git, ssh, rsync und Visual Studio Code. Die letzten vier sind nur für einzelne Funktionen nötig und tragen den Zusatz „optional“.
 
-![Einstellungen → Diagnose & Support: „Benötigte Programme“, alle installiert, zwei davon optional](/anleitungen/fehlerbehebung/diagnose-und-support/01-benoetigte-programme.webp)
+Fehlt eines, steht dabei, was ohne es nicht mehr geht und was zu tun ist. Fehlt ein Programm, das zur App gehört, ist deine Kopie von WPorbit unvollständig: Lade WPorbit neu und ersetze die alte Kopie, siehe [WPorbit installieren](/anleitungen/erste-schritte/wporbit-installieren). Fehlt git, öffnet `xcode-select --install` im Terminal Apples Installationsfenster.
 
 ## Einen Debug-Bericht erstellen
 
@@ -51,14 +51,15 @@ Der Bericht enthält keine Passwörter. Er ist dafür gemacht, in eine Support-A
 
 | Problem | Abschnitt | Knopf |
 |---|---|---|
-| Colima, Vault oder lokale Domains laufen nach einer Neuinstallation nicht mehr | Einrichtungsassistent | **Einrichtungsassistent neu starten** |
+| Colima oder lokale Domains laufen nach einer Neuinstallation nicht mehr | Einrichtungsassistent | **Einrichtungsassistent neu starten** |
 | Der Browser zeigt Projekte unter `*.wporbit` als „nicht sicher“ an | SSL-Zertifikat reparieren | **Zertifikat neu vertrauen…** |
 | Die lokale Infrastruktur ist nicht bereit | Schnellstart lokal | **Lokal alles bereit machen** |
-| Vault antwortet nicht oder Zugangsdaten fehlen | Vault-Verbindungstest | **Diagnose starten** |
 
-Nach **Zertifikat neu vertrauen…** startest du den Browser neu. **Diagnose starten** zeigt den Zustand des Vaults, wie viele Projekte darin liegen, und Empfehlungen. Mit **Bericht kopieren** nimmst du das Ergebnis mit ins Ticket.
+Nach **Zertifikat neu vertrauen…** startest du den Browser neu. **Lokal alles bereit machen** startet Colima und prüft, ob Docker antwortet.
 
-Weiter unten stehen die **Colima-Diagnose** und das **Vault-Protokoll**. Beide lädst du bei Bedarf neu und kopierst sie mit **In Zwischenablage kopieren** bzw. **Kopieren**.
+Weiter unten steht die **Colima-Diagnose**. Mit **Diagnose laden** holst du die aktuelle Ausgabe und kopierst sie mit **Kopieren**.
+
+Was die einzelnen Fehlerbilder bedeuten, steht in [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
 
 ## Das App-Protokoll lesen
 
@@ -77,7 +78,7 @@ Die Logs eines einzelnen Projekts findest du im Projekt im Tab **Logs**, siehe [
 Hilft nichts anderes, kannst du WPorbit in den Auslieferungszustand zurücksetzen. Das ist der letzte Schritt, nicht der erste.
 
 <Callout variant="achtung" title="Zugangsdaten sind danach weg">
-Das Zurücksetzen stoppt Vault und Colima, entfernt die lokale Domain-Infrastruktur (Caddy, dnsmasq) und löscht Projektliste, Vault-Daten, Lizenz-Aktivierung, Tokens und alle Einstellungen. Die im Vault gespeicherten Zugangsdaten aller Projekte sind danach unwiderruflich weg. Exportiere sie vorher, siehe [Zugangsdaten im Vault verwalten](/anleitungen/zugaenge/zugangsdaten-im-vault).
+Das Zurücksetzen stoppt Colima, entfernt die lokale Domain-Infrastruktur (Caddy, DNS-Resolver) und löscht Projektliste, Zugangsdaten, Lizenz-Aktivierung, Tokens und alle Einstellungen. Die im Schlüsselbund gespeicherten Zugangsdaten aller Projekte (SSH, Datenbank, WordPress-Admin) sind danach unwiderruflich weg. Sichere sie vorher, siehe [Zugangsdaten verwalten](/anleitungen/zugaenge/zugangsdaten-im-vault).
 </Callout>
 
 Nicht angetastet werden deine Projektordner auf der Festplatte und die Docker-Container und -Volumes.
@@ -148,7 +149,7 @@ Kommst du nicht bis in die App, erreichst du uns über die Seite [Support](/supp
 
 - **Einstellungen → Diagnose & Support** bündelt Prüfen, Reparieren und den Kontakt zu uns.
 - **Debug-Bericht kopieren** und in das Ticket einfügen spart die meisten Rückfragen.
-- **Alles zurücksetzen und neu starten…** löscht alle Zugangsdaten. Exportiere sie vorher.
+- **Alles zurücksetzen und neu starten…** löscht alle Zugangsdaten. Sichere sie vorher.
 - Tickets mit bis zu fünf Bildern sendest du direkt aus der App, den Verlauf siehst du unter **Meine Tickets**.
 
 </KeyTakeaways>
