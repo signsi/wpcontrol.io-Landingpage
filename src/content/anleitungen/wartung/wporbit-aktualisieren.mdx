@@ -2,7 +2,7 @@
 title: "WPorbit aktualisieren"
 description: "Wie neue WPorbit-Versionen auf deinen Mac kommen, wie du von Hand nach Updates suchst und welche Version du gerade hast."
 order: 50
-updated: 2026-09-24
+updated: 2026-11-11
 type: anleitung
 audience: einsteiger
 duration: "2 Minuten"
@@ -61,9 +61,13 @@ WPorbit kann auch selbständig nach Updates suchen. Ob es das tun darf, fragt di
 
 ## Was ein Update nicht ändert
 
-Ein Update ersetzt nur die App. Deine Projekte, ihre Ordner, die Zugangsdaten im Vault und deine Einstellungen bleiben, wie sie sind.
+Ein Update ersetzt nur die App. Deine Projekte, ihre Ordner, die Zugangsdaten im Schlüsselbund und deine Einstellungen bleiben, wie sie sind.
 
-Die Werkzeuge, die WPorbit nutzt, etwa Colima oder Vault, aktualisiert ein App-Update nicht. Welche davon installiert sind, siehst du unter **Einstellungen → Diagnose & Support** im Abschnitt „Benötigte Programme“. Mehr dazu unter [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support).
+Die Werkzeuge, die WPorbit nutzt, etwa Colima, Docker und Caddy, stecken in der App und kommen mit dem Update in der Version mit, die zu ihr gehört. Du musst sie nicht getrennt aktualisieren. Ob alles vollständig da ist, siehst du unter **Einstellungen → Diagnose & Support** im Abschnitt „Benötigte Programme“. Mehr dazu unter [Diagnose und Support](/anleitungen/fehlerbehebung/diagnose-und-support).
+
+<Callout variant="hinweis" title="Update von einer Version vor 1.23.0">
+Seit 1.23.0 braucht WPorbit weder Homebrew noch Vault. Bestehende Einrichtungen stellt die App beim Update um: Die Programme kommen aus der App, und die Zugangsdaten deiner Projekte liegen danach im macOS-Schlüsselbund. Wie du sie dort verwaltest, steht in [Zugangsdaten verwalten](/anleitungen/zugaenge/zugangsdaten-im-vault).
+</Callout>
 
 <Callout variant="achtung" title="Update schlägt fehl?">
 Lässt sich ein Update nicht installieren, lade die aktuelle Version von der Seite [Downloads](/downloads) und installiere sie wie beim ersten Mal, siehe [WPorbit installieren](/anleitungen/erste-schritte/wporbit-installieren). Deine Projekte und Einstellungen bleiben dabei erhalten.
