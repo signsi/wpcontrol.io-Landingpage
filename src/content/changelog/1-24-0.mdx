@@ -1,0 +1,25 @@
+---
+version: "1.24.0"
+date: 2026-11-13
+title: "Apple Container statt Colima, Claude im Projekt, Schutz auch über IPv6"
+type: release
+highlights:
+  - "Auf macOS 26 laufen die Container mit Apples eigener Laufzeit: kein Colima, kein Docker, nichts zu installieren"
+  - "Claude Code im Projekt, SSH-Schlüssel pro Git-Host und «MailHog öffnen» im Menü"
+  - "Der Schutz des Macs vor Containern gilt jetzt auch für IPv6"
+draft: false
+---
+
+**Wichtig:** WPorbit braucht ab dieser Version **macOS 26** oder neuer. Macs mit älterem macOS bleiben bei Version 1.23.
+
+- **Apple Container als Standard:** Die Container laufen mit Apples Container-Laufzeit statt mit Colima. Das spart Speicher und Startzeit, und es muss nichts mehr installiert werden. Vorhandene Projekte zieht WPorbit beim ersten Start automatisch um, vorher legt es eine Sicherung an. Lokale Seiten (`<projekt>.wporbit`), Datenbank-Ansicht und VS Code funktionieren wie bisher.
+- **Claude Code im Projekt:** **Claude öffnen** und **Claude anmelden…** im Menü **Öffnen in…**. Claude wird einmal in den Einstellungen eingerichtet und bleibt aktuell, ohne dass das Image neu gebaut werden muss.
+- **SSH-Schlüssel:** Pro Git-Host legst du fest, welcher Schlüssel im Container gilt. Fehlende Schlüssel lädt WPorbit selbst in den Agenten.
+- **MailHog öffnen:** Im Menü **Öffnen in…** steht jetzt **MailHog öffnen**. Läuft MailHog nicht, sagt WPorbit, wo du es einschaltest. Mails aus dem Projekt erreichen MailHog auch mit Apple Container.
+- **Team:** Projekte lassen sich nach einer Freigabe neu speichern, und veraltete Geräteeinträge werden erkannt.
+- **Agent veraltet:** WPorbit zeigt in der Seitenleiste, wenn der Lesezugang eines Kunden-Servers erneuert werden sollte (**Lesezugang neu einrichten…**). Der neue Agent 11 prüft zusätzlich `.htaccess`, Dateirechte, Debug-Einstellungen und neue Administratoren.
+- **Schneller holen:** Die Sicherung vor dem Holen ist deutlich schneller, die Restzeit wird ehrlicher geschätzt, und beim Holen und Senden gibt es einen Fortschritt.
+- **Sicherheit:** Ein Plugin im Projekt erreicht vom Container aus keine Dienste auf deinem Mac, weder über IPv4 noch über IPv6. Die Sperre wird nach jedem Containerstart neu geprüft, und die Prüfung in den Einstellungen testet beide Wege. Nach einem Update erneuert WPorbit auch den Container-Dienst, wenn er noch vom alten Stand läuft.
+- **Behoben:** Die Port-Weiterleitung überlebt einen Neustart oder Absturz der App. Fehlt die Berechtigung **Lokales Netzwerk**, erklärt WPorbit, was zu tun ist, statt eine weisse Seite zu zeigen. Texte ohne Colima und Docker, wo sie nicht mehr passen. Ein Hänger bei langen Containerlisten.
+
+Beim ersten Start fragt macOS einmal nach dem Zugriff auf das lokale Netzwerk. Bitte **Erlauben** wählen, sonst bleiben lokale Seiten leer.
