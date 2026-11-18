@@ -2,7 +2,7 @@
 title: "Datenbank, WP-CLI und Terminal"
 description: "Die lokale Datenbank in phpMyAdmin öffnen, WP-CLI-Befehle im Projekt ausführen und ein Terminal im Container oder per SSH auf dem Server öffnen."
 order: 20
-updated: 2026-10-20
+updated: 2026-11-18
 type: anleitung
 audience: fortgeschritten
 duration: "5 Minuten"
@@ -22,22 +22,21 @@ Für die Arbeit direkt an Datenbank und Dateien bringt WPorbit vier Werkzeuge mi
 |---|---|---|
 | **Terminal** | Shell im WordPress-Container als `dev` | Projekt läuft |
 | **Terminal (root)** | Shell im WordPress-Container als `root` | Projekt läuft |
-| **Datenbank öffnen** | phpMyAdmin im Browser, Passwort in der Zwischenablage | Projekt läuft |
+| **Datenbank öffnen** | phpMyAdmin im Browser, direkt angemeldet | Projekt läuft |
 | **WP-CLI…** | Fenster für einzelne WP-CLI-Befehle | Projekt läuft |
 | **SSH-Terminal** | SSH-Sitzung auf dem Server | Server hinterlegt |
 
 ## Datenbank öffnen
 
-Klicke auf **Öffnen in…** → **Datenbank öffnen**. WPorbit startet phpMyAdmin im Netzwerk des Projekts und öffnet es im Browser. phpMyAdmin zeigt ein Anmeldeformular:
+Klicke auf **Öffnen in…** → **Datenbank öffnen**. WPorbit startet phpMyAdmin im Netzwerk des Projekts und öffnet es im Browser. Du bist sofort mit dem Datenbank-Benutzer des Projekts angemeldet, ein Passwort musst du nicht eintippen.
 
-1. Den Benutzer nennt WPorbit in der Statuszeile. Trage ihn unter „Benutzername“ ein.
-2. Das Passwort liegt bereits in der Zwischenablage. Füge es mit ⌘V unter „Passwort“ ein und klicke auf **Anmelden**.
-
-Die Zwischenablage wird nach 90 Sekunden wieder geleert, ausser du hast inzwischen etwas anderes kopiert. Brauchst du länger, klicke einfach noch einmal auf **Datenbank öffnen**. Benutzer und Passwort stehen auch in den Projekteinstellungen unter „Zugangsdaten“.
-
-<Callout variant="hinweis" title="Warum ein Formular?">
-Bis Version 1.15 war phpMyAdmin ohne Anmeldung offen. Damit konnte auch ein fremdes Plugin aus einem anderen Projekt die Datenbank lesen. Mit dem Formular kommt nur hinein, wer das Passwort des Projekts kennt.
+<Callout variant="hinweis" title="Warum nur über WPorbit?">
+Die Anmeldung gilt nur für diesen einen Klick: WPorbit erzeugt jedes Mal ein Einmal-Token, das 60 Sekunden gilt und nach dem ersten Aufruf wertlos ist. Öffnest du dieselbe Adresse ein zweites Mal oder rufst phpMyAdmin ohne WPorbit auf, erscheint „Bitte über WPorbit öffnen“. So kommt auch ein fremdes Plugin aus einem anderen Projekt nicht an die Datenbank, obwohl der Port auf deinem Mac erreichbar ist. (Bis Version 1.15 war phpMyAdmin ohne Anmeldung offen.)
 </Callout>
+
+Brauchst du phpMyAdmin erneut, klicke noch einmal auf **Datenbank öffnen**. Jeder Klick meldet dich neu an.
+
+Gelingt die Einmal-Anmeldung nicht, öffnet WPorbit phpMyAdmin wie früher mit dem Anmeldeformular und sagt in der Statuszeile, warum. Dann nennt die Statuszeile den Benutzer, und das Passwort liegt 90 Sekunden in der Zwischenablage (⌘V unter „Passwort“). Benutzer und Passwort stehen auch in den Projekteinstellungen unter „Zugangsdaten“.
 
 Beim ersten Mal lädt WPorbit den Datenbank-Betrachter herunter, rund 800 MB. Das passiert nur einmal pro Mac, und WPorbit sagt es vorher in der Statuszeile. Danach öffnet er sich in wenigen Sekunden.
 

@@ -1,0 +1,19 @@
+---
+version: "1.25.0"
+date: 2026-11-18
+title: "Neu von Remote aufsetzen, phpMyAdmin ohne Anmeldung, sicherer Umzug"
+type: release
+highlights:
+  - "«Neu von Remote aufsetzen…» setzt ein Projekt lokal 1:1 wie die Live-Seite neu auf"
+  - "«Datenbank öffnen» meldet dich in phpMyAdmin direkt an, ohne dass der Port offen ist"
+  - "Der Umzug von Colima auf Apple Container klappt auch bei Projekten ohne Docker-Container und wiederholt sich nicht mehr bei jedem Start"
+draft: true
+---
+
+- **Neu von Remote aufsetzen:** Im Projektmenü unter **Wartung** steht bei Projekten mit Server **Neu von Remote aufsetzen…**. WPorbit prüft vorher, ob Themes oder Plugins mit Git Änderungen haben, die nur lokal liegen, und sichert auf Wunsch Datenbank und `wp-content`. Danach entfernt es das Lokale und öffnet **Von Remote laden…**. Server-Zugang, Einstellungen und Team bleiben.
+- **phpMyAdmin direkt angemeldet:** **Datenbank öffnen** meldet dich ohne Formular und ohne Zwischenablage an. Die Anmeldung gilt nur für diesen Klick (Einmal-Token, 60 Sekunden). Ohne WPorbit zeigt der Port weiterhin keine Datenbank.
+- **Umzug auf Apple Container zuverlässiger:** Projekte, deren Docker-Container fehlen, ziehen jetzt auch um. Ein Fehler, der sich nicht von selbst ändert, wird nicht mehr bei jedem Start wiederholt, und die Diagnose zeigt den Grund. Neu: **Erneut versuchen** und **Leere Umzug-Ordner löschen**.
+- **Claude im Projekt:** Die Anmeldung von Claude lässt sich auch prüfen, während ein Projekt läuft. Ein zweites Projekt startet mit Claude, auch wenn schon eines läuft.
+- **VS Code:** **In VS Code öffnen** startet Docker Desktop nicht mehr, wenn du nur Apple Container nutzt.
+- **SSH-Schlüssel:** WPorbit lädt nur die Schlüssel, die du gewählt hast, nicht das ganze Schlüsselbund. Wenn die Auswahl nicht im Agenten liegt, ist **Schlüssel laden** hervorgehoben. Der Agent-Socket im Container ist nur für den Benutzer `dev` erreichbar.
+- **Holen:** Liegt WordPress live in einem Unterordner, richtet WPorbit die lokale Adresse ohne diesen Unterordner ein. Eine PHP-Warnung der Live-Seite wird nicht mehr als Tabellen-Präfix gelesen.
