@@ -2,12 +2,13 @@
 title: "Projekte organisieren, bearbeiten und löschen"
 description: "Projekte in der Seitenleiste finden, über das Kontextmenü bearbeiten und den Unterschied zwischen „Aus der Liste entfernen“ und „Komplett löschen…“ kennen."
 order: 30
-updated: 2026-09-24
+updated: 2026-11-18
 type: anleitung
 audience: einsteiger
 duration: "5 Minuten"
 appliesTo: [Standalone]
 related:
+  - veroeffentlichen/holen-senden-deployen
   - erste-schritte/oberflaeche-im-ueberblick
   - entwicklung/php-und-wordpress-version-wechseln
   - wartung/backups-erstellen
@@ -42,7 +43,7 @@ Ein Rechtsklick auf ein Projekt in der Seitenleiste öffnet das Projektmenü. Da
 - **Starten** oder **Stoppen**, **Neu starten**, **Lokale Umgebung einrichten…**
 - **Im Finder zeigen** und die beiden VS-Code-Einträge
 - Was den Server betrifft: **Vom Server holen…**, **Zum Server senden…**, **Theme deployen…**, **Theme einrichten**, **Verbindung ausführlich testen**. Ohne hinterlegten Server sind diese Einträge ausgegraut.
-- **Backup erstellen…** und **Backup importieren…**
+- Gruppe **Wartung**: **Lokale Umgebung einrichten…**, bei Projekten mit Server **Neu von Remote aufsetzen…**, **Backup erstellen…** und **Backup importieren…**
 - Reparaturen: **Berechtigungen korrigieren** und **Neues Docker-Image holen…**
 - **Bearbeiten…**, **Aus der Liste entfernen** und **Komplett löschen…**
 
@@ -65,6 +66,38 @@ Beide Reparaturen findest du auch in der Übersicht in der Karte „Wartung“ u
 **Berechtigungen korrigieren** setzt die Dateirechte im WordPress-Container neu. Das hilft, wenn Uploads, Plugin-Updates oder Git mit „Permission denied“ scheitern. Das Projekt muss dafür laufen.
 
 **Neues Docker-Image holen…** lädt die neueste Version des WordPress-Images und erstellt den Container neu. WPorbit fragt vorher: „Neues Docker-Image holen?“. Die lokale Seite ist dabei kurz nicht erreichbar, Datenbank und Dateien bleiben erhalten. Bestätige mit **Holen und neu erstellen**.
+
+## Neu von Remote aufsetzen
+
+Ist ein Projekt lokal durcheinander geraten und die Live-Seite ist die Wahrheit, setzt du es mit **Neu von Remote aufsetzen…** (Gruppe **Wartung**) von vorn auf. Der Eintrag steht nur bei Projekten mit hinterlegtem Server.
+
+<Callout variant="achtung" title="Das lokale Projekt wird entfernt">
+Verloren gehen die lokale Datenbank, die lokalen Dateien und der Claude-Verlauf dieses Projekts. Server-Zugang, Einstellungen und Team bleiben. Die Live-Seite wird nicht angefasst.
+</Callout>
+
+<Steps>
+
+<Step title="Prüfen und bestätigen">
+
+WPorbit prüft zuerst, ob Themes oder Plugins mit Git Änderungen haben, die nur lokal liegen, und listet sie mit „nicht committet“ und „nicht gepusht“ auf. Mit **Vorher sichern** (standardmässig an) entsteht vorher ein Archiv von Datenbank und `wp-content` im Ordner `.backups` des Projekts. Sind lokale Änderungen da oder lässt sich das nicht prüfen, musst du das ausdrücklich bestätigen. Ist das Projekt noch von früher auch unter Docker (Colima) vorhanden, kannst du dafür Colima kurz starten lassen, damit auch diese Reste verschwinden.
+
+</Step>
+
+<Step title="Lokales entfernen">
+
+Mit **Lokales entfernen und neu laden** entfernt WPorbit Container und Daten des Projekts. Eine Stufenanzeige oben zeigt, wo es steht. Der Knopf ist gesperrt, solange für das Projekt etwas anderes läuft (Holen, Senden, Backup).
+
+</Step>
+
+<Step title="Von Remote laden">
+
+Danach öffnet **Von Remote laden…** den bekannten Assistenten. Wähle Datenbank, Plugins, Uploads und bei Bedarf Themes und lade das Projekt neu vom Server.
+
+</Step>
+
+</Steps>
+
+Hatte ein Theme oder Plugin ein Git-Repository, nennt WPorbit am Ende die Ordner, die du von Hand wieder klonen musst. WPorbit klont nicht selbst, weil es keine Zugangsdaten zu deinem Git-Anbieter hat.
 
 ## Entfernen oder löschen
 

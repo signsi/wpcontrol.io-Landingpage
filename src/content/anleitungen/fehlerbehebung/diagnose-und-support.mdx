@@ -2,7 +2,7 @@
 title: "Diagnose und Support"
 description: "Einen Debug-Bericht erstellen, typische Reparaturen selbst auslösen, das App-Protokoll lesen und ein Support-Ticket mit Bildern senden."
 order: 50
-updated: 2026-11-11
+updated: 2026-11-18
 type: fehlerbehebung
 audience: einsteiger
 duration: "10 Minuten"
@@ -60,6 +60,19 @@ Nach **Zertifikat neu vertrauen…** startest du den Browser neu. **Lokal alles 
 Weiter unten steht die **Colima-Diagnose**. Mit **Diagnose laden** holst du die aktuelle Ausgabe und kopierst sie mit **Kopieren**.
 
 Was die einzelnen Fehlerbilder bedeuten, steht in [Einrichtung schlägt fehl](/anleitungen/fehlerbehebung/einrichtung-schlaegt-fehl).
+
+## Umzug auf Apple Container
+
+Hast du WPorbit von einer Version mit Colima und Docker aktualisiert, zieht WPorbit deine Projekte beim Start auf Apple Container um. Jedes Projekt bekommt zuerst eine eigene Sicherung unter `~/Library/Application Support/WPorbit/Umzug`. Die Daten unter Docker bleiben dabei unverändert.
+
+Klappt ein Umzug nicht, erscheint in der Diagnose der Abschnitt **Umzug auf Apple container**. Er steht nur da, wenn es etwas zu zeigen gibt. Pro Projekt siehst du den Grund und ob WPorbit es weiter von selbst versucht:
+
+- **Vorübergehende Fehler**, etwa wenn Docker nicht antwortet, versucht WPorbit beim nächsten Start wieder.
+- **Dauerhafte Fehler**, etwa wenn kein passendes Image auf dem Mac liegt, versucht WPorbit nicht noch einmal von selbst. Behebe die Ursache und klicke dann auf **Erneut versuchen**. Der Umzug läuft beim nächsten Start von WPorbit.
+
+Aus älteren Versuchen können leere Ordner übrig sein, in denen keine Sicherung liegt. **Leere Umzug-Ordner löschen** entfernt nur solche. Ein Ordner mit einer Sicherung bleibt immer stehen.
+
+Willst du ein Projekt, das nicht umzieht, lieber ganz neu aufsetzen, nutze **Neu von Remote aufsetzen…**, siehe [Projekte organisieren, bearbeiten und löschen](/anleitungen/projekte/projekte-organisieren-und-loeschen).
 
 ## Das App-Protokoll lesen
 
