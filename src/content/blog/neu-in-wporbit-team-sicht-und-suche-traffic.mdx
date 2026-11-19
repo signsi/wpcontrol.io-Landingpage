@@ -1,0 +1,82 @@
+---
+title: "Neu in WPorbit: Team-Sicht, Server-Backup und Suche & Traffic in der Cloud"
+seoTitle: "Neu in WPorbit 1.25: App und Cloud"
+description: "Was das nächste WPorbit-Release bringt: Team-Sicht, Server-Backup, gruppierte Projekte, klarere Fehler und in der Cloud Suche & Traffic mit Monatsbericht."
+date: 2026-11-19
+category: produkt
+tags: [release, team, cloud]
+author: patrick
+draft: true
+---
+
+<KeyTakeaways>
+
+- In der App gibt es eine **Team-Sicht**: alle geteilten Projekte auf einen Blick, mit Zustand auf diesem Mac und den passenden Aktionen.
+- **Server sichern…** lädt eine Kopie der Live-Seite auf deinen Mac, ohne etwas auf dem Server oder in deinem lokalen Projekt zu ändern.
+- Die Projektliste lässt sich nach **Tag oder Kunde gruppieren**, und «Neues Projekt» bietet Projekte aus dem Team direkt an.
+- Fehler nennen jetzt, **wo** sie liegen: beim Server, in der Umgebung oder im Projekt.
+- In der Cloud kommen **Suche & Traffic** (Search Console und Analytics, Beta), ein **Kurzbericht**, ein **Monatsbericht** und ein **Link für Kunden**.
+
+</KeyTakeaways>
+
+Dieser Beitrag fasst zusammen, was seit dem letzten Release dazugekommen ist: zuerst in der App, dann in der [WPorbit Cloud](/cloud). Alles, was hier steht, läuft bei uns jeden Tag mit echten Projekten. Wo etwas noch Beta ist oder von Hand freigeschaltet wird, steht es dabei.
+
+## In der App
+
+### Die Team-Sicht
+
+Bisher standen Projekte, die dein Team hat und dein Mac nicht, als kleiner Abschnitt ganz unten in der Seitenleiste. Bei vielen Projekten ging das unter, und Projekte, die dein Mac nicht öffnen kann, sah man gar nicht.
+
+Jetzt gibt es in der Seitenleiste den Eintrag **Team**. Er zeigt jedes geteilte Projekt einmal: ob es auf diesem Mac schon verknüpft ist, ob es nur im Team liegt oder ob dein Mac es nicht lesen kann. Dazu steht, wer zuletzt geändert hat und ob die Überwachung läuft. Je nach Zustand gibt es die Aktion, die gerade Sinn ergibt: **Einrichten**, **Verknüpfen**, **Mit dem Team abgleichen** oder **Öffnen**. Ein Projekt, das dein Mac nicht lesen kann, nennt den Grund und den Weg, wie es wieder lesbar wird.
+
+Auch in **Neues Projekt** steht jetzt oben der Block «Aus dem Team einrichten». Wer ein Projekt vom Team auf einen neuen Mac holen will, findet es dort, statt es zu suchen.
+
+### Projekte ordnen
+
+Ab ein paar Dutzend Projekten ist eine flache Liste mühsam. Die Seitenleiste gruppiert jetzt nach **Tag** oder nach **Kunde**, und die Gruppen lassen sich einklappen. Ein Projekt kann mehrere Tags haben und steht dann unter jedem. Wer die flache Liste mag, schaltet das Gruppieren auf «Nichts». Tags und Gruppierung bleiben auf deinem Mac, sie gehen nicht ins Team.
+
+### Server sichern
+
+Vor einem Eingriff willst du eine Kopie der Live-Seite, ohne sie gleich in dein lokales Projekt zu spielen. **Server sichern…** (im Backup-Tab und im Projektmenü) lädt Datenbank, Plugins, Uploads und Themes auf deinen Mac, als Archiv im Ordner `.backups` des Projekts. Der Server und dein lokaler Stand bleiben unverändert, und das Archiv ist nur für dich lesbar. Zugangsdaten (`wp-config.php`, `.env`, `.htpasswd`) und versteckte Dateien kommen nie mit. Bei grossen Seiten wählst du wie beim Holen, welche Ordner mitkommen. Das fertige Archiv erscheint im Backup-Tab und lässt sich wie jedes andere Backup wieder einspielen.
+
+### Fehler, die sagen, wo sie liegen
+
+«Verbindung prüfen» meldete bei einem unserer Kunden-Projekte «Datenbank: keine Tabellen lesbar». Die Datenbank war in Ordnung. Auf dem Server lief für die Kommandozeile eine alte PHP-Version, ein Plugin verlangte eine neuere, und WordPress stürzte beim Laden ab. Die App hat das nicht gesehen.
+
+Heute erkennt die Vorprüfung diesen Fall, nennt das Plugin, die vorhandene und die benötigte PHP-Version und schlägt ein passendes PHP-Programm auf dem Server vor, das du mit einem Klick übernimmst. Wo sie die Ursache nicht kennt, sagt sie das und zeigt die Ausgabe des Servers. Dasselbe gilt jetzt für Deploy, CI/CD-Einrichtung und das Einschalten der Überwachung: Die Fehlerkarte nennt die Schicht (SSH, Datenbank, PHP, Übertragung) und wer zuständig ist.
+
+### Schneller und sicherer im Alltag
+
+- **VS Code:** Der VS-Code-Server bleibt pro Projekt erhalten und wird nicht mehr nach jedem Neuanlegen des Containers von vorn geladen. Das erste Anhängen dauerte bei uns rund zwei Minuten, die meiste Zeit für den Download.
+- **Neu von Remote aufsetzen:** Setzt ein Projekt lokal wie die Live-Seite neu auf, nachdem WPorbit gesagt hat, was lokal verloren ginge.
+- **phpMyAdmin:** «Datenbank öffnen» meldet dich direkt an, mit einem Token, das nur für diesen Klick und 60 Sekunden gilt.
+- **Team:** Dein eigener Code für die Freigabe eines neuen Macs steht jetzt immer unter «Dieser Mac». «Mit dem Team abgleichen» sagt auch dann etwas, wenn alles gleich ist.
+
+## In der Cloud
+
+Die Cloud ist das Dashboard, das alle Projekte deines Teams überwacht. Dazu sind zwei grosse Dinge gekommen, beide rund um Sichtbarkeit in der Suche.
+
+### Suche & Traffic (Beta)
+
+Teams verbinden ihr Google-Konto, **nur lesend**, und ordnen je Projekt die Search-Console-Site und die Analytics-Property zu. Das Token liegt versiegelt auf dem Server. Danach holt WPorbit täglich Klicks, Impressionen, Sitzungen und Key Events und prüft selbst die wichtigsten Seiten. Daraus entstehen Alarme für Fehlerseiten, Einbrüche beim Index, bei den Besuchen und in der Suche. Sie kommen über denselben Weg wie die anderen Alarme, nicht im Wartungsfenster und erst ab einer Mindestlast, damit eine kleine Seite nicht wegen drei Besuchern alarmiert.
+
+Wir speichern bewusst wenig: Tageswerte nur 60 Tage lang. WPorbit soll Probleme finden, kein SEO-Archiv sein, und Google bleibt die Quelle. Die Funktion ist **Beta** und wird je Team von Hand freigeschaltet. Schreib uns, wenn du sie ausprobieren willst.
+
+### Kurzbericht, Monatsbericht und Kunden-Link
+
+Am Kopf des Reiters «Suche & Traffic» steht ein **Kurzbericht**: eine Ampel mit Begründung, vier Zahlen mit Veränderung zur Vorperiode (28 oder 7 Tage), die SEO-Gesundheit, die wichtigsten Seiten und höchstens drei Auffälligkeiten. Zum Lesen reicht ein Blick, ohne in vier Werkzeuge zu wechseln.
+
+Daraus wird der **Monatsbericht**: Am 4. des Monats legt WPorbit je Projekt mit Google-Zuordnung einen unveränderlichen Schnappschuss des Vormonats an, mit Summen, Wochenverlauf, SEO-Gesundheit, wichtigsten Seiten und den Alarmen des Monats.
+
+Für den Kunden gibt es einen **Link**: Wer Owner im Team ist, erzeugt je Projekt einen Link mit Zufalls-Token, der ohne Anmeldung den neuesten Bericht als Kundenseite zeigt. Er läuft nach 1 bis 365 Tagen ab und lässt sich jederzeit widerrufen. Gespeichert wird nur der Hash des Tokens.
+
+### Kleiner, aber nützlich
+
+- Das Dashboard zeigt über der Projekttabelle, wie viele Konten einen **veralteten Agenten** haben. Ein Klick filtert darauf.
+- Zwei **Fehlalarme** bei «PHP in uploads/» sind weg: die kompilierten Vorlagen von WPML und die `index.php` von WP Defender. Jede andere PHP-Datei in `uploads/` bleibt ein kritischer Befund.
+
+## Wie du updatest
+
+Die App aktualisiert sich selbst; WPorbit braucht macOS 26 oder neuer. Die Cloud-Neuerungen sind schon live, nur der Lesezugang eines Kundenservers muss bei veraltetem Agenten einmal neu eingerichtet werden (**Lesezugang neu einrichten…**). Was sich im Detail geändert hat, steht im [Changelog](/changelog).
+
+Wenn dir ein Teil fehlt oder etwas anders funktioniert als hier beschrieben, schreib uns über das Support-Formular in der App. Wir lesen jede Nachricht.
