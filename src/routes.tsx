@@ -102,6 +102,7 @@ export const routes: RouteRecord[] = [
       { path: 'vergleich', lazy: () => import('./pages/VergleichPage').then((m) => ({ Component: m.default })) },
       ...alternativeRoutes,
       { path: 'preise', lazy: () => import('./pages/PreisePage').then((m) => ({ Component: m.default })) },
+      { path: 'neu', lazy: () => import('./pages/NeuPage').then((m) => ({ Component: m.default })) },
       { path: 'testen', lazy: () => import('./pages/TestenPage').then((m) => ({ Component: m.default })) },
       { path: 'faq', lazy: () => import('./pages/FaqPage').then((m) => ({ Component: m.default })) },
 
