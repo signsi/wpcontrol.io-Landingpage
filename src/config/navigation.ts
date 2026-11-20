@@ -107,6 +107,7 @@ export const footerNav: FooterColumn[] = [
     items: [
       { label: 'Blog', to: '/blog' },
       { label: 'Anleitungen', to: '/anleitungen' },
+      { label: 'Neu in 1.25', to: '/neu' },
       { label: 'Changelog', to: '/changelog' },
       { label: 'Downloads', to: '/downloads' },
       { label: 'FAQ', to: '/faq' },
